@@ -16,7 +16,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Alpha Male | Premium Men's Wellness",
+  title: "Alpha Male | Premium Men's Wellness.",
   description:
     "India's premium science-backed men's wellness brand. Confidence, refined.",
 };
