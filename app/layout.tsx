@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { Cinzel, Montserrat } from "next/font/google";
 import "./globals.css";
-
+import ClarityAnalytics from "@/Components/Clarity";
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -35,6 +35,7 @@ export default function RootLayout({
       className={`${cinzel.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-body">
+        <ClarityAnalytics />
         {children}
       </body>
     </html>
