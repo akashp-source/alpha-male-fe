@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Cinzel, Montserrat } from "next/font/google";
 import "./globals.css";
 import ClarityAnalytics from "@/Components/Clarity";
+import GoogleTagManager from "@/Components/GoogleTagManager";
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -36,6 +37,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-body">
         <ClarityAnalytics />
+        <GoogleTagManager />
         {children}
       </body>
     </html>
