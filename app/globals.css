@@ -1,0 +1,68 @@
+@import "tailwindcss";
+/* @import "./fonts.css"; */
+
+
+
+@theme {
+  --font-heading: "Cinzel", serif;
+  --font-body: "Montserrat", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #161f33;
+  color: #d5d5d7;
+  font-family: var(--font-montserrat);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+::selection {
+  background: #d5d5d7;
+  color: #161f33;
+}
+
+
+/* Default: blurred */
+/* .product-image {
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
+  opacity: 0.5;
+  transform: scale(0.95);
+  transition: all 450ms ease-in-out;
+} */
+
+/* Click/tap reveal */
+.product-image.revealed {
+  filter: blur(0);
+  -webkit-filter: blur(0);
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Desktop: hover reveal */
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .product-image {
+    filter: blur(0);
+    -webkit-filter: blur(0);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+html {
+  @apply scroll-smooth;
+}
