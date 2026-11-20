@@ -2,8 +2,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import type { Product } from "@/types/product";
+import { addToCart } from "@/lib/cart";
 import {
+    Loader2,
     Minus,
     Plus,
     ShoppingBag,
@@ -34,7 +37,10 @@ export default function ProductBuySection({
     onAddToCart,
     onBuyNow,
 }: ProductBuySectionProps) {
+    const router = useRouter();
     const [quantity, setQuantity] = useState(1);
+    const [pending, setPending] = useState<"cart" | "buy" | null>(null);
+    const [cartError, setCartError] = useState("");
     const [selectedImage, setSelectedImage] = useState(
         product.images?.[0] || ""
     );
@@ -71,6 +77,45 @@ export default function ProductBuySection({
 
     const formatPrice = (price: number) =>
         `₹${price.toLocaleString("en-IN")}`;
+
+    // -----------------------------------
+    // Add to cart / Buy now
+    // Callers may override via onAddToCart / onBuyNow; otherwise the item is
+    // added to the cart through the cart API.
+    // -----------------------------------
+
+    const handleAddToCart = async () => {
+        if (onAddToCart) return onAddToCart(product, quantity, totalPrice);
+        if (pending || outOfStock) return;
+
+        setPending("cart");
+        setCartError("");
+        try {
+            await addToCart(product._id, quantity);
+            // Show the updated cart (the navbar listens for this event).
+            window.dispatchEvent(new Event("open-cart"));
+        } catch (error) {
+            setCartError(error instanceof Error ? error.message : "Unable to add to cart");
+        } finally {
+            setPending(null);
+        }
+    };
+
+    const handleBuyNow = async () => {
+        if (onBuyNow) return onBuyNow(product, quantity, totalPrice);
+        if (pending || outOfStock) return;
+
+        setPending("buy");
+        setCartError("");
+        try {
+            await addToCart(product._id, quantity);
+            router.push("/checkout");
+            // Keep the spinner while the checkout page loads.
+        } catch (error) {
+            setCartError(error instanceof Error ? error.message : "Unable to start checkout");
+            setPending(null);
+        }
+    };
 
     // -----------------------------------
     // Quantity update
@@ -421,35 +466,37 @@ export default function ProductBuySection({
 
                             <button
                                 type="button"
-                                disabled={outOfStock}
-                                onClick={() =>
-                                    onAddToCart?.(
-                                        product,
-                                        quantity,
-                                        totalPrice
-                                    )
-                                }
+                                disabled={outOfStock || pending !== null}
+                                onClick={handleAddToCart}
                                 className="flex h-12 items-center justify-center gap-2 rounded-lg bg-[#17120f] px-4 font-body text-sm font-semibold text-[#e7c49c] transition hover:bg-[#30251e] disabled:cursor-not-allowed disabled:opacity-50"
                             >
-                                <ShoppingBag size={16} />
-                                Add to cart
+                                {pending === "cart" ? (
+                                    <Loader2 size={16} className="animate-spin" />
+                                ) : (
+                                    <ShoppingBag size={16} />
+                                )}
+                                {pending === "cart" ? "Adding..." : "Add to cart"}
                             </button>
 
                             <button
                                 type="button"
-                                disabled={outOfStock}
-                                onClick={() =>
-                                    onBuyNow?.(
-                                        product,
-                                        quantity,
-                                        totalPrice
-                                    )
-                                }
+                                disabled={outOfStock || pending !== null}
+                                onClick={handleBuyNow}
                                 className="flex h-12 items-center justify-center gap-2 rounded-lg bg-[#07162f] px-4 font-body text-sm font-semibold text-white transition hover:bg-[#105139] disabled:cursor-not-allowed disabled:opacity-50"
                             >
-                                <Zap size={16} />
-                                Buy now
+                                {pending === "buy" ? (
+                                    <Loader2 size={16} className="animate-spin" />
+                                ) : (
+                                    <Zap size={16} />
+                                )}
+                                {pending === "buy" ? "Please wait..." : "Buy now"}
                             </button>
+
+                            {cartError && (
+                                <p role="alert" className="font-body text-xs text-red-600 sm:col-span-2">
+                                    {cartError}
+                                </p>
+                            )}
                         </div>
 
                         {/* Trust Features */}

@@ -1,32 +1,43 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
     X,
-    ShieldCheck,
     Package,
-    CreditCard,
     RotateCcw,
     Gift,
     Lock,
 } from "lucide-react";
 import Image from "next/image";
 
+const DISMISS_KEY = "guest-signup-dismissed-until";
+const DISMISS_DURATION = 7 * 24 * 60 * 60 * 1000;
+
 export default function GuestSignupPopup() {
     const [isOpen, setIsOpen] = useState(false);
     const [mobile, setMobile] = useState("");
-    const [marketingConsent, setMarketingConsent] = useState(true);
+    const [marketingConsent, setMarketingConsent] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const dialogRef = useRef<HTMLDivElement>(null);
+    const mobileInputRef = useRef<HTMLInputElement>(null);
 
-    // Show popup after 2 seconds if user is not logged in
+    const closePopup = useCallback(() => {
+        localStorage.setItem(DISMISS_KEY, String(Date.now() + DISMISS_DURATION));
+        setIsOpen(false);
+    }, []);
+
+    // Show after a short delay unless the visitor recently dismissed the popup.
     useEffect(() => {
         if (localStorage.getItem("token")) return;
+        const dismissedUntil = Number(localStorage.getItem(DISMISS_KEY) || 0);
+        if (dismissedUntil > Date.now()) return;
+        if (dismissedUntil) localStorage.removeItem(DISMISS_KEY);
 
         const timer = window.setTimeout(() => {
-            // Recheck authentication before opening
-            if (!localStorage.getItem("token")) {
+            const currentDismissal = Number(localStorage.getItem(DISMISS_KEY) || 0);
+            if (!localStorage.getItem("token") && currentDismissal <= Date.now()) {
                 setIsOpen(true);
             }
         }, 2000);
@@ -34,9 +45,55 @@ export default function GuestSignupPopup() {
         return () => window.clearTimeout(timer);
     }, []);
 
-    const closePopup = () => {
-        setIsOpen(false);
-    };
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const previousBodyOverflow = document.body.style.overflow;
+        const previousRootOverflow = document.documentElement.style.overflow;
+        const previousFocus = document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null;
+        document.body.style.overflow = "hidden";
+        document.documentElement.style.overflow = "hidden";
+        const focusTimer = window.setTimeout(() => mobileInputRef.current?.focus(), 0);
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                event.preventDefault();
+                closePopup();
+                return;
+            }
+            if (event.key !== "Tab" || !dialogRef.current) return;
+
+            const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(
+                'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )).filter((element) => element.offsetParent !== null);
+            if (!focusable.length) {
+                event.preventDefault();
+                dialogRef.current.focus();
+                return;
+            }
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && (document.activeElement === first || !dialogRef.current.contains(document.activeElement))) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && (document.activeElement === last || !dialogRef.current.contains(document.activeElement))) {
+                event.preventDefault();
+                first.focus();
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.clearTimeout(focusTimer);
+            document.removeEventListener("keydown", handleKeyDown);
+            document.body.style.overflow = previousBodyOverflow;
+            document.documentElement.style.overflow = previousRootOverflow;
+            previousFocus?.focus();
+        };
+    }, [isOpen, closePopup]);
 
     const handleGetOtp = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -69,9 +126,16 @@ export default function GuestSignupPopup() {
     return (
 
         // <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/50 p-4 sm:p-6">
-        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-[#07152e]/40 p-4 sm:p-6">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-[#07152e]/50 p-3 sm:p-6">
 
-            <div className="relative mx-auto grid w-full max-w-[1100px] items-center gap-6 lg:grid-cols-2 bg-[#07162f] p-5 rounded-2xl">
+            <div
+                ref={dialogRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="guest-signup-title"
+                tabIndex={-1}
+                className="relative mx-auto grid w-full max-w-[1100px] items-center gap-0 rounded-2xl bg-transparent p-0 outline-none lg:grid-cols-2 lg:gap-6 lg:bg-[#07162f] lg:p-5"
+            >
 
                 {/* LEFT BRAND PANEL */}
                 <div className="hidden text-center text-white lg:block">
@@ -89,7 +153,7 @@ export default function GuestSignupPopup() {
                         />
                     </div>
 
-                    <p className="mb-16 text-[10px] font-semibold tracking-[0.3em] text-[#c2d0df]">
+                    <p className="mb-16 text-xs font-semibold tracking-[0.3em] text-[#c2d0df]">
                         DRIVE · STAMINA · ENERGY
                     </p>
 
@@ -123,7 +187,7 @@ export default function GuestSignupPopup() {
                 </div>
 
                 {/* RIGHT SIGNUP CARD */}
-                <div className="relative z-10 mx-auto w-full max-w-[500px] rounded-2xl bg-white px-6 py-8 shadow-2xl sm:px-10 sm:py-10">
+                <div className="relative z-10 mx-auto w-full max-w-[500px] rounded-2xl bg-white px-5 py-7 shadow-2xl sm:px-10 sm:py-10">
 
                     {/* Close */}
                     <button
@@ -136,18 +200,18 @@ export default function GuestSignupPopup() {
                     </button>
 
                     <div className="mx-auto max-w-[350px]">
-                        <h2 className="mb-2 text-center text-xl font-bold leading-7 text-[#07152e]">
+                        <h2 id="guest-signup-title" className="mb-2 text-center text-xl font-bold leading-7 text-[#07152e]">
                             Unlock members-only
                             <br />
                             offers
                         </h2>
 
-                        <p className="mb-6 text-center text-[11px] leading-5 text-[#91857b]">
+                        <p className="mb-6 text-center text-sm leading-5 text-[#6B6158]">
                             Sign up with your mobile number for offers and order updates.
                         </p>
 
                         <form onSubmit={handleGetOtp}>
-                            <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                            <label htmlFor="guest-signup-mobile" className="mb-2 block text-sm font-semibold text-[#07152e]">
                                 Mobile number
                             </label>
 
@@ -158,6 +222,8 @@ export default function GuestSignupPopup() {
                                 </div>
 
                                 <input
+                                    ref={mobileInputRef}
+                                    id="guest-signup-mobile"
                                     type="tel"
                                     inputMode="numeric"
                                     maxLength={10}
@@ -167,12 +233,12 @@ export default function GuestSignupPopup() {
                                     }
                                     placeholder="10-digit mobile number"
                                     required
-                                    className="min-w-0 flex-1 px-3 text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                    className="min-w-0 flex-1 px-3 text-sm text-[#07152e] outline-none placeholder:text-[#6B6158]"
                                 />
                             </div>
 
                             {/* Marketing consent */}
-                            <label className="mt-5 flex cursor-pointer items-start gap-2 text-[11px] leading-5 text-[#7b8493]">
+                            <label className="mt-5 flex cursor-pointer items-start gap-2 text-sm leading-5 text-[#6B6158]">
                                 <input
                                     type="checkbox"
                                     checked={marketingConsent}
@@ -186,7 +252,7 @@ export default function GuestSignupPopup() {
                             </label>
 
                             {error && (
-                                <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-[11px] text-red-600">
+                                <p role="alert" className="mt-3 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
                                     {error}
                                 </p>
                             )}
@@ -194,23 +260,23 @@ export default function GuestSignupPopup() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-[#07152e] text-xs font-bold text-white transition hover:bg-[#176348] disabled:opacity-60"
+                                className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-[#07152e] text-sm font-bold text-white transition hover:bg-[#176348] disabled:opacity-60"
                             >
                                 {loading ? "PLEASE WAIT..." : "GET OTP"}
                             </button>
                         </form>
 
-                        <p className="mt-5 text-center text-[10px] leading-5 text-[#91857b]">
+                        <p className="mt-5 text-center text-xs leading-5 text-[#6B6158]">
                             By continuing, you agree to our{" "}
                             <a
-                                href="/privacy-policy"
+                                href="/policies/privacy"
                                 className="underline underline-offset-2"
                             >
                                 Privacy Policy
                             </a>{" "}
                             and{" "}
                             <a
-                                href="/terms"
+                                href="/policies/terms"
                                 className="underline underline-offset-2"
                             >
                                 T&Cs
@@ -218,7 +284,7 @@ export default function GuestSignupPopup() {
                             .
                         </p>
 
-                        <div className="mt-5 flex items-center justify-center gap-1.5 text-[9px] text-[#a0a8b5]">
+                        <div className="mt-5 flex items-center justify-center gap-1.5 text-xs text-[#6B6158]">
                             <Lock size={11} />
                             Your number stays private.
                         </div>
@@ -244,9 +310,9 @@ function Benefit({
                 {icon}
             </div>
 
-            <h3 className="mb-2 text-[11px] font-bold">{title}</h3>
+            <h3 className="mb-2 text-sm font-bold">{title}</h3>
 
-            <p className="text-[10px] leading-4 text-[#c2d0df]">
+            <p className="text-xs leading-5 text-[#c2d0df]">
                 {description}
             </p>
         </div>

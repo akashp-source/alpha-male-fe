@@ -62,12 +62,21 @@ export default function BrandValues() {
                         </article>
                     ))}
 
-                    <article className="group relative min-h-[250px] overflow-hidden rounded-2xl border border-white/50 bg-[#071630] shadow-[0_6px_20px_rgba(7,22,48,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-white/80 hover:shadow-[0_16px_36px_rgba(7,22,48,0.18)] sm:min-h-[280px]">
-                        <Image src="/images/utils/info.png" alt="Alpha Male condoms, delay spray and oral strips" fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#071630]/90 via-[#071630]/15 to-transparent" />
-                        <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
+                    {/* Photo on top, text below on navy: the text never sits on the image.
+                        info-products.png is info.png without its built-in badge column. */}
+                    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-[#071630] shadow-[0_6px_20px_rgba(7,22,48,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(7,22,48,0.18)]">
+                        <div className="relative h-44 shrink-0 overflow-hidden bg-[linear-gradient(180deg,#f3e2d6_0%,#ecdcd1_100%)] sm:h-48 lg:h-auto lg:min-h-[180px] lg:flex-1">
+                            <Image
+                                src="/images/utils/info-products.png"
+                                alt="Alpha Male condoms, delay spray and oral strips"
+                                fill
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                className="object-contain object-bottom px-6 pt-4 transition-transform duration-700 group-hover:scale-[1.03]"
+                            />
+                        </div>
+                        <div className="p-5 text-white sm:p-6">
                             <p className="mb-1 text-[9px] font-bold uppercase tracking-[0.25em] text-[#d7c29e]">MADE FOR YOU</p>
-                            <h3 className="font-heading text-xl font-bold uppercase sm:text-2xl">Feel good about taking care.</h3>
+                            <h3 className="font-heading text-xl font-bold uppercase leading-snug sm:text-2xl">Feel good about taking care.</h3>
                             <Link href="/products" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-white/60 px-4 py-2.5 text-xs font-semibold transition hover:bg-white hover:text-[#071630]">
                                 Explore the collection <span aria-hidden="true">→</span>
                             </Link>

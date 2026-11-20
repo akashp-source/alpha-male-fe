@@ -134,10 +134,10 @@ export default function Navbar() {
 
     return (
         <header className="relative z-50 w-full border-b border-[#eeeeee] bg-white">
-            <div className="pdp-container flex h-[76px] items-center justify-between gap-2 md:h-[92px]">
+            <div className="mx-auto grid h-[76px] w-full max-w-[1800px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-10 md:h-[92px]">
 
                 {/* Logo */}
-                <Link href="/" className="flex min-w-0 shrink items-center gap-1.5 sm:gap-2 md:shrink-0 md:gap-3">
+                <Link href="/" className="flex min-w-0 shrink items-center gap-1.5 justify-self-start sm:gap-2 md:shrink-0 md:gap-3">
                     <Image
                         src="/images/logo.png"
                         alt="Alpha Male"
@@ -153,7 +153,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden items-center gap-5 lg:flex xl:gap-9">
+                <nav className="hidden items-center gap-5 justify-self-center lg:flex xl:gap-9">
                     {navLinks.map((link) => {
                         const active =
                             link.href === "/"
@@ -181,7 +181,7 @@ export default function Navbar() {
                 </nav>
 
                 {/* Right Actions */}
-                <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 md:gap-3">
+                <div className="col-start-2 flex shrink-0 items-center justify-self-end gap-1.5 sm:gap-2 md:gap-3 lg:col-start-3">
 
                     {/* Account */}
                     {isLoggedIn ? (

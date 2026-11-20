@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, ShoppingBag, SlidersHorizontal, X } from "lucide-react";
+import { ArrowRight, Search, ShoppingBag, SlidersHorizontal, X } from "lucide-react";
 import type { Product } from "@/types/product";
 import AddToCartButton from "@/Components/Cart/AddToCartButton";
 
@@ -106,10 +106,34 @@ export default function AllProductsSection({ products }: Props) {
 
                 <div className="grid gap-5 lg:grid-cols-[260px_minmax(0,1fr)] xl:gap-8">
                     <aside className="hidden h-fit rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 lg:block">
-                        <form onSubmit={submitSearch} className="mb-5 flex items-center rounded-xl border border-slate-300 bg-white p-1.5 focus-within:ring-2 focus-within:ring-[#071630]/20">
-                            <Search size={18} className="ml-2 shrink-0 text-slate-500" />
-                            <input value={searchDraft} onChange={(event) => setSearchDraft(event.target.value)} placeholder="Search products..." aria-label="Search products" className="min-w-0 flex-1 px-2 py-2 text-sm text-[#071630] outline-none" />
-                            <button type="submit" className="rounded-lg bg-[#071630] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#176348]">Search</button>
+                        {/* Compact search for the narrow sidebar: full-width field, icon submit button */}
+                        <form onSubmit={submitSearch} role="search" className="mb-5 flex h-11 items-center gap-1 rounded-full border border-slate-200 bg-slate-50 pl-3.5 pr-1 transition focus-within:border-[#071630]/40 focus-within:bg-white focus-within:ring-2 focus-within:ring-[#071630]/10">
+                            <Search size={16} className="shrink-0 text-slate-400" aria-hidden="true" />
+                            <input
+                                type="search"
+                                value={searchDraft}
+                                onChange={(event) => setSearchDraft(event.target.value)}
+                                placeholder="Search products"
+                                aria-label="Search products"
+                                className="h-full min-w-0 flex-1 bg-transparent px-1.5 text-sm text-[#071630] outline-none placeholder:text-slate-400 [&::-webkit-search-cancel-button]:hidden"
+                            />
+                            {searchDraft && (
+                                <button
+                                    type="button"
+                                    onClick={() => { setSearchDraft(""); setSearch(""); setPage(1); }}
+                                    aria-label="Clear search"
+                                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-200 hover:text-[#071630]"
+                                >
+                                    <X size={14} />
+                                </button>
+                            )}
+                            <button
+                                type="submit"
+                                aria-label="Search"
+                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#071630] text-white transition hover:bg-[#176348]"
+                            >
+                                <ArrowRight size={16} />
+                            </button>
                         </form>
                         <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-4">
                             <h3 className="text-lg font-bold">Filters</h3>

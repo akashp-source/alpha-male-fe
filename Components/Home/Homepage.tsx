@@ -56,10 +56,36 @@ async function getBestSellers(): Promise<Product[]> {
     }
 }
 
+type HomeComparisonSide = { productId: string; image: string; label: string; href: string };
+type HomeComparison = {
+    _id: string;
+    title: string;
+    description: string;
+    left: HomeComparisonSide;
+    right: HomeComparisonSide;
+};
+
+// "Find Your Alpha" blocks (home_comparisons collection). The backend only
+// returns blocks whose two products are active; an error hides the section.
+async function getHomeComparisons(): Promise<HomeComparison[]> {
+    try {
+        const response = await fetch(`${API_URL}/home-comparisons`, {
+            cache: "no-store",
+        });
+        if (!response.ok) throw new Error("Failed to fetch comparisons");
+        const data = await response.json();
+        return Array.isArray(data.comparisons) ? data.comparisons : [];
+    } catch (error) {
+        console.error("Home comparisons fetching error:", error);
+        return [];
+    }
+}
+
 export default async function HomePage() {
-    const [products, bestSellers] = await Promise.all([
+    const [products, bestSellers, comparisons] = await Promise.all([
         getProducts(),
         getBestSellers(),
+        getHomeComparisons(),
     ]);
 
     return (
@@ -73,28 +99,19 @@ export default async function HomePage() {
             </h1>
             <FeaturedProducts />
             <TrustSection />
-            <ImageComparison
-                leftImage="/images/comparison/alpha-bold.png"
-                rightImage="/images/comparison/alpha-boss.png"
-                leftLabel="Alpha Bold"
-                rightLabel="Alpha Boss"
-                leftHref="/products/PRODUCT_ID_1"
-                rightHref="/products/PRODUCT_ID_2"
-                title="Find Your Alpha"
-                description="Explore the Alpha Male collection."
-            />
-
-
-            <ImageComparison
-                leftImage="/images/comparison/alpha-icon.png"
-                rightImage="/images/comparison/alpha-legend.png"
-                leftLabel="Alpha Icon"
-                rightLabel="Alpha Legend"
-                leftHref="/products/PRODUCT_ID_1"
-                rightHref="/products/PRODUCT_ID_2"
-                title="Find Your Alpha"
-                description="Explore the Alpha Male collection."
-            />
+            {comparisons.map((comparison) => (
+                <ImageComparison
+                    key={comparison._id}
+                    leftImage={comparison.left.image}
+                    rightImage={comparison.right.image}
+                    leftLabel={comparison.left.label}
+                    rightLabel={comparison.right.label}
+                    leftHref={comparison.left.href}
+                    rightHref={comparison.right.href}
+                    title={comparison.title}
+                    description={comparison.description || undefined}
+                />
+            ))}
             <BrandValues />
             <FAQ />
             <FooterPage />
