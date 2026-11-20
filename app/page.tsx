@@ -2,6 +2,7 @@
 "use client";
 
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import {
   FlaskConical,
@@ -23,6 +24,10 @@ type PopupState = {
 };
 
 export default function Home() {
+  // The store is live: send "/" to the storefront. The coming-soon page below
+  // is kept; remove this line to show it again.
+  redirect("/home");
+
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [showEarlyAccess, setShowEarlyAccess] = useState(false);

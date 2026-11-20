@@ -265,7 +265,7 @@ export default function FeaturedProducts() {
                         {/* Explore Button */}
                         <Link
                             href={`/products/${product._id}`}
-                            className="mt-6 inline-flex h-11 items-center gap-3 border border-[#d6b47e] px-5 font-body text-[10px] font-bold uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-[#d6b47e] hover:text-[#07162f] sm:mt-8 sm:h-14 sm:gap-4 sm:px-8 sm:text-sm"
+                            className="mt-6 inline-flex h-11 items-center gap-3 border border-[#d6b47e] px-5 font-body text-[10px] font-bold uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-[#d6b47e] hover:text-[#07162f] sm:mt-8 sm:h-14 sm:gap-4 sm:px-8 sm:text-sm rounded-xl"
                         >
                             Explore Product
                             <ArrowRight size={17} />

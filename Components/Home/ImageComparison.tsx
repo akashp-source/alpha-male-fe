@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,6 +27,49 @@ export default function ImageComparison({
     description = "Discover the Alpha Male collection and find the product that suits your routine.",
 }: ImageComparisonProps) {
     const [position, setPosition] = useState(50);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isDragging = useRef(false);
+
+    const updatePosition = useCallback((clientX: number) => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        const rect = container.getBoundingClientRect();
+
+        const nextPosition =
+            ((clientX - rect.left) / rect.width) * 100;
+
+        setPosition(Math.max(0, Math.min(100, nextPosition)));
+    }, []);
+
+    const handlePointerDown = (
+        e: React.PointerEvent<HTMLDivElement>
+    ) => {
+        // Don't start dragging when clicking product links
+        if ((e.target as HTMLElement).closest("a")) return;
+
+        isDragging.current = true;
+        e.currentTarget.setPointerCapture(e.pointerId);
+        updatePosition(e.clientX);
+    };
+
+    const handlePointerMove = (
+        e: React.PointerEvent<HTMLDivElement>
+    ) => {
+        if (!isDragging.current) return;
+
+        updatePosition(e.clientX);
+    };
+
+    const handlePointerUp = (
+        e: React.PointerEvent<HTMLDivElement>
+    ) => {
+        isDragging.current = false;
+
+        if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+            e.currentTarget.releasePointerCapture(e.pointerId);
+        }
+    };
 
     return (
         <section className="bg-[#faf7f2] px-4 py-12 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
@@ -48,8 +91,18 @@ export default function ImageComparison({
                     </p>
                 </div>
 
-                {/* Comparison */}
-                <div className="relative mx-auto aspect-[4/3] w-full max-w-[1100px] select-none overflow-hidden rounded-lg bg-[#eeeae4] sm:aspect-[16/9] sm:rounded-xl">
+                {/* Comparison Container */}
+                <div
+                    ref={containerRef}
+                    onPointerDown={handlePointerDown}
+                    onPointerMove={handlePointerMove}
+                    onPointerUp={handlePointerUp}
+                    onPointerCancel={handlePointerUp}
+                    className="relative mx-auto aspect-[4/3] w-full max-w-[1100px] select-none overflow-hidden rounded-lg bg-[#eeeae4] touch-pan-y sm:aspect-[16/9] sm:rounded-xl"
+                    style={{
+                        cursor: isDragging.current ? "grabbing" : "ew-resize",
+                    }}
+                >
 
                     {/* Left Image */}
                     <Image
@@ -106,51 +159,39 @@ export default function ImageComparison({
                     </div>
 
                     {/* Bottom Left Product Link */}
-                    <div className="absolute bottom-3 left-3 z-40 sm:bottom-7 sm:left-8">
+                    <div className="pointer-events-none absolute bottom-3 left-3 z-40 sm:bottom-7 sm:left-8">
                         <p className="mb-1 font-body text-xs font-medium text-[#211b17] sm:text-lg">
                             {leftLabel}
                         </p>
 
                         <Link
                             href={leftHref}
-                            className="inline-block border-b border-[#211b17] pb-0.5 font-body text-[10px] text-[#211b17] transition-colors hover:border-[#176348] hover:text-[#176348] sm:text-sm"
+                            className="pointer-events-auto inline-block border-b border-[#211b17] pb-0.5 font-body text-[10px] text-[#211b17] transition-colors hover:border-[#176348] hover:text-[#176348] sm:text-sm"
                         >
                             View product
                         </Link>
                     </div>
 
                     {/* Bottom Right Product Link */}
-                    <div className="absolute bottom-3 right-3 z-40 text-right sm:bottom-7 sm:right-8">
+                    <div className="pointer-events-none absolute bottom-3 right-3 z-40 text-right sm:bottom-7 sm:right-8">
                         <p className="mb-1 font-body text-xs font-medium text-[#211b17] sm:text-lg">
                             {rightLabel}
                         </p>
 
                         <Link
                             href={rightHref}
-                            className="inline-block border-b border-[#211b17] pb-0.5 font-body text-[10px] text-[#211b17] transition-colors hover:border-[#176348] hover:text-[#176348] sm:text-sm"
+                            className="pointer-events-auto inline-block border-b border-[#211b17] pb-0.5 font-body text-[10px] text-[#211b17] transition-colors hover:border-[#176348] hover:text-[#176348] sm:text-sm"
                         >
                             View product
                         </Link>
                     </div>
 
-                    {/* Slider Input */}
-                    <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={position}
-                        onChange={(e) =>
-                            setPosition(Number(e.target.value))
-                        }
-                        aria-label="Drag to compare products"
-                        className="absolute inset-0 z-30 h-full w-full cursor-ew-resize opacity-0"
-                    />
-
                 </div>
 
                 {/* Instruction */}
                 <p className="mt-5 text-center font-body text-[10px] font-medium uppercase tracking-[0.2em] text-[#91857b] sm:text-xs">
-                    ↔ Drag to explore
+                    <span className="mr-2">↔</span>
+                    Drag anywhere to compare
                 </p>
 
             </div>

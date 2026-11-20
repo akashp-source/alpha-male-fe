@@ -1,121 +1,324 @@
 
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import {
-    ShoppingBag,
+    ShoppingCart,
     UserRound,
     Menu,
     X,
+    LogOut,
 } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import CartDrawer from "../Cart/CartDrawer";
+
+const API_URL =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
+
+const navLinks = [
+    { name: "Home", href: "/home" },
+    { name: "Shop", href: "/shop" },
+    // { name: "Combos", href: "/shop" },
+    { name: "Help", href: "/help" },
+];
 
 export default function Navbar() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
 
-    const navLinks = [
-        { name: "Home", href: "/" },
-        { name: "Shop", href: "/products" },
-        { name: "About", href: "/about" },
-    ];
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [cartCount, setCartCount] = useState(0);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    // Check authentication
+    const checkAuth = useCallback(() => {
+        const token = localStorage.getItem("token");
+        setIsLoggedIn(!!token);
+    }, []);
+
+    // Logout
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        setIsLoggedIn(false);
+        setMobileMenuOpen(false);
+
+        router.replace("/user/login");
+        router.refresh();
+    };
+
+    const fetchCartCount = useCallback(async () => {
+        try {
+            let guestId = localStorage.getItem("guestId");
+
+            if (!guestId) {
+                guestId = `guest_${crypto.randomUUID()}`;
+                localStorage.setItem("guestId", guestId);
+            }
+
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(`${API_URL}/cart`, {
+                method: "GET",
+                headers: {
+                    "x-guest-id": guestId,
+                    ...(token
+                        ? { Authorization: `Bearer ${token}` }
+                        : {}),
+                },
+                cache: "no-store",
+            });
+
+            if (!response.ok) {
+                throw new Error("Unable to fetch cart");
+            }
+
+            const data = await response.json();
+
+            const totalItems = (data?.items || []).reduce(
+                (total: number, item: { quantity?: number }) =>
+                    total + (item.quantity || 0),
+                0
+            );
+
+            setCartCount(totalItems);
+        } catch (error) {
+            console.error("Cart count error:", error);
+        }
+    }, []);
+
+    // Initial authentication and cart check
+    useEffect(() => {
+        checkAuth();
+        fetchCartCount();
+    }, [checkAuth, fetchCartCount]);
+
+    // Refresh authentication when login/logout happens
+    useEffect(() => {
+        const handleAuthChange = () => checkAuth();
+
+        window.addEventListener("auth-updated", handleAuthChange);
+        window.addEventListener("storage", handleAuthChange);
+
+        return () => {
+            window.removeEventListener("auth-updated", handleAuthChange);
+            window.removeEventListener("storage", handleAuthChange);
+        };
+    }, [checkAuth]);
+
+    // Refresh cart
+    useEffect(() => {
+        const handleCartUpdated = () => fetchCartCount();
+
+        window.addEventListener("cart-updated", handleCartUpdated);
+
+        return () => {
+            window.removeEventListener("cart-updated", handleCartUpdated);
+        };
+    }, [fetchCartCount]);
+
+    // Other pages (e.g. campaign pages) can open the cart drawer.
+    useEffect(() => {
+        const openCart = () => setIsCartOpen(true);
+
+        window.addEventListener("open-cart", openCart);
+
+        return () => {
+            window.removeEventListener("open-cart", openCart);
+        };
+    }, []);
 
     return (
-        <header className="relative z-50 w-full border-b border-[#eee9e3] bg-white">
+        <header className="relative z-50 w-full border-b border-[#eeeeee] bg-white">
+            <div className="pdp-container flex h-[76px] items-center justify-between gap-2 md:h-[92px]">
 
-            <nav className="relative mx-auto flex h-[70px] max-w-[1600px] items-center justify-between px-4 sm:h-[76px] sm:px-8 lg:h-[84px] lg:px-12">
-
-                {/* LEFT: Desktop Navigation */}
-                <div className="hidden items-center gap-7 md:flex lg:gap-11">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="font-body text-sm font-medium text-[#211b17] transition-colors hover:text-[#176348] lg:text-base"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                </div>
-
-                {/* Mobile Menu Button */}
-                <button
-                    type="button"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="flex h-10 w-10 items-center justify-center text-[#211b17] md:hidden"
-                    aria-label="Toggle navigation menu"
-                >
-                    {mobileMenuOpen ? (
-                        <X size={24} />
-                    ) : (
-                        <Menu size={24} />
-                    )}
-                </button>
-
-                {/* CENTER: Actual Brand Logo */}
-                <Link
-                    href="/"
-                    className="absolute left-1/2 flex -translate-x-1/2 items-center justify-center"
-                >
+                {/* Logo */}
+                <Link href="/" className="flex min-w-0 shrink items-center gap-1.5 sm:gap-2 md:shrink-0 md:gap-3">
                     <Image
                         src="/images/logo.png"
                         alt="Alpha Male"
-                        width={190}
-                        height={65}
+                        width={52}
+                        height={52}
                         priority
-                        className="h-auto max-h-[48px] w-[135px] object-contain sm:w-[160px] sm:max-h-[55px] lg:w-[190px] lg:max-h-[62px]"
+                        className="h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11 md:h-14 md:w-14"
                     />
+
+                    <span className="truncate font-heading text-[13px] font-semibold tracking-[0.05em] text-[#101d38] sm:text-base sm:tracking-[0.08em] md:text-[27px]">
+                        ALPHA MALE
+                    </span>
                 </Link>
 
-                {/* RIGHT: Cart and Account */}
-                <div className="ml-auto flex items-center gap-4 sm:gap-6 lg:gap-8">
+                {/* Desktop Navigation */}
+                <nav className="hidden items-center gap-5 lg:flex xl:gap-9">
+                    {navLinks.map((link) => {
+                        const active =
+                            link.href === "/"
+                                ? pathname === "/"
+                                : pathname === link.href ||
+                                pathname.startsWith(`${link.href}/`);
 
-                    <Link
-                        href="/cart"
-                        aria-label="Shopping cart"
-                        className="relative flex items-center justify-center text-[#211b17] transition hover:text-[#176348]"
-                    >
-                        <ShoppingBag size={21} strokeWidth={1.5} />
-                    </Link>
-
-                    <Link
-                        href="/account"
-                        aria-label="My account"
-                        className="hidden items-center justify-center text-[#211b17] transition hover:text-[#176348] sm:flex"
-                    >
-                        <UserRound size={22} strokeWidth={1.5} />
-                    </Link>
-                </div>
-            </nav>
-
-            {/* Mobile Navigation */}
-            {mobileMenuOpen && (
-                <div className="border-t border-[#eee9e3] bg-white px-6 py-5 md:hidden">
-                    <div className="flex flex-col gap-5">
-                        {navLinks.map((link) => (
+                        return (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="font-body text-sm font-medium uppercase tracking-wider text-[#211b17] transition hover:text-[#176348]"
+                                className={`relative py-2 font-body text-[17px] font-medium transition-colors ${active
+                                    ? "text-[#071630]"
+                                    : "text-[#687080] hover:text-[#071630]"
+                                    }`}
                             >
                                 {link.name}
-                            </Link>
-                        ))}
 
-                        <div className="border-t border-[#eee9e3] pt-4">
-                            <Link
-                                href="/account"
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="flex items-center gap-2 font-body text-sm text-[#211b17]"
-                            >
-                                <UserRound size={18} />
-                                My Account
+                                {active && (
+                                    <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#071630]" />
+                                )}
                             </Link>
+                        );
+                    })}
+                </nav>
+
+                {/* Right Actions */}
+                <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 md:gap-3">
+
+                    {/* Account */}
+                    {isLoggedIn ? (
+                        <div className="hidden items-center gap-2 md:flex">
+                            <Link
+                                href="/user/profile"
+                                aria-label="My account"
+                                title="My account"
+                                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-[#071630] transition hover:bg-[#f5f7fa] md:h-[54px] md:w-[54px]"
+                            >
+                                <UserRound size={22} strokeWidth={1.8} />
+                            </Link>
+
+                            <button
+                                type="button"
+                                onClick={handleLogout}
+                                className="hidden items-center gap-2 rounded-full border border-[#e0e5ed] px-4 py-3 text-sm font-semibold text-[#071630] transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 sm:flex"
+                            >
+                                <LogOut size={17} />
+                                Sign out
+                            </button>
                         </div>
-                    </div>
+                    ) : (
+                        <Link
+                            href="/user/login"
+                            aria-label="Sign in"
+                            title="Sign in"
+                            className="hidden h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-[#071630] transition hover:bg-[#f5f7fa] md:flex md:h-[54px] md:w-[54px]"
+                        >
+                            <UserRound size={22} strokeWidth={1.8} />
+                        </Link>
+                    )}
+
+                    {/* Cart */}
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setIsCartOpen(true);
+                            fetchCartCount();
+                        }}
+                        className="flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-[#071630] px-2.5 text-white transition hover:bg-[#176348] sm:h-11 sm:gap-2 sm:px-3 md:h-[55px] md:gap-3 md:px-6"
+                    >
+                        <ShoppingCart size={21} strokeWidth={1.8} />
+
+                        <span className="hidden font-body text-sm font-semibold md:inline md:text-base">
+                            Cart
+                        </span>
+
+                        <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-[#071630] md:h-6 md:min-w-6 md:px-1.5 md:text-xs">
+                            {cartCount}
+                        </span>
+                    </button>
+
+                    {/* Mobile Menu */}
+                    <button
+                        type="button"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        aria-label="Toggle navigation"
+                        className="flex h-10 w-10 items-center justify-center text-[#071630] lg:hidden"
+                    >
+                        {mobileMenuOpen ? (
+                            <X size={25} />
+                        ) : (
+                            <Menu size={25} />
+                        )}
+                    </button>
                 </div>
+            </div>
+
+            {/* Mobile Navigation */}
+            {mobileMenuOpen && (
+                <nav className="border-t border-gray-100 bg-white px-6 py-4 shadow-lg lg:hidden">
+                    <div className="flex flex-col">
+                        {navLinks.map((link) => {
+                            const active =
+                                link.href === "/"
+                                    ? pathname === "/"
+                                    : pathname === link.href ||
+                                    pathname.startsWith(`${link.href}/`);
+
+                            return (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className={`border-b border-gray-100 py-4 font-body text-sm font-semibold ${active
+                                        ? "text-[#176348]"
+                                        : "text-[#273449]"
+                                        }`}
+                                >
+                                    {link.name}
+                                </Link>
+                            );
+                        })}
+
+                        {/* Mobile Account Actions */}
+                        {isLoggedIn ? (
+                            <>
+                                <Link
+                                    href="/user/profile"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="border-b border-gray-100 py-4 text-sm font-semibold text-[#273449]"
+                                >
+                                    My Account
+                                </Link>
+
+                                <button
+                                    type="button"
+                                    onClick={handleLogout}
+                                    className="flex items-center gap-2 py-4 text-left text-sm font-semibold text-red-600"
+                                >
+                                    <LogOut size={17} />
+                                    Sign out
+                                </button>
+                            </>
+                        ) : (
+                            <Link
+                                href="/user/login"
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="border-b border-gray-100 py-4 text-sm font-semibold text-[#176348]"
+                            >
+                                Sign in / Register
+                            </Link>
+                        )}
+                    </div>
+                </nav>
             )}
+
+            {/* Cart Drawer */}
+            <CartDrawer
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                onCheckout={() => {
+                    setIsCartOpen(false);
+                    router.push("/checkout");
+                }}
+            />
         </header>
     );
 }

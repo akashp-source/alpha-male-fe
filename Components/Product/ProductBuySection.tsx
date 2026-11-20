@@ -99,11 +99,11 @@ export default function ProductBuySection({
     };
 
     return (
-        <section className="min-h-screen bg-[#faf7f2] text-[#211b17]">
-            <div className="mx-auto max-w-[1280px] px-4 py-5 sm:px-6 sm:py-7 lg:px-8 lg:py-8">
+        <section className="w-full bg-[#faf7f2] text-[#211b17]">
+            <div className="pdp-container py-4 sm:py-5 lg:py-6">
 
                 {/* Breadcrumb */}
-                <nav className="mb-5 flex flex-wrap items-center gap-2 font-body text-xs text-[#968a80] sm:mb-7 sm:text-sm">
+                <nav className="mb-4 flex min-w-0 flex-wrap items-center gap-2 font-body text-xs text-[#968a80] sm:mb-5 sm:text-sm">
                     <a
                         href="/"
                         className="transition hover:text-[#176348]"
@@ -122,24 +122,24 @@ export default function ProductBuySection({
 
                     <ChevronRight size={13} />
 
-                    <span className="font-medium uppercase text-[#211b17]">
+                    <span className="min-w-0 break-words font-medium uppercase text-[#211b17]">
                         {product.name}
                     </span>
                 </nav>
 
                 {/* Main Product Layout */}
-                <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-[0.9fr_1.1fr] md:gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10">
+                <div className="grid min-w-0 grid-cols-1 items-start gap-4 md:gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
 
                     {/* LEFT: Product Images */}
-                    <div className="w-full md:sticky md:top-5">
+                    <div className="w-full min-w-0 lg:sticky lg:top-[92px]">
 
                         {/* Main Image */}
-                        <div className="flex aspect-square max-h-[400px] w-[90%] items-center justify-center overflow-hidden rounded-2xl bg-[#17120f] p-5 sm:aspect-[1.08/1] sm:max-h-[350px] sm:rounded-[20px] sm:p-7">
+                        <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl  p-0 sm:rounded-[20px] sm:p-1 lg:max-h-[560px] lg:p-4">
                             {selectedImage ? (
                                 <img
                                     src={selectedImage}
                                     alt={product.name}
-                                    className="h-full w-[100%] object-contain"
+                                    className="h-full w-full object-contain"
                                 />
                             ) : (
                                 <Package
@@ -151,7 +151,7 @@ export default function ProductBuySection({
 
                         {/* Image Thumbnails */}
                         {product.images?.length > 1 && (
-                            <div className="mt-3 flex gap-2.5 overflow-x-auto pb-1">
+                            <div className="mt-2 flex gap-2 overflow-x-auto overscroll-x-contain pb-1">
                                 {product.images.map((image, index) => (
                                     <button
                                         type="button"
@@ -159,7 +159,7 @@ export default function ProductBuySection({
                                         onClick={() =>
                                             setSelectedImage(image)
                                         }
-                                        className={`h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 bg-[#17120f] p-1.5 transition sm:h-16 sm:w-16 ${selectedImage === image
+                                        className={`h-11 min-h-11 w-11 min-w-11 shrink-0 overflow-hidden rounded-lg border-2 p-1.5 transition sm:h-16 sm:w-16 ${selectedImage === image
                                             ? "border-[#176348]"
                                             : "border-transparent"
                                             }`}
@@ -176,25 +176,25 @@ export default function ProductBuySection({
                     </div>
 
                     {/* RIGHT: Product Details */}
-                    <div className="min-w-0">
+                    <div className="flex min-w-0 flex-col">
 
                         {/* Category */}
-                        <p className="mb-2 font-body text-[10px] font-bold uppercase tracking-[0.25em] text-[#176348] sm:text-xs">
+                        <p className="order-1 mb-1 font-body text-[10px] font-bold uppercase tracking-[0.25em] text-[#176348] sm:text-xs">
                             {product.category}
                         </p>
 
                         {/* Product Name */}
-                        <h1 className="font-heading text-[25px] font-bold uppercase leading-[1.2] tracking-wide sm:text-3xl lg:text-[34px]">
+                        <h1 className="order-1 break-words font-heading text-[25px] font-bold uppercase leading-[1.2] tracking-wide sm:text-3xl lg:text-[34px]">
                             {product.name}
                         </h1>
 
                         {/* Description */}
-                        <p className="mt-2 font-body text-xs leading-6 text-[#8b8077] sm:text-sm">
+                        <p className="order-8 mt-3 break-words font-body text-xs leading-6 text-[#8b8077] sm:text-sm md:order-2">
                             {product.description}
                         </p>
 
                         {/* Product Price */}
-                        <div className="mt-4 flex flex-wrap items-center gap-2.5 sm:mt-5">
+                        <div className="order-2 mt-1 flex flex-wrap items-center gap-2.5 sm:mt-2 lg:mt-1">
                             <span className="font-body text-[27px] font-bold tracking-tight sm:text-3xl">
                                 {formatPrice(product.price)}
                             </span>
@@ -215,12 +215,12 @@ export default function ProductBuySection({
                                 )}
                         </div>
 
-                        <p className="mt-1 font-body text-[10px] text-[#9a8e84] sm:text-xs">
+                        <p className="order-2 mt-0.5 font-body text-[10px] text-[#9a8e84] sm:text-xs">
                             Inclusive of all taxes
                         </p>
 
                         {/* Quantity Selector */}
-                        <div className="mt-5 flex flex-wrap items-center gap-3">
+                        <div className="order-3 mt-2 flex flex-wrap items-center gap-3 lg:mt-2">
                             <div className="flex h-11 items-center rounded-lg border border-[#e3d9ce] bg-white sm:h-12">
 
                                 <button
@@ -270,9 +270,9 @@ export default function ProductBuySection({
 
                         {/* Combo Offers */}
                         {product.comboOffers?.length > 0 && (
-                            <div className="mt-6 sm:mt-7">
+                            <div className="order-4 mt-2 sm:mt-3 lg:mt-2">
 
-                                <div className="mb-3 flex items-center justify-between gap-2">
+                                <div className="mb-2 flex items-center justify-between gap-2">
                                     <div>
                                         <h2 className="font-heading text-base font-bold sm:text-lg">
                                             Special Combo Offers
@@ -288,7 +288,7 @@ export default function ProductBuySection({
                                     </span>
                                 </div>
 
-                                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                                <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
 
                                     {product.comboOffers.map(
                                         (offer, index) => {
@@ -320,7 +320,7 @@ export default function ProductBuySection({
                                                             offer.quantity
                                                         )
                                                     }
-                                                    className={`relative rounded-xl border p-3 text-left transition-all sm:p-3.5 ${isSelected
+                                                    className={`relative min-w-0 rounded-xl border p-2 text-left transition-all sm:p-2.5 ${isSelected
                                                         ? "border-[#176348] bg-[#edf5ef] ring-1 ring-[#176348]"
                                                         : "border-[#e5dcd2] bg-white hover:border-[#176348]"
                                                         } disabled:cursor-not-allowed disabled:opacity-40`}
@@ -331,19 +331,19 @@ export default function ProductBuySection({
                                                         </span>
                                                     )}
 
-                                                    <p className="pr-6 font-body text-xs font-bold sm:text-sm">
+                                                    <p className="break-words pr-5 font-body text-[11px] font-bold leading-snug sm:text-sm">
                                                         {offer.title ||
                                                             `Buy ${offer.quantity} Packs`}
                                                     </p>
 
                                                     {offer.description && (
-                                                        <p className="mt-1 font-body text-[10px] leading-4 text-[#91857b] sm:text-xs">
+                                                        <p className="mt-1 break-words font-body text-[9px] leading-3.5 text-[#91857b] sm:text-xs sm:leading-4">
                                                             {offer.description}
                                                         </p>
                                                     )}
 
-                                                    <div className="mt-2 flex flex-wrap items-center gap-2">
-                                                        <span className="font-body text-lg font-bold text-[#176348]">
+                                                    <div className="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+                                                        <span className="font-body text-sm font-bold text-[#176348] sm:text-lg">
                                                             {formatPrice(
                                                                 offer.offerPrice
                                                             )}
@@ -390,7 +390,7 @@ export default function ProductBuySection({
                         )}
 
                         {/* Total Price Summary */}
-                        <div className="mt-5 flex items-center justify-between gap-3 rounded-xl border border-[#eee5dc] bg-white p-3.5 sm:p-4">
+                        <div className="order-5 mt-2 flex items-center justify-between gap-3 rounded-xl border border-[#eee5dc] bg-white p-2.5 sm:p-3">
 
                             <div>
                                 <p className="font-body text-[10px] text-[#91857b] sm:text-xs">
@@ -417,7 +417,7 @@ export default function ProductBuySection({
                         </div>
 
                         {/* Add to Cart / Buy Now */}
-                        <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                        <div className="order-6 mt-1 grid grid-cols-1 gap-2 sm:grid-cols-2">
 
                             <button
                                 type="button"
@@ -445,7 +445,7 @@ export default function ProductBuySection({
                                         totalPrice
                                     )
                                 }
-                                className="flex h-12 items-center justify-center gap-2 rounded-lg bg-[#176348] px-4 font-body text-sm font-semibold text-white transition hover:bg-[#105139] disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-12 items-center justify-center gap-2 rounded-lg bg-[#07162f] px-4 font-body text-sm font-semibold text-white transition hover:bg-[#105139] disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <Zap size={16} />
                                 Buy now
@@ -453,26 +453,26 @@ export default function ProductBuySection({
                         </div>
 
                         {/* Trust Features */}
-                        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-[#e8ded4] pt-4">
+                        <div className="order-7 mt-3 grid grid-cols-3 gap-2 border-t border-[#e8ded4] pt-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-3 sm:pt-4">
 
-                            <div className="flex items-center gap-1.5 font-body text-[10px] text-[#8b8077] sm:text-xs">
-                                <Package size={14} />
+                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-[9px] leading-tight text-[#8b8077] sm:flex-row sm:text-xs">
+                                <Package size={14} className="shrink-0" />
                                 Plain packaging
                             </div>
 
-                            <div className="flex items-center gap-1.5 font-body text-[10px] text-[#8b8077] sm:text-xs">
-                                <ShieldCheck size={14} />
+                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-[9px] leading-tight text-[#8b8077] sm:flex-row sm:text-xs">
+                                <ShieldCheck size={14} className="shrink-0" />
                                 Private billing
                             </div>
 
-                            <div className="flex items-center gap-1.5 font-body text-[10px] text-[#8b8077] sm:text-xs">
-                                <RefreshCcw size={14} />
+                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-[9px] leading-tight text-[#8b8077] sm:flex-row sm:text-xs">
+                                <RefreshCcw size={14} className="shrink-0" />
                                 Easy returns
                             </div>
                         </div>
 
                         {/* SKU */}
-                        <p className="mt-4 font-body text-[10px] text-[#a1958b] sm:text-xs">
+                        <p className="order-9 mt-3 font-body text-[10px] text-[#a1958b] sm:text-xs">
                             SKU: {product.sku}
                         </p>
                     </div>

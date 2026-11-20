@@ -1,0 +1,254 @@
+
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+    X,
+    ShieldCheck,
+    Package,
+    CreditCard,
+    RotateCcw,
+    Gift,
+    Lock,
+} from "lucide-react";
+import Image from "next/image";
+
+export default function GuestSignupPopup() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [mobile, setMobile] = useState("");
+    const [marketingConsent, setMarketingConsent] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    // Show popup after 2 seconds if user is not logged in
+    useEffect(() => {
+        if (localStorage.getItem("token")) return;
+
+        const timer = window.setTimeout(() => {
+            // Recheck authentication before opening
+            if (!localStorage.getItem("token")) {
+                setIsOpen(true);
+            }
+        }, 2000);
+
+        return () => window.clearTimeout(timer);
+    }, []);
+
+    const closePopup = () => {
+        setIsOpen(false);
+    };
+
+    const handleGetOtp = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError("");
+
+        if (!/^[6-9]\d{9}$/.test(mobile)) {
+            setError("Please enter a valid 10-digit mobile number.");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            // TODO: Connect your actual send OTP API here.
+            console.log({
+                mobile: `+91${mobile}`,
+                marketingConsent,
+            });
+
+            setError("Connect your OTP API to enable verification.");
+        } catch {
+            setError("Unable to send OTP. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (!isOpen) return null;
+
+    return (
+
+        // <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/50 p-4 sm:p-6">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-[#07152e]/40 p-4 sm:p-6">
+
+            <div className="relative mx-auto grid w-full max-w-[1100px] items-center gap-6 lg:grid-cols-2 bg-[#07162f] p-5 rounded-2xl">
+
+                {/* LEFT BRAND PANEL */}
+                <div className="hidden text-center text-white lg:block">
+                    <div className="mb-5 flex items-center justify-center gap-2">
+
+
+                        <Image
+                            src="/images/logo-cropped.png"
+                            alt="Alpha Male - Drive, Stamina, Energy"
+                            width={100}
+                            height={100}
+                            priority
+                            unoptimized
+                            className="block object-contain"
+                        />
+                    </div>
+
+                    <p className="mb-16 text-[10px] font-semibold tracking-[0.3em] text-[#c2d0df]">
+                        DRIVE · STAMINA · ENERGY
+                    </p>
+
+                    <h2 className="mx-auto mb-12 max-w-md text-xl font-bold leading-7">
+                        Premium men's wellness, delivered
+                        <br />
+                        discreetly.
+                    </h2>
+
+                    <div className="grid grid-cols-3 gap-2">
+                        <Benefit
+                            icon={<Gift size={21} />}
+                            title="Extra 12% off"
+                            description="When you pay online with Razorpay at checkout."
+                        />
+
+                        <Benefit
+                            icon={<Package size={21} />}
+                            title="100% discreet delivery"
+                            description="Plain packaging and private billing on every order."
+                        />
+
+                        <Benefit
+                            icon={<RotateCcw size={21} />}
+                            title="Easy returns"
+                            description="Simple returns if something isn't right."
+                        />
+                    </div>
+
+                    <div className="pointer-events-none absolute -bottom-24 left-1/3 h-64 w-64 rounded-full bg-[#176348]/10 blur-3xl" />
+                </div>
+
+                {/* RIGHT SIGNUP CARD */}
+                <div className="relative z-10 mx-auto w-full max-w-[500px] rounded-2xl bg-white px-6 py-8 shadow-2xl sm:px-10 sm:py-10">
+
+                    {/* Close */}
+                    <button
+                        type="button"
+                        onClick={closePopup}
+                        aria-label="Close signup popup"
+                        className="absolute right-4 top-4 rounded-full p-1 text-[#718096] transition hover:bg-gray-100 hover:text-[#07152e]"
+                    >
+                        <X size={19} />
+                    </button>
+
+                    <div className="mx-auto max-w-[350px]">
+                        <h2 className="mb-2 text-center text-xl font-bold leading-7 text-[#07152e]">
+                            Unlock members-only
+                            <br />
+                            offers
+                        </h2>
+
+                        <p className="mb-6 text-center text-[11px] leading-5 text-[#91857b]">
+                            Sign up with your mobile number for offers and order updates.
+                        </p>
+
+                        <form onSubmit={handleGetOtp}>
+                            <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                                Mobile number
+                            </label>
+
+                            <div className="flex h-12 overflow-hidden rounded-lg border border-[#dce2ea] bg-white focus-within:border-[#176348]">
+                                <div className="flex shrink-0 items-center gap-2 border-r border-[#e5e9ef] bg-[#f5f7fa] px-3 text-xs font-semibold text-[#07152e]">
+                                    <span>🇮🇳</span>
+                                    <span>+91</span>
+                                </div>
+
+                                <input
+                                    type="tel"
+                                    inputMode="numeric"
+                                    maxLength={10}
+                                    value={mobile}
+                                    onChange={(e) =>
+                                        setMobile(e.target.value.replace(/\D/g, ""))
+                                    }
+                                    placeholder="10-digit mobile number"
+                                    required
+                                    className="min-w-0 flex-1 px-3 text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                />
+                            </div>
+
+                            {/* Marketing consent */}
+                            <label className="mt-5 flex cursor-pointer items-start gap-2 text-[11px] leading-5 text-[#7b8493]">
+                                <input
+                                    type="checkbox"
+                                    checked={marketingConsent}
+                                    onChange={(e) => setMarketingConsent(e.target.checked)}
+                                    className="mt-1 shrink-0 accent-[#07152e]"
+                                />
+
+                                <span>
+                                    Notify me about offers and new products.
+                                </span>
+                            </label>
+
+                            {error && (
+                                <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-[11px] text-red-600">
+                                    {error}
+                                </p>
+                            )}
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-[#07152e] text-xs font-bold text-white transition hover:bg-[#176348] disabled:opacity-60"
+                            >
+                                {loading ? "PLEASE WAIT..." : "GET OTP"}
+                            </button>
+                        </form>
+
+                        <p className="mt-5 text-center text-[10px] leading-5 text-[#91857b]">
+                            By continuing, you agree to our{" "}
+                            <a
+                                href="/privacy-policy"
+                                className="underline underline-offset-2"
+                            >
+                                Privacy Policy
+                            </a>{" "}
+                            and{" "}
+                            <a
+                                href="/terms"
+                                className="underline underline-offset-2"
+                            >
+                                T&Cs
+                            </a>
+                            .
+                        </p>
+
+                        <div className="mt-5 flex items-center justify-center gap-1.5 text-[9px] text-[#a0a8b5]">
+                            <Lock size={11} />
+                            Your number stays private.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div >
+    );
+}
+
+function Benefit({
+    icon,
+    title,
+    description,
+}: {
+    icon: React.ReactNode;
+    title: string;
+    description: string;
+}) {
+    return (
+        <div className="rounded-xl border border-white/10 bg-white/[0.07] px-3 py-4">
+            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#07152e]">
+                {icon}
+            </div>
+
+            <h3 className="mb-2 text-[11px] font-bold">{title}</h3>
+
+            <p className="text-[10px] leading-4 text-[#c2d0df]">
+                {description}
+            </p>
+        </div>
+    );
+}

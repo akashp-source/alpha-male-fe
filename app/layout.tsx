@@ -2,7 +2,10 @@
 import type { Metadata } from "next";
 import { Cinzel, Montserrat } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
 import ClarityAnalytics from "@/Components/Clarity";
+import AttributionCapture from "@/Components/AttributionCapture";
+import WhatsAppFloat from "@/Components/WhatsAppFloat";
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -36,7 +39,12 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-body">
         <ClarityAnalytics />
+        {/* Remembers utm_* tags from landing URLs for order attribution */}
+        <Suspense fallback={null}>
+          <AttributionCapture />
+        </Suspense>
         {children}
+        <WhatsAppFloat />
       </body>
     </html>
   );
