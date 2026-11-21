@@ -1,4 +1,6 @@
 
+import type { Metadata } from "next";
+
 import FooterPage from "@/Components/Footer";
 import Image from "next/image";
 import Link from "next/link";
@@ -200,6 +202,12 @@ function ContactDetails() {
         </div>
     );
 }
+
+export const metadata: Metadata = {
+    title: "Return & Refund Policy",
+    description:
+        "When you can return an Alpha Male product, how to report damaged or incorrect items, and how refunds are issued.",
+};
 
 export default function ReturnRefundPolicyPage() {
     return (

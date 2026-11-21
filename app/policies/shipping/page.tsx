@@ -1,4 +1,6 @@
 
+import type { Metadata } from "next";
+
 import FooterPage from "@/Components/Footer";
 import Image from "next/image";
 import Link from "next/link";
@@ -219,6 +221,12 @@ function ContactDetails() {
         </div>
     );
 }
+
+export const metadata: Metadata = {
+    title: "Shipping & Delivery Policy",
+    description:
+        "Where Alpha Male delivers in India, order processing and delivery timelines, shipping charges and discreet packaging.",
+};
 
 export default function ShippingPolicyPage() {
     return (

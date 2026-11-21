@@ -1,20 +1,11 @@
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import type { Product } from "@/types/product";
+
 import Navbar from "@/Components/Home/NavBar";
-import ProductBuySection from "@/Components/Product/ProductBuySection";
-import ProductRecommendations from "@/Components/Product/ProductRecommendations";
-import ProductKeyPoints from "@/Components/Product/ProductKeyPoints";
-import ProductHowItWorks from "@/Components/Product/HowToUse/ProductHowItWorks";
-import ProductHighlights from "@/Components/Product/Highlights/ProductHighlights";
-import ProductHighlightsV2 from "@/Components/Product/Highlights/ProductHighlightsV2";
-import ProductHighlightsV3 from "@/Components/Product/Highlights/ProductHighlightsV3";
-import ProductHighlightsV4 from "@/Components/Product/Highlights/ProductHighlightsV4";
-import ProductClaims from "@/Components/ProductClaims";
-import ProductFAQs from "@/Components/Product/ProductFAQs";
-import ProductComparison from "@/Components/Product/ProductComparison";
-import ProductDetailedDescription from "@/Components/Product/ProductDetailedDescription";
-import ProductRatings from "@/Components/Product/ProductRatings";
+import ProductPageView from "@/Components/Product/ProductPageView";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
@@ -44,6 +35,68 @@ async function getProduct(id: string) {
     }
 }
 
+// Turns the (sometimes bulleted, sometimes literal "\n"-separated) product
+// description into one plain line, cut to `max` characters on a word boundary.
+function truncate(text: string, max = 155) {
+    const clean = text
+        .split(/\r?\n|\\n/)
+        .map((line) => line.replace(/^\s*[-•*]\s*/, "").trim())
+        .filter(Boolean)
+        .map((line) => (/[.!?]$/.test(line) ? line : `${line}.`))
+        .join(" ")
+        .replace(/\s+/g, " ")
+        .trim();
+    if (clean.length <= max) return clean;
+    const cut = clean.slice(0, max);
+    const lastSpace = cut.lastIndexOf(" ");
+    return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[\s,.;:–-]+$/, "");
+}
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+    const { id } = await params;
+
+    // Same request as the page; Next.js memoizes it, so no extra API call.
+    // Metadata must never break the page, so fall back to the defaults on error.
+    let product: Product | null = null;
+    try {
+        product = await getProduct(id);
+    } catch {
+        return {};
+    }
+
+    if (!product || !product.isActive) return {};
+
+    const baseTitle = product.packSize
+        ? `${product.name} (${product.packSize})`
+        : product.name;
+    const title = product.metaTitle?.trim() || baseTitle;
+    const description =
+        product.metaDescription?.trim() ||
+        (product.description ? truncate(product.description) : undefined);
+    const image = product.images?.[0];
+    const url = `/products/${id}`;
+
+    return {
+        title,
+        description,
+        alternates: { canonical: url },
+        openGraph: {
+            // Child openGraph replaces the root one, so repeat the site fields.
+            siteName: "Alpha Male",
+            locale: "en_IN",
+            type: "website",
+            url,
+            title,
+            description,
+            ...(image ? { images: [{ url: image, alt: product.name }] } : {}),
+        },
+    };
+}
+
 export default async function ProductDetailsPage({
     params,
 }: {
@@ -60,79 +113,7 @@ export default async function ProductDetailsPage({
     return (
         <>
             <Navbar />
-            <main className="flex w-full flex-col items-center overflow-x-clip bg-white">
-
-                {/* Product details and purchase section */}
-
-                <ProductBuySection product={product} />
-
-                {/* Product recommendations */}
-                <ProductRecommendations product={product} />
-
-                {/* Product key points */}
-                <ProductKeyPoints
-                    keyPoints={product.keyPoints}
-                />
-
-                {/* How the product works */}
-                <ProductHowItWorks
-                    title={`How ${product.name} works`}
-                    description={product.description}
-                    steps={product.howToUse}
-                />
-                <br /><br />
-
-                <ProductComparison comparison={product.comparison} />
-
-                {/* 
-            <ProductHighlights
-                heading={`Why Choose ${product.name}?`}
-                highlights={product.highlights}
-            />
-
-            <br />
-            <ProductHighlightsV2
-                heading={`Why Choose ${product.name}?`}
-                highlights={product.highlights}
-            />
-
-            <br /><br />
-            <ProductHighlightsV3
-                heading={`Why Choose ${product.name}?`}
-                eyebrow="WHY BOLD S"
-                highlights={product.highlights}
-            /> */}
-                <ProductHighlightsV4
-                    highlights={product.highlights}
-                    heading={`Why Choose ${product.name}?`}
-                    eyebrow="WHY BOLD S"
-                    productName="BOLD S"
-                    strength="25mg"
-                />
-
-                <ProductClaims
-                    claims={product.claims}
-                    heading="The Alpha Male Promise"
-                />
-
-                {/* Long-form description (renders only if set in DB) */}
-                <ProductDetailedDescription
-                    detailedDescription={product.detailedDescription}
-                    productName={product.name}
-                />
-
-                {/* Ratings and reviews (renders only if the product has ratings) */}
-                <ProductRatings
-                    productId={product._id}
-                    productName={product.name}
-                    ratings={product.ratings}
-                />
-
-                <ProductFAQs
-                    faqs={product.faqs}
-                    productName={product.name}
-                />
-            </main>
+            <ProductPageView product={product} />
         </>
     );
 }

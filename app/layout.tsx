@@ -7,6 +7,7 @@ import ClarityAnalytics from "@/Components/Clarity";
 import AttributionCapture from "@/Components/AttributionCapture";
 import WhatsAppFloat from "@/Components/WhatsAppFloat";
 import GoogleTagManager from "@/Components/GoogleTagManager";
+import AgeVerificationPopup from "@/Components/user/AgeVerificationPopup";
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -20,9 +21,19 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Alpha Male | Premium Men's Wellness.",
+  metadataBase: new URL("https://www.alphamale.co.in"),
+  title: {
+    default:
+      "Buy Condoms & Men's Sexual Wellness Online in India | Alpha Male",
+    template: "%s | Alpha Male",
+  },
   description:
-    "India's premium science-backed men's wellness brand. Confidence, refined.",
+    "Shop Alpha Male condoms, lubricants and men's wellness products. Plain-pack, discreet delivery across India.",
+  openGraph: {
+    siteName: "Alpha Male",
+    locale: "en_IN",
+    type: "website",
+  },
 };
 
 export const viewport = {
@@ -46,6 +57,7 @@ export default function RootLayout({
         </Suspense>
         <GoogleTagManager />
         {children}
+        <AgeVerificationPopup />
         <WhatsAppFloat />
       </body>
     </html>

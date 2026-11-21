@@ -11,7 +11,7 @@ import {
     X,
     LogOut,
 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CartDrawer from "../Cart/CartDrawer";
 
 const API_URL =
@@ -32,6 +32,39 @@ export default function Navbar() {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [cartCount, setCartCount] = useState(0);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [hiddenWhileScrolling, setHiddenWhileScrolling] = useState(false);
+    const scrollStopTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Hide the navbar while the page is scrolling; bring it back 2s after scrolling stops.
+    useEffect(() => {
+        const SHOW_AFTER_MS = 2000;
+        const TOP_OFFSET = 100; // always visible near the top of the page
+
+        const handleScroll = () => {
+            if (window.scrollY <= TOP_OFFSET) {
+                if (scrollStopTimer.current) clearTimeout(scrollStopTimer.current);
+                setHiddenWhileScrolling(false);
+                return;
+            }
+
+            setHiddenWhileScrolling(true);
+
+            if (scrollStopTimer.current) clearTimeout(scrollStopTimer.current);
+            scrollStopTimer.current = setTimeout(() => {
+                setHiddenWhileScrolling(false);
+            }, SHOW_AFTER_MS);
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (scrollStopTimer.current) clearTimeout(scrollStopTimer.current);
+        };
+    }, []);
+
+    // Never hide while the mobile menu or cart drawer is open.
+    const navbarHidden = hiddenWhileScrolling && !mobileMenuOpen && !isCartOpen;
 
     // Check authentication
     const checkAuth = useCallback(() => {
@@ -133,7 +166,11 @@ export default function Navbar() {
     }, []);
 
     return (
-        <header className="relative z-50 w-full border-b border-[#eeeeee] bg-white">
+        // Only apply the translate class while hidden: any transform on the header would
+        // become the containing block for the fixed-position CartDrawer inside it.
+        <header
+            className={`sticky top-0 z-50 w-full border-b border-[#eeeeee] bg-white transition-transform duration-300 ${navbarHidden ? "-translate-y-full" : ""}`}
+        >
             <div className="mx-auto grid h-[76px] w-full max-w-[1800px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-10 md:h-[92px]">
 
                 {/* Logo */}

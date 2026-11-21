@@ -1,4 +1,6 @@
 
+import type { Metadata } from "next";
+
 import FooterPage from "@/Components/Footer";
 import Footer from "@/Components/Footer";
 import Image from "next/image";
@@ -42,6 +44,12 @@ function Section({
         </section>
     );
 }
+
+export const metadata: Metadata = {
+    title: "Cancellation Policy",
+    description:
+        "How to cancel an Alpha Male order before or after dispatch, and how refunds for cancelled orders are processed.",
+};
 
 export default function CancellationPolicyPage() {
     return (

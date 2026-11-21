@@ -1,4 +1,6 @@
 
+import type { Metadata } from "next";
+
 import FooterPage from "@/Components/Footer";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,6 +21,12 @@ function Section({
         </section>
     );
 }
+
+export const metadata: Metadata = {
+    title: "IT Policy",
+    description:
+        "Permitted and prohibited use of the Alpha Male website, how we secure our platform, and how to report a vulnerability or request a takedown.",
+};
 
 export default function ITPolicyPage() {
     return (

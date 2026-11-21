@@ -1,4 +1,6 @@
 
+import type { Metadata } from "next";
+
 import FooterPage from "@/Components/Footer";
 import Image from "next/image";
 import Link from "next/link";
@@ -77,6 +79,12 @@ function ContactLink({
         </a>
     );
 }
+
+export const metadata: Metadata = {
+    title: "Terms & Conditions",
+    description:
+        "The terms and conditions that apply when you browse the Alpha Male website and buy our products.",
+};
 
 export default function TermsAndConditionsPage() {
     return (

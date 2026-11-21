@@ -5,6 +5,14 @@ export interface Product {
     sku: string;
     description: string;
     detailedDescription?: string;
+
+    // Optional SEO overrides; used by generateMetadata on the product page
+    // when present. Not returned by the API yet.
+    metaTitle?: string;
+    metaDescription?: string;
+    // e.g. "Pack of 10". Appended to the page title when present.
+    packSize?: string;
+
     price: number;
     compareAtPrice: number | null;
 

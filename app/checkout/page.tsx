@@ -161,7 +161,7 @@ export default function CheckoutPage() {
         useState<AddressForm>(emptyAddress);
 
     const [paymentMethod, setPaymentMethod] =
-        useState<PaymentMethod>("ONLINE");
+        useState<PaymentMethod | null>(null);
 
     const [showAddressForm, setShowAddressForm] = useState(false);
 
@@ -568,6 +568,11 @@ export default function CheckoutPage() {
     };
 
     const placeOrder = async () => {
+        if (!paymentMethod) {
+            setError("Please select a payment method.");
+            return;
+        }
+
         const validationError = validateCheckout();
 
         if (validationError) {
@@ -1147,14 +1152,16 @@ export default function CheckoutPage() {
                         <button
                             type="button"
                             onClick={placeOrder}
-                            disabled={submitting}
+                            disabled={submitting || !paymentMethod}
                             className="hidden min-h-14 w-full items-center justify-center gap-2 bg-[#071630] px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#176348] disabled:cursor-not-allowed disabled:opacity-60 lg:flex"
                         >
                             {submitting
                                 ? "PROCESSING..."
-                                : paymentMethod === "COD"
-                                    ? "PLACE COD ORDER"
-                                    : "CONTINUE TO PAYMENT"}
+                                : !paymentMethod
+                                    ? "SELECT PAYMENT METHOD"
+                                    : paymentMethod === "COD"
+                                        ? "PLACE COD ORDER"
+                                        : "CONTINUE TO PAYMENT"}
                             <ArrowRight size={18} />
                         </button>
                     </section>
@@ -1405,14 +1412,16 @@ export default function CheckoutPage() {
                         <button
                             type="button"
                             onClick={placeOrder}
-                            disabled={submitting}
-                            className="flex min-h-14 w-full items-center justify-center gap-2 bg-[#071630] px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#176348] disabled:opacity-60"
+                            disabled={submitting || !paymentMethod}
+                            className="flex min-h-14 w-full items-center justify-center gap-2 bg-[#071630] px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#176348] disabled:cursor-not-allowed disabled:opacity-60"
                         >
                             {submitting
                                 ? "PROCESSING..."
-                                : paymentMethod === "COD"
-                                    ? "PLACE COD ORDER"
-                                    : "CONTINUE TO PAYMENT"}
+                                : !paymentMethod
+                                    ? "SELECT PAYMENT METHOD"
+                                    : paymentMethod === "COD"
+                                        ? "PLACE COD ORDER"
+                                        : "CONTINUE TO PAYMENT"}
                             <ArrowRight size={18} />
                         </button>
                     </div>

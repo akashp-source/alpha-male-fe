@@ -1,4 +1,6 @@
 
+import type { Metadata } from "next";
+
 import FooterPage from "@/Components/Footer";
 import Image from "next/image";
 import Link from "next/link";
@@ -80,6 +82,12 @@ function ContactLink({
         </a>
     );
 }
+
+export const metadata: Metadata = {
+    title: "Privacy Policy",
+    description:
+        "How Alpha Male collects, uses, stores and protects your personal information when you shop with us.",
+};
 
 export default function PrivacyPolicyPage() {
     return (
