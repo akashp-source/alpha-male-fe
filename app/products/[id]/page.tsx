@@ -52,8 +52,6 @@ export default async function ProductDetailsPage({
     const { id } = await params;
 
     const product = await getProduct(id);
-    console.log(product, 'products');
-
 
     if (!product || !product.isActive) {
         notFound();
@@ -114,7 +112,7 @@ export default async function ProductDetailsPage({
 
                 <ProductClaims
                     claims={product.claims}
-                    heading="The Bold S Promise"
+                    heading="The Alpha Male Promise"
                 />
 
                 {/* Long-form description (renders only if set in DB) */}

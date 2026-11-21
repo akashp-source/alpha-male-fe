@@ -5,7 +5,7 @@ import type { Product } from "@/types/product";
 
 type BestSellerProduct = Pick<
     Product,
-    "_id" | "name" | "price" | "compareAtPrice" | "images" | "category" | "stock"
+    "_id" | "name" | "price" | "images" | "category" | "stock"
 >;
 
 interface BestSellersProps {
@@ -26,11 +26,6 @@ function BestSellerCard({
     hidden?: boolean;
 }) {
     const image = product.images?.[0];
-    const discount =
-        product.compareAtPrice && product.compareAtPrice > product.price
-            ? Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)
-            : 0;
-
     return (
         <Link
             href={`/products/${product._id}`}
@@ -57,11 +52,6 @@ function BestSellerCard({
                     Best seller
                 </span>
 
-                {discount > 0 && (
-                    <span className="absolute right-2 top-2 rounded-full bg-[#176348] px-2 py-1 font-body text-[9px] font-bold text-white sm:text-[10px]">
-                        {discount}% OFF
-                    </span>
-                )}
             </div>
 
             <div className="px-1 pb-1 pt-3">
@@ -74,11 +64,6 @@ function BestSellerCard({
                         <span className="font-body text-sm font-bold text-[#211b17] sm:text-base">
                             {money(product.price)}
                         </span>
-                        {discount > 0 && (
-                            <span className="font-body text-[10px] text-[#a69a90] line-through sm:text-xs">
-                                {money(product.compareAtPrice!)}
-                            </span>
-                        )}
                     </div>
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f3ede5] text-[#211b17] transition-colors group-hover:bg-[#176348] group-hover:text-white">
                         <ArrowUpRight size={15} />

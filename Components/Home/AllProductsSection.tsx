@@ -7,17 +7,20 @@ import Link from "next/link";
 import { ArrowRight, Search, ShoppingBag, SlidersHorizontal, X } from "lucide-react";
 import type { Product } from "@/types/product";
 import AddToCartButton from "@/Components/Cart/AddToCartButton";
+import { useStoreCategories } from "@/lib/categories";
 
 type Props = { products: Product[] };
 type PriceFilter = "all" | "under500" | "500-1000" | "over1000";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
 const PAGE_SIZE = 12;
 
-const categories = ["condoms", "lubricants", "oral-strips"];
-const categoryLabel = (value: string) => value.replaceAll("-", " ");
 const money = (amount: number) => `₹${amount.toLocaleString("en-IN")}`;
 
 export default function AllProductsSection({ products }: Props) {
+    // Category filter options come from the backend (GET /categories).
+    const categories = useStoreCategories();
+    const categoryName = (slug: string) =>
+        categories.find((item) => item.slug === slug)?.name ?? slug.replaceAll("-", " ");
     const [apiProducts, setApiProducts] = useState(products);
     const [total, setTotal] = useState(products.length);
     const [page, setPage] = useState(1);
@@ -142,8 +145,8 @@ export default function AllProductsSection({ products }: Props) {
                         <fieldset className="border-b border-slate-200 py-4">
                             <legend className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Category</legend>
                             <div className="space-y-3">
-                                {categories.map((item) => <label key={item} className="flex cursor-pointer items-center gap-3 text-sm capitalize">
-                                    <input type="checkbox" checked={category === item} onChange={() => updateCategory(category === item ? "" : item)} className="h-4 w-4 accent-[#071630]" />{categoryLabel(item)}
+                                {categories.map((item) => <label key={item.slug} className="flex cursor-pointer items-center gap-3 text-sm">
+                                    <input type="checkbox" checked={category === item.slug} onChange={() => updateCategory(category === item.slug ? "" : item.slug)} className="h-4 w-4 accent-[#071630]" />{item.name}
                                 </label>)}
                             </div>
                         </fieldset>
@@ -181,24 +184,22 @@ export default function AllProductsSection({ products }: Props) {
                         {mobileFiltersOpen && <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm lg:hidden">
                             <div className="mb-3 flex items-center justify-between"><h3 className="text-sm font-bold">Filter products</h3><button type="button" onClick={clearFilters} className="text-xs underline">Clear all</button></div>
                             <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-3">
-                                <fieldset><legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">Category</legend>{categories.map((item) => <label key={item} className="mb-2 flex items-center gap-2 text-xs capitalize"><input type="checkbox" checked={category === item} onChange={() => updateCategory(category === item ? "" : item)} className="h-4 w-4 accent-[#071630]" />{categoryLabel(item)}</label>)}</fieldset>
+                                <fieldset><legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">Category</legend>{categories.map((item) => <label key={item.slug} className="mb-2 flex items-center gap-2 text-xs"><input type="checkbox" checked={category === item.slug} onChange={() => updateCategory(category === item.slug ? "" : item.slug)} className="h-4 w-4 accent-[#071630]" />{item.name}</label>)}</fieldset>
                                 <fieldset><legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">Price</legend>{([["all", "Any price"], ["under500", "Under ₹500"], ["500-1000", "₹500–₹1,000"], ["over1000", "Over ₹1,000"]] as [PriceFilter, string][]).map(([value, label]) => <label key={value} className="mb-2 flex items-center gap-2 text-xs"><input type="radio" name="mobile-home-price" checked={price === value} onChange={() => updatePrice(value)} className="h-4 w-4 accent-[#071630]" />{label}</label>)}</fieldset>
                                 <fieldset><legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">Availability & offers</legend><label className="mb-2 flex items-center gap-2 text-xs"><input type="checkbox" checked={inStock} onChange={(e) => { setInStock(e.target.checked); setPage(1); }} className="h-4 w-4 accent-[#071630]" />In stock</label><label className="mb-2 flex items-center gap-2 text-xs"><input type="checkbox" checked={saleOnly} onChange={(e) => setSaleOnly(e.target.checked)} className="h-4 w-4 accent-[#071630]" />On sale</label><label className="mb-2 flex items-center gap-2 text-xs"><input type="checkbox" checked={comboOnly} onChange={(e) => setComboOnly(e.target.checked)} className="h-4 w-4 accent-[#071630]" />Combo packs</label></fieldset>
                             </div>
                         </div>}
                         {error ? <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-red-600">{error}</div> : loading ? <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">{Array.from({ length: 6 }, (_, i) => <div key={i} className="animate-pulse overflow-hidden rounded-2xl bg-white"><div className="aspect-square bg-slate-200" /><div className="space-y-3 p-3 sm:p-5"><div className="h-3 w-1/3 rounded bg-slate-200" /><div className="h-4 w-4/5 rounded bg-slate-200" /></div></div>)}</div> : visibleProducts.length ? <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
                             {visibleProducts.map((product) => {
-                                const discount = product.compareAtPrice && product.compareAtPrice > product.price ? Math.round((1 - product.price / product.compareAtPrice) * 100) : 0;
                                 return <article key={product._id} className="min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-lg sm:rounded-[22px]">
                                     <div className="relative flex aspect-square items-center justify-center bg-[#e8ecf2] p-2 sm:p-5">
                                         {product.images?.[0] ? <Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1280px) 45vw, 30vw" className="object-contain p-2 sm:p-5" unoptimized /> : <ShoppingBag className="h-9 w-9 text-slate-400 sm:h-12 sm:w-12" />}
-                                        {discount > 0 && <span className="absolute left-2 top-2 rounded-full bg-[#071630] px-2 py-1 text-[9px] font-bold text-white sm:left-4 sm:top-4 sm:px-3 sm:py-1.5 sm:text-xs">{discount}% OFF</span>}
                                         {product.comboOffers?.length > 0 && <span className="absolute right-2 top-2 rounded-full bg-white px-2 py-1 text-[9px] font-semibold sm:right-4 sm:top-4 sm:px-3 sm:py-1.5 sm:text-xs">Combo</span>}
                                     </div>
                                     <div className="p-2.5 sm:p-5">
-                                        <p className="mb-1 truncate text-[9px] font-bold uppercase tracking-[0.12em] text-[#687b99] sm:text-xs sm:tracking-[0.16em]">{product.category}</p>
+                                        <p className="mb-1 truncate text-[9px] font-bold uppercase tracking-[0.12em] text-[#687b99] sm:text-xs sm:tracking-[0.16em]">{categoryName(product.category)}</p>
                                         <Link href={`/products/${product._id}`} className="line-clamp-2 min-h-9 text-xs font-bold leading-4 hover:underline sm:min-h-12 sm:font-heading sm:text-base sm:leading-6">{product.name}</Link>
-                                        <div className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 sm:mt-3 sm:gap-2"><strong className="text-sm sm:text-xl">{money(product.price)}</strong>{discount > 0 && <del className="text-[9px] text-slate-400 sm:text-sm">{money(product.compareAtPrice!)}</del>}</div>
+                                        <div className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 sm:mt-3 sm:gap-2"><strong className="text-sm sm:text-xl">{money(product.price)}</strong></div>
                                         <div className="mt-3 grid grid-cols-1 gap-1.5 min-[390px]:grid-cols-2 sm:mt-4 sm:gap-2">
                                             <Link href={`/products/${product._id}`} className="flex h-9 items-center justify-center rounded-lg border border-[#071630] text-[11px] font-medium transition hover:bg-slate-50 sm:h-11 sm:rounded-xl sm:text-sm">View</Link>
                                             <AddToCartButton productId={product._id} label="Add" className="h-9 justify-center gap-1 rounded-lg bg-[#071630] px-1 text-[11px] font-medium text-white transition hover:bg-[#14284d] disabled:opacity-60 sm:h-11 sm:gap-2 sm:rounded-xl sm:px-2 sm:text-sm" />

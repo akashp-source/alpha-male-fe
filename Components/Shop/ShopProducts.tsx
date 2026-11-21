@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, ShoppingCart, SlidersHorizontal, X } from "lucide-react";
 import AddToCartButton from "../Cart/AddToCartButton";
+import { useStoreCategories } from "@/lib/categories";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
@@ -33,12 +34,6 @@ type Props = {
     onAddToCart?: (product: Product) => void;
 };
 
-const categories = [
-    { label: "Condoms", value: "condoms" },
-    { label: "Lubricants", value: "lubricants" },
-    { label: "Oral strips", value: "oral-strips" },
-];
-
 const priceOptions = [
     { label: "Any price", value: "all" },
     { label: "Under ₹500", value: "under500" },
@@ -50,6 +45,12 @@ const money = (value: number) =>
     `₹${value.toLocaleString("en-IN")}`;
 
 export default function ShopProducts({ onAddToCart }: Props) {
+    // Category filter options come from the backend (GET /categories).
+    const storeCategories = useStoreCategories();
+    const categories = useMemo(
+        () => storeCategories.map((item) => ({ label: item.name, value: item.slug })),
+        [storeCategories],
+    );
     const [products, setProducts] = useState<Product[]>([]);
     const [total, setTotal] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
@@ -69,7 +70,6 @@ export default function ShopProducts({ onAddToCart }: Props) {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
     const fetchProducts = useCallback(async (signal: AbortSignal) => {
-        console.log("feth");
 
         setLoading(true);
         setError("");

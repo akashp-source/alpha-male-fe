@@ -1,0 +1,1 @@
+export const ONLINE_PAYMENT_DISCOUNT_PERCENT = 12;

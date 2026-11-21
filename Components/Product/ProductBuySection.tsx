@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Product } from "@/types/product";
 import { addToCart } from "@/lib/cart";
+import ProductGallery from "./ProductGallery";
+import RichDescription from "./RichDescription";
 import {
     Loader2,
     Minus,
@@ -41,9 +43,6 @@ export default function ProductBuySection({
     const [quantity, setQuantity] = useState(1);
     const [pending, setPending] = useState<"cart" | "buy" | null>(null);
     const [cartError, setCartError] = useState("");
-    const [selectedImage, setSelectedImage] = useState(
-        product.images?.[0] || ""
-    );
 
     // -----------------------------------
     // Pricing calculation
@@ -177,47 +176,8 @@ export default function ProductBuySection({
 
                     {/* LEFT: Product Images */}
                     <div className="w-full min-w-0 lg:sticky lg:top-[92px]">
-
-                        {/* Main Image */}
-                        <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl  p-0 sm:rounded-[20px] sm:p-1 lg:max-h-[560px] lg:p-4">
-                            {selectedImage ? (
-                                <img
-                                    src={selectedImage}
-                                    alt={product.name}
-                                    className="h-full w-full object-contain"
-                                />
-                            ) : (
-                                <Package
-                                    size={70}
-                                    className="text-white/30"
-                                />
-                            )}
-                        </div>
-
-                        {/* Image Thumbnails */}
-                        {product.images?.length > 1 && (
-                            <div className="mt-2 flex gap-2 overflow-x-auto overscroll-x-contain pb-1">
-                                {product.images.map((image, index) => (
-                                    <button
-                                        type="button"
-                                        key={`${image}-${index}`}
-                                        onClick={() =>
-                                            setSelectedImage(image)
-                                        }
-                                        className={`h-11 min-h-11 w-11 min-w-11 shrink-0 overflow-hidden rounded-lg border-2 p-1.5 transition sm:h-16 sm:w-16 ${selectedImage === image
-                                            ? "border-[#176348]"
-                                            : "border-transparent"
-                                            }`}
-                                    >
-                                        <img
-                                            src={image}
-                                            alt={`${product.name} ${index + 1}`}
-                                            className="h-full w-full object-contain"
-                                        />
-                                    </button>
-                                ))}
-                            </div>
-                        )}
+                        {/* Swipe on phone; click + ← → on desktop */}
+                        <ProductGallery images={product.images ?? []} name={product.name} />
                     </div>
 
                     {/* RIGHT: Product Details */}
@@ -233,10 +193,11 @@ export default function ProductBuySection({
                             {product.name}
                         </h1>
 
-                        {/* Description */}
-                        <p className="order-8 mt-3 break-words font-body text-xs leading-6 text-[#8b8077] sm:text-sm md:order-2">
-                            {product.description}
-                        </p>
+                        {/* Description: bullet lines ("- ", "• ", "* ") render as points */}
+                        <RichDescription
+                            text={product.description}
+                            className="order-8 mt-3 font-body text-xs leading-6 text-[#8b8077] sm:text-sm md:order-2"
+                        />
 
                         {/* Product Price */}
                         <div className="order-2 mt-1 flex flex-wrap items-center gap-2.5 sm:mt-2 lg:mt-1">

@@ -94,9 +94,9 @@ export default async function HomePage() {
             <HeroBanner />
             <BestSellers products={bestSellers} />
             <AllProductsSection products={products} />
-            <h1 className="font-heading font-semibold text-center text-4xl p-5">
+            <h2 className="font-heading font-semibold text-center text-4xl p-5">
                 Our Featured Products
-            </h1>
+            </h2>
             <FeaturedProducts />
             <TrustSection />
             {comparisons.map((comparison) => (

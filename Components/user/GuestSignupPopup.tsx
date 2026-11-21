@@ -10,6 +10,7 @@ import {
     Lock,
 } from "lucide-react";
 import Image from "next/image";
+import { ONLINE_PAYMENT_DISCOUNT_PERCENT } from "@/lib/offers";
 
 const DISMISS_KEY = "guest-signup-dismissed-until";
 const DISMISS_DURATION = 7 * 24 * 60 * 60 * 1000;
@@ -107,12 +108,6 @@ export default function GuestSignupPopup() {
         setLoading(true);
 
         try {
-            // TODO: Connect your actual send OTP API here.
-            console.log({
-                mobile: `+91${mobile}`,
-                marketingConsent,
-            });
-
             setError("Connect your OTP API to enable verification.");
         } catch {
             setError("Unable to send OTP. Please try again.");
@@ -166,7 +161,7 @@ export default function GuestSignupPopup() {
                     <div className="grid grid-cols-3 gap-2">
                         <Benefit
                             icon={<Gift size={21} />}
-                            title="Extra 12% off"
+                            title={`Extra ${ONLINE_PAYMENT_DISCOUNT_PERCENT}% off`}
                             description="When you pay online with Razorpay at checkout."
                         />
 

@@ -57,11 +57,7 @@ export default function RegisterPage() {
 
         try {
             // TODO: Connect your registration API here.
-            console.log({
-                fullName: form.fullName,
-                emailOrPhone: form.emailOrPhone,
-                password: form.password,
-            });
+
         } catch {
             setError("Something went wrong. Please try again.");
         } finally {

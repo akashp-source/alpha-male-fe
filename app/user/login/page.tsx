@@ -142,7 +142,7 @@ export default function LoginPage() {
                     </div>
 
                     {/* Login mode tabs */}
-                    <div className="mb-6 grid grid-cols-2 rounded-lg bg-[#e9edf3] p-1">
+                    {/* <div className="mb-6 grid grid-cols-2 rounded-lg bg-[#e9edf3] p-1">
                         <button
                             type="button"
                             onClick={() => {
@@ -170,7 +170,7 @@ export default function LoginPage() {
                         >
                             OTP
                         </button>
-                    </div>
+                    </div> */}
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {/* Email */}
@@ -296,8 +296,8 @@ export default function LoginPage() {
                     </div>
 
                     {/* GOOGLE & APPLE SIGN IN */}
-                    <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        {/* Google */}
+                    {/* <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                       
                         <button
                             type="button"
                             onClick={handleGoogleLogin}
@@ -329,7 +329,7 @@ export default function LoginPage() {
                             Continue with Google
                         </button>
 
-                        {/* Apple */}
+                      
                         <button
                             type="button"
                             onClick={handleAppleLogin}
@@ -346,16 +346,16 @@ export default function LoginPage() {
                             </svg>
                             Continue with Apple
                         </button>
-                    </div>
+                    </div> */}
 
                     {/* Guest */}
-                    <Link
+                    {/* <Link
                         href="/"
                         className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#9aa5b5] text-xs font-semibold text-[#07152e] transition hover:border-[#07152e] hover:bg-[#f7f8fa]"
                     >
                         <ShoppingCart size={14} />
                         Continue as guest
-                    </Link>
+                    </Link> */}
 
                     {/* Register */}
                     <p className="mt-7 text-center text-[11px] text-[#7b8493]">
