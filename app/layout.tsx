@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import ClarityAnalytics from "@/Components/Clarity";
 import AttributionCapture from "@/Components/AttributionCapture";
 import WhatsAppFloat from "@/Components/WhatsAppFloat";
+import GoogleTagManager from "@/Components/GoogleTagManager";
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -43,6 +44,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <AttributionCapture />
         </Suspense>
+        <GoogleTagManager />
         {children}
         <WhatsAppFloat />
       </body>
