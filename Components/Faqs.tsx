@@ -3,6 +3,8 @@
 
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
+import { ONLINE_PAYMENT_DISCOUNT_PERCENT } from "@/lib/offers";
+import { WHATSAPP_LINK } from "@/lib/contact";
 
 const faqs = [
     {
@@ -26,14 +28,24 @@ const faqs = [
             "Completely. Your details are used only to process your order and are never sold or shared.",
     },
     {
-        question: "How do I get 10% off?",
-        answer:
-            "Join the waitlist above. The first 500 sign-ups receive an exclusive launch code by email on 25 December.",
+        question: "How do I get extra savings?",
+        answer: (
+            <>
+                Pay online with Razorpay at checkout and get an extra {ONLINE_PAYMENT_DISCOUNT_PERCENT}% off your order.
+            </>
+        ),
     },
     {
         question: "HOW CAN I CONTACT YOUR TEAM?",
-        answer:
-            "You can reach our team at info@alphamale.co.in for product information, order assistance and general enquiries.",
+        answer: (
+            <>
+                Message us on{" "}
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+                    WhatsApp
+                </a>{" "}
+                or email info@alphamale.co.in for product information, order help and general questions.
+            </>
+        ),
     },
 ];
 

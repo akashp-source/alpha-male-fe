@@ -1,0 +1,457 @@
+
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+    Mail,
+    Lock,
+    Eye,
+    EyeOff,
+    ShoppingCart,
+    Package,
+    CreditCard,
+    RotateCcw,
+    ShieldCheck,
+} from "lucide-react";
+
+type LoginMode = "password" | "otp";
+
+const API_URL =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
+
+export default function LoginPage() {
+    const router = useRouter();
+
+    const [mode, setMode] = useState<LoginMode>("password");
+    const [showPassword, setShowPassword] = useState(false);
+    const [rememberMe, setRememberMe] = useState(true);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [otp, setOtp] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    // Redirect already authenticated users
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            router.replace("/home");
+        }
+    }, [router]);
+
+    // Email/password login
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError("");
+
+        if (mode === "otp") {
+            setError("OTP login is not connected yet.");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const response = await fetch(`${API_URL}/user/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email.trim(),
+                    password,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Invalid email or password.");
+            }
+
+            if (data.requiresOtp) {
+                setError("OTP verification is required. Please complete verification.");
+                return;
+            }
+
+            if (!data.accessToken) {
+                throw new Error("No access token received from server.");
+            }
+
+            localStorage.setItem("token", data.accessToken);
+
+            if (data.user) {
+                localStorage.setItem("user", JSON.stringify(data.user));
+            }
+
+            router.replace("/home");
+        } catch (err) {
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "Something went wrong. Please try again."
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // OAuth placeholders
+    const handleGoogleLogin = () => {
+        setError("Google login integration is not configured yet.");
+    };
+
+    const handleAppleLogin = () => {
+        setError("Apple login integration is not configured yet.");
+    };
+
+    return (
+        <main className="min-h-screen bg-[#07152e] lg:grid lg:grid-cols-2">
+            {/* LEFT: LOGIN SECTION */}
+            <section className="flex min-h-screen flex-col bg-white px-6 py-7 sm:px-12 lg:px-16 xl:px-24">
+                {/* Logo */}
+                {/* <Link href="/" className="flex w-fit items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#07152e] text-white">
+                        <ShieldCheck size={19} />
+                    </div>
+
+                    <span className="font-heading text-sm font-bold tracking-[0.12em] text-[#07152e]">
+                        ALPHA MALE
+                    </span>
+                </Link> */}
+
+                <div className="mx-auto flex w-full max-w-[420px] flex-1 flex-col justify-center py-12 lg:py-16">
+                    <div className="mb-7">
+                        <span className="font-heading text-[2rem] font-bold tracking-[0.12em] text-[#07152e]">
+                            ALPHA MALE
+                        </span>
+                        <p className="mb-2 text-[8px] font-semibold uppercase tracking-[0.25em] text-[#176348]">
+                            Drive · Stamina · Energy
+                        </p>
+
+                        <h1 className="font-heading text-2xl font-bold tracking-wide text-[#07152e] sm:text-3xl">
+                            WELCOME BACK
+                        </h1>
+
+                        <p className="mt-2 max-w-xs text-xs leading-5 text-[#91857b]">
+                            Log in to track orders, reorder favourites and check out faster.
+                        </p>
+                    </div>
+
+                    {/* Login mode tabs */}
+                    {/* <div className="mb-6 grid grid-cols-2 rounded-lg bg-[#e9edf3] p-1">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setMode("password");
+                                setError("");
+                            }}
+                            className={`rounded-md py-2.5 text-xs font-semibold transition ${mode === "password"
+                                ? "bg-[#07152e] text-white shadow-sm"
+                                : "text-[#07152e]"
+                                }`}
+                        >
+                            Password
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setMode("otp");
+                                setError("");
+                            }}
+                            className={`rounded-md py-2.5 text-xs font-semibold transition ${mode === "otp"
+                                ? "bg-[#07152e] text-white shadow-sm"
+                                : "text-[#07152e]"
+                                }`}
+                        >
+                            OTP
+                        </button>
+                    </div> */}
+
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        {/* Email */}
+                        <div>
+                            <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                                Email or mobile number
+                            </label>
+
+                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-[#176348]">
+                                <Mail size={15} className="shrink-0 text-[#718096]" />
+
+                                <input
+                                    type="text"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="you@example.com"
+                                    required
+                                    autoComplete="username"
+                                    className="w-full bg-transparent text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Password */}
+                        {mode === "password" && (
+                            <div>
+                                <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                                    Password
+                                </label>
+
+                                <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-[#176348]">
+                                    <Lock size={15} className="shrink-0 text-[#718096]" />
+
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="Enter your password"
+                                        required
+                                        autoComplete="current-password"
+                                        className="w-full bg-transparent text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                    />
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="text-[#718096]"
+                                        aria-label="Toggle password visibility"
+                                    >
+                                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* OTP */}
+                        {mode === "otp" && (
+                            <div>
+                                <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                                    One-time password
+                                </label>
+
+                                <input
+                                    type="text"
+                                    inputMode="numeric"
+                                    maxLength={6}
+                                    value={otp}
+                                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                                    placeholder="Enter 6-digit OTP"
+                                    className="h-11 w-full rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 text-xs tracking-[0.3em] text-[#07152e] outline-none focus:border-[#176348]"
+                                />
+                            </div>
+                        )}
+
+                        {/* Remember / Forgot */}
+                        {mode === "password" && (
+                            <div className="flex items-center justify-between gap-3 text-[11px]">
+                                <label className="flex cursor-pointer items-center gap-2 text-[#526078]">
+                                    <input
+                                        type="checkbox"
+                                        checked={rememberMe}
+                                        onChange={(e) => setRememberMe(e.target.checked)}
+                                        className="accent-[#07152e]"
+                                    />
+                                    Keep me logged in
+                                </label>
+
+                                <Link
+                                    href="/user/forgot-password"
+                                    className="font-semibold text-[#176348] underline underline-offset-2"
+                                >
+                                    Forgot password?
+                                </Link>
+                            </div>
+                        )}
+
+                        {/* Error */}
+                        {error && (
+                            <div className="rounded-lg border border-red-100 bg-red-50 px-3 py-2.5 text-xs text-red-600">
+                                {error}
+                            </div>
+                        )}
+
+                        {/* Login button */}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="flex h-12 w-full items-center justify-center rounded-lg bg-[#07152e] text-xs font-bold text-white transition hover:bg-[#10284b] disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                            {loading
+                                ? "PLEASE WAIT..."
+                                : mode === "password"
+                                    ? "Log In"
+                                    : "Verify & Log In"}
+                        </button>
+                    </form>
+
+                    {/* Divider */}
+                    <div className="my-5 flex items-center gap-4">
+                        <div className="h-px flex-1 bg-[#e8ebef]" />
+                        <span className="text-[10px] text-[#a0a8b5]">or</span>
+                        <div className="h-px flex-1 bg-[#e8ebef]" />
+                    </div>
+
+                    {/* GOOGLE & APPLE SIGN IN */}
+                    {/* <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                       
+                        <button
+                            type="button"
+                            onClick={handleGoogleLogin}
+                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#9aa5b5] text-xs font-semibold text-[#07152e] transition hover:border-[#07152e] hover:bg-[#f7f8fa]"
+                        >
+                            <svg
+                                width="17"
+                                height="17"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    fill="#EA4335"
+                                    d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.5 14.6 2.5 12 2.5 6.8 2.5 2.6 6.7 2.6 12s4.2 9.5 9.4 9.5c5.4 0 9-3.8 9-9.2 0-.6-.1-1.1-.2-1.6H12z"
+                                />
+                                <path
+                                    fill="#4285F4"
+                                    d="M21 12.3c0-.6-.1-1.1-.2-1.6H12v3.9h5.5c-.3 1.3-1.1 2.4-2.3 3.1l3.1 2.4c1.8-1.7 2.7-4.2 2.7-7.8z"
+                                />
+                                <path
+                                    fill="#FBBC05"
+                                    d="M6.4 14.3c-.2-.7-.4-1.5-.4-2.3s.1-1.6.4-2.3L3.2 7.3C2.5 8.7 2.1 10.3 2.1 12s.4 3.3 1.1 4.7l3.2-2.4z"
+                                />
+                                <path
+                                    fill="#34A853"
+                                    d="M12 21.5c2.6 0 4.8-.9 6.3-2.4l-3.1-2.4c-.8.6-1.9 1-3.2 1-2.5 0-4.6-1.7-5.4-4l-3.2 2.4c1.6 3.2 4.9 5.4 8.6 5.4z"
+                                />
+                            </svg>
+                            Continue with Google
+                        </button>
+
+                      
+                        <button
+                            type="button"
+                            onClick={handleAppleLogin}
+                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-black text-xs font-semibold text-white transition hover:bg-[#1f1f1f]"
+                        >
+                            <svg
+                                width="17"
+                                height="17"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.59-.75 2.99-.75 1.39 0 1.79.75 3.01.73 1.24-.02 2.03-1.13 2.79-2.25.88-1.29 1.24-2.53 1.26-2.6-.03-.01-2.42-.93-2.45-3.72zM14.08 5.85c.64-.77 1.07-1.84.95-2.91-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.77-.97 2.82 1.03.08 2.07-.52 2.71-1.29z" />
+                            </svg>
+                            Continue with Apple
+                        </button>
+                    </div> */}
+
+                    {/* Guest */}
+                    {/* <Link
+                        href="/"
+                        className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#9aa5b5] text-xs font-semibold text-[#07152e] transition hover:border-[#07152e] hover:bg-[#f7f8fa]"
+                    >
+                        <ShoppingCart size={14} />
+                        Continue as guest
+                    </Link> */}
+
+                    {/* Register */}
+                    <p className="mt-7 text-center text-[11px] text-[#7b8493]">
+                        New to Alpha Male?{" "}
+                        <Link
+                            href="/user/register"
+                            className="font-bold text-[#176348] underline underline-offset-2"
+                        >
+                            Create an account
+                        </Link>
+                    </p>
+
+                    {/* Privacy */}
+                    <p className="mt-5 flex items-center justify-center gap-2 text-center text-[10px] text-[#9aa2ae]">
+                        <Lock size={11} />
+                        Your details stay private. We never share your purchase history.
+                    </p>
+                </div>
+            </section>
+
+            {/* RIGHT: DESKTOP BRAND PANEL */}
+            <section className="relative hidden min-h-screen overflow-hidden bg-[#07152e] px-10 py-12 text-white lg:flex lg:items-center lg:justify-center xl:px-20">
+                <div className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full border border-white/[0.06]" />
+                <div className="absolute -right-16 -top-16 h-[370px] w-[370px] rounded-full border border-white/[0.06]" />
+                <div className="absolute -bottom-40 -left-24 h-[450px] w-[450px] rounded-full border border-white/[0.04]" />
+
+                <div className="relative z-10 w-full max-w-[480px]">
+                    <div className="rounded-[28px] border border-white/10 bg-white/[0.055] p-8 shadow-2xl backdrop-blur-sm xl:p-10">
+                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#b6c5d9]">
+                            Drive · Stamina · Energy
+                        </p>
+
+                        <h2 className="font-heading text-3xl font-bold leading-tight xl:text-4xl">
+                            YOUR WELLNESS,
+                            <br />
+                            DELIVERED
+                            <br />
+                            DISCREETLY.
+                        </h2>
+
+                        <div className="relative mt-7 flex h-56 items-center justify-center overflow-hidden rounded-2xl bg-[#10264a]">
+                            <div className="absolute h-48 w-48 rounded-full bg-[#176348]/20 blur-3xl" />
+
+                            <div className="relative flex h-40 w-28 -rotate-6 flex-col items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-[#263b5c] to-[#101d35] shadow-2xl">
+                                <ShieldCheck size={34} className="text-[#d5dce7]" />
+                                <span className="mt-3 font-heading text-[9px] tracking-[0.25em] text-white/70">
+                                    ALPHA MALE
+                                </span>
+                                <span className="mt-1 font-heading text-2xl font-bold tracking-widest text-white">
+                                    BOLD
+                                </span>
+                            </div>
+
+                            <div className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[#07152e] shadow-lg">
+                                <ShieldCheck size={27} />
+                            </div>
+                        </div>
+
+                        <div className="mt-7 grid grid-cols-3 gap-4">
+                            <div>
+                                <Package size={18} className="mb-2 text-[#c2d0df]" />
+                                <p className="text-[11px] font-semibold">Plain packaging</p>
+                            </div>
+
+                            <div>
+                                <CreditCard size={18} className="mb-2 text-[#c2d0df]" />
+                                <p className="text-[11px] font-semibold">Private billing</p>
+                            </div>
+
+                            <div>
+                                <RotateCcw size={18} className="mb-2 text-[#c2d0df]" />
+                                <p className="text-[11px] font-semibold">Easy returns</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p className="mt-8 text-center text-[10px] tracking-[0.2em] text-white/35">
+                        CONFIDENCE STARTS WITH YOU.
+                    </p>
+                </div>
+            </section>
+
+            {/* MOBILE BRAND HEADER */}
+            <div className="absolute left-0 top-0 flex w-full flex-col items-center bg-[#07152e] pb-12 pt-7 text-white lg:hidden">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[#07152e]">
+                    <ShieldCheck size={30} />
+                </div>
+
+                <span className="mt-2 font-heading text-sm font-bold tracking-[0.15em]">
+                    ALPHA MALE
+                </span>
+
+                <span className="mt-1 text-[9px] tracking-[0.25em] text-[#c2d0df]">
+                    DRIVE · STAMINA · ENERGY
+                </span>
+            </div>
+        </main>
+    );
+}

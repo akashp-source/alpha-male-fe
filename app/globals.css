@@ -17,6 +17,15 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 body {
@@ -63,6 +72,64 @@ input {
   }
 }
 
-html {
-  @apply scroll-smooth;
+.pdp-section {
+  width: 100%;
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+}
+
+.pdp-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@media (min-width: 640px) {
+  .pdp-container { padding-inline: 24px; }
+}
+
+@media (min-width: 1024px) {
+  .pdp-container { padding-inline: 32px; }
+}
+
+.pdp-section-end-tight { padding-bottom: 0; }
+
+.pdp-last-section {
+  padding-bottom: calc(clamp(2rem, 4vw, 3.5rem) + 4.5rem);
+}
+
+/* Horizontal scrollers without a visible scrollbar (still swipe/scrollable). */
+.no-scrollbar {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Best sellers marquee (homepage, desktop). The list is rendered twice and
+   moved by half its width, so the loop is seamless. */
+.bestseller-marquee-wrap {
+  overflow: hidden;
+  padding-block: 8px 16px;
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.bestseller-marquee {
+  animation: bestseller-marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+.bestseller-marquee-wrap:hover .bestseller-marquee,
+.bestseller-marquee-wrap:focus-within .bestseller-marquee {
+  animation-play-state: paused;
+}
+
+@keyframes bestseller-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Reduced motion: no auto-scroll; show one copy and let people scroll. */
+@media (prefers-reduced-motion: reduce) {
+  .bestseller-marquee { animation: none; }
+  .bestseller-marquee [data-duplicate] { display: none; }
+  .bestseller-marquee-wrap { overflow-x: auto; mask-image: none; }
 }
