@@ -139,7 +139,7 @@ export default function Navbar() {
                 {/* Logo */}
                 <Link href="/" className="flex min-w-0 shrink items-center gap-1.5 justify-self-start sm:gap-2 md:shrink-0 md:gap-3">
                     <Image
-                        src="/images/logo.png"
+                        src="/images/logo2.webp"
                         alt="Alpha Male"
                         width={52}
                         height={52}
