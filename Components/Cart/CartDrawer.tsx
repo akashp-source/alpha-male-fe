@@ -41,7 +41,22 @@ type CartApiItem = {
     productId: CartProduct;
     quantity: number;
     price: number;
+    // Server-computed (GET /cart) with combo offers applied.
+    unitPrice?: number;
+    regularTotal?: number;
+    lineTotal?: number;
+    comboDiscount?: number;
 };
+
+/** Unit price: server value, else the current product price. */
+function getItemUnitPrice(item: CartApiItem) {
+    return Number(item.unitPrice ?? item.productId?.price ?? item.price ?? 0);
+}
+
+/** Line total with combo offers, as charged at checkout. */
+function getItemLineTotal(item: CartApiItem) {
+    return Number(item.lineTotal ?? getItemUnitPrice(item) * item.quantity);
+}
 
 type FrequentlyBoughtProduct = {
     product: CartProduct;
@@ -364,10 +379,12 @@ export default function CartDrawer({
     // ------------------------------------------
 
     const subtotal = items.reduce(
-        (total, item) =>
-            total +
-            Number(item.price ?? item.productId?.price ?? 0) *
-            item.quantity,
+        (total, item) => total + getItemLineTotal(item),
+        0
+    );
+
+    const comboSavings = items.reduce(
+        (total, item) => total + Number(item.comboDiscount ?? 0),
         0
     );
 
@@ -638,9 +655,9 @@ export default function CartDrawer({
                                     const isBusy =
                                         busyProductId === product._id;
 
-                                    const itemPrice = Number(
-                                        item.price ?? product.price ?? 0
-                                    );
+                                    const itemPrice = getItemUnitPrice(item);
+                                    const lineTotal = getItemLineTotal(item);
+                                    const lineSaving = Number(item.comboDiscount ?? 0);
 
                                     return (
                                         <div
@@ -741,12 +758,21 @@ export default function CartDrawer({
                                                         </button>
                                                     </div>
 
-                                                    <p className="text-sm font-bold text-[#071630]">
-                                                        {formatPrice(
-                                                            itemPrice *
-                                                            item.quantity
+                                                    <div className="text-right">
+                                                        {lineSaving > 0 && (
+                                                            <p className="text-[10px] text-[#91857b] line-through">
+                                                                {formatPrice(itemPrice * item.quantity)}
+                                                            </p>
                                                         )}
-                                                    </p>
+                                                        <p className="text-sm font-bold text-[#071630]">
+                                                            {formatPrice(lineTotal)}
+                                                        </p>
+                                                        {lineSaving > 0 && (
+                                                            <p className="text-[10px] font-semibold text-[#176348]">
+                                                                Combo saves {formatPrice(lineSaving)}
+                                                            </p>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -890,6 +916,12 @@ export default function CartDrawer({
                                 {formatPrice(subtotal)}
                             </span>
                         </div>
+
+                        {comboSavings > 0 && (
+                            <p className="mb-1 text-right text-xs font-semibold text-[#176348]">
+                                Combo savings {formatPrice(comboSavings)}
+                            </p>
+                        )}
 
                         <p className="mb-4 text-[10px] leading-4 text-[#91857b]">
                             Shipping and discounts are calculated at checkout.

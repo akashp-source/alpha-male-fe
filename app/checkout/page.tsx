@@ -84,7 +84,22 @@ type CartItem = {
     productId: Product;
     quantity: number;
     price: number;
+    // Server-computed (GET /cart) with combo offers applied.
+    unitPrice?: number;
+    regularTotal?: number;
+    lineTotal?: number;
+    comboDiscount?: number;
 };
+
+/** Unit price: server value, else the current product price. */
+function getItemUnitPrice(item: CartItem) {
+    return Number(item.unitPrice ?? item.productId?.price ?? item.price ?? 0);
+}
+
+/** Line total with combo offers, as the backend charges it. */
+function getItemLineTotal(item: CartItem) {
+    return Number(item.lineTotal ?? getItemUnitPrice(item) * item.quantity);
+}
 
 type PaymentMethod = "COD" | "ONLINE";
 
@@ -169,12 +184,20 @@ export default function CheckoutPage() {
 
 
 
+    // Item subtotal after combo offers (from the server cart pricing).
     const subtotal = useMemo(
         () =>
-            items.reduce(
-                (sum, item) => sum + item.price * item.quantity,
-                0
-            ),
+            Math.round(
+                items.reduce((sum, item) => sum + getItemLineTotal(item), 0) * 100
+            ) / 100,
+        [items]
+    );
+
+    const comboSavings = useMemo(
+        () =>
+            Math.round(
+                items.reduce((sum, item) => sum + Number(item.comboDiscount ?? 0), 0) * 100
+            ) / 100,
         [items]
     );
 
@@ -626,6 +649,11 @@ export default function CheckoutPage() {
                     qty: item.quantity,
                 })),
 
+                // The backend re-prices from the database and rejects (409)
+                // the order if this no longer matches, so we never charge a
+                // different amount than the one shown.
+                expectedSubtotal: subtotal,
+
                 shippingAddress: shipping,
                 billingAddress: billing,
 
@@ -656,6 +684,15 @@ export default function CheckoutPage() {
             });
 
             const data = await response.json();
+
+            if (response.status === 409) {
+                // Prices changed: reload the cart so the summary is current.
+                await fetchCart().catch(() => undefined);
+                throw new Error(
+                    data?.message ||
+                    "Prices in your cart have changed. Please review your order and try again."
+                );
+            }
 
             if (!response.ok) {
                 throw new Error(
@@ -1213,7 +1250,7 @@ export default function CheckoutPage() {
                                                 </p>
 
                                                 <p className="mt-1 text-xs text-gray-500">
-                                                    {formatPrice(item.price)}
+                                                    {formatPrice(getItemUnitPrice(item))}
                                                 </p>
 
                                                 <div className="mt-2 flex items-center gap-2">
@@ -1262,11 +1299,21 @@ export default function CheckoutPage() {
                                                 </div>
                                             </div>
 
-                                            <p className="shrink-0 text-sm font-semibold">
-                                                {formatPrice(
-                                                    item.price * item.quantity
+                                            <div className="shrink-0 text-right">
+                                                {Number(item.comboDiscount ?? 0) > 0 && (
+                                                    <p className="text-[10px] text-gray-400 line-through">
+                                                        {formatPrice(getItemUnitPrice(item) * item.quantity)}
+                                                    </p>
                                                 )}
-                                            </p>
+                                                <p className="text-sm font-semibold">
+                                                    {formatPrice(getItemLineTotal(item))}
+                                                </p>
+                                                {Number(item.comboDiscount ?? 0) > 0 && (
+                                                    <p className="text-[10px] font-semibold text-[#176348]">
+                                                        Combo offer applied
+                                                    </p>
+                                                )}
+                                            </div>
                                         </div>
                                     );
                                 })}
@@ -1360,6 +1407,22 @@ export default function CheckoutPage() {
 
                             <div className="border-t border-gray-200 px-5 py-5">
                                 <div className="space-y-3 text-sm">
+                                    {comboSavings > 0 && (
+                                        <div className="flex justify-between text-gray-600">
+                                            <span>Items total</span>
+                                            <span>{formatPrice(subtotal + comboSavings)}</span>
+                                        </div>
+                                    )}
+
+                                    {comboSavings > 0 && (
+                                        <div className="flex justify-between text-gray-600">
+                                            <span>Combo savings</span>
+                                            <span className="text-[#176348]">
+                                                - {formatPrice(comboSavings)}
+                                            </span>
+                                        </div>
+                                    )}
+
                                     <div className="flex justify-between text-gray-600">
                                         <span>Subtotal</span>
                                         <span>{formatPrice(subtotal)}</span>
