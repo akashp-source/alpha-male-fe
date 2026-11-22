@@ -513,14 +513,14 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                                 </div>
 
                                                 <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-2 pt-4">
-                                                    <button
-                                                        // onClick={() => router.push(`/products/${product._id}`)}
-                                                        className="w-full min-h-10 rounded-xl border border-[#071630] 
+                                                    <Link
+                                                        href={`/products/${product._id}`}
+                                                        className="flex w-full min-h-10 items-center justify-center rounded-xl border border-[#071630]
         bg-white px-3 py-2 text-sm font-semibold text-[#071630]
         whitespace-nowrap transition hover:bg-slate-100"
                                                     >
                                                         View
-                                                    </button>
+                                                    </Link>
 
                                                     {/* <button
                                                         // onClick={() => handleAddToCart(product)}

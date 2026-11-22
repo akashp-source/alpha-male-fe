@@ -8,16 +8,20 @@ import { ShieldCheck } from "lucide-react";
 // the popup on every later visit. Clear it so those visitors see it again.
 const LEGACY_AGE_VERIFIED_KEY = "alpha-male-age-verified";
 
+// Client-only, in-memory: true after the visitor confirms during this page load.
+let confirmedThisLoad = false;
+
 /**
  * 18+ age confirmation (compliance requirement).
  *
- * Shown on every page load, including a refresh: the answer is deliberately
- * NOT stored. It is mounted in the root layout, so moving between pages inside
- * the site doesn't show it again until the next full load.
+ * Mounted only on the /home route. Shown on every full load of /home,
+ * including a refresh: the answer is deliberately NOT stored. Once confirmed,
+ * navigating back to /home inside the site doesn't show it again until the
+ * next full load (the module-level flag below resets on reload).
  * Rendered open from the server, so page content never flashes before it.
  */
 export default function AgeVerificationPopup() {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(() => !confirmedThisLoad);
     const [isUnderage, setIsUnderage] = useState(false);
     const confirmButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -45,6 +49,7 @@ export default function AgeVerificationPopup() {
     }, [isOpen]);
 
     const confirmAge = () => {
+        confirmedThisLoad = true;
         setIsOpen(false);
     };
 

@@ -58,7 +58,14 @@ export default function ProductBuySection({
         ? activeCombo.offerPrice
         : product.price * quantity;
 
-    const originalPrice = product.price * quantity;
+    // Savings are measured against the 1-qty strike-through price (MRP)
+    // when there is one, so combos show the full discount off MRP.
+    const unitMrp =
+        product.compareAtPrice && product.compareAtPrice > product.price
+            ? product.compareAtPrice
+            : product.price;
+
+    const originalPrice = unitMrp * quantity;
 
     const savings = Math.max(0, originalPrice - totalPrice);
 
@@ -302,7 +309,7 @@ export default function ProductBuySection({
                                                 quantity === offer.quantity;
 
                                             const regularPrice =
-                                                product.price *
+                                                unitMrp *
                                                 offer.quantity;
 
                                             const offerSavings =
@@ -311,6 +318,15 @@ export default function ProductBuySection({
                                                     regularPrice -
                                                     offer.offerPrice
                                                 );
+
+                                            const offerSavingsPercent =
+                                                regularPrice > 0
+                                                    ? Math.round(
+                                                        (offerSavings /
+                                                            regularPrice) *
+                                                        100
+                                                    )
+                                                    : 0;
 
                                             const exceedsStock =
                                                 offer.quantity >
@@ -368,6 +384,8 @@ export default function ProductBuySection({
                                                             {formatPrice(
                                                                 offerSavings
                                                             )}
+                                                            {offerSavingsPercent > 0 &&
+                                                                ` (${offerSavingsPercent}% off)`}
                                                         </p>
                                                     )}
 

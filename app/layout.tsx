@@ -7,7 +7,6 @@ import ClarityAnalytics from "@/Components/Clarity";
 import AttributionCapture from "@/Components/AttributionCapture";
 import WhatsAppFloat from "@/Components/WhatsAppFloat";
 import GoogleTagManager from "@/Components/GoogleTagManager";
-import AgeVerificationPopup from "@/Components/user/AgeVerificationPopup";
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -57,7 +56,6 @@ export default function RootLayout({
         </Suspense>
         <GoogleTagManager />
         {children}
-        <AgeVerificationPopup />
         <WhatsAppFloat />
       </body>
     </html>
