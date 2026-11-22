@@ -5,6 +5,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Product } from "@/types/product";
 import { addToCart } from "@/lib/cart";
+import {
+    calculateComboPricing,
+    getBulkDiscountMinQuantity,
+    getBulkDiscountPercent,
+} from "@/lib/comboPricing";
 import ProductGallery from "./ProductGallery";
 import RichDescription from "./RichDescription";
 import {
@@ -46,17 +51,26 @@ export default function ProductBuySection({
 
     // -----------------------------------
     // Pricing calculation
-    // Quantity is the single source of truth
+    // Quantity is the single source of truth. Same rules the backend
+    // charges at checkout: exact combo tier, else bulk percent above the
+    // largest tier, else regular price.
     // -----------------------------------
 
-    const activeCombo =
-        product.comboOffers?.find(
-            (offer) => offer.quantity === quantity
-        ) ?? null;
+    const pricing = calculateComboPricing(product, quantity);
 
-    const totalPrice = activeCombo
-        ? activeCombo.offerPrice
-        : product.price * quantity;
+    const activeCombo =
+        pricing.appliedOffer?.type === "COMBO"
+            ? product.comboOffers?.find(
+                (offer) => offer.quantity === quantity
+            ) ?? null
+            : null;
+
+    const bulkPercent = getBulkDiscountPercent(product);
+    const bulkMinQuantity = getBulkDiscountMinQuantity(product);
+    const bulkActive = pricing.appliedOffer?.type === "BULK_PERCENT";
+    const hasOffers = product.comboOffers?.length > 0 || bulkPercent > 0;
+
+    const totalPrice = pricing.total;
 
     // Savings are measured against the 1-qty strike-through price (MRP)
     // when there is one, so combos show the full discount off MRP.
@@ -282,7 +296,7 @@ export default function ProductBuySection({
                         </div>
 
                         {/* Combo Offers */}
-                        {product.comboOffers?.length > 0 && (
+                        {hasOffers && (
                             <div className="order-4 mt-2 sm:mt-3 lg:mt-2">
 
                                 <div className="mb-2 flex items-center justify-between gap-2">
@@ -303,7 +317,7 @@ export default function ProductBuySection({
 
                                 <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
 
-                                    {product.comboOffers.map(
+                                    {(product.comboOffers ?? []).map(
                                         (offer, index) => {
                                             const isSelected =
                                                 quantity === offer.quantity;
@@ -400,8 +414,48 @@ export default function ProductBuySection({
                                     )}
                                 </div>
 
+                                {/* Bulk percent off above the largest combo */}
+                                {bulkPercent > 0 && (
+                                    <button
+                                        type="button"
+                                        disabled={bulkMinQuantity > product.stock}
+                                        onClick={() =>
+                                            bulkActive
+                                                ? setQuantity(1)
+                                                : setQuantity(bulkMinQuantity)
+                                        }
+                                        className={`relative mt-2 w-full min-w-0 rounded-xl border p-2 text-left transition-all sm:p-2.5 ${bulkActive
+                                            ? "border-[#176348] bg-[#edf5ef] ring-1 ring-[#176348]"
+                                            : "border-[#e5dcd2] bg-white hover:border-[#176348]"
+                                            } disabled:cursor-not-allowed disabled:opacity-40`}
+                                    >
+                                        {bulkActive && (
+                                            <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-[#176348] text-white">
+                                                <Check size={12} />
+                                            </span>
+                                        )}
+
+                                        <p className="break-words pr-5 font-body text-[11px] font-bold leading-snug sm:text-sm">
+                                            Buy {bulkMinQuantity}+ packs
+                                        </p>
+
+                                        <p className="mt-1 font-body text-sm font-bold text-[#176348] sm:text-base">
+                                            {bulkPercent}% OFF
+                                            <span className="ml-1 font-body text-[10px] font-semibold text-[#91857b]">
+                                                on every pack
+                                            </span>
+                                        </p>
+
+                                        {bulkActive && (
+                                            <p className="mt-1 font-body text-[10px] font-semibold text-[#176348]">
+                                                Applied to {quantity} packs
+                                            </p>
+                                        )}
+                                    </button>
+                                )}
+
                                 {/* Remove Combo */}
-                                {activeCombo && (
+                                {(activeCombo || bulkActive) && (
                                     <button
                                         type="button"
                                         onClick={() => setQuantity(1)}

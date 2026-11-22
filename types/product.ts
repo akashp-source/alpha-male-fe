@@ -32,6 +32,9 @@ export interface Product {
         description?: string;
     }[];
 
+    // Percent off for quantities above the largest combo tier (0 = off).
+    bulkDiscountPercent?: number;
+
     betterTogether: {
         productId: string;
     }[];
