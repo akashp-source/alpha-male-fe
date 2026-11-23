@@ -1,5 +1,5 @@
 
-import UserNavbar from "@/Components/user/UserNavbar";
+import AccountHeader from "@/Components/user/AccountHeader";
 
 export default function UserLayout({
     children,
@@ -8,7 +8,8 @@ export default function UserLayout({
 }) {
     return (
         <div className="min-h-screen bg-white">
-            <UserNavbar />
+            {/* Main site header (with cart) on account pages; slim header on login/register */}
+            <AccountHeader />
             {children}
         </div>
     );

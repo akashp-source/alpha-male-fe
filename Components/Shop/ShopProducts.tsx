@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, ShoppingCart, SlidersHorizontal, X } from "lucide-react";
 import AddToCartButton from "../Cart/AddToCartButton";
-import { useStoreCategories } from "@/lib/categories";
+import { categoryLabel, useStoreCategories } from "@/lib/categories";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
@@ -48,7 +48,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
     // Category filter options come from the backend (GET /categories).
     const storeCategories = useStoreCategories();
     const categories = useMemo(
-        () => storeCategories.map((item) => ({ label: item.name, value: item.slug })),
+        () => storeCategories.map((item) => ({ label: categoryLabel(item.name), value: item.slug })),
         [storeCategories],
     );
     const [products, setProducts] = useState<Product[]>([]);
@@ -332,7 +332,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                             e.preventDefault();
                             setPage(1);
                         }}
-                        className="flex w-full max-w-md items-center rounded-full bg-white p-1.5 text-[#071630]"
+                        className="flex w-full max-w-md items-center rounded-full bg-white p-1.5 text-[#071630] focus-within:ring-2 focus-within:ring-[#e9b949] focus-within:ring-offset-2 focus-within:ring-offset-[#071630]"
                     >
                         <Search size={18} className="ml-3 shrink-0 text-slate-500" />
 
@@ -343,10 +343,11 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                 setPage(1);
                             }}
                             placeholder="Search products..."
+                            aria-label="Search products"
                             className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none"
                         />
 
-                        <button className="rounded-full bg-[#071630] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#176348]">
+                        <button className="rounded-full bg-[#071630] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#14284d]">
                             Search
                         </button>
                     </form>
@@ -537,7 +538,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                                         productId={product._id}
                                                         className="w-full min-h-10 rounded-xl bg-[#071630] 
         px-3 py-2 text-sm font-semibold text-white
-        whitespace-nowrap transition hover:bg-[#142747]
+        whitespace-nowrap transition hover:bg-[#14284d]
         disabled:cursor-not-allowed disabled:opacity-50"
                                                     />
                                                 </div>

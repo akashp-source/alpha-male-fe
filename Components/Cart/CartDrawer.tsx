@@ -621,7 +621,7 @@ export default function CartDrawer({
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="mt-6 min-h-11 bg-[#071630] px-7 py-3 text-xs font-semibold tracking-widest text-white transition hover:bg-[#176348]"
+                                className="mt-6 min-h-11 bg-[#071630] px-7 py-3 text-xs font-semibold tracking-widest text-white transition hover:bg-[#14284d]"
                             >
                                 CONTINUE SHOPPING
                             </button>
@@ -936,7 +936,7 @@ export default function CartDrawer({
                                 !!busyProductId ||
                                 !!addingProductId
                             }
-                            className="flex min-h-12 w-full items-center justify-center gap-2 rounded-sm bg-[#071630] px-5 py-3 text-xs font-bold tracking-[0.15em] text-white transition hover:bg-[#176348] disabled:cursor-not-allowed disabled:opacity-50"
+                            className="flex min-h-12 w-full items-center justify-center gap-2 rounded-sm bg-[#071630] px-5 py-3 text-xs font-bold tracking-[0.15em] text-white transition hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             PROCEED TO CHECKOUT
                             <ArrowRight size={16} />

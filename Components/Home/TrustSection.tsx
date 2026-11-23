@@ -56,7 +56,7 @@ export default function TrustSection() {
                     {/* Certification Text */}
                     <div className="flex-1 text-center sm:text-left">
 
-                        <p className="mb-3 font-body text-[10px] font-medium uppercase tracking-[0.35em] text-[#aab2c2] sm:text-xs">
+                        <p className="mb-3 font-body text-xs font-medium uppercase tracking-[0.35em] text-[#aab2c2]">
                             OUR STANDARD
                         </p>
 
@@ -92,7 +92,7 @@ export default function TrustSection() {
                                     className="text-[#d0d3dc] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#d6b47e]"
                                 />
 
-                                <div className="font-body text-[9px] font-bold leading-5 tracking-[0.08em] text-[#b9c0ce] transition-colors group-hover:text-white sm:text-[10px] sm:tracking-[0.1em]">
+                                <div className="font-body text-xs font-bold leading-5 tracking-[0.08em] text-[#b9c0ce] transition-colors group-hover:text-white sm:tracking-[0.1em]">
                                     <p>{feature.title}</p>
                                     {feature.subtitle && (
                                         <p>{feature.subtitle}</p>

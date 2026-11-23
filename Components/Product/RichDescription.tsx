@@ -4,17 +4,42 @@
  * Formatting rules (how to write it in the DB / admin textarea):
  * - Each line starting with "-", "*" or "•" (plus a space) is a bullet point.
  * - Each line starting with "1." or "1)" is a numbered point.
+ * - A line starting with "#", "##" or "###" (or wrapped entirely in
+ *   "**...**") is a subheading.
+ * - "**text**" inside a line is shown bold.
  * - Any other line is normal text; a blank line starts a new paragraph.
  * Text with no such lines renders exactly as before (plain paragraph).
  */
 
 type Block =
+    | { type: "heading"; text: string }
     | { type: "paragraph"; lines: string[] }
     | { type: "bullets"; items: string[] }
     | { type: "numbers"; items: string[] };
 
 const BULLET = /^\s*[-*•●▪]\s+(.+)$/;
 const NUMBER = /^\s*\d{1,2}[.)]\s+(.+)$/;
+const HEADING = /^#{1,3}\s+(.+?)\s*#*$/;
+const BOLD_LINE = /^\*\*([^*]+)\*\*:?$/;
+
+/** Render "**bold**" spans inside a line. */
+function Inline({ text }: { text: string }) {
+    const parts = text.split(/\*\*([^*]+)\*\*/g);
+    if (parts.length === 1) return <>{text}</>;
+    return (
+        <>
+            {parts.map((part, i) =>
+                i % 2 === 1 ? (
+                    <strong key={i} className="font-semibold text-[#211b17]">
+                        {part}
+                    </strong>
+                ) : (
+                    part
+                )
+            )}
+        </>
+    );
+}
 
 export function parseDescription(text: string): Block[] {
     const blocks: Block[] = [];
@@ -35,6 +60,12 @@ export function parseDescription(text: string): Block[] {
             continue;
         }
 
+        const heading = line.match(HEADING) ?? line.match(BOLD_LINE);
+        if (heading) {
+            blocks.push({ type: "heading", text: heading[1].trim() });
+            continue;
+        }
+
         const bullet = line.match(BULLET);
         const number = bullet ? null : line.match(NUMBER);
 
@@ -51,7 +82,13 @@ export function parseDescription(text: string): Block[] {
         }
     }
 
-    return blocks.filter((block) => (block.type === "paragraph" ? block.lines.length > 0 : block.items.length > 0));
+    return blocks.filter((block) =>
+        block.type === "heading"
+            ? block.text.length > 0
+            : block.type === "paragraph"
+                ? block.lines.length > 0
+                : block.items.length > 0
+    );
 }
 
 export default function RichDescription({ text, className = "" }: { text?: string | null; className?: string }) {
@@ -61,13 +98,21 @@ export default function RichDescription({ text, className = "" }: { text?: strin
     return (
         <div className={`space-y-2 break-words ${className}`}>
             {blocks.map((block, index) => {
+                if (block.type === "heading") {
+                    return (
+                        <p key={index} className="pt-2 font-semibold text-[#211b17] first:pt-0">
+                            <Inline text={block.text} />
+                        </p>
+                    );
+                }
+
                 if (block.type === "paragraph") {
                     return (
                         <p key={index}>
                             {block.lines.map((line, i) => (
                                 <span key={i}>
                                     {i > 0 && <br />}
-                                    {line}
+                                    <Inline text={line} />
                                 </span>
                             ))}
                         </p>
@@ -86,7 +131,9 @@ export default function RichDescription({ text, className = "" }: { text?: strin
                                         {i + 1}.
                                     </span>
                                 )}
-                                <span>{item}</span>
+                                <span>
+                                    <Inline text={item} />
+                                </span>
                             </li>
                         ))}
                     </Tag>

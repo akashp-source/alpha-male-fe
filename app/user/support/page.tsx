@@ -172,7 +172,7 @@ export default function SupportPage() {
 
     return (
         <main className="min-h-screen bg-[#f7f8fa]">
-            <div className="mx-auto w-full max-w-[1440px] px-4 py-7 sm:px-6 sm:py-9 lg:px-10 lg:py-12">
+            <div className="mx-auto w-full max-w-[1440px] px-4 py-7 sm:px-6 sm:py-9 lg:px-10 lg:py-12 pb-28 lg:pb-28">
                 <header className="mb-7 sm:mb-8">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#176348]">Your account</p>
                     <h1 className="mt-2 font-heading text-2xl font-bold tracking-wide text-[#07152e] sm:text-3xl">HELP &amp; SUPPORT</h1>

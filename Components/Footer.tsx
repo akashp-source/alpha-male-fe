@@ -9,7 +9,7 @@ export default function FooterPage() {
                 {/* Policy Links */}
                 <nav
                     aria-label="Footer navigation"
-                    className="flex flex-wrap justify-center gap-x-5 gap-y-3 text-[10px] text-[#B0B1B0] sm:justify-start"
+                    className="flex flex-wrap justify-center gap-x-5 gap-y-3 text-xs text-[#B0B1B0] sm:text-sm sm:justify-start"
                 >
                     <Link href="/" className="transition hover:text-white">
                         Home
@@ -49,11 +49,11 @@ export default function FooterPage() {
                 {/* Copyright and Age Restriction */}
                 <div className="flex flex-col items-center justify-between gap-4 border-t border-[#D5D5D7]/10 pt-5 text-center sm:flex-row sm:text-left">
 
-                    <p className="m-0 text-[8px] tracking-[0.08em] text-[#858E9E]">
+                    <p className="m-0 text-xs tracking-[0.04em] text-[#858E9E]">
                         © 2026 Alpha Male. All rights reserved.
                     </p>
 
-                    <p className="m-0 flex items-center gap-2 text-[8px] tracking-[0.08em] text-[#858E9E]">
+                    <p className="m-0 flex items-center gap-2 text-xs tracking-[0.04em] text-[#858E9E]">
                         <strong className="border border-[#D5D5D7]/30 px-2 py-1 text-[#D5D5D7]">
                             18+
                         </strong>

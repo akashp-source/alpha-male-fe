@@ -162,7 +162,7 @@ export default function ProductShowcase({
                 <div className="mt-9 text-center sm:mt-12">
                     <Link
                         href="/products"
-                        className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[#211b17] px-5 font-body text-[10px] font-bold uppercase tracking-[0.12em] text-[#211b17] transition-all duration-300 hover:border-[#176348] hover:bg-[#176348] hover:text-white sm:h-12 sm:gap-3 sm:px-8 sm:text-xs sm:tracking-[0.15em]"
+                        className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[#211b17] px-5 font-body text-[10px] font-bold uppercase tracking-[0.12em] text-[#211b17] transition-all duration-300 hover:border-[#071630] hover:bg-[#071630] hover:text-white sm:h-12 sm:gap-3 sm:px-8 sm:text-xs sm:tracking-[0.15em]"
                     >
                         Explore All Products
                         <ArrowUpRight size={15} />

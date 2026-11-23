@@ -61,17 +61,19 @@ export default function UserNavbar() {
                     {
                         token && (
                             <>
-                                <Link href="/orders" className="rounded-lg border border-[#07152e] px-4 py-2.5 text-xs font-semibold text-[#07152e] transition hover:bg-[#07152e] hover:text-white">My Orders</Link>
+                                <Link href="/user/orders" className="rounded-lg border border-[#07152e] px-4 py-2.5 text-xs font-semibold text-[#07152e] transition hover:bg-[#07152e] hover:text-white">My Orders</Link>
                             </>
                         )
                     }
 
+                    {/* Icon-only on phones, icon + text from sm up */}
                     <Link
                         href="/home"
-                        className="hidden items-center gap-1.5 text-xs font-medium text-[#718096] transition hover:text-[#176348] sm:flex"
+                        aria-label="Back to store"
+                        className="flex h-10 w-10 items-center justify-center gap-1.5 rounded-full border border-[#dce2ea] text-xs font-medium text-[#07152e] transition hover:bg-[#f5f7fa] sm:h-auto sm:w-auto sm:rounded-none sm:border-0 sm:text-[#526078] sm:hover:bg-transparent sm:hover:text-[#07152e]"
                     >
-                        <ArrowLeft size={14} />
-                        Back to store
+                        <ArrowLeft size={16} aria-hidden="true" />
+                        <span className="hidden sm:inline">Back to store</span>
                     </Link>
                 </div>
             </nav>

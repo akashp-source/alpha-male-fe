@@ -259,15 +259,18 @@ export default function Navbar() {
                             setIsCartOpen(true);
                             fetchCartCount();
                         }}
-                        className="flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-[#071630] px-2.5 text-white transition hover:bg-[#176348] sm:h-11 sm:gap-2 sm:px-3 md:h-[55px] md:gap-3 md:px-6"
+                        aria-label={`Open cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}
+                        aria-haspopup="dialog"
+                        aria-expanded={isCartOpen}
+                        className="flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-[#071630] px-2.5 text-white transition hover:bg-[#14284d] sm:h-11 sm:gap-2 sm:px-3 md:h-[55px] md:gap-3 md:px-6"
                     >
-                        <ShoppingCart size={21} strokeWidth={1.8} />
+                        <ShoppingCart size={21} strokeWidth={1.8} aria-hidden="true" />
 
-                        <span className="hidden font-body text-sm font-semibold md:inline md:text-base">
+                        <span aria-hidden="true" className="hidden font-body text-sm font-semibold md:inline md:text-base">
                             Cart
                         </span>
 
-                        <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-[#071630] md:h-6 md:min-w-6 md:px-1.5 md:text-xs">
+                        <span aria-hidden="true" className="flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-[#071630] md:h-6 md:min-w-6 md:px-1.5 md:text-xs">
                             {cartCount}
                         </span>
                     </button>
@@ -276,7 +279,9 @@ export default function Navbar() {
                     <button
                         type="button"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        aria-label="Toggle navigation"
+                        aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                        aria-expanded={mobileMenuOpen}
+                        aria-controls="mobile-navigation"
                         className="flex h-10 w-10 items-center justify-center text-[#071630] lg:hidden"
                     >
                         {mobileMenuOpen ? (
@@ -290,7 +295,7 @@ export default function Navbar() {
 
             {/* Mobile Navigation */}
             {mobileMenuOpen && (
-                <nav className="border-t border-gray-100 bg-white px-6 py-4 shadow-lg lg:hidden">
+                <nav id="mobile-navigation" aria-label="Main menu" className="border-t border-gray-100 bg-white px-6 py-4 shadow-lg lg:hidden">
                     <div className="flex flex-col">
                         {navLinks.map((link) => {
                             const active =

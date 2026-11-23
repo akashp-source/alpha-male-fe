@@ -1,19 +1,19 @@
 
 "use client";
 
-import { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { useId, useState } from "react";
+import { Plus, Minus } from "lucide-react";
 import { ONLINE_PAYMENT_DISCOUNT_PERCENT } from "@/lib/offers";
 import { WHATSAPP_LINK } from "@/lib/contact";
 
 const faqs = [
     {
-        question: "IS DELIVERY DISCREET?",
+        question: "Is delivery discreet?",
         answer:
             "Yes. Every order ships sealed, and the outside of the parcel never shows what's inside.",
     },
     {
-        question: "WHY WILL YOUR TEAM CALL ME AFTER I ORDER?",
+        question: "Why will your team call me after I order?",
         answer:
             "Every order is confirmed by phone before dispatch. Our team also runs a short consultation - age, health and current medicines - so every product reaches you safely.",
     },
@@ -36,7 +36,7 @@ const faqs = [
         ),
     },
     {
-        question: "HOW CAN I CONTACT YOUR TEAM?",
+        question: "How can I contact your team?",
         answer: (
             <>
                 Message us on{" "}
@@ -51,6 +51,7 @@ const faqs = [
 
 export default function FAQ() {
     const [openItems, setOpenItems] = useState<number[]>([]);
+    const idPrefix = useId();
 
     const toggleFAQ = (index: number) => {
         setOpenItems((prev) =>
@@ -71,7 +72,7 @@ export default function FAQ() {
 
                 {/* Heading */}
                 <div className="mb-10 text-center sm:mb-12">
-                    <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.4em] text-[#929BAE]">
+                    <p className="mb-3 text-xs font-medium uppercase tracking-[0.35em] text-[#929BAE]">
                         GOOD TO KNOW
                     </p>
 
@@ -80,53 +81,58 @@ export default function FAQ() {
                     </h2>
                 </div>
 
-                {/* FAQ Accordion */}
-                <div className="border-t border-[#D5D5D7]/[0.10]">
+                {/* FAQ Accordion: same card style as the product-page FAQ */}
+                <div className="space-y-3">
 
                     {faqs.map((faq, index) => {
                         const isOpen = openItems.includes(index);
+                        const buttonId = `${idPrefix}-faq-button-${index}`;
+                        const panelId = `${idPrefix}-faq-panel-${index}`;
 
                         return (
                             <div
                                 key={faq.question}
-                                className="border-b border-[#D5D5D7]/[0.10]"
+                                className={`overflow-hidden rounded-xl border bg-white transition-all duration-300 ${isOpen
+                                    ? "border-[#07162f]/40 shadow-sm"
+                                    : "border-[#e8e1d8]"
+                                    }`}
                             >
 
                                 {/* Question */}
                                 <button
                                     type="button"
+                                    id={buttonId}
                                     onClick={() => toggleFAQ(index)}
                                     aria-expanded={isOpen}
-                                    className="flex w-full items-center justify-between gap-5 py-6 text-left transition-colors hover:text-white sm:py-7"
+                                    aria-controls={panelId}
+                                    className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left md:px-7"
                                 >
-                                    <span className="font-heading text-[13px] font-semibold uppercase leading-[1.6] tracking-[0.035em] text-[#E0E0E2] sm:text-[14px]">
+                                    <span className="font-body text-sm font-semibold text-[#211b17] md:text-base">
                                         {faq.question}
                                     </span>
 
-                                    {isOpen ? (
-                                        <X
-                                            size={15}
-                                            strokeWidth={1.5}
-                                            className="shrink-0 text-[#AEB5C3]"
-                                        />
-                                    ) : (
-                                        <Plus
-                                            size={15}
-                                            strokeWidth={1.5}
-                                            className="shrink-0 text-[#AEB5C3]"
-                                        />
-                                    )}
+                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#e8f2ed] text-[#07162f]">
+                                        {isOpen ? (
+                                            <Minus size={16} />
+                                        ) : (
+                                            <Plus size={16} />
+                                        )}
+                                    </span>
                                 </button>
 
                                 {/* Answer */}
                                 <div
-                                    className={`grid transition-all duration-300 ease-in-out ${isOpen
-                                        ? "grid-rows-[1fr] opacity-100"
-                                        : "grid-rows-[0fr] opacity-0"
+                                    id={panelId}
+                                    role="region"
+                                    aria-labelledby={buttonId}
+                                    inert={!isOpen}
+                                    className={`grid transition-all duration-300 ${isOpen
+                                        ? "grid-rows-[1fr]"
+                                        : "grid-rows-[0fr]"
                                         }`}
                                 >
                                     <div className="overflow-hidden">
-                                        <p className="max-w-[620px] pb-6 pr-6 text-[12px] font-body leading-[1.9] text-[#AEB5C3] sm:text-[13px]">
+                                        <p className="px-5 pb-6 font-body text-sm leading-7 text-[#4a423b] md:px-7 md:text-base">
                                             {faq.answer}
                                         </p>
                                     </div>

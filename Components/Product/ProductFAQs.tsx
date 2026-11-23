@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Plus, Minus } from "lucide-react";
 
 interface FAQ {
@@ -19,6 +19,7 @@ export default function ProductFAQs({
     productName = "this product",
 }: ProductFAQsProps) {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const idPrefix = useId();
 
     if (!faqs.length) return null;
 
@@ -36,7 +37,7 @@ export default function ProductFAQs({
                         Frequently Asked Questions
                     </h2>
 
-                    <p className="mx-auto mt-4 max-w-xl font-body text-sm leading-7 text-[#91857b] md:text-base">
+                    <p className="mx-auto mt-4 max-w-xl font-body text-sm leading-7 text-[#5c534b] md:text-base">
                         Everything you need to know about {productName}.
                     </p>
                 </div>
@@ -44,6 +45,8 @@ export default function ProductFAQs({
                 <div className="space-y-3">
                     {faqs.map((faq, index) => {
                         const isOpen = openIndex === index;
+                        const buttonId = `${idPrefix}-faq-button-${index}`;
+                        const panelId = `${idPrefix}-faq-panel-${index}`;
 
                         return (
                             <div
@@ -58,7 +61,9 @@ export default function ProductFAQs({
                                     onClick={() =>
                                         setOpenIndex(isOpen ? null : index)
                                     }
+                                    id={buttonId}
                                     aria-expanded={isOpen}
+                                    aria-controls={panelId}
                                     className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left md:px-7"
                                 >
                                     <span className="font-body text-sm font-semibold text-[#211b17] md:text-base">
@@ -75,13 +80,17 @@ export default function ProductFAQs({
                                 </button>
 
                                 <div
+                                    id={panelId}
+                                    role="region"
+                                    aria-labelledby={buttonId}
+                                    inert={!isOpen}
                                     className={`grid transition-all duration-300 ${isOpen
                                         ? "grid-rows-[1fr]"
                                         : "grid-rows-[0fr]"
                                         }`}
                                 >
                                     <div className="overflow-hidden">
-                                        <p className="px-5 pb-6 font-body text-sm leading-7 text-[#746c65] md:px-7 md:text-base">
+                                        <p className="px-5 pb-6 font-body text-sm leading-7 text-[#4a423b] md:px-7 md:text-base">
                                             {faq.answer}
                                         </p>
                                     </div>

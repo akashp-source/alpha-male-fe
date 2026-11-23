@@ -1190,7 +1190,7 @@ export default function CheckoutPage() {
                             type="button"
                             onClick={placeOrder}
                             disabled={submitting || !paymentMethod}
-                            className="hidden min-h-14 w-full items-center justify-center gap-2 bg-[#071630] px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#176348] disabled:cursor-not-allowed disabled:opacity-60 lg:flex"
+                            className="hidden min-h-14 w-full items-center justify-center gap-2 bg-[#071630] px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-60 lg:flex"
                         >
                             {submitting
                                 ? "PROCESSING..."
@@ -1476,7 +1476,7 @@ export default function CheckoutPage() {
                             type="button"
                             onClick={placeOrder}
                             disabled={submitting || !paymentMethod}
-                            className="flex min-h-14 w-full items-center justify-center gap-2 bg-[#071630] px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#176348] disabled:cursor-not-allowed disabled:opacity-60"
+                            className="flex min-h-14 w-full items-center justify-center gap-2 bg-[#071630] px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-60"
                         >
                             {submitting
                                 ? "PROCESSING..."

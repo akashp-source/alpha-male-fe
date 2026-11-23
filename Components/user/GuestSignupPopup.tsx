@@ -255,7 +255,7 @@ export default function GuestSignupPopup() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-[#07152e] text-sm font-bold text-white transition hover:bg-[#176348] disabled:opacity-60"
+                                className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-[#07152e] text-sm font-bold text-white transition hover:bg-[#14284d] disabled:opacity-60"
                             >
                                 {loading ? "PLEASE WAIT..." : "GET OTP"}
                             </button>

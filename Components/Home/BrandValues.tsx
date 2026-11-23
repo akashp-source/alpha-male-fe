@@ -40,7 +40,7 @@ export default function BrandValues() {
             <div className="mx-auto max-w-[1320px]">
                 <div className="mb-8 grid gap-4 sm:mb-10 md:grid-cols-[1fr_340px] md:items-end">
                     <div>
-                        <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.28em] text-[#526987] sm:text-xs">WHY ALPHA MALE</p>
+                        <p className="mb-2 text-xs font-bold uppercase tracking-[0.28em] text-[#526987]">WHY ALPHA MALE</p>
                         <h2 className="max-w-2xl font-heading text-3xl font-semibold uppercase leading-tight sm:text-4xl lg:text-[46px]">
                             Wellness, without the awkwardness.
                         </h2>
@@ -62,22 +62,24 @@ export default function BrandValues() {
                         </article>
                     ))}
 
-                    {/* Photo on top, text below on navy: the text never sits on the image.
+                    {/* Photo and text on navy: the text never sits on the image.
+                        Stacked on phone/tablet; side by side on desktop so this card is no
+                        taller than cards 04-05 next to it (a tall card left them half empty).
                         info-products.png is info.png without its built-in badge column. */}
-                    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-[#071630] shadow-[0_6px_20px_rgba(7,22,48,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(7,22,48,0.18)]">
-                        <div className="relative h-44 shrink-0 overflow-hidden bg-[linear-gradient(180deg,#f3e2d6_0%,#ecdcd1_100%)] sm:h-48 lg:h-auto lg:min-h-[180px] lg:flex-1">
+                    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-[#071630] shadow-[0_6px_20px_rgba(7,22,48,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(7,22,48,0.18)] lg:flex-row">
+                        <div className="relative h-44 shrink-0 overflow-hidden bg-[linear-gradient(180deg,#f3e2d6_0%,#ecdcd1_100%)] sm:h-48 lg:h-auto lg:w-[42%]">
                             <Image
                                 src="/images/utils/info-products.png"
                                 alt="Alpha Male condoms, delay spray and oral strips"
                                 fill
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                className="object-contain object-bottom px-6 pt-4 transition-transform duration-700 group-hover:scale-[1.03]"
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 15vw"
+                                className="object-contain object-bottom px-6 pt-4 transition-transform duration-700 group-hover:scale-[1.03] lg:px-3"
                             />
                         </div>
-                        <div className="p-5 text-white sm:p-6">
-                            <p className="mb-1 text-[9px] font-bold uppercase tracking-[0.25em] text-[#d7c29e]">MADE FOR YOU</p>
-                            <h3 className="font-heading text-xl font-bold uppercase leading-snug sm:text-2xl">Feel good about taking care.</h3>
-                            <Link href="/products" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-white/60 px-4 py-2.5 text-xs font-semibold transition hover:bg-white hover:text-[#071630]">
+                        <div className="p-5 text-white sm:p-6 lg:flex lg:flex-1 lg:flex-col lg:justify-center lg:p-5">
+                            <p className="mb-1 text-xs font-bold uppercase tracking-[0.25em] text-[#d7c29e]">MADE FOR YOU</p>
+                            <h3 className="font-heading text-xl font-bold uppercase leading-snug sm:text-2xl lg:text-xl">Feel good about taking care.</h3>
+                            <Link href="/products" className="mt-4 inline-flex items-center gap-2 self-start rounded-lg border border-white/60 px-4 py-2.5 text-xs font-semibold transition hover:bg-white hover:text-[#071630]">
                                 Explore the collection <span aria-hidden="true">→</span>
                             </Link>
                         </div>

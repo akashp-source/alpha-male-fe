@@ -42,7 +42,7 @@ export default function ProductHowItWorks({
                                 className="flex min-h-[90px] items-center gap-4 rounded-[20px] bg-[#202c45] px-4 py-4 transition duration-300 hover:bg-[#293751] sm:gap-5 sm:px-5"
                             >
                                 {/* Number */}
-                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#315bd5] font-body text-lg font-bold text-white sm:h-14 sm:w-14 sm:text-xl">
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#e9b949] to-[#b8801f] font-body text-lg font-bold text-[#07162f] sm:h-14 sm:w-14 sm:text-xl">
                                     {index + 1}
                                 </div>
 

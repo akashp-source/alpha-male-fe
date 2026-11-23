@@ -145,7 +145,7 @@ export default function ProductComparison({ comparison }: ProductComparisonProps
                             <VsBadge className="absolute left-0 top-[calc(50%+1rem)] z-10 -translate-x-1/2 -translate-y-1/2" />
                             <div className="flex flex-col items-center gap-3">
                                 <ColumnAvatar image={comparison.otherImage} ours={false} />
-                                <h3 className="font-body text-base font-semibold leading-snug text-[#5b6577] lg:text-lg">{otherLabel}</h3>
+                                <h3 className="font-body text-base font-semibold leading-snug text-[#4b5565] lg:text-lg">{otherLabel}</h3>
                             </div>
                         </div>
                     </div>
@@ -168,7 +168,7 @@ export default function ProductComparison({ comparison }: ProductComparisonProps
 
                                     <div role="cell" className={`flex items-center gap-3 px-5 py-5 ${divider ? "border-b border-[#eef1f6]" : ""}`}>
                                         <Tick ours={false} />
-                                        <span className="font-body text-sm leading-relaxed text-[#6b7485] lg:text-[15px]">{row.others}</span>
+                                        <span className="font-body text-sm leading-relaxed text-[#4b5565] lg:text-[15px]">{row.others}</span>
                                     </div>
                                 </div>
                             );
@@ -200,7 +200,7 @@ export default function ProductComparison({ comparison }: ProductComparisonProps
                         </div>
                         <div className="flex flex-col items-center gap-2 rounded-3xl border border-[#e3e8f0] bg-white px-3 pb-5 pt-7 text-center">
                             <ColumnAvatar image={comparison.otherImage} ours={false} />
-                            <span className="font-body text-xs font-semibold leading-snug text-[#5b6577]">{otherLabel}</span>
+                            <span className="font-body text-sm font-semibold leading-snug text-[#4b5565]">{otherLabel}</span>
                         </div>
                         <VsBadge className="absolute left-1/2 top-1/2 z-10 h-11 w-11 -translate-x-1/2 -translate-y-1/2 text-xs" />
                     </div>
@@ -219,7 +219,7 @@ export default function ProductComparison({ comparison }: ProductComparisonProps
                                     </div>
                                     <div className="flex items-start gap-2 px-3 py-3">
                                         <Tick ours={false} />
-                                        <span className="font-body text-xs leading-relaxed text-[#6b7485]">{row.others}</span>
+                                        <span className="font-body text-sm leading-relaxed text-[#4b5565]">{row.others}</span>
                                     </div>
                                 </div>
                             </li>
