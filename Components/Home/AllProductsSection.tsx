@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ArrowRight, Search, ShoppingBag, SlidersHorizontal, X } from "lucide-react";
 import type { Product } from "@/types/product";
 import AddToCartButton from "@/Components/Cart/AddToCartButton";
-import { useStoreCategories } from "@/lib/categories";
+import { categoryLabel, useStoreCategories } from "@/lib/categories";
 
 type Props = { products: Product[] };
 type PriceFilter = "all" | "under500" | "500-1000" | "over1000";
@@ -20,7 +20,7 @@ export default function AllProductsSection({ products }: Props) {
     // Category filter options come from the backend (GET /categories).
     const categories = useStoreCategories();
     const categoryName = (slug: string) =>
-        categories.find((item) => item.slug === slug)?.name ?? slug.replaceAll("-", " ");
+        categoryLabel(categories.find((item) => item.slug === slug)?.name ?? slug.replaceAll("-", " "));
     const [apiProducts, setApiProducts] = useState(products);
     const [total, setTotal] = useState(products.length);
     const [page, setPage] = useState(1);
@@ -101,16 +101,16 @@ export default function AllProductsSection({ products }: Props) {
                     <p className="mx-auto mt-2 max-w-xl text-xs leading-5 text-slate-600 sm:mt-3 sm:text-sm sm:leading-6">Find the right essentials for your confidence, comfort and wellbeing.</p>
                 </div>
 
-                <form onSubmit={submitSearch} className="mb-4 flex items-center rounded-xl border border-slate-300 bg-white p-1.5 shadow-sm focus-within:ring-2 focus-within:ring-[#071630]/20 lg:hidden">
+                <form onSubmit={submitSearch} className="mb-4 flex items-center rounded-xl border border-slate-300 bg-white p-1.5 shadow-sm focus-within:border-[#071630] focus-within:ring-2 focus-within:ring-[#071630] lg:hidden">
                     <Search size={18} className="ml-2 shrink-0 text-slate-500" />
                     <input value={searchDraft} onChange={(event) => setSearchDraft(event.target.value)} placeholder="Search products..." aria-label="Search products" className="min-w-0 flex-1 px-2 py-2.5 text-sm text-[#071630] outline-none" />
-                    <button type="submit" className="rounded-lg bg-[#071630] px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-[#176348] sm:px-4 sm:text-sm">Search</button>
+                    <button type="submit" className="rounded-lg bg-[#071630] px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-[#14284d] sm:px-4 sm:text-sm">Search</button>
                 </form>
 
                 <div className="grid gap-5 lg:grid-cols-[260px_minmax(0,1fr)] xl:gap-8">
                     <aside className="hidden h-fit rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 lg:block">
                         {/* Compact search for the narrow sidebar: full-width field, icon submit button */}
-                        <form onSubmit={submitSearch} role="search" className="mb-5 flex h-11 items-center gap-1 rounded-full border border-slate-200 bg-slate-50 pl-3.5 pr-1 transition focus-within:border-[#071630]/40 focus-within:bg-white focus-within:ring-2 focus-within:ring-[#071630]/10">
+                        <form onSubmit={submitSearch} role="search" className="mb-5 flex h-11 items-center gap-1 rounded-full border border-slate-200 bg-slate-50 pl-3.5 pr-1 transition focus-within:border-[#071630] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#071630]">
                             <Search size={16} className="shrink-0 text-slate-400" aria-hidden="true" />
                             <input
                                 type="search"
@@ -133,7 +133,7 @@ export default function AllProductsSection({ products }: Props) {
                             <button
                                 type="submit"
                                 aria-label="Search"
-                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#071630] text-white transition hover:bg-[#176348]"
+                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#071630] text-white transition hover:bg-[#14284d]"
                             >
                                 <ArrowRight size={16} />
                             </button>
@@ -146,7 +146,7 @@ export default function AllProductsSection({ products }: Props) {
                             <legend className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Category</legend>
                             <div className="space-y-3">
                                 {categories.map((item) => <label key={item.slug} className="flex cursor-pointer items-center gap-3 text-sm">
-                                    <input type="checkbox" checked={category === item.slug} onChange={() => updateCategory(category === item.slug ? "" : item.slug)} className="h-4 w-4 accent-[#071630]" />{item.name}
+                                    <input type="checkbox" checked={category === item.slug} onChange={() => updateCategory(category === item.slug ? "" : item.slug)} className="h-4 w-4 accent-[#071630]" />{categoryLabel(item.name)}
                                 </label>)}
                             </div>
                         </fieldset>
@@ -184,7 +184,7 @@ export default function AllProductsSection({ products }: Props) {
                         {mobileFiltersOpen && <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm lg:hidden">
                             <div className="mb-3 flex items-center justify-between"><h3 className="text-sm font-bold">Filter products</h3><button type="button" onClick={clearFilters} className="text-xs underline">Clear all</button></div>
                             <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-3">
-                                <fieldset><legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">Category</legend>{categories.map((item) => <label key={item.slug} className="mb-2 flex items-center gap-2 text-xs"><input type="checkbox" checked={category === item.slug} onChange={() => updateCategory(category === item.slug ? "" : item.slug)} className="h-4 w-4 accent-[#071630]" />{item.name}</label>)}</fieldset>
+                                <fieldset><legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">Category</legend>{categories.map((item) => <label key={item.slug} className="mb-2 flex items-center gap-2 text-xs"><input type="checkbox" checked={category === item.slug} onChange={() => updateCategory(category === item.slug ? "" : item.slug)} className="h-4 w-4 accent-[#071630]" />{categoryLabel(item.name)}</label>)}</fieldset>
                                 <fieldset><legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">Price</legend>{([["all", "Any price"], ["under500", "Under ₹500"], ["500-1000", "₹500–₹1,000"], ["over1000", "Over ₹1,000"]] as [PriceFilter, string][]).map(([value, label]) => <label key={value} className="mb-2 flex items-center gap-2 text-xs"><input type="radio" name="mobile-home-price" checked={price === value} onChange={() => updatePrice(value)} className="h-4 w-4 accent-[#071630]" />{label}</label>)}</fieldset>
                                 <fieldset><legend className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">Availability & offers</legend><label className="mb-2 flex items-center gap-2 text-xs"><input type="checkbox" checked={inStock} onChange={(e) => { setInStock(e.target.checked); setPage(1); }} className="h-4 w-4 accent-[#071630]" />In stock</label><label className="mb-2 flex items-center gap-2 text-xs"><input type="checkbox" checked={saleOnly} onChange={(e) => setSaleOnly(e.target.checked)} className="h-4 w-4 accent-[#071630]" />On sale</label><label className="mb-2 flex items-center gap-2 text-xs"><input type="checkbox" checked={comboOnly} onChange={(e) => setComboOnly(e.target.checked)} className="h-4 w-4 accent-[#071630]" />Combo packs</label></fieldset>
                             </div>

@@ -214,7 +214,7 @@ export default function SavedAddressesPage() {
                     <button type="button" aria-label="Dismiss notification" onClick={() => setToastMessage("")} className="rounded p-0.5 text-[#718096] hover:bg-[#f1f3f6] hover:text-[#07152e]"><X size={16} /></button>
                 </div>
             )}
-            <div className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+            <div className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-10 lg:py-12 pb-28 lg:pb-28">
                 <div className="mb-7">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#176348]">Your account</p>
                     <h1 className="mt-2 font-heading text-2xl font-bold tracking-wide text-[#07152e] sm:text-3xl">SAVED ADDRESSES</h1>

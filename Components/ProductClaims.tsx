@@ -83,7 +83,7 @@ export default function ProductClaims({
                                 </h3>
 
                                 {/* Description */}
-                                <p className="max-w-[190px] font-body text-[11px] leading-relaxed text-[#71817e] sm:text-xs">
+                                <p className="max-w-[200px] font-body text-sm leading-relaxed text-[#3f4d4a]">
                                     {claim.description}
                                 </p>
                             </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import RichDescription from "./RichDescription";
 
 interface ProductDetailedDescriptionProps {
     detailedDescription?: string;
@@ -19,12 +20,6 @@ export default function ProductDetailedDescription({
 
     const text = detailedDescription?.trim();
     if (!text) return null;
-
-    // Blank lines separate paragraphs; single line breaks are kept inside a paragraph.
-    const paragraphs = text
-        .split(/\n\s*\n/)
-        .map((paragraph) => paragraph.trim())
-        .filter(Boolean);
 
     const isLong = text.length > COLLAPSE_THRESHOLD;
     const collapsed = isLong && !expanded;
@@ -49,16 +44,11 @@ export default function ProductDetailedDescription({
                             className={`relative overflow-hidden transition-[max-height] duration-500 ${collapsed ? "max-h-72 sm:max-h-80" : "max-h-none"
                                 }`}
                         >
-                            <div className="space-y-4 font-body text-sm leading-7 text-[#746c65] sm:text-base sm:leading-8">
-                                {paragraphs.map((paragraph, index) => (
-                                    <p
-                                        key={index}
-                                        className="whitespace-pre-line break-words"
-                                    >
-                                        {paragraph}
-                                    </p>
-                                ))}
-                            </div>
+                            {/* Bullets, numbered lines, "#" headings and **bold** render as real markup */}
+                            <RichDescription
+                                text={text}
+                                className="space-y-4 font-body text-sm leading-7 text-[#4a423b] sm:text-base sm:leading-8"
+                            />
 
                             {collapsed && (
                                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#faf7f2] to-transparent" />

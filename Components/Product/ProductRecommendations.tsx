@@ -163,7 +163,7 @@ export default function ProductRecommendations({ product }: { product: Product }
                             <div className="rounded-xl border border-[#e8ded4] bg-white/70 p-4 shadow-sm">
                                 <p className="font-body text-[10px] text-[#8b8077]">Total for {selectedProducts.length} {selectedProducts.length === 1 ? "item" : "items"}</p>
                                 <p className="mt-1 font-body text-2xl font-bold">{formatPrice(bundleTotal)}</p>
-                                <button type="button" onClick={addBundle} disabled={addingBundle || !selectedProducts.length} className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#071630] px-3 font-body text-xs font-bold text-white transition hover:bg-[#176348] disabled:opacity-60">
+                                <button type="button" onClick={addBundle} disabled={addingBundle || !selectedProducts.length} className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#071630] px-3 font-body text-xs font-bold text-white transition hover:bg-[#14284d] disabled:opacity-60">
                                     {addingBundle ? <Loader2 size={15} className="animate-spin" /> : <ShoppingCart size={15} />}
                                     {addingBundle ? "Adding..." : `Add ${selectedProducts.length} to cart`}
                                 </button>
@@ -194,7 +194,7 @@ export default function ProductRecommendations({ product }: { product: Product }
                                                 <span className="font-body text-sm font-bold">{formatPrice(item.price)}</span>
                                                 {item.compareAtPrice && item.compareAtPrice > item.price && <span className="font-body text-[10px] text-[#a69a90] line-through">{formatPrice(item.compareAtPrice)}</span>}
                                             </div>
-                                            <button type="button" onClick={() => addRecommended(item)} disabled={addingProductId === item._id} className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#071630] font-body text-[10px] font-bold text-white transition hover:bg-[#176348] disabled:opacity-60">
+                                            <button type="button" onClick={() => addRecommended(item)} disabled={addingProductId === item._id} className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#071630] font-body text-[10px] font-bold text-white transition hover:bg-[#14284d] disabled:opacity-60">
                                                 {addingProductId === item._id ? <Loader2 size={13} className="animate-spin" /> : <ShoppingCart size={13} />}
                                                 {addingProductId === item._id ? "Adding..." : "Add to cart"}
                                             </button>

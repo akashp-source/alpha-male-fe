@@ -47,7 +47,7 @@ function BestSellerCard({
                     </div>
                 )}
 
-                <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-[#211b17] px-2.5 py-1 font-body text-[9px] font-bold uppercase tracking-wider text-[#f0c65b] sm:text-[10px]">
+                <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-[#211b17] px-2.5 py-1 font-body text-xs font-bold uppercase tracking-wider text-[#f0c65b]">
                     <Flame size={11} />
                     Best seller
                 </span>
@@ -65,13 +65,13 @@ function BestSellerCard({
                             {money(product.price)}
                         </span>
                     </div>
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f3ede5] text-[#211b17] transition-colors group-hover:bg-[#176348] group-hover:text-white">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f3ede5] text-[#211b17] transition-colors group-hover:bg-[#071630] group-hover:text-white">
                         <ArrowUpRight size={15} />
                     </span>
                 </div>
 
                 {product.stock <= 0 && (
-                    <p className="mt-1.5 font-body text-[10px] font-semibold text-red-600">Out of stock</p>
+                    <p className="mt-1.5 font-body text-xs font-semibold text-red-600">Out of stock</p>
                 )}
             </div>
         </Link>
@@ -89,7 +89,7 @@ export default function BestSellers({ products }: BestSellersProps) {
         <section className="w-full bg-white px-3 py-10 sm:px-6 sm:py-14 lg:px-10" aria-labelledby="best-sellers-heading">
             <div className="mx-auto max-w-[1450px]">
                 <div className="mb-6 flex flex-col items-center text-center sm:mb-10">
-                    <p className="mb-2 inline-flex items-center gap-1.5 font-body text-[9px] font-bold uppercase tracking-[0.3em] text-[#176348] sm:text-xs">
+                    <p className="mb-2 inline-flex items-center gap-1.5 font-body text-xs font-bold uppercase tracking-[0.3em] text-[#176348]">
                         <Flame size={13} className="text-[#c28a29]" />
                         Most loved
                     </p>
@@ -111,7 +111,7 @@ export default function BestSellers({ products }: BestSellersProps) {
                         ))}
                     </ul>
                     {products.length > 1 && (
-                        <p className="mt-1 text-center font-body text-[10px] uppercase tracking-[0.2em] text-[#a69a90]">
+                        <p className="mt-1 text-center font-body text-xs uppercase tracking-[0.2em] text-[#5c534b]">
                             Swipe to see more →
                         </p>
                     )}

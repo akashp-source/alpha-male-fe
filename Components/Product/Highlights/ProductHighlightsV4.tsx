@@ -129,7 +129,7 @@ function HighlightCard({
                     {item.title}
                 </h3>
 
-                <p className="font-body text-[11px] leading-relaxed text-white/75 sm:text-xs">
+                <p className="font-body text-sm leading-relaxed text-[#E9E9EA]">
                     {item.description}
                 </p>
             </div>

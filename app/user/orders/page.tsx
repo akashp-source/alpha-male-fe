@@ -180,7 +180,7 @@ export default function MyOrdersPage() {
 
     return (
         <main className="min-h-screen bg-[#fafbfc]">
-            <div className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+            <div className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-10 lg:py-12 pb-28 lg:pb-28">
                 <div className="mb-7">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#176348]">
                         Your account

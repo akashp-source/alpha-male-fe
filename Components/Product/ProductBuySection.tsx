@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import type { Product } from "@/types/product";
 import { addToCart } from "@/lib/cart";
@@ -163,6 +163,41 @@ export default function ProductBuySection({
         }
     };
 
+    // Radio-group keyboard support: arrow keys move to and select the
+    // previous/next enabled offer.
+    const handleOfferKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+        const forward = event.key === "ArrowRight" || event.key === "ArrowDown";
+        const backward = event.key === "ArrowLeft" || event.key === "ArrowUp";
+        if (!forward && !backward) return;
+
+        const radios = Array.from(
+            event.currentTarget.querySelectorAll<HTMLButtonElement>(
+                '[role="radio"]:not(:disabled)'
+            )
+        );
+        if (radios.length === 0) return;
+
+        event.preventDefault();
+        const current = radios.indexOf(
+            document.activeElement as HTMLButtonElement
+        );
+        const next =
+            current === -1
+                ? 0
+                : (current + (forward ? 1 : -1) + radios.length) % radios.length;
+        radios[next].focus();
+        if (radios[next].getAttribute("aria-checked") !== "true") {
+            radios[next].click();
+        }
+    };
+
+    // Roving tabindex: the selected offer (or the first enabled one when
+    // nothing is selected) is the single tab stop in the group.
+    const firstEnabledComboIndex = (product.comboOffers ?? []).findIndex(
+        (offer) => offer.quantity <= product.stock
+    );
+    const anyOfferSelected = activeCombo !== null || bulkActive;
+
     return (
         <section className="w-full bg-[#faf7f2] text-[#211b17]">
             <div className="pdp-container py-4 sm:py-5 lg:py-6">
@@ -217,7 +252,7 @@ export default function ProductBuySection({
                         {/* Description: bullet lines ("- ", "• ", "* ") render as points */}
                         <RichDescription
                             text={product.description}
-                            className="order-8 mt-3 font-body text-xs leading-6 text-[#8b8077] sm:text-sm md:order-2"
+                            className="order-8 mt-3 font-body text-xs leading-6 text-[#5c534b] sm:text-sm md:order-2"
                         />
 
                         {/* Product Price */}
@@ -301,20 +336,28 @@ export default function ProductBuySection({
 
                                 <div className="mb-2 flex items-center justify-between gap-2">
                                     <div>
-                                        <h2 className="font-heading text-base font-bold sm:text-lg">
+                                        <h2
+                                            id="combo-offers-heading"
+                                            className="font-heading text-base font-bold sm:text-lg"
+                                        >
                                             Special Combo Offers
                                         </h2>
 
-                                        <p className="mt-1 font-body text-[11px] text-[#94877d] sm:text-xs">
+                                        <p className="mt-1 font-body text-xs text-[#94877d] sm:text-sm">
                                             Buy more and save more
                                         </p>
                                     </div>
 
-                                    <span className="shrink-0 rounded-full bg-[#e5f1e9] px-3 py-1 font-body text-[9px] font-bold uppercase tracking-wider text-[#176348] sm:text-[10px]">
+                                    <span className="shrink-0 rounded-full bg-[#e5f1e9] px-3 py-1 font-body text-xs font-bold uppercase tracking-wider text-[#176348]">
                                         Best Deals
                                     </span>
                                 </div>
 
+                                <div
+                                    role="radiogroup"
+                                    aria-labelledby="combo-offers-heading"
+                                    onKeyDown={handleOfferKeyDown}
+                                >
                                 <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
 
                                     {(product.comboOffers ?? []).map(
@@ -350,6 +393,15 @@ export default function ProductBuySection({
                                                 <button
                                                     type="button"
                                                     key={index}
+                                                    role="radio"
+                                                    aria-checked={isSelected}
+                                                    tabIndex={
+                                                        isSelected ||
+                                                            (!anyOfferSelected &&
+                                                                index === firstEnabledComboIndex)
+                                                            ? 0
+                                                            : -1
+                                                    }
                                                     disabled={exceedsStock}
                                                     onClick={() =>
                                                         selectCombo(
@@ -362,18 +414,21 @@ export default function ProductBuySection({
                                                         } disabled:cursor-not-allowed disabled:opacity-40`}
                                                 >
                                                     {isSelected && (
-                                                        <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-[#176348] text-white">
-                                                            <Check size={12} />
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#176348] text-white sm:right-3 sm:top-3"
+                                                        >
+                                                            <Check size={12} strokeWidth={3} />
                                                         </span>
                                                     )}
 
-                                                    <p className="break-words pr-5 font-body text-[11px] font-bold leading-snug sm:text-sm">
+                                                    <p className="break-words pr-6 font-body text-xs font-bold leading-snug sm:text-sm">
                                                         {offer.title ||
                                                             `Buy ${offer.quantity} Packs`}
                                                     </p>
 
                                                     {offer.description && (
-                                                        <p className="mt-1 break-words font-body text-[9px] leading-3.5 text-[#91857b] sm:text-xs sm:leading-4">
+                                                        <p className="mt-1 break-words font-body text-xs leading-4 text-[#91857b]">
                                                             {offer.description}
                                                         </p>
                                                     )}
@@ -385,7 +440,7 @@ export default function ProductBuySection({
                                                             )}
                                                         </span>
 
-                                                        <span className="font-body text-[10px] text-[#a69a90] line-through">
+                                                        <span className="font-body text-xs text-[#a69a90] line-through">
                                                             {formatPrice(
                                                                 regularPrice
                                                             )}
@@ -393,7 +448,7 @@ export default function ProductBuySection({
                                                     </div>
 
                                                     {offerSavings > 0 && (
-                                                        <p className="mt-1 font-body text-[10px] font-semibold text-[#176348]">
+                                                        <p className="mt-1 font-body text-xs font-semibold text-[#176348]">
                                                             Save{" "}
                                                             {formatPrice(
                                                                 offerSavings
@@ -404,7 +459,7 @@ export default function ProductBuySection({
                                                     )}
 
                                                     {isSelected && (
-                                                        <p className="mt-1 font-body text-[10px] font-semibold text-[#176348]">
+                                                        <p className="mt-1 font-body text-xs font-semibold text-[#176348]">
                                                             Selected
                                                         </p>
                                                     )}
@@ -418,6 +473,15 @@ export default function ProductBuySection({
                                 {bulkPercent > 0 && (
                                     <button
                                         type="button"
+                                        role="radio"
+                                        aria-checked={bulkActive}
+                                        tabIndex={
+                                            bulkActive ||
+                                                (!anyOfferSelected &&
+                                                    firstEnabledComboIndex === -1)
+                                                ? 0
+                                                : -1
+                                        }
                                         disabled={bulkMinQuantity > product.stock}
                                         onClick={() =>
                                             bulkActive
@@ -430,29 +494,33 @@ export default function ProductBuySection({
                                             } disabled:cursor-not-allowed disabled:opacity-40`}
                                     >
                                         {bulkActive && (
-                                            <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-[#176348] text-white">
-                                                <Check size={12} />
+                                            <span
+                                                aria-hidden="true"
+                                                className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#176348] text-white sm:right-3 sm:top-3"
+                                            >
+                                                <Check size={12} strokeWidth={3} />
                                             </span>
                                         )}
 
-                                        <p className="break-words pr-5 font-body text-[11px] font-bold leading-snug sm:text-sm">
+                                        <p className="break-words pr-6 font-body text-xs font-bold leading-snug sm:text-sm">
                                             Buy {bulkMinQuantity}+ packs
                                         </p>
 
                                         <p className="mt-1 font-body text-sm font-bold text-[#176348] sm:text-base">
                                             {bulkPercent}% OFF
-                                            <span className="ml-1 font-body text-[10px] font-semibold text-[#91857b]">
+                                            <span className="ml-1 font-body text-xs font-semibold text-[#91857b]">
                                                 on every pack
                                             </span>
                                         </p>
 
                                         {bulkActive && (
-                                            <p className="mt-1 font-body text-[10px] font-semibold text-[#176348]">
+                                            <p className="mt-1 font-body text-xs font-semibold text-[#176348]">
                                                 Applied to {quantity} packs
                                             </p>
                                         )}
                                     </button>
                                 )}
+                                </div>
 
                                 {/* Remove Combo */}
                                 {(activeCombo || bulkActive) && (
@@ -501,7 +569,7 @@ export default function ProductBuySection({
                                 type="button"
                                 disabled={outOfStock || pending !== null}
                                 onClick={handleAddToCart}
-                                className="flex h-12 items-center justify-center gap-2 rounded-lg bg-[#17120f] px-4 font-body text-sm font-semibold text-[#e7c49c] transition hover:bg-[#30251e] disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-[#071630] bg-[#071630] px-4 font-body text-sm font-semibold text-white transition hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {pending === "cart" ? (
                                     <Loader2 size={16} className="animate-spin" />
@@ -515,7 +583,7 @@ export default function ProductBuySection({
                                 type="button"
                                 disabled={outOfStock || pending !== null}
                                 onClick={handleBuyNow}
-                                className="flex h-12 items-center justify-center gap-2 rounded-lg bg-[#07162f] px-4 font-body text-sm font-semibold text-white transition hover:bg-[#105139] disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-[#071630] bg-transparent px-4 font-body text-sm font-semibold text-[#071630] transition hover:bg-[#E9E9EA] disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {pending === "buy" ? (
                                     <Loader2 size={16} className="animate-spin" />
@@ -535,17 +603,17 @@ export default function ProductBuySection({
                         {/* Trust Features */}
                         <div className="order-7 mt-3 grid grid-cols-3 gap-2 border-t border-[#e8ded4] pt-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-3 sm:pt-4">
 
-                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-[9px] leading-tight text-[#8b8077] sm:flex-row sm:text-xs">
+                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-[#5c534b] sm:flex-row">
                                 <Package size={14} className="shrink-0" />
                                 Plain packaging
                             </div>
 
-                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-[9px] leading-tight text-[#8b8077] sm:flex-row sm:text-xs">
+                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-[#5c534b] sm:flex-row">
                                 <ShieldCheck size={14} className="shrink-0" />
                                 Private billing
                             </div>
 
-                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-[9px] leading-tight text-[#8b8077] sm:flex-row sm:text-xs">
+                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-[#5c534b] sm:flex-row">
                                 <RefreshCcw size={14} className="shrink-0" />
                                 Easy returns
                             </div>
