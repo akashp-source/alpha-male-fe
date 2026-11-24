@@ -5,7 +5,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
     X,
     Package,
-    RotateCcw,
     Gift,
     Lock,
 } from "lucide-react";
@@ -158,7 +157,7 @@ export default function GuestSignupPopup() {
                         discreetly.
                     </h2>
 
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                         <Benefit
                             icon={<Gift size={21} />}
                             title={`Extra ${ONLINE_PAYMENT_DISCOUNT_PERCENT}% off`}
@@ -169,12 +168,6 @@ export default function GuestSignupPopup() {
                             icon={<Package size={21} />}
                             title="100% discreet delivery"
                             description="Plain packaging and private billing on every order."
-                        />
-
-                        <Benefit
-                            icon={<RotateCcw size={21} />}
-                            title="Easy returns"
-                            description="Simple returns if something isn't right."
                         />
                     </div>
 

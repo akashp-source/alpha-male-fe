@@ -27,7 +27,6 @@ import {
     Check,
     ShieldCheck,
     Package,
-    RefreshCcw,
     ChevronRight,
 } from "lucide-react";
 
@@ -820,7 +819,7 @@ export default function ProductBuySection({
                         </div>
 
                         {/* Trust Features */}
-                        <div className="order-7 mt-3 grid grid-cols-3 gap-2 border-t border-[#e8ded4] pt-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-3 sm:pt-4">
+                        <div className="order-7 mt-3 grid grid-cols-2 gap-2 border-t border-[#e8ded4] pt-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-3 sm:pt-4">
 
                             <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-brand-navy-muted sm:flex-row">
                                 <Package size={14} className="shrink-0" />
@@ -830,11 +829,6 @@ export default function ProductBuySection({
                             <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-brand-navy-muted sm:flex-row">
                                 <ShieldCheck size={14} className="shrink-0" />
                                 Private billing
-                            </div>
-
-                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-brand-navy-muted sm:flex-row">
-                                <RefreshCcw size={14} className="shrink-0" />
-                                Easy returns
                             </div>
                         </div>
 

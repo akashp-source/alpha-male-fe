@@ -12,7 +12,6 @@ import {
     ShoppingCart,
     Package,
     CreditCard,
-    RotateCcw,
     ShieldCheck,
 } from "lucide-react";
 
@@ -414,7 +413,7 @@ export default function LoginPage() {
                             </div>
                         </div>
 
-                        <div className="mt-7 grid grid-cols-3 gap-4">
+                        <div className="mt-7 grid grid-cols-2 gap-4">
                             <div>
                                 <Package size={18} className="mb-2 text-[#c2d0df]" />
                                 <p className="text-[11px] font-semibold">Plain packaging</p>
@@ -423,11 +422,6 @@ export default function LoginPage() {
                             <div>
                                 <CreditCard size={18} className="mb-2 text-[#c2d0df]" />
                                 <p className="text-[11px] font-semibold">Private billing</p>
-                            </div>
-
-                            <div>
-                                <RotateCcw size={18} className="mb-2 text-[#c2d0df]" />
-                                <p className="text-[11px] font-semibold">Easy returns</p>
                             </div>
                         </div>
                     </div>

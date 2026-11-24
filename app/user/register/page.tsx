@@ -12,7 +12,6 @@ import {
     Package,
     CreditCard,
     ShieldCheck,
-    RotateCcw,
 } from "lucide-react";
 
 export default function RegisterPage() {
@@ -383,7 +382,7 @@ export default function RegisterPage() {
                         </div>
 
                         {/* Benefits */}
-                        <div className="mt-7 grid grid-cols-3 gap-4">
+                        <div className="mt-7 grid grid-cols-2 gap-4">
                             <div>
                                 <Package size={18} className="mb-2 text-[#c2d0df]" />
                                 <p className="text-[11px] font-semibold">Plain packaging</p>
@@ -392,11 +391,6 @@ export default function RegisterPage() {
                             <div>
                                 <CreditCard size={18} className="mb-2 text-[#c2d0df]" />
                                 <p className="text-[11px] font-semibold">Private billing</p>
-                            </div>
-
-                            <div>
-                                <RotateCcw size={18} className="mb-2 text-[#c2d0df]" />
-                                <p className="text-[11px] font-semibold">Easy returns</p>
                             </div>
                         </div>
                     </div>
