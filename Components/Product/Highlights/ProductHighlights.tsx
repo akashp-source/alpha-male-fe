@@ -31,7 +31,7 @@ const TextContent = ({
     align?: "left" | "right";
 }) => (
     <div className={`w-full min-w-0 ${align === "right" ? "text-left lg:text-right" : "text-left"}`}>
-        <h3 className="mb-3 font-body text-lg font-bold leading-snug text-white sm:text-xl">
+        <h3 className="mb-3 font-body text-lg font-semibold leading-snug text-white sm:text-xl">
             {highlight.title}
         </h3>
 
@@ -48,12 +48,12 @@ export default function ProductHighlights({
     if (!highlights.length) return null;
 
     return (
-        <section className="w-full overflow-hidden bg-[#07162f] px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <section className="w-full overflow-hidden bg-brand-navy px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
 
             <div className="mx-auto w-full max-w-[1200px]">
 
                 {/* Section heading */}
-                <h2 className="mb-10 text-center font-heading text-2xl font-bold text-white sm:mb-14 sm:text-3xl">
+                <h2 className="mb-10 text-center font-heading text-2xl font-semibold text-white sm:mb-14 sm:text-3xl">
                     {heading}
                 </h2>
 

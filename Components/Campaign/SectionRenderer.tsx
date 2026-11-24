@@ -1188,7 +1188,7 @@ function Benefits(props: RenderProps) {
                         alignItems: "center",
                         gap: 14,
                         padding: "18px 20px",
-                        boxShadow: "0 16px 32px -24px rgba(7,22,47,0.4)",
+                        boxShadow: "0 16px 32px -24px rgba(33,46,73,0.4)",
                         textAlign: "left",
                     }}
                 >
@@ -1399,7 +1399,7 @@ function Testimonials(props: RenderProps) {
                 <Grid columns={data.columns} mobileColumns={data.mobileColumns} device={device} gap={16}>
                     {items.map((item) => (
                         <figure key={item._key} style={{ ...cardStyle(data), margin: 0, padding: 22, display: "flex", flexDirection: "column", gap: 14, textAlign: "left" }}>
-                            <span aria-label={`${item.rating} out of 5 stars`} style={{ color: "#d79b2b", letterSpacing: 2, fontSize: 16 }}>
+                            <span aria-label={`${item.rating} out of 5 stars`} style={{ color: "var(--color-accent-amber-dark)", letterSpacing: 2, fontSize: 16 }}>
                                 {"★".repeat(Math.max(0, Math.min(5, Number(item.rating) || 0)))}
                                 <span style={{ opacity: 0.25 }}>{"★".repeat(5 - Math.max(0, Math.min(5, Number(item.rating) || 0)))}</span>
                             </span>

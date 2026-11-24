@@ -29,16 +29,16 @@ export default function ProductDetailedDescription({
             <div className="pdp-container">
                 <div className="mx-auto max-w-4xl">
                     <header className="mb-8 text-center sm:mb-10">
-                        <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.3em] text-[#07162f]">
+                        <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.3em] text-brand-navy">
                             Know more
                         </p>
 
-                        <h2 className="font-heading text-2xl font-semibold leading-tight text-[#211b17] sm:text-3xl md:text-4xl">
+                        <h2 className="font-heading text-2xl font-semibold leading-tight text-brand-navy sm:text-3xl md:text-4xl">
                             About {productName}
                         </h2>
                     </header>
 
-                    <div className="rounded-2xl border border-[#e8e1d8] bg-[#faf7f2] px-5 py-6 sm:px-8 sm:py-8 md:px-10">
+                    <div className="rounded-2xl border border-[#e8e1d8] bg-pale-gray px-5 py-6 sm:px-8 sm:py-8 md:px-10">
                         <div
                             id="product-detailed-description"
                             className={`relative overflow-hidden transition-[max-height] duration-500 ${collapsed ? "max-h-72 sm:max-h-80" : "max-h-none"
@@ -47,11 +47,11 @@ export default function ProductDetailedDescription({
                             {/* Bullets, numbered lines, "#" headings and **bold** render as real markup */}
                             <RichDescription
                                 text={text}
-                                className="space-y-4 font-body text-sm leading-7 text-[#4a423b] sm:text-base sm:leading-8"
+                                className="space-y-4 font-body text-sm leading-7 text-brand-navy-muted sm:text-base sm:leading-8"
                             />
 
                             {collapsed && (
-                                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#faf7f2] to-transparent" />
+                                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-pale-gray to-transparent" />
                             )}
                         </div>
 
@@ -62,7 +62,7 @@ export default function ProductDetailedDescription({
                                     onClick={() => setExpanded((value) => !value)}
                                     aria-expanded={expanded}
                                     aria-controls="product-detailed-description"
-                                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#07162f]/30 bg-white px-5 py-2 font-body text-sm font-semibold text-[#07162f] transition-colors hover:bg-[#e8f2ed]"
+                                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-brand-navy/30 bg-white px-5 py-2 font-body text-sm font-semibold text-brand-navy transition-colors hover:bg-pale-gray"
                                 >
                                     {expanded ? "Read less" : "Read more"}
                                     <ChevronDown

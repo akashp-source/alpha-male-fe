@@ -19,7 +19,7 @@ export default function WhatsAppFloat() {
         hover:scale-110
         focus-visible:outline-none
         focus-visible:ring-2
-        focus-visible:ring-[#176348]
+        focus-visible:ring-success-green
         focus-visible:ring-offset-4
         sm:bottom-6 sm:right-6 sm:h-[52px] sm:w-[52px]
       "

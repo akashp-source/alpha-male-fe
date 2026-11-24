@@ -15,10 +15,10 @@ function Section({
 }) {
     return (
         <section className="border-b border-white/[0.08] py-7 last:border-0">
-            <h2 className="mb-4 font-serif text-lg tracking-wide text-[#D5D5D7] sm:text-xl">
+            <h2 className="mb-4 font-heading text-lg tracking-wide text-olympus sm:text-xl">
                 {title}
             </h2>
-            <div className="space-y-3 text-sm leading-7 text-[#AEB5C3]">
+            <div className="space-y-3 text-sm leading-7 text-palladium">
                 {children}
             </div>
         </section>
@@ -36,7 +36,7 @@ function PolicyTable({
         <div className="my-5 overflow-x-auto font-body">
             <table className="w-full min-w-[500px] border-collapse text-left text-xs sm:text-sm">
                 <thead>
-                    <tr className="border-b border-white/20 text-[#D5D5D7]">
+                    <tr className="border-b border-white/20 text-olympus">
                         {headers.map((header) => (
                             <th key={header} className="px-4 py-3 font-medium">
                                 {header}
@@ -48,7 +48,7 @@ function PolicyTable({
                     {rows.map((row, index) => (
                         <tr
                             key={index}
-                            className="border-b border-white/[0.07] text-[#AEB5C3]"
+                            className="border-b border-white/[0.07] text-palladium"
                         >
                             {row.map((cell, cellIndex) => (
                                 <td key={cellIndex} className="px-4 py-3 align-top leading-6">
@@ -73,7 +73,7 @@ function ContactLink({
     return (
         <a
             href={href}
-            className="text-[#D5D5D7] underline decoration-white/30 underline-offset-4 transition hover:text-white"
+            className="text-olympus underline decoration-white/30 underline-offset-4 transition hover:text-white"
         >
             {children}
         </a>
@@ -88,13 +88,13 @@ export const metadata: Metadata = {
 
 export default function TermsAndConditionsPage() {
     return (
-        <main className="min-h-screen bg-[#0C1221] px-5 py-16 text-[#D5D5D7] sm:px-8 sm:py-24">
+        <main className="min-h-screen bg-brand-navy px-5 py-16 text-olympus sm:px-8 sm:py-24">
             <div className="mx-auto max-w-4xl">
                 {/* Back to Home */}
                 <div className="mb-12">
                     <Link
                         href="/"
-                        className="group inline-flex items-center gap-2 rounded-full border border-[#354158] px-5 py-2.5 text-sm text-[#AEB5C3] transition-all duration-300 hover:border-[#D5D5D7] hover:bg-[#19243B] hover:text-white"
+                        className="group inline-flex items-center gap-2 rounded-full border border-[#354158] px-5 py-2.5 text-sm text-palladium transition-all duration-300 hover:border-olympus hover:bg-[#19243B] hover:text-white"
                     >
                         <span className="transition-transform duration-300 group-hover:-translate-x-1">
                             ←
@@ -116,7 +116,7 @@ export default function TermsAndConditionsPage() {
                         />
                     </div>
 
-                    <h1 className="font-heading text-3xl uppercase tracking-[0.12em] text-[#D5D5D7] sm:text-5xl">
+                    <h1 className="font-heading text-3xl uppercase tracking-[0.12em] text-olympus sm:text-5xl">
                         Terms & Conditions
                     </h1>
 
@@ -124,11 +124,11 @@ export default function TermsAndConditionsPage() {
                         Effective: 02 November 2026
                     </p>
 
-                    <div className="mx-auto mt-7 h-px w-16 bg-gradient-to-r from-transparent via-[#AEB5C3] to-transparent" />
+                    <div className="mx-auto mt-7 h-px w-16 bg-gradient-to-r from-transparent via-palladium to-transparent" />
                 </header>
 
                 {/* Introduction */}
-                <div className="mb-8 text-sm leading-7 text-[#AEB5C3] font-body">
+                <div className="mb-8 text-sm leading-7 text-palladium font-body">
                     These Terms & Conditions apply each time you visit alphamale.co.in,
                     create an Alpha Male account or place an order with us. Please read
                     them carefully. Using our website means you accept them, together
@@ -137,7 +137,7 @@ export default function TermsAndConditionsPage() {
 
                 {/* At a Glance */}
                 <section className="mb-8 border border-white/10 bg-white/[0.025] p-5 sm:p-7 font-body">
-                    <h2 className="mb-4  text-xl text-[#D5D5D7] font-heading">
+                    <h2 className="mb-4  text-xl text-olympus font-heading">
                         At a Glance
                     </h2>
 
@@ -258,7 +258,7 @@ export default function TermsAndConditionsPage() {
 
                     <Section title="6. Subscriptions">
                         <p>
-                            <strong className="text-[#D5D5D7]">Managing your plan.</strong>{" "}
+                            <strong className="text-olympus">Managing your plan.</strong>{" "}
                             You can pause or cancel an Alpha Male subscription at any time
                             from your account, or by writing to info@alphamale.co.in. Once
                             your request is processed, no further recurring payments will
@@ -300,22 +300,22 @@ export default function TermsAndConditionsPage() {
                     <Section title="8. Cancellations, Returns & Refunds">
                         <ul className="list-disc space-y-2 pl-5">
                             <li>
-                                <strong className="text-[#D5D5D7]">Cancellation:</strong>{" "}
+                                <strong className="text-olympus">Cancellation:</strong>{" "}
                                 Free of charge at any time before your order is dispatched.
                             </li>
                             <li>
-                                <strong className="text-[#D5D5D7]">Returns:</strong>{" "}
+                                <strong className="text-olympus">Returns:</strong>{" "}
                                 To protect your health and hygiene, only sealed, unopened
                                 products are accepted, within 7 days of delivery. Opened
                                 products cannot be returned.
                             </li>
                             <li>
-                                <strong className="text-[#D5D5D7]">Damaged, wrong or expired items:</strong>{" "}
+                                <strong className="text-olympus">Damaged, wrong or expired items:</strong>{" "}
                                 Report them to us within 48 hours of delivery, with photos and
                                 an unboxing video. We will replace the item or refund you in full.
                             </li>
                             <li>
-                                <strong className="text-[#D5D5D7]">Refunds:</strong>{" "}
+                                <strong className="text-olympus">Refunds:</strong>{" "}
                                 Credited to your original payment method within 5–7 business
                                 days of approval.
                             </li>
@@ -427,29 +427,29 @@ export default function TermsAndConditionsPage() {
                         </p>
                         <ul className="space-y-3">
                             <li>
-                                <span className="text-[#D5D5D7]">Email: </span>
+                                <span className="text-olympus">Email: </span>
                                 <ContactLink href="mailto:info@alphamale.co.in">
                                     info@alphamale.co.in
                                 </ContactLink>
                             </li>
                             <li>
-                                <span className="text-[#D5D5D7]">Phone: </span>
+                                <span className="text-olympus">Phone: </span>
                                 <ContactLink href="tel:+919000937222">
                                     +91 90009 37222
                                 </ContactLink>
                             </li>
                             <li>
-                                <span className="text-[#D5D5D7]">WhatsApp: </span>
+                                <span className="text-olympus">WhatsApp: </span>
                                 <ContactLink href="https://wa.me/919000937222">
                                     +91 90009 37222
                                 </ContactLink>
                             </li>
                             <li>
-                                <span className="text-[#D5D5D7]">Address: </span>
+                                <span className="text-olympus">Address: </span>
                                 Hyderabad, Telangana, India
                             </li>
                             <li>
-                                <span className="text-[#D5D5D7]">Support hours: </span>
+                                <span className="text-olympus">Support hours: </span>
                                 Monday to Saturday, 10:00 AM to 6:00 PM IST
                             </li>
                         </ul>

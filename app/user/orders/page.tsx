@@ -182,15 +182,15 @@ export default function MyOrdersPage() {
         <main className="min-h-screen bg-[#fafbfc]">
             <div className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-10 lg:py-12 pb-28 lg:pb-28">
                 <div className="mb-7">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#176348]">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-success-green">
                         Your account
                     </p>
 
-                    <h1 className="mt-2 font-heading text-2xl font-bold tracking-wide text-[#07152e] sm:text-3xl">
+                    <h1 className="mt-2 font-heading text-2xl font-semibold tracking-wide text-brand-navy sm:text-3xl">
                         MY ORDERS
                     </h1>
 
-                    <p className="mt-2 text-xs text-[#91857b] sm:text-sm">
+                    <p className="mt-2 text-xs text-brand-navy-muted sm:text-sm">
                         Track, manage and reorder your purchases.
                     </p>
                 </div>
@@ -217,8 +217,8 @@ export default function MyOrdersPage() {
                                             type="button"
                                             onClick={() => setFilter(item.value)}
                                             className={`flex items-center gap-2 rounded-full border px-4 py-2.5 text-xs font-bold transition ${active
-                                                ? "border-[#07152e] bg-[#07152e] text-white"
-                                                : "border-[#dce2ea] bg-white text-[#07152e] hover:border-[#07152e]"
+                                                ? "border-brand-navy bg-brand-navy text-white"
+                                                : "border-[#dce2ea] bg-white text-brand-navy hover:border-brand-navy"
                                                 }`}
                                         >
                                             {item.label}
@@ -226,7 +226,7 @@ export default function MyOrdersPage() {
                                             <span
                                                 className={`flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] ${active
                                                     ? "bg-white/20 text-white"
-                                                    : "bg-[#e9edf3] text-[#07152e]"
+                                                    : "bg-pale-gray text-brand-navy"
                                                     }`}
                                             >
                                                 {counts[item.value]}
@@ -247,7 +247,7 @@ export default function MyOrdersPage() {
                                     value={search}
                                     onChange={(event) => setSearch(event.target.value)}
                                     placeholder="Order ID or product"
-                                    className="h-12 w-full rounded-xl border border-[#dce2ea] bg-white pl-11 pr-4 text-sm text-[#07152e] outline-none transition placeholder:text-[#9aa3b2] focus:border-[#07152e] focus:ring-2 focus:ring-[#07152e]/5"
+                                    className="h-12 w-full rounded-xl border border-[#dce2ea] bg-white pl-11 pr-4 text-sm text-brand-navy outline-none transition placeholder:text-[#9aa3b2] focus:border-brand-navy focus:ring-2 focus:ring-brand-navy/5"
                                 />
                             </div>
                         </div>
@@ -262,9 +262,9 @@ export default function MyOrdersPage() {
                                     >
                                         <div className="h-24 bg-[#f0f2f6]" />
                                         <div className="space-y-4 p-6">
-                                            <div className="h-4 w-40 rounded bg-[#e9edf3]" />
+                                            <div className="h-4 w-40 rounded bg-pale-gray" />
                                             <div className="h-16 rounded bg-[#f5f7fa]" />
-                                            <div className="h-10 w-48 rounded bg-[#e9edf3]" />
+                                            <div className="h-10 w-48 rounded bg-pale-gray" />
                                         </div>
                                     </div>
                                 ))}
@@ -281,7 +281,7 @@ export default function MyOrdersPage() {
                                 <button
                                     type="button"
                                     onClick={() => fetchOrders(page)}
-                                    className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#07152e] px-5 py-3 text-xs font-bold text-white"
+                                    className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-navy px-5 py-3 text-xs font-bold text-white"
                                 >
                                     <RefreshCw size={14} />
                                     Try again
@@ -315,7 +315,7 @@ export default function MyOrdersPage() {
                                     <Package size={28} className="text-[#718096]" />
                                 </div>
 
-                                <h3 className="mt-5 text-base font-bold text-[#07152e]">
+                                <h3 className="mt-5 text-base font-semibold text-brand-navy">
                                     {search
                                         ? "No matching orders found"
                                         : filter === "ALL"
@@ -333,7 +333,7 @@ export default function MyOrdersPage() {
                                     <button
                                         type="button"
                                         onClick={() => setSearch("")}
-                                        className="mt-5 rounded-xl bg-[#07152e] px-5 py-3 text-xs font-bold text-white"
+                                        className="mt-5 rounded-xl bg-brand-navy px-5 py-3 text-xs font-bold text-white"
                                     >
                                         Clear search
                                     </button>
@@ -353,7 +353,7 @@ export default function MyOrdersPage() {
                                         type="button"
                                         disabled={page <= 1}
                                         onClick={() => changePage(page - 1)}
-                                        className="rounded-lg border border-[#dce2ea] px-4 py-2 text-xs font-semibold text-[#07152e] disabled:cursor-not-allowed disabled:opacity-40"
+                                        className="rounded-lg border border-[#dce2ea] px-4 py-2 text-xs font-semibold text-brand-navy disabled:cursor-not-allowed disabled:opacity-40"
                                     >
                                         Previous
                                     </button>
@@ -362,7 +362,7 @@ export default function MyOrdersPage() {
                                         type="button"
                                         disabled={page >= totalPages}
                                         onClick={() => changePage(page + 1)}
-                                        className="rounded-lg bg-[#07152e] px-4 py-2 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
+                                        className="rounded-lg bg-brand-navy px-4 py-2 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
                                     >
                                         Next
                                     </button>

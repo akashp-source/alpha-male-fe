@@ -62,11 +62,11 @@ export default function FAQ() {
     };
 
     return (
-        <section className="relative w-full overflow-hidden     px-5 py-20 text-[#D5D5D7] sm:px-10 sm:py-24">
+        <section className="relative w-full overflow-hidden     px-5 py-20 text-olympus sm:px-10 sm:py-24">
 
             {/* Decorative Side Borders */}
-            <div className="pointer-events-none absolute inset-y-0 left-4 border-l hidden sm:block border-[#D5D5D7]/[0.07] sm:left-6" />
-            <div className="pointer-events-none absolute inset-y-0 right-4 border-r border-[#D5D5D7]/[0.07] sm:right-6" />
+            <div className="pointer-events-none absolute inset-y-0 left-4 border-l hidden sm:block border-olympus/[0.07] sm:left-6" />
+            <div className="pointer-events-none absolute inset-y-0 right-4 border-r border-olympus/[0.07] sm:right-6" />
 
             <div className="relative mx-auto max-w-[730px]">
 
@@ -76,7 +76,7 @@ export default function FAQ() {
                         GOOD TO KNOW
                     </p>
 
-                    <h2 className="silver-text font-heading text-[clamp(32px,5vw,42px)] font-medium uppercase leading-tight tracking-[0.04em]">
+                    <h2 className="silver-text font-heading text-[clamp(32px,5vw,42px)] font-semibold uppercase leading-tight tracking-[0.04em]">
                         Your Questions
                     </h2>
                 </div>
@@ -93,7 +93,7 @@ export default function FAQ() {
                             <div
                                 key={faq.question}
                                 className={`overflow-hidden rounded-xl border bg-white transition-all duration-300 ${isOpen
-                                    ? "border-[#07162f]/40 shadow-sm"
+                                    ? "border-brand-navy/40 shadow-sm"
                                     : "border-[#e8e1d8]"
                                     }`}
                             >
@@ -107,11 +107,11 @@ export default function FAQ() {
                                     aria-controls={panelId}
                                     className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left md:px-7"
                                 >
-                                    <span className="font-body text-sm font-semibold text-[#211b17] md:text-base">
+                                    <span className="font-body text-sm font-semibold text-brand-navy md:text-base">
                                         {faq.question}
                                     </span>
 
-                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#e8f2ed] text-[#07162f]">
+                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-pale-gray text-brand-navy">
                                         {isOpen ? (
                                             <Minus size={16} />
                                         ) : (
@@ -132,7 +132,7 @@ export default function FAQ() {
                                         }`}
                                 >
                                     <div className="overflow-hidden">
-                                        <p className="px-5 pb-6 font-body text-sm leading-7 text-[#4a423b] md:px-7 md:text-base">
+                                        <p className="px-5 pb-6 font-body text-sm leading-7 text-brand-navy-muted md:px-7 md:text-base">
                                             {faq.answer}
                                         </p>
                                     </div>

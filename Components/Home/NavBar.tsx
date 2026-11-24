@@ -184,7 +184,7 @@ export default function Navbar() {
                         className="h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11 md:h-14 md:w-14"
                     />
 
-                    <span className="truncate font-heading text-[13px] font-semibold tracking-[0.05em] text-[#101d38] sm:text-base sm:tracking-[0.08em] md:text-[27px]">
+                    <span className="truncate font-heading text-[13px] font-semibold tracking-[0.05em] text-brand-navy sm:text-base sm:tracking-[0.08em] md:text-[27px]">
                         ALPHA MALE
                     </span>
                 </Link>
@@ -203,14 +203,14 @@ export default function Navbar() {
                                 key={link.name}
                                 href={link.href}
                                 className={`relative py-2 font-body text-[17px] font-medium transition-colors ${active
-                                    ? "text-[#071630]"
-                                    : "text-[#687080] hover:text-[#071630]"
+                                    ? "text-brand-navy"
+                                    : "text-[#687080] hover:text-brand-navy"
                                     }`}
                             >
                                 {link.name}
 
                                 {active && (
-                                    <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#071630]" />
+                                    <span className="absolute bottom-0 left-0 h-[2px] w-full bg-brand-navy" />
                                 )}
                             </Link>
                         );
@@ -227,7 +227,7 @@ export default function Navbar() {
                                 href="/user/profile"
                                 aria-label="My account"
                                 title="My account"
-                                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-[#071630] transition hover:bg-[#f5f7fa] md:h-[54px] md:w-[54px]"
+                                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-brand-navy transition hover:bg-[#f5f7fa] md:h-[54px] md:w-[54px]"
                             >
                                 <UserRound size={22} strokeWidth={1.8} />
                             </Link>
@@ -235,7 +235,7 @@ export default function Navbar() {
                             <button
                                 type="button"
                                 onClick={handleLogout}
-                                className="hidden items-center gap-2 rounded-full border border-[#e0e5ed] px-4 py-3 text-sm font-semibold text-[#071630] transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 sm:flex"
+                                className="hidden items-center gap-2 rounded-full border border-[#e0e5ed] px-4 py-3 text-sm font-semibold text-brand-navy transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 sm:flex"
                             >
                                 <LogOut size={17} />
                                 Sign out
@@ -246,7 +246,7 @@ export default function Navbar() {
                             href="/user/login"
                             aria-label="Sign in"
                             title="Sign in"
-                            className="hidden h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-[#071630] transition hover:bg-[#f5f7fa] md:flex md:h-[54px] md:w-[54px]"
+                            className="hidden h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-brand-navy transition hover:bg-[#f5f7fa] md:flex md:h-[54px] md:w-[54px]"
                         >
                             <UserRound size={22} strokeWidth={1.8} />
                         </Link>
@@ -262,7 +262,7 @@ export default function Navbar() {
                         aria-label={`Open cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}
                         aria-haspopup="dialog"
                         aria-expanded={isCartOpen}
-                        className="flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-[#071630] px-2.5 text-white transition hover:bg-[#14284d] sm:h-11 sm:gap-2 sm:px-3 md:h-[55px] md:gap-3 md:px-6"
+                        className="flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-brand-navy px-2.5 text-white transition hover:bg-[#14284d] sm:h-11 sm:gap-2 sm:px-3 md:h-[55px] md:gap-3 md:px-6"
                     >
                         <ShoppingCart size={21} strokeWidth={1.8} aria-hidden="true" />
 
@@ -270,7 +270,7 @@ export default function Navbar() {
                             Cart
                         </span>
 
-                        <span aria-hidden="true" className="flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-[#071630] md:h-6 md:min-w-6 md:px-1.5 md:text-xs">
+                        <span aria-hidden="true" className="flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-brand-navy md:h-6 md:min-w-6 md:px-1.5 md:text-xs">
                             {cartCount}
                         </span>
                     </button>
@@ -282,7 +282,7 @@ export default function Navbar() {
                         aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
                         aria-expanded={mobileMenuOpen}
                         aria-controls="mobile-navigation"
-                        className="flex h-10 w-10 items-center justify-center text-[#071630] lg:hidden"
+                        className="flex h-10 w-10 items-center justify-center text-brand-navy lg:hidden"
                     >
                         {mobileMenuOpen ? (
                             <X size={25} />
@@ -310,7 +310,7 @@ export default function Navbar() {
                                     href={link.href}
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={`border-b border-gray-100 py-4 font-body text-sm font-semibold ${active
-                                        ? "text-[#176348]"
+                                        ? "text-success-green"
                                         : "text-[#273449]"
                                         }`}
                                 >
@@ -343,7 +343,7 @@ export default function Navbar() {
                             <Link
                                 href="/user/login"
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="border-b border-gray-100 py-4 text-sm font-semibold text-[#176348]"
+                                className="border-b border-gray-100 py-4 text-sm font-semibold text-success-green"
                             >
                                 Sign in / Register
                             </Link>

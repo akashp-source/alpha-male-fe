@@ -144,16 +144,16 @@ export type FieldDef = {
 /* ------------------------------------------------------------------ */
 
 export const PALETTE = {
-    navy: "#07162f",
+    navy: "#212e49", // brand navy (--color-brand-navy)
     gold: "#e7c49c",
-    cream: "#faf7f2",
-    dark: "#17120f",
-    green: "#176348",
+    cream: "#e9e9ea", // pale light gray (--color-pale-gray)
+    dark: "#212e49", // brand navy (--color-brand-navy)
+    green: "#176348", // accent pending review (--color-success-green)
     border: "#ece6dc",
     muted: "#6b6259",
     body: "#4a4038",
     soft: "#c3cad6",
-    white: "#ffffff",
+    white: "#fefefe", // brand white (--color-white)
 };
 
 export const API_URL =

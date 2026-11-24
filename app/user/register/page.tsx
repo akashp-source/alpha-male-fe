@@ -71,17 +71,17 @@ export default function RegisterPage() {
             <section className="relative flex min-h-screen flex-col bg-white px-6 pb-10 pt-[155px] sm:px-12 lg:px-16 lg:py-8 xl:px-24">
                 {/* Logo - desktop */}
                 <Link href="/" className="hidden w-fit items-center gap-2 lg:flex">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#07152e] text-white">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-navy text-white">
                         <ShieldCheck size={19} />
                     </div>
-                    <span className="font-heading text-sm font-bold tracking-[0.12em] text-[#07152e]">
+                    <span className="font-heading text-sm font-bold tracking-[0.12em] text-brand-navy">
                         ALPHA MALE
                     </span>
                 </Link>
 
                 {/* Mobile brand header */}
-                <div className="absolute left-0 top-0 flex w-full flex-col items-center bg-[#07152e] pb-12 pt-7 text-white lg:hidden">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[#07152e]">
+                <div className="absolute left-0 top-0 flex w-full flex-col items-center bg-brand-navy pb-12 pt-7 text-white lg:hidden">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-brand-navy">
                         <ShieldCheck size={30} />
                     </div>
 
@@ -97,15 +97,15 @@ export default function RegisterPage() {
                 {/* Form content */}
                 <div className="mx-auto flex w-full max-w-[420px] flex-1 flex-col justify-center py-8 lg:py-10">
                     <div className="mb-6">
-                        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#176348]">
+                        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-success-green">
                             Join the Alpha community
                         </p>
 
-                        <h1 className="font-heading text-2xl font-bold tracking-wide text-[#07152e] sm:text-3xl">
+                        <h1 className="font-heading text-2xl font-semibold tracking-wide text-brand-navy sm:text-3xl">
                             CREATE ACCOUNT
                         </h1>
 
-                        <p className="mt-2 text-xs leading-5 text-[#91857b]">
+                        <p className="mt-2 text-xs leading-5 text-brand-navy-muted">
                             Create your account for faster checkout, easy reordering and
                             private order tracking.
                         </p>
@@ -114,11 +114,11 @@ export default function RegisterPage() {
                     <form onSubmit={handleRegister} className="space-y-4">
                         {/* Full name */}
                         <div>
-                            <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                            <label className="mb-2 block text-[11px] font-semibold text-brand-navy">
                                 Full name
                             </label>
 
-                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-[#176348]">
+                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-success-green">
                                 <User size={15} className="shrink-0 text-[#718096]" />
 
                                 <input
@@ -128,18 +128,18 @@ export default function RegisterPage() {
                                     placeholder="Enter your full name"
                                     autoComplete="name"
                                     required
-                                    className="w-full bg-transparent text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                    className="w-full bg-transparent text-xs text-brand-navy outline-none placeholder:text-[#9aa5b5]"
                                 />
                             </div>
                         </div>
 
                         {/* Email / Phone */}
                         <div>
-                            <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                            <label className="mb-2 block text-[11px] font-semibold text-brand-navy">
                                 Email or mobile number
                             </label>
 
-                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-[#176348]">
+                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-success-green">
                                 <Mail size={15} className="shrink-0 text-[#718096]" />
 
                                 <input
@@ -151,18 +151,18 @@ export default function RegisterPage() {
                                     placeholder="you@example.com"
                                     autoComplete="email"
                                     required
-                                    className="w-full bg-transparent text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                    className="w-full bg-transparent text-xs text-brand-navy outline-none placeholder:text-[#9aa5b5]"
                                 />
                             </div>
                         </div>
 
                         {/* Password */}
                         <div>
-                            <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                            <label className="mb-2 block text-[11px] font-semibold text-brand-navy">
                                 Password
                             </label>
 
-                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-[#176348]">
+                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-success-green">
                                 <Lock size={15} className="shrink-0 text-[#718096]" />
 
                                 <input
@@ -172,7 +172,7 @@ export default function RegisterPage() {
                                     placeholder="Create a password"
                                     autoComplete="new-password"
                                     required
-                                    className="w-full bg-transparent text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                    className="w-full bg-transparent text-xs text-brand-navy outline-none placeholder:text-[#9aa5b5]"
                                 />
 
                                 <button
@@ -185,18 +185,18 @@ export default function RegisterPage() {
                                 </button>
                             </div>
 
-                            <p className="mt-1.5 text-[10px] text-[#91857b]">
+                            <p className="mt-1.5 text-[10px] text-brand-navy-muted">
                                 Use at least 8 characters.
                             </p>
                         </div>
 
                         {/* Confirm password */}
                         <div>
-                            <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                            <label className="mb-2 block text-[11px] font-semibold text-brand-navy">
                                 Confirm password
                             </label>
 
-                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-[#176348]">
+                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-success-green">
                                 <Lock size={15} className="shrink-0 text-[#718096]" />
 
                                 <input
@@ -208,7 +208,7 @@ export default function RegisterPage() {
                                     placeholder="Re-enter your password"
                                     autoComplete="new-password"
                                     required
-                                    className="w-full bg-transparent text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                    className="w-full bg-transparent text-xs text-brand-navy outline-none placeholder:text-[#9aa5b5]"
                                 />
 
                                 <button
@@ -236,21 +236,21 @@ export default function RegisterPage() {
                                 onChange={(e) =>
                                     updateField("acceptedTerms", e.target.checked)
                                 }
-                                className="mt-1 accent-[#07152e]"
+                                className="mt-1 accent-brand-navy"
                             />
 
                             <span>
                                 I agree to the{" "}
                                 <Link
                                     href="/terms"
-                                    className="font-semibold text-[#176348] underline"
+                                    className="font-semibold text-success-green underline"
                                 >
                                     Terms & Conditions
                                 </Link>{" "}
                                 and{" "}
                                 <Link
                                     href="/privacy-policy"
-                                    className="font-semibold text-[#176348] underline"
+                                    className="font-semibold text-success-green underline"
                                 >
                                     Privacy Policy
                                 </Link>
@@ -269,7 +269,7 @@ export default function RegisterPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex h-12 w-full items-center justify-center rounded-lg bg-[#07152e] text-xs font-bold text-white transition hover:bg-[#10284b] disabled:cursor-not-allowed disabled:opacity-60"
+                            className="flex h-12 w-full items-center justify-center rounded-lg bg-brand-navy text-xs font-bold text-white transition hover:bg-[#10284b] disabled:cursor-not-allowed disabled:opacity-60"
                         >
                             {loading ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
                         </button>
@@ -285,7 +285,7 @@ export default function RegisterPage() {
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <button
                             type="button"
-                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#9aa5b5] text-xs font-semibold text-[#07152e] transition hover:border-[#07152e] hover:bg-[#f7f8fa]"
+                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#9aa5b5] text-xs font-semibold text-brand-navy transition hover:border-brand-navy hover:bg-[#f7f8fa]"
                         >
                             <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.5 14.6 2.5 12 2.5 6.8 2.5 2.6 6.7 2.6 12s4.2 9.5 9.4 9.5c5.4 0 9-3.8 9-9.2 0-.6-.1-1.1-.2-1.6H12z" />
@@ -311,7 +311,7 @@ export default function RegisterPage() {
                         Already have an account?{" "}
                         <Link
                             href="/user/login"
-                            className="font-bold text-[#176348] underline underline-offset-2"
+                            className="font-bold text-success-green underline underline-offset-2"
                         >
                             Log in
                         </Link>
@@ -326,7 +326,7 @@ export default function RegisterPage() {
 
                     <Link
                         href="/"
-                        className="flex h-11 w-full items-center justify-center rounded-lg border border-[#9aa5b5] text-xs font-semibold text-[#07152e] transition hover:border-[#07152e] hover:bg-[#f7f8fa]"
+                        className="flex h-11 w-full items-center justify-center rounded-lg border border-[#9aa5b5] text-xs font-semibold text-brand-navy transition hover:border-brand-navy hover:bg-[#f7f8fa]"
                     >
                         Continue as guest
                     </Link>
@@ -339,7 +339,7 @@ export default function RegisterPage() {
             </section>
 
             {/* RIGHT: BRAND PANEL */}
-            <section className="relative hidden min-h-screen overflow-hidden bg-[#07152e] px-10 py-12 text-white lg:flex lg:items-center lg:justify-center xl:px-20">
+            <section className="relative hidden min-h-screen overflow-hidden bg-brand-navy px-10 py-12 text-white lg:flex lg:items-center lg:justify-center xl:px-20">
                 <div className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full border border-white/[0.06]" />
                 <div className="absolute -right-16 -top-16 h-[370px] w-[370px] rounded-full border border-white/[0.06]" />
                 <div className="absolute -bottom-40 -left-24 h-[450px] w-[450px] rounded-full border border-white/[0.04]" />
@@ -350,7 +350,7 @@ export default function RegisterPage() {
                             Drive · Stamina · Energy
                         </p>
 
-                        <h2 className="font-heading text-3xl font-bold leading-tight xl:text-4xl">
+                        <h2 className="font-heading text-3xl font-semibold leading-tight xl:text-4xl">
                             OWN YOUR
                             <br />
                             CONFIDENCE.
@@ -365,7 +365,7 @@ export default function RegisterPage() {
 
                         {/* Product visual */}
                         <div className="relative mt-7 flex h-56 items-center justify-center overflow-hidden rounded-2xl bg-[#10264a]">
-                            <div className="absolute h-48 w-48 rounded-full bg-[#176348]/20 blur-3xl" />
+                            <div className="absolute h-48 w-48 rounded-full bg-success-green/20 blur-3xl" />
 
                             <div className="relative flex h-40 w-28 -rotate-6 flex-col items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-[#263b5c] to-[#101d35] shadow-2xl">
                                 <ShieldCheck size={34} className="text-[#d5dce7]" />
@@ -377,7 +377,7 @@ export default function RegisterPage() {
                                 </span>
                             </div>
 
-                            <div className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[#07152e] shadow-lg">
+                            <div className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white text-brand-navy shadow-lg">
                                 <ShieldCheck size={27} />
                             </div>
                         </div>

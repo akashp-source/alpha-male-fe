@@ -150,7 +150,7 @@ function ProductCard({ product }: { product: Product }) {
             </div>
 
             {/* Product Name */}
-            <h3 className="mt-3 font-serif text-[11px] font-medium uppercase tracking-[0.16em] text-[#E0E0E2] sm:text-[12px]">
+            <h3 className="mt-3 font-body text-[11px] font-semibold uppercase tracking-[0.16em] text-[#E0E0E2] sm:text-[12px]">
                 {product.name}
             </h3>
 
@@ -223,9 +223,9 @@ function ProductCategory({
             {/* Category Heading */}
             <div className="mb-5 text-center">
 
-                {/* <div className="mx-auto mb-3 h-px w-12 bg-gradient-to-r from-transparent via-[#AEB5C3] to-transparent" /> */}
+                {/* <div className="mx-auto mb-3 h-px w-12 bg-gradient-to-r from-transparent via-palladium to-transparent" /> */}
 
-                <h2 className="font-serif text-xl font-heading uppercase tracking-[0.19em] text-[#D5D5D7] sm:text-2xl">
+                <h2 className="font-heading text-xl uppercase tracking-[0.19em] text-olympus sm:text-2xl">
                     {title}
                 </h2>
 
@@ -259,7 +259,7 @@ export default function LaunchingSoon() {
     return (
         <main
             id="products"
-            className="relative min-h-screen scroll-mt-6 overflow-hidden px-5 pb-16 text-[#D5D5D7] sm:px-8"
+            className="relative min-h-screen scroll-mt-6 overflow-hidden px-5 pb-16 text-olympus sm:px-8"
         >
 
             {/* Decorative Borders */}
@@ -272,7 +272,7 @@ export default function LaunchingSoon() {
                 {/* Hero */}
                 <header className="flex flex-col items-center pb-12 pt-12 text-center sm:pb-14 sm:pt-16">
 
-                    <p className="mb-3 text-[9px] uppercase tracking-[0.38em] text-[#AEB5C3]">
+                    <p className="mb-3 text-[9px] uppercase tracking-[0.38em] text-palladium">
                         THE WAIT IS ALMOST OVER
                     </p>
 
@@ -280,11 +280,11 @@ export default function LaunchingSoon() {
                         Launching Soon
                     </h1>
 
-                    <p className="mt-3 max-w-[500px] text-[11px] leading-6 text-[#AEB5C3] sm:text-[13px] font-body font-normal">
+                    <p className="mt-3 max-w-[500px] text-[11px] leading-6 text-palladium sm:text-[13px] font-body font-normal">
                         India's first premium science-backed men's wellness brand
                     </p>
 
-                    {/* <div className="mt-5 h-px w-16 bg-gradient-to-r from-transparent via-[#AEB5C3] to-transparent" /> */}
+                    {/* <div className="mt-5 h-px w-16 bg-gradient-to-r from-transparent via-palladium to-transparent" /> */}
 
                 </header>
 
@@ -315,7 +315,7 @@ export default function LaunchingSoon() {
                 {/* Footer */}
                 <footer className="border-t border-white/[0.08] pt-8 text-center">
 
-                    <p className="font-serif text-[13px] uppercase tracking-[0.35em] text-[#D5D5D7]">
+                    <p className="font-serif text-[13px] uppercase tracking-[0.35em] text-olympus">
                         ALPHA MALE
                     </p>
 

@@ -35,10 +35,10 @@ function Section({
 }) {
     return (
         <section className="border-b border-[#28344A] py-7 last:border-0">
-            <h2 className="mb-4 font-serif text-xl text-[#D5D5D7]">
+            <h2 className="mb-4 font-heading text-xl text-olympus">
                 {title}
             </h2>
-            <div className="space-y-3 text-sm leading-7 text-[#AEB5C3] [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:space-y-3 [&_ol]:pl-5 [&_strong]:text-[#D5D5D7]">
+            <div className="space-y-3 text-sm leading-7 text-palladium [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:space-y-3 [&_ol]:pl-5 [&_strong]:text-olympus">
                 {children}
             </div>
         </section>
@@ -53,14 +53,14 @@ export const metadata: Metadata = {
 
 export default function CancellationPolicyPage() {
     return (
-        <main className="min-h-screen bg-[#0C1221] text-[#D5D5D7]">
+        <main className="min-h-screen bg-brand-navy text-olympus">
             <div className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-12">
 
                 {/* Back to Home */}
                 <div className="mb-12">
                     <Link
                         href="/"
-                        className="group inline-flex items-center gap-2 rounded-full border border-[#354158] px-5 py-2.5 text-sm text-[#AEB5C3] transition-all duration-300 hover:border-[#D5D5D7] hover:bg-[#19243B] hover:text-white"
+                        className="group inline-flex items-center gap-2 rounded-full border border-[#354158] px-5 py-2.5 text-sm text-palladium transition-all duration-300 hover:border-olympus hover:bg-[#19243B] hover:text-white"
                     >
                         <span className="transition-transform duration-300 group-hover:-translate-x-1">
                             ←
@@ -83,7 +83,7 @@ export default function CancellationPolicyPage() {
                         />
                     </div>
 
-                    <h1 className="font-serif text-4xl sm:text-5xl">
+                    <h1 className="font-heading text-4xl sm:text-5xl">
                         Cancellation Policy
                     </h1>
 
@@ -91,7 +91,7 @@ export default function CancellationPolicyPage() {
                         Effective: 02 November 2026
                     </p>
 
-                    <p className="mt-6 max-w-3xl text-sm leading-7 text-[#AEB5C3]">
+                    <p className="mt-6 max-w-3xl text-sm leading-7 text-palladium">
                         Plans change, and we keep cancellations simple. You can cancel any
                         Alpha Male order free of charge until it leaves our warehouse.
                     </p>
@@ -102,7 +102,7 @@ export default function CancellationPolicyPage() {
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[620px] text-left text-sm">
                             <thead>
-                                <tr className="border-b border-[#354158] text-[#D5D5D7]">
+                                <tr className="border-b border-[#354158] text-olympus">
                                     <th className="py-3 pr-4">Order stage</th>
                                     <th className="py-3 pr-4">Can you cancel?</th>
                                     <th className="py-3">What happens</th>
@@ -114,7 +114,7 @@ export default function CancellationPolicyPage() {
                                         key={item.stage}
                                         className="border-b border-[#28344A] last:border-0"
                                     >
-                                        <td className="py-3 pr-4 align-top text-[#D5D5D7]">
+                                        <td className="py-3 pr-4 align-top text-olympus">
                                             {item.stage}
                                         </td>
                                         <td className="py-3 pr-4 align-top">
@@ -145,7 +145,7 @@ export default function CancellationPolicyPage() {
                             Email{" "}
                             <a
                                 href="mailto:info@alphamale.co.in"
-                                className="text-[#D5D5D7] underline underline-offset-4 hover:text-white"
+                                className="text-olympus underline underline-offset-4 hover:text-white"
                             >
                                 info@alphamale.co.in
                             </a>{" "}
@@ -229,7 +229,7 @@ export default function CancellationPolicyPage() {
 
                 {/* Footer */}
                 {/* <footer className="mt-12 border-t border-[#354158] pt-8 text-center">
-                    <p className="font-serif text-sm uppercase tracking-[0.35em] text-[#D5D5D7]">
+                    <p className="font-serif text-sm uppercase tracking-[0.35em] text-olympus">
                         ALPHA MALE
                     </p>
 

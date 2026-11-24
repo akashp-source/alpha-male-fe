@@ -14,8 +14,8 @@ function Section({
 }) {
     return (
         <section className="border-b border-[#28344A] py-7 last:border-0">
-            <h2 className="mb-4 font-serif text-xl text-[#D5D5D7]">{title}</h2>
-            <div className="space-y-3 text-sm leading-7 text-[#AEB5C3] [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 [&_strong]:text-[#D5D5D7]">
+            <h2 className="mb-4 font-heading text-xl text-olympus">{title}</h2>
+            <div className="space-y-3 text-sm leading-7 text-palladium [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 [&_strong]:text-olympus">
                 {children}
             </div>
         </section>
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function ITPolicyPage() {
     return (
-        <main className="min-h-screen bg-[#0C1221] text-[#D5D5D7]">
+        <main className="min-h-screen bg-brand-navy text-olympus">
             <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8 lg:py-20">
                 <Link
                     href="/"
@@ -51,11 +51,11 @@ export default function ITPolicyPage() {
                             className="h-[90px] w-[90px] object-contain"
                         />
                     </div>
-                    <h1 className="font-serif text-4xl sm:text-5xl">IT Policy</h1>
+                    <h1 className="font-heading text-4xl sm:text-5xl">IT Policy</h1>
                     <p className="mt-4 text-sm text-[#929BAE]">
                         Effective: 02 November 2026
                     </p>
-                    <p className="mt-6 max-w-3xl text-sm leading-7 text-[#AEB5C3]">
+                    <p className="mt-6 max-w-3xl text-sm leading-7 text-palladium">
                         This IT Policy is published under the Information Technology Act,
                         2000 and the Information Technology (Intermediary Guidelines and
                         Digital Media Ethics Code) Rules, 2021. It sets out the rules for
@@ -160,7 +160,7 @@ export default function ITPolicyPage() {
                         to be from us to{" "}
                         <a
                             href="mailto:info@alphamale.co.in"
-                            className="text-[#D5D5D7] underline underline-offset-4"
+                            className="text-olympus underline underline-offset-4"
                         >
                             info@alphamale.co.in
                         </a>.
@@ -172,7 +172,7 @@ export default function ITPolicyPage() {
                         If you find a security issue on our Platform, please report it to{" "}
                         <a
                             href="mailto:info@alphamale.co.in?subject=Security%20Report"
-                            className="text-[#D5D5D7] underline underline-offset-4"
+                            className="text-olympus underline underline-offset-4"
                         >
                             info@alphamale.co.in
                         </a>{" "}

@@ -17,12 +17,12 @@ export default function ProductHighlightsV2({
     if (!highlights.length) return null;
 
     return (
-        <section className="w-full bg-[#07162f] px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
+        <section className="w-full bg-brand-navy px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
             <div className="mx-auto max-w-[1300px]">
 
                 {/* Heading */}
                 <div className="mb-12 text-center">
-                    <h2 className="font-heading text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+                    <h2 className="font-heading text-2xl font-semibold text-white sm:text-3xl lg:text-4xl">
                         {heading}
                     </h2>
 
@@ -53,7 +53,7 @@ export default function ProductHighlightsV2({
 
                             {/* Content */}
                             <div className="flex flex-1 flex-col p-4 sm:p-4 lg:p-4">
-                                <h3 className="mb-2 font-body text-base font-bold leading-snug text-[#0d403d] sm:text-[17px]">
+                                <h3 className="mb-2 font-body text-base font-semibold leading-snug text-[#0d403d] sm:text-[17px]">
                                     {item.title}
                                 </h3>
 

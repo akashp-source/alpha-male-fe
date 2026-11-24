@@ -91,7 +91,7 @@ const quickLinks = [
 ];
 
 const inputClass =
-    "mt-2 h-12 w-full min-w-0 rounded-xl border border-[#dce2ea] bg-white px-3 text-sm font-normal text-[#07152e] outline-none placeholder:text-[#6b7485] focus:border-[#07152e] focus:ring-2 focus:ring-[#07152e]";
+    "mt-2 h-12 w-full min-w-0 rounded-xl border border-[#dce2ea] bg-white px-3 text-sm font-normal text-brand-navy outline-none placeholder:text-[#6b7485] focus:border-brand-navy focus:ring-2 focus:ring-brand-navy";
 
 export default function HelpCenter() {
     const idPrefix = useId();
@@ -140,17 +140,17 @@ export default function HelpCenter() {
         <main className="w-full bg-[#f7f8fa]">
             <div className="mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
                 <header className="mb-7 sm:mb-8">
-                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#176348]">Help centre</p>
-                    <h1 className="mt-2 font-heading text-2xl font-bold tracking-wide text-[#07152e] sm:text-3xl">HELP &amp; SUPPORT</h1>
-                    <p className="mt-2 text-sm text-[#526078]">Find answers or get in touch with our team. No sign-in needed.</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-success-green">Help centre</p>
+                    <h1 className="mt-2 font-heading text-2xl font-semibold tracking-wide text-brand-navy sm:text-3xl">HELP &amp; SUPPORT</h1>
+                    <p className="mt-2 text-sm text-brand-navy-muted">Find answers or get in touch with our team. No sign-in needed.</p>
                 </header>
 
                 {/* Search */}
-                <section aria-labelledby={`${idPrefix}-search-heading`} className="relative overflow-hidden rounded-[22px] bg-[#07152e] px-5 py-7 text-white sm:px-8 sm:py-9 lg:px-9">
+                <section aria-labelledby={`${idPrefix}-search-heading`} className="relative overflow-hidden rounded-[22px] bg-brand-navy px-5 py-7 text-white sm:px-8 sm:py-9 lg:px-9">
                     <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-16 h-56 w-56 rounded-full border-[28px] border-white/[0.035]" />
                     <div aria-hidden="true" className="pointer-events-none absolute -right-4 top-8 h-36 w-36 rounded-full border border-white/[0.06]" />
-                    <h2 id={`${idPrefix}-search-heading`} className="relative text-xl font-bold sm:text-2xl">How can we help you today?</h2>
-                    <label className="relative mt-5 flex h-12 items-center gap-3 rounded-xl bg-white px-4 text-[#526078] focus-within:ring-2 focus-within:ring-[#e9b949] focus-within:ring-offset-2 focus-within:ring-offset-[#07152e] sm:h-[58px] sm:px-5">
+                    <h2 id={`${idPrefix}-search-heading`} className="relative text-xl font-semibold sm:text-2xl">How can we help you today?</h2>
+                    <label className="relative mt-5 flex h-12 items-center gap-3 rounded-xl bg-white px-4 text-brand-navy-muted focus-within:ring-2 focus-within:ring-[#e9b949] focus-within:ring-offset-2 focus-within:ring-offset-brand-navy sm:h-[58px] sm:px-5">
                         <Search size={19} className="shrink-0" aria-hidden="true" />
                         <input
                             type="search"
@@ -158,7 +158,7 @@ export default function HelpCenter() {
                             value={query}
                             onChange={(event) => setQuery(event.target.value)}
                             placeholder="Search e.g. track order, refund, packaging"
-                            className="h-full min-w-0 flex-1 bg-transparent text-sm text-[#07152e] outline-none placeholder:text-[#6b7485] sm:text-base"
+                            className="h-full min-w-0 flex-1 bg-transparent text-sm text-brand-navy outline-none placeholder:text-[#6b7485] sm:text-base"
                         />
                     </label>
                     <div className="relative mt-4 flex flex-wrap items-center gap-2 text-xs sm:gap-2.5">
@@ -178,7 +178,7 @@ export default function HelpCenter() {
 
                 {/* Topics */}
                 <section className="mt-6 sm:mt-7">
-                    <h2 className="mb-3 text-base font-bold text-[#07152e] sm:text-lg">Browse by topic</h2>
+                    <h3 className="mb-3 text-base font-semibold text-brand-navy sm:text-lg">Browse by topic</h3>
                     <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
                         {topics.map((topic) => {
                             const Icon = topic.icon;
@@ -189,12 +189,12 @@ export default function HelpCenter() {
                                     type="button"
                                     onClick={() => chooseTopic(topic.key)}
                                     aria-pressed={selected}
-                                    className={`flex min-h-[76px] items-center gap-3 rounded-[18px] border p-3 text-left transition sm:min-h-[84px] sm:gap-4 sm:p-4 ${selected ? "border-[#07152e] bg-[#eef1f6]" : "border-[#e1e6ee] bg-white hover:border-[#07152e]/40"}`}
+                                    className={`flex min-h-[76px] items-center gap-3 rounded-[18px] border p-3 text-left transition sm:min-h-[84px] sm:gap-4 sm:p-4 ${selected ? "border-brand-navy bg-pale-gray" : "border-[#e1e6ee] bg-white hover:border-brand-navy/40"}`}
                                 >
-                                    <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#edf0f4] text-[#07152e] sm:h-[54px] sm:w-[54px]"><Icon size={20} /></span>
+                                    <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pale-gray text-brand-navy sm:h-[54px] sm:w-[54px]"><Icon size={20} /></span>
                                     <span className="min-w-0">
-                                        <span className="block text-sm font-bold text-[#07152e] sm:text-[15px]">{topic.title}</span>
-                                        <span className="mt-0.5 block text-xs text-[#526078]">{topic.subtitle}</span>
+                                        <span className="block text-sm font-bold text-brand-navy sm:text-[15px]">{topic.title}</span>
+                                        <span className="mt-0.5 block text-xs text-brand-navy-muted">{topic.subtitle}</span>
                                     </span>
                                 </button>
                             );
@@ -206,18 +206,18 @@ export default function HelpCenter() {
                     {/* FAQs */}
                     <section className="overflow-hidden rounded-[22px] border border-[#e1e6ee] bg-white">
                         <div className="flex items-center gap-3 border-b border-[#e7ebf1] bg-[#f1f3f6] px-5 py-4 sm:px-6 sm:py-5">
-                            <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#07152e] text-white"><HelpCircle size={21} /></span>
+                            <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-navy text-white"><HelpCircle size={21} /></span>
                             <div>
-                                <h2 className="text-base font-bold text-[#07152e] sm:text-lg">Frequently asked questions</h2>
-                                <p className="text-xs text-[#526078]" aria-live="polite">{visibleFAQs.length} {visibleFAQs.length === 1 ? "answer" : "answers"}</p>
+                                <h3 className="text-base font-semibold text-brand-navy sm:text-lg">Frequently asked questions</h3>
+                                <p className="text-xs text-brand-navy-muted" aria-live="polite">{visibleFAQs.length} {visibleFAQs.length === 1 ? "answer" : "answers"}</p>
                             </div>
                         </div>
 
                         {visibleFAQs.length === 0 ? (
                             <div className="px-5 py-12 text-center sm:px-8">
-                                <p className="text-sm font-semibold text-[#07152e]">No answers found</p>
-                                <p className="mt-1 text-xs text-[#526078]">Try another search, browse a different topic, or contact our team.</p>
-                                <button type="button" onClick={() => { setQuery(""); setActiveTopic("All"); }} className="mt-4 text-xs font-bold text-[#176348] underline underline-offset-4">Clear filters</button>
+                                <p className="text-sm font-semibold text-brand-navy">No answers found</p>
+                                <p className="mt-1 text-xs text-brand-navy-muted">Try another search, browse a different topic, or contact our team.</p>
+                                <button type="button" onClick={() => { setQuery(""); setActiveTopic("All"); }} className="mt-4 text-xs font-bold text-success-green underline underline-offset-4">Clear filters</button>
                             </div>
                         ) : visibleFAQs.map((faq) => {
                             const isOpen = expandedFaq === faq.index;
@@ -234,22 +234,22 @@ export default function HelpCenter() {
                                             onClick={() => setExpandedFaq(isOpen ? -1 : faq.index)}
                                             className="flex min-h-[58px] w-full items-center gap-2 px-4 py-3 text-left sm:gap-3 sm:px-6 sm:py-4"
                                         >
-                                            <span className="hidden shrink-0 rounded-md bg-[#edf0f4] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#4b5565] sm:inline-flex">{faq.topic}</span>
-                                            <span className="min-w-0 flex-1 text-sm font-bold text-[#07152e] sm:text-[15px]">{faq.question}</span>
-                                            <ChevronDown size={18} aria-hidden="true" className={`shrink-0 text-[#07152e] transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                                            <span className="hidden shrink-0 rounded-md bg-pale-gray px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-brand-navy-muted sm:inline-flex">{faq.topic}</span>
+                                            <span className="min-w-0 flex-1 text-sm font-bold text-brand-navy sm:text-[15px]">{faq.question}</span>
+                                            <ChevronDown size={18} aria-hidden="true" className={`shrink-0 text-brand-navy transition-transform ${isOpen ? "rotate-180" : ""}`} />
                                         </button>
                                     </h3>
                                     <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!isOpen} className="px-4 pb-5 sm:px-6 sm:pb-6">
-                                        <p className="text-sm leading-6 text-[#4b5565]">{faq.answer}</p>
+                                        <p className="text-sm leading-6 text-brand-navy-muted">{faq.answer}</p>
                                         <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-                                            <span className="mr-1 text-[#526078]">Was this helpful?</span>
+                                            <span className="mr-1 text-brand-navy-muted">Was this helpful?</span>
                                             {([true, false] as const).map((vote) => (
                                                 <button
                                                     key={String(vote)}
                                                     type="button"
                                                     aria-pressed={helpful[faq.index] === vote}
                                                     onClick={() => setHelpful((current) => ({ ...current, [faq.index]: vote }))}
-                                                    className={`rounded-full border px-3.5 py-1.5 font-semibold transition ${helpful[faq.index] === vote ? "border-[#07152e] bg-[#07152e] text-white" : "border-[#dce2ea] text-[#07152e] hover:bg-[#f5f7fa]"}`}
+                                                    className={`rounded-full border px-3.5 py-1.5 font-semibold transition ${helpful[faq.index] === vote ? "border-brand-navy bg-brand-navy text-white" : "border-[#dce2ea] text-brand-navy hover:bg-[#f5f7fa]"}`}
                                                 >
                                                     {vote ? "Yes" : "No"}
                                                 </button>
@@ -265,74 +265,74 @@ export default function HelpCenter() {
                         {/* Contact */}
                         <section className="rounded-[22px] border border-[#e1e6ee] bg-white p-5 sm:p-6">
                             <div className="mb-4 flex items-center gap-3">
-                                <span aria-hidden="true" className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#07152e] text-white"><Headphones size={20} /></span>
+                                <span aria-hidden="true" className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-navy text-white"><Headphones size={20} /></span>
                                 <div>
-                                    <h2 className="text-base font-bold text-[#07152e]">Talk to us</h2>
-                                    <p className="text-xs text-[#526078]">Mon–Sat, 10 am – 6 pm IST</p>
+                                    <h3 className="text-base font-semibold text-brand-navy">Talk to us</h3>
+                                    <p className="text-xs text-brand-navy-muted">Mon–Sat, 10 am – 6 pm IST</p>
                                 </div>
                             </div>
                             <div className="space-y-2.5">
                                 <a href={`https://wa.me/${SUPPORT_PHONE_LINK.slice(1)}`} target="_blank" rel="noopener noreferrer" className="flex min-h-[72px] items-center gap-3 rounded-2xl bg-[#e8f5ef] p-3 transition hover:bg-[#ddf0e7]">
-                                    <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#176348] text-white"><MessageCircle size={19} /></span>
-                                    <span className="min-w-0 flex-1"><span className="block text-sm font-bold text-[#07152e]">Chat on WhatsApp</span><span className="block break-words text-xs text-[#4b5565]">Usually the fastest way · {SUPPORT_PHONE}</span></span>
-                                    <span aria-hidden="true" className="text-[#07152e]">›</span>
+                                    <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-success-green text-white"><MessageCircle size={19} /></span>
+                                    <span className="min-w-0 flex-1"><span className="block text-sm font-bold text-brand-navy">Chat on WhatsApp</span><span className="block break-words text-xs text-brand-navy-muted">Usually the fastest way · {SUPPORT_PHONE}</span></span>
+                                    <span aria-hidden="true" className="text-brand-navy">›</span>
                                 </a>
                                 <a href={`mailto:${SUPPORT_EMAIL}`} className="flex min-h-[65px] items-center gap-3 rounded-2xl border border-[#e1e6ee] p-3 transition hover:bg-[#f8f9fb]">
-                                    <Mail size={20} aria-hidden="true" className="ml-1 shrink-0 text-[#07152e]" />
-                                    <span className="min-w-0 flex-1"><span className="block text-sm font-bold text-[#07152e]">Email us</span><span className="block break-all text-xs text-[#526078]">{SUPPORT_EMAIL}</span></span>
-                                    <span aria-hidden="true" className="text-[#07152e]">›</span>
+                                    <Mail size={20} aria-hidden="true" className="ml-1 shrink-0 text-brand-navy" />
+                                    <span className="min-w-0 flex-1"><span className="block text-sm font-bold text-brand-navy">Email us</span><span className="block break-all text-xs text-brand-navy-muted">{SUPPORT_EMAIL}</span></span>
+                                    <span aria-hidden="true" className="text-brand-navy">›</span>
                                 </a>
                                 <a href={`tel:${SUPPORT_PHONE_LINK}`} className="flex min-h-[65px] items-center gap-3 rounded-2xl border border-[#e1e6ee] p-3 transition hover:bg-[#f8f9fb]">
-                                    <Phone size={19} aria-hidden="true" className="ml-1 shrink-0 text-[#07152e]" />
-                                    <span className="min-w-0 flex-1"><span className="block text-sm font-bold text-[#07152e]">Call us</span><span className="block text-xs text-[#526078]">{SUPPORT_PHONE}</span></span>
-                                    <span aria-hidden="true" className="text-[#07152e]">›</span>
+                                    <Phone size={19} aria-hidden="true" className="ml-1 shrink-0 text-brand-navy" />
+                                    <span className="min-w-0 flex-1"><span className="block text-sm font-bold text-brand-navy">Call us</span><span className="block text-xs text-brand-navy-muted">{SUPPORT_PHONE}</span></span>
+                                    <span aria-hidden="true" className="text-brand-navy">›</span>
                                 </a>
                             </div>
                         </section>
 
                         {/* Request form (opens a pre-filled email) */}
                         <section className="rounded-[22px] border border-[#e1e6ee] bg-white p-5 sm:p-6">
-                            <h2 className="text-base font-bold text-[#07152e]">Raise a request</h2>
-                            <p className="mt-1 text-xs leading-5 text-[#526078]">Tell us what went wrong and we&apos;ll get back to you.</p>
+                            <h3 className="text-base font-semibold text-brand-navy">Raise a request</h3>
+                            <p className="mt-1 text-xs leading-5 text-brand-navy-muted">Tell us what went wrong and we&apos;ll get back to you.</p>
                             <form onSubmit={submitRequest} className="mt-4 space-y-3.5">
-                                <label className="block text-xs font-bold text-[#07152e]">Your name
+                                <label className="block text-xs font-bold text-brand-navy">Your name
                                     <input required maxLength={100} autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} className={inputClass} />
                                 </label>
-                                <label className="block text-xs font-bold text-[#07152e]">Email
+                                <label className="block text-xs font-bold text-brand-navy">Email
                                     <input required type="email" maxLength={150} autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} />
                                 </label>
-                                <label className="block text-xs font-bold text-[#07152e]">Order number <span className="font-normal text-[#526078]">(optional)</span>
+                                <label className="block text-xs font-bold text-brand-navy">Order number <span className="font-normal text-brand-navy-muted">(optional)</span>
                                     <input maxLength={40} value={orderNumber} onChange={(event) => setOrderNumber(event.target.value)} placeholder="e.g. ORD-123456" className={inputClass} />
                                 </label>
-                                <label className="block text-xs font-bold text-[#07152e]">What&apos;s the issue?
+                                <label className="block text-xs font-bold text-brand-navy">What&apos;s the issue?
                                     <select value={issue} onChange={(event) => setIssue(event.target.value)} className={`${inputClass} font-semibold`}>
                                         {issueOptions.map((option) => <option key={option}>{option}</option>)}
                                     </select>
                                 </label>
-                                <label className="block text-xs font-bold text-[#07152e]">Details
+                                <label className="block text-xs font-bold text-brand-navy">Details
                                     <textarea required minLength={10} maxLength={2000} rows={4} value={details} onChange={(event) => setDetails(event.target.value)} placeholder="Describe the issue" className={`${inputClass} block h-auto min-h-28 resize-y py-3`} />
                                 </label>
-                                <button type="submit" className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#071630] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#14284d]">
+                                <button type="submit" className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-navy px-4 py-3 text-sm font-bold text-white transition hover:bg-[#14284d]">
                                     <Mail size={16} aria-hidden="true" />Prepare request email
                                 </button>
                                 {submitMessage && (
-                                    <p role="status" className="flex items-start gap-2 text-xs leading-5 text-[#176348]">
+                                    <p role="status" className="flex items-start gap-2 text-xs leading-5 text-success-green">
                                         <CheckCircle2 size={15} aria-hidden="true" className="mt-0.5 shrink-0" />{submitMessage}
                                     </p>
                                 )}
-                                <p className="text-xs leading-5 text-[#526078]">Your email app opens with the details. Attach any photos there before sending.</p>
+                                <p className="text-xs leading-5 text-brand-navy-muted">Your email app opens with the details. Attach any photos there before sending.</p>
                             </form>
                         </section>
 
                         {/* Quick links */}
                         <section className="rounded-[22px] border border-[#e1e6ee] bg-white p-5 sm:p-6">
-                            <h2 className="text-base font-bold text-[#07152e]">Quick links</h2>
+                            <h3 className="text-base font-semibold text-brand-navy">Quick links</h3>
                             <ul className="mt-3 space-y-1">
                                 {quickLinks.map((link) => {
                                     const Icon = link.icon;
                                     return (
                                         <li key={link.href}>
-                                            <Link href={link.href} className="flex min-h-11 items-center gap-3 rounded-xl px-2 text-sm font-semibold text-[#07152e] transition hover:bg-[#f5f7fa]">
+                                            <Link href={link.href} className="flex min-h-11 items-center gap-3 rounded-xl px-2 text-sm font-semibold text-brand-navy transition hover:bg-[#f5f7fa]">
                                                 <Icon size={17} aria-hidden="true" className="shrink-0" />
                                                 <span className="flex-1">{link.label}</span>
                                                 <span aria-hidden="true">›</span>
@@ -341,8 +341,8 @@ export default function HelpCenter() {
                                     );
                                 })}
                             </ul>
-                            <p className="mt-3 text-xs leading-5 text-[#526078]">
-                                Have an account? <Link href="/user/orders" className="font-semibold text-[#07152e] underline underline-offset-4">View my orders</Link>
+                            <p className="mt-3 text-xs leading-5 text-brand-navy-muted">
+                                Have an account? <Link href="/user/orders" className="font-semibold text-brand-navy underline underline-offset-4">View my orders</Link>
                             </p>
                         </section>
                     </div>

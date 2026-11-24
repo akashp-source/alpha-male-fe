@@ -13,13 +13,13 @@ const sections = [
             <div className="overflow-x-auto">
                 <table className="w-full min-w-[600px] text-left text-sm">
                     <thead>
-                        <tr className="border-b border-[#354158] text-[#D5D5D7]">
+                        <tr className="border-b border-[#354158] text-olympus">
                             <th className="py-3 pr-4">Situation</th>
                             <th className="py-3 pr-4">Report within</th>
                             <th className="py-3">What we do</th>
                         </tr>
                     </thead>
-                    <tbody className="text-[#AEB5C3]">
+                    <tbody className="text-palladium">
                         {[
                             ["Damaged, leaking or tampered product", "48 hours of delivery", "Free replacement, or a full refund if a replacement isn’t available"],
                             ["Wrong product or missing item", "48 hours of delivery", "We send the correct item free, or refund you in full"],
@@ -120,13 +120,13 @@ const sections = [
                 <div className="overflow-x-auto">
                     <table className="w-full min-w-[560px] text-left text-sm">
                         <thead>
-                            <tr className="border-b border-[#354158] text-[#D5D5D7]">
+                            <tr className="border-b border-[#354158] text-olympus">
                                 <th className="py-3 pr-4">How you paid</th>
                                 <th className="py-3 pr-4">Where the refund goes</th>
                                 <th className="py-3">Timeline after approval</th>
                             </tr>
                         </thead>
-                        <tbody className="text-[#AEB5C3]">
+                        <tbody className="text-palladium">
                             {[
                                 ["UPI, card, net banking or wallet", "Your original payment method", "5–7 business days"],
                                 ["Cash on Delivery", "Your bank account or UPI ID, which you share through our secure support link", "5–7 business days"],
@@ -170,8 +170,8 @@ function Section({
 }) {
     return (
         <section className="border-b border-[#28344A] py-7 last:border-0">
-            <h2 className="mb-4 font-serif text-xl text-[#D5D5D7]">{title}</h2>
-            <div className="space-y-3 text-sm leading-7 text-[#AEB5C3] [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:space-y-3 [&_ol]:pl-5 [&_strong]:text-[#D5D5D7]">
+            <h2 className="mb-4 font-heading text-xl text-olympus">{title}</h2>
+            <div className="space-y-3 text-sm leading-7 text-palladium [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:space-y-3 [&_ol]:pl-5 [&_strong]:text-olympus">
                 {children}
             </div>
         </section>
@@ -180,24 +180,24 @@ function Section({
 
 function ContactDetails() {
     return (
-        <div className="space-y-3 text-sm leading-7 text-[#AEB5C3]">
+        <div className="space-y-3 text-sm leading-7 text-palladium">
             <p>
-                <strong className="text-[#D5D5D7]">Email:</strong>{" "}
+                <strong className="text-olympus">Email:</strong>{" "}
                 <a href="mailto:info@alphamale.co.in" className="underline underline-offset-4 hover:text-white">
                     info@alphamale.co.in
                 </a>
             </p>
             <p>
-                <strong className="text-[#D5D5D7]">Phone / WhatsApp:</strong>{" "}
+                <strong className="text-olympus">Phone / WhatsApp:</strong>{" "}
                 <a href="tel:+919000937222" className="underline underline-offset-4 hover:text-white">
                     +91 90009 37222
                 </a>
             </p>
             <p>
-                <strong className="text-[#D5D5D7]">Support hours:</strong> Monday to Saturday, 10:00 AM to 6:00 PM IST
+                <strong className="text-olympus">Support hours:</strong> Monday to Saturday, 10:00 AM to 6:00 PM IST
             </p>
             <p>
-                <strong className="text-[#D5D5D7]">Address:</strong> Hyderabad, Telangana, India
+                <strong className="text-olympus">Address:</strong> Hyderabad, Telangana, India
             </p>
         </div>
     );
@@ -211,14 +211,14 @@ export const metadata: Metadata = {
 
 export default function ReturnRefundPolicyPage() {
     return (
-        <main className="min-h-screen bg-[#0C1221] text-[#D5D5D7]">
+        <main className="min-h-screen bg-brand-navy text-olympus">
             <div className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-12">
 
                 {/* Back to Home */}
                 <div className="mb-12">
                     <Link
                         href="/"
-                        className="group inline-flex items-center gap-2 rounded-full border border-[#354158] px-5 py-2.5 text-sm text-[#AEB5C3] transition-all duration-300 hover:border-[#D5D5D7] hover:bg-[#19243B] hover:text-white"
+                        className="group inline-flex items-center gap-2 rounded-full border border-[#354158] px-5 py-2.5 text-sm text-palladium transition-all duration-300 hover:border-olympus hover:bg-[#19243B] hover:text-white"
                     >
                         <span className="transition-transform duration-300 group-hover:-translate-x-1">
                             ←
@@ -240,13 +240,13 @@ export default function ReturnRefundPolicyPage() {
                             className="h-[90px] w-[90px] object-contain"
                         />
                     </div>
-                    <h1 className="font-serif text-4xl sm:text-5xl">
+                    <h1 className="font-heading text-4xl sm:text-5xl">
                         Return & Refund Policy
                     </h1>
                     <p className="mt-4 text-sm text-[#929BAE]">
                         Effective: 02 November 2026
                     </p>
-                    <p className="mt-6 max-w-3xl text-sm leading-7 text-[#AEB5C3]">
+                    <p className="mt-6 max-w-3xl text-sm leading-7 text-palladium">
                         Every Alpha Male product is made to be taken or used on the body,
                         so safety comes first. Only products that have never left their
                         original seal ever go back on our shelves. That is why our returns
@@ -257,7 +257,7 @@ export default function ReturnRefundPolicyPage() {
 
                 {/* At a Glance */}
                 <section className="mb-8 rounded-xl border border-[#354158] bg-[#19243B]/50 p-6">
-                    <h2 className="mb-5 font-serif text-2xl">At a Glance</h2>
+                    <h2 className="mb-5 font-heading text-2xl">At a Glance</h2>
                     <div className="space-y-4 text-sm">
                         {[
                             ["Can I return a product I’ve opened?", "No. Opened or used products can’t be returned, for health and hygiene reasons"],
@@ -267,8 +267,8 @@ export default function ReturnRefundPolicyPage() {
                             ["How soon is my refund?", "5–7 business days after your return is approved"],
                         ].map(([question, answer]) => (
                             <div key={question} className="grid gap-1 border-b border-[#354158] pb-3 last:border-0 sm:grid-cols-2">
-                                <p className="text-[#D5D5D7]">{question}</p>
-                                <p className="text-[#AEB5C3]">{answer}</p>
+                                <p className="text-olympus">{question}</p>
+                                <p className="text-palladium">{answer}</p>
                             </div>
                         ))}
                     </div>
@@ -289,7 +289,7 @@ export default function ReturnRefundPolicyPage() {
                 <FooterPage />
                 {/* Footer */}
                 {/* <footer className="mt-12 border-t border-[#354158] pt-8 text-center">
-                    <p className="font-serif text-sm uppercase tracking-[0.35em] text-[#D5D5D7]">
+                    <p className="font-serif text-sm uppercase tracking-[0.35em] text-olympus">
                         ALPHA MALE
                     </p>
                     <p className="mt-2 text-xs text-[#929BAE]">

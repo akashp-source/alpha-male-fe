@@ -28,7 +28,7 @@ interface FeaturedProduct {
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
-const controlClass = "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 bg-black/25 text-white backdrop-blur-sm transition hover:bg-white hover:text-[#07162f] disabled:cursor-not-allowed disabled:opacity-50 md:h-12 md:w-12";
+const controlClass = "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 bg-black/25 text-white backdrop-blur-sm transition hover:bg-white hover:text-brand-navy disabled:cursor-not-allowed disabled:opacity-50 md:h-12 md:w-12";
 
 export default function FeaturedProducts() {
     const [products, setProducts] = useState<FeaturedProduct[]>([]);
@@ -90,15 +90,15 @@ export default function FeaturedProducts() {
 
     if (loading) {
         return (
-            <section className="flex min-h-[360px] items-center justify-center bg-[#07162f] md:min-h-[570px]" aria-label="Featured products">
-                <div className="h-9 w-9 animate-spin rounded-full border-2 border-white/20 border-t-[#d6b47e]" />
+            <section className="flex min-h-[360px] items-center justify-center bg-brand-navy md:min-h-[570px]" aria-label="Featured products">
+                <div className="h-9 w-9 animate-spin rounded-full border-2 border-white/20 border-t-accent-gold" />
             </section>
         );
     }
 
     if (error) {
         return (
-            <section className="flex min-h-[300px] items-center justify-center bg-[#07162f] px-5 text-center md:min-h-[350px]" aria-label="Featured products">
+            <section className="flex min-h-[300px] items-center justify-center bg-brand-navy px-5 text-center md:min-h-[350px]" aria-label="Featured products">
                 <p className="font-body text-sm text-white/70">{error}</p>
             </section>
         );
@@ -119,9 +119,9 @@ export default function FeaturedProducts() {
             onClick={() => setActiveIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
             aria-current={activeIndex === index ? "true" : undefined}
-            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d6b47e]"
+            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-gold"
         >
-            <span className={`block h-1.5 rounded-full transition-all duration-300 ${activeIndex === index ? "w-5 bg-[#d6b47e]" : "w-2.5 bg-white/50"}`} />
+            <span className={`block h-1.5 rounded-full transition-all duration-300 ${activeIndex === index ? "w-5 bg-accent-gold" : "w-2.5 bg-white/50"}`} />
         </button>
     ));
 
@@ -132,7 +132,7 @@ export default function FeaturedProducts() {
             disabled={!motionPreferenceReady || reducedMotion || products.length <= 1}
             aria-label={reducedMotion ? "Autoplay disabled by reduced motion preference" : userPaused ? "Play autoplay" : "Pause autoplay"}
             aria-pressed={userPaused || reducedMotion}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 bg-black/25 text-white backdrop-blur-sm transition hover:bg-white hover:text-[#07162f] disabled:cursor-not-allowed disabled:opacity-55 md:h-11 md:w-11"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 bg-black/25 text-white backdrop-blur-sm transition hover:bg-white hover:text-brand-navy disabled:cursor-not-allowed disabled:opacity-55 md:h-11 md:w-11"
         >
             {userPaused || reducedMotion ? <Play size={16} fill="currentColor" /> : <Pause size={16} fill="currentColor" />}
         </button>
@@ -143,7 +143,7 @@ export default function FeaturedProducts() {
             role="region"
             aria-roledescription="carousel"
             aria-label="Featured products"
-            className="relative w-full overflow-hidden bg-[#07162f]"
+            className="relative w-full overflow-hidden bg-brand-navy"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onFocusCapture={setFocusWithin}
@@ -176,24 +176,24 @@ export default function FeaturedProducts() {
                 </div>
 
                 <div className="relative z-10 w-full max-w-[580px] break-words text-left lg:max-w-[52%]">
-                    <p className="mb-3 font-heading text-xs font-bold tracking-[0.25em] text-[#d6b47e] sm:mb-5 sm:text-sm md:text-base md:tracking-[0.3em]">
+                    <p className="mb-3 font-heading text-xs font-bold tracking-[0.25em] text-accent-gold sm:mb-5 sm:text-sm md:text-base md:tracking-[0.3em]">
                         ALPHA MALE
                     </p>
                     <p className="mb-2 font-body text-[9px] font-semibold uppercase tracking-[0.24em] text-white/70 sm:mb-3 sm:text-xs sm:tracking-[0.3em]">
                         DRIVE · STAMINA · ENERGY
                     </p>
-                    <h2 className="max-w-full font-heading text-3xl font-bold uppercase leading-[1.15] tracking-wide text-white sm:text-4xl md:text-5xl lg:text-6xl">
+                    <h2 className="max-w-full font-heading text-3xl font-semibold uppercase leading-[1.15] tracking-wide text-white sm:text-4xl md:text-5xl lg:text-6xl">
                         {product.taglines?.[0]?.title || product.name}
                     </h2>
                     <p className="mt-3 max-w-full font-body text-xs leading-5 text-white/75 sm:mt-4 sm:text-sm sm:leading-7 md:text-base md:leading-8 lg:max-w-lg">
                         {product.taglines?.[0]?.description || product.description}
                     </p>
-                    <p className="mt-3 font-body text-[9px] font-bold uppercase tracking-[0.18em] text-[#d6b47e] sm:mt-4 sm:text-xs sm:tracking-[0.2em]">
+                    <p className="mt-3 font-body text-[9px] font-bold uppercase tracking-[0.18em] text-accent-gold sm:mt-4 sm:text-xs sm:tracking-[0.2em]">
                         {product.name}
                     </p>
                     <Link
                         href={productHref(product)}
-                        className="mt-5 inline-flex h-11 max-w-full items-center gap-3 rounded-xl border border-[#d6b47e] px-5 font-body text-[10px] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#d6b47e] hover:text-[#07162f] sm:mt-7 sm:h-14 sm:gap-4 sm:px-8 sm:text-sm sm:tracking-[0.15em]"
+                        className="mt-5 inline-flex h-11 max-w-full items-center gap-3 rounded-xl border border-accent-gold px-5 font-body text-[10px] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-accent-gold hover:text-brand-navy sm:mt-7 sm:h-14 sm:gap-4 sm:px-8 sm:text-sm sm:tracking-[0.15em]"
                     >
                         Explore Product <ArrowRight size={17} />
                     </Link>
@@ -220,7 +220,7 @@ export default function FeaturedProducts() {
                             type="button"
                             onClick={previousSlide}
                             aria-label="Previous featured product"
-                            className="absolute left-5 top-1/2 z-30 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-black/25 text-white backdrop-blur-sm transition hover:bg-white hover:text-[#07162f] lg:left-6 lg:flex lg:h-12 lg:w-12"
+                            className="absolute left-5 top-1/2 z-30 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-black/25 text-white backdrop-blur-sm transition hover:bg-white hover:text-brand-navy lg:left-6 lg:flex lg:h-12 lg:w-12"
                         >
                             <ChevronLeft size={22} />
                         </button>
@@ -228,7 +228,7 @@ export default function FeaturedProducts() {
                             type="button"
                             onClick={nextSlide}
                             aria-label="Next featured product"
-                            className="absolute right-5 top-1/2 z-30 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-black/25 text-white backdrop-blur-sm transition hover:bg-white hover:text-[#07162f] lg:right-6 lg:flex lg:h-12 lg:w-12"
+                            className="absolute right-5 top-1/2 z-30 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-black/25 text-white backdrop-blur-sm transition hover:bg-white hover:text-brand-navy lg:right-6 lg:flex lg:h-12 lg:w-12"
                         >
                             <ChevronRight size={22} />
                         </button>

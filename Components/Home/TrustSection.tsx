@@ -89,10 +89,10 @@ export default function TrustSection() {
                                 <Icon
                                     size={32}
                                     strokeWidth={1.5}
-                                    className="text-[#d0d3dc] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-[#d6b47e]"
+                                    className="text-[#d0d3dc] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-accent-gold"
                                 />
 
-                                <div className="font-body text-xs font-bold leading-5 tracking-[0.08em] text-[#b9c0ce] transition-colors group-hover:text-white sm:tracking-[0.1em]">
+                                <div className="font-body text-xs font-bold leading-5 tracking-[0.08em] text-palladium transition-colors group-hover:text-white sm:tracking-[0.1em]">
                                     <p>{feature.title}</p>
                                     {feature.subtitle && (
                                         <p>{feature.subtitle}</p>

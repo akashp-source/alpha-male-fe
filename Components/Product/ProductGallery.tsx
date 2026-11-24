@@ -103,7 +103,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
             aria-roledescription="carousel"
             aria-label={`${name} images`}
             onKeyDown={onKeyDown}
-            className="group/gallery rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-[#212E49]/40 focus-visible:ring-offset-2"
+            className="group/gallery rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/40 focus-visible:ring-offset-2"
         >
             {/* Main images: swipeable track */}
             <div className="relative">
@@ -142,7 +142,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                             onClick={() => goTo(active - 1)}
                             disabled={active === 0}
                             aria-label="Previous image"
-                            className="absolute left-3 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#212E49] shadow-md opacity-0 transition hover:bg-white disabled:pointer-events-none disabled:opacity-0 group-hover/gallery:opacity-100 group-focus-within/gallery:opacity-100 lg:flex"
+                            className="absolute left-3 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-brand-navy shadow-md opacity-0 transition hover:bg-white disabled:pointer-events-none disabled:opacity-0 group-hover/gallery:opacity-100 group-focus-within/gallery:opacity-100 lg:flex"
                         >
                             <ChevronLeft size={20} />
                         </button>
@@ -151,13 +151,13 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                             onClick={() => goTo(active + 1)}
                             disabled={active === count - 1}
                             aria-label="Next image"
-                            className="absolute right-3 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#212E49] shadow-md opacity-0 transition hover:bg-white disabled:pointer-events-none disabled:opacity-0 group-hover/gallery:opacity-100 group-focus-within/gallery:opacity-100 lg:flex"
+                            className="absolute right-3 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-brand-navy shadow-md opacity-0 transition hover:bg-white disabled:pointer-events-none disabled:opacity-0 group-hover/gallery:opacity-100 group-focus-within/gallery:opacity-100 lg:flex"
                         >
                             <ChevronRight size={20} />
                         </button>
 
                         {/* Counter */}
-                        <span className="pointer-events-none absolute right-3 top-3 rounded-full bg-[#212E49]/75 px-2.5 py-1 font-body text-[11px] font-semibold text-white">
+                        <span className="pointer-events-none absolute right-3 top-3 rounded-full bg-brand-navy/75 px-2.5 py-1 font-body text-[11px] font-semibold text-white">
                             {active + 1} / {count}
                         </span>
 
@@ -166,7 +166,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                             {list.map((_, index) => (
                                 <span
                                     key={index}
-                                    className={`h-1.5 rounded-full transition-all ${index === active ? "w-5 bg-[#212E49]" : "w-1.5 bg-[#212E49]/30"}`}
+                                    className={`h-1.5 rounded-full transition-all ${index === active ? "w-5 bg-brand-navy" : "w-1.5 bg-brand-navy/30"}`}
                                 />
                             ))}
                         </div>
@@ -184,7 +184,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
                             onClick={() => goTo(index)}
                             aria-label={`Show image ${index + 1} of ${count}`}
                             aria-current={index === active}
-                            className={`h-11 min-h-11 w-11 min-w-11 shrink-0 overflow-hidden rounded-lg border-2 p-1.5 transition sm:h-16 sm:w-16 ${index === active ? "border-[#212E49]" : "border-transparent hover:border-[#212E49]/30"}`}
+                            className={`h-11 min-h-11 w-11 min-w-11 shrink-0 overflow-hidden rounded-lg border-2 p-1.5 transition sm:h-16 sm:w-16 ${index === active ? "border-brand-navy" : "border-transparent hover:border-brand-navy/30"}`}
                         >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={image} alt="" loading="lazy" className="h-full w-full object-contain" />
@@ -194,7 +194,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
             )}
 
             {count > 1 && (
-                <p className="mt-1 hidden font-body text-[11px] text-[#8b8077] lg:block">
+                <p className="mt-1 hidden font-body text-[11px] text-brand-navy-muted lg:block">
                     Click an image, then use ← → to browse.
                 </p>
             )}

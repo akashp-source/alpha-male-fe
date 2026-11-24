@@ -25,7 +25,7 @@ export default function ProductKeyPoints({
                         key={`${point.title}-${index}`}
                         className="min-w-0 rounded-[22px] border border-[#dce3dc] bg-white p-3 transition duration-300 hover:-translate-y-1 hover:shadow-md sm:p-6"
                     >
-                        <div className="mb-2 flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-[#dce5dc] bg-[#e0f2e9] sm:mb-4 sm:h-14 sm:w-14 sm:rounded-2xl">
+                        <div className="mb-2 flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-[#dce5dc] bg-pale-gray sm:mb-4 sm:h-14 sm:w-14 sm:rounded-2xl">
                             {point.image ? (
                                 <img
                                     src={point.image}
@@ -40,7 +40,7 @@ export default function ProductKeyPoints({
                             )}
                         </div>
 
-                        <h3 className="mb-1 break-words font-body text-sm font-bold leading-snug text-[#17120f] sm:mb-2 sm:text-lg">
+                        <h3 className="mb-1 break-words font-body text-sm font-semibold leading-snug text-brand-navy sm:mb-2 sm:text-lg">
                             {point.title}
                         </h3>
 

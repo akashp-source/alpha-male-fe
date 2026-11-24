@@ -52,7 +52,7 @@ Marketing/e-commerce site for Alpha Male (men's wellness brand). Two separate da
 ### Conventions
 
 - Components live in `Components/` (capital C) and are imported via the `@/*` alias mapped to the repo root (e.g. `@/Components/Faqs`, `@/lib/mongodb`).
-- Styling is Tailwind CSS v4, wired through Turbopack via a `@tailwindcss/turbopack` loader rule in `next.config.ts` (there's no PostCSS config). Theme tokens are in `app/globals.css` under `@theme` (`font-heading` = Cinzel, `font-body` = Montserrat, loaded via `next/font/google` in `app/layout.tsx`). Brand colors: background `#161f33`, text `#d5d5d7`.
+- Styling is Tailwind CSS v4, wired through Turbopack via a `@tailwindcss/turbopack` loader rule in `next.config.ts` (there's no PostCSS config). Theme tokens are in `app/globals.css` under `@theme` (`font-heading` = Cinzel, `font-body` = Montserrat, loaded via `next/font/google` in `app/layout.tsx`). Brand colours, fonts and their tokens are defined in `BRAND_GUIDELINES.md`; read it before any UI change.
 - `app/fonts.css` defines custom classes such as `.silver-text`, but its `@import` in `globals.css` is commented out, so those classes currently have no effect even though `app/page.tsx` and several `Components/` files use them. Define new shared styles in `globals.css`.
 - The product API base URL (`NEXT_PUBLIC_API_URL || "http://localhost:4001"`) is redeclared in each of the three fetching files; there's no shared API client.
 - Icons come from `lucide-react`.

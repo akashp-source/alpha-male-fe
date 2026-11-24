@@ -3,9 +3,58 @@
 
 
 
-@theme {
-  --font-heading: "Cinzel", serif;
-  --font-body: "Montserrat", sans-serif;
+/* -------------------------------------------------------------------------
+   Brand tokens (Alpha Male Brand Guidelines). Use these utilities
+   (bg-brand-navy, text-palladium, ...) instead of hex values in components.
+   `static` keeps every variable in the CSS so inline styles can use
+   var(--color-...) too.
+   ------------------------------------------------------------------------- */
+@theme static {
+  /* Typography: Cinzel for display/headings, Montserrat for body/UI.
+     font-serif maps to Cinzel too, so it can never fall back to ui-serif. */
+  --font-heading: "Cinzel", "Cinzel Fallback", serif;
+  --font-serif: "Cinzel", "Cinzel Fallback", serif;
+  --font-body: "Montserrat", "Montserrat Fallback", sans-serif;
+
+  /* Brand palette */
+  --color-brand-navy: #212e49; /* primary brand colour */
+  --color-white: #fefefe; /* also used by bg-white / text-white */
+  --color-palladium: #b0b1b0;
+  --color-pale-gray: #e9e9ea;
+  --color-olympus: #d5d5d7;
+  --color-medium-gray: #b5b5b5;
+
+  /* Secondary text on light backgrounds: navy at 75%.
+     AA (4.5:1+) on white, pale-gray and olympus. */
+  --color-brand-navy-muted: rgb(33 46 73 / 0.75);
+
+  /* Accents NOT in the brand guidelines, pending the brand owner's decision.
+     Tokenised only; they look exactly as before. */
+  --color-accent-gold: #d6b47e;
+  --color-accent-amber: #f0c65b;
+  --color-accent-amber-dark: #d79b2b;
+  --color-success-green: #176348;
+  --color-accent-green-deep: #103e3a;
+  --color-accent-green-moss: #315b3e;
+  --color-accent-lime: #c5df50;
+}
+
+/* Heading rule: H1-H2 = Cinzel 600, H3 and below = Montserrat 600.
+   Applies to headings without their own font classes. */
+@layer base {
+  h1,
+  h2 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-body);
+    font-weight: 600;
+  }
 }
 
 * {
@@ -30,8 +79,8 @@ body::-webkit-scrollbar {
 
 body {
   background: #161f33;
-  color: #d5d5d7;
-  font-family: var(--font-montserrat);
+  color: var(--color-olympus);
+  font-family: var(--font-body);
 }
 
 button,
@@ -40,7 +89,7 @@ input {
 }
 
 ::selection {
-  background: #d5d5d7;
+  background: var(--color-olympus);
   color: #161f33;
 }
 

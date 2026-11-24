@@ -99,9 +99,9 @@ export default function AccountSidebar({
             <ShieldCheck
                 size={18}
                 aria-hidden="true"
-                className="mt-0.5 shrink-0 text-[#07152e]"
+                className="mt-0.5 shrink-0 text-brand-navy"
             />
-            <p className="text-xs leading-5 text-[#526078]">{privacyNote}</p>
+            <p className="text-xs leading-5 text-brand-navy-muted">{privacyNote}</p>
         </div>
     );
 
@@ -122,15 +122,15 @@ export default function AccountSidebar({
                                 <Link
                                     href={link.href}
                                     aria-current={active ? "page" : undefined}
-                                    className={`flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border px-4 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#07152e] focus-visible:ring-offset-2 ${active
-                                        ? "border-[#07152e] bg-[#07152e] text-white"
-                                        : "border-[#dce2ea] bg-white text-[#07152e] hover:bg-[#f5f7fa]"
+                                    className={`flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border px-4 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-2 ${active
+                                        ? "border-brand-navy bg-brand-navy text-white"
+                                        : "border-[#dce2ea] bg-white text-brand-navy hover:bg-[#f5f7fa]"
                                         }`}
                                 >
                                     {link.shortLabel}
                                     {link.count !== undefined && (
                                         <span
-                                            className={`flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-bold ${active ? "bg-white text-[#07152e]" : "bg-[#07152e] text-white"}`}
+                                            className={`flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-bold ${active ? "bg-white text-brand-navy" : "bg-brand-navy text-white"}`}
                                         >
                                             {link.count}
                                             <span className="sr-only"> orders</span>
@@ -153,9 +153,9 @@ export default function AccountSidebar({
 
             {/* ---------- Desktop sidebar ---------- */}
             <div className="hidden lg:block">
-                <div className="rounded-[24px] bg-[#07152e] p-5 text-white">
+                <div className="rounded-[24px] bg-brand-navy p-5 text-white">
                     <div className="flex items-center gap-3">
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-[#07152e]">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-brand-navy">
                             {initials}
                         </div>
 
@@ -179,7 +179,7 @@ export default function AccountSidebar({
                                 href={link.href}
                                 aria-current={active ? "page" : undefined}
                                 className={`mb-1 flex items-center justify-between rounded-xl px-3.5 py-3 text-sm transition last:mb-0 ${active
-                                    ? "bg-[#e9edf3] font-bold text-[#07152e]"
+                                    ? "bg-pale-gray font-bold text-brand-navy"
                                     : "text-[#344054] hover:bg-[#f5f7fa]"
                                     }`}
                             >
@@ -189,7 +189,7 @@ export default function AccountSidebar({
                                 </span>
 
                                 {link.count !== undefined && (
-                                    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[#07152e] px-1.5 text-xs font-bold text-white">
+                                    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-brand-navy px-1.5 text-xs font-bold text-white">
                                         {link.count}
                                         <span className="sr-only"> orders</span>
                                     </span>

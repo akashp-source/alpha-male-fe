@@ -42,7 +42,7 @@ export default function ProductClaims({
                 <div className="mb-8 flex min-w-0 items-center justify-center gap-3 sm:mb-10 sm:gap-5">
                     <div className="hidden h-px flex-1 bg-[#dcd8ce] sm:block" />
 
-                    <h2 className="text-center font-heading text-lg font-bold capitalize tracking-wide text-[#10443f] sm:whitespace-nowrap sm:text-2xl lg:text-3xl">
+                    <h2 className="text-center font-heading text-lg font-semibold capitalize tracking-wide text-[#10443f] sm:whitespace-nowrap sm:text-2xl lg:text-3xl">
                         {heading}
                     </h2>
 
@@ -61,7 +61,7 @@ export default function ProductClaims({
                                 className={`group flex min-w-0 flex-col items-center px-2 text-center ${claims.length % 2 === 1 && index === claims.length - 1 ? "col-span-2 mx-auto w-1/2 sm:col-span-1 sm:w-auto" : ""} lg:border-r lg:border-[#dedbd2] lg:last:border-r-0`}
                             >
                                 {/* Icon */}
-                                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#07162f] transition-transform duration-300 group-hover:scale-110">
+                                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-brand-navy transition-transform duration-300 group-hover:scale-110">
                                     {claim.image ? (
                                         <img
                                             src={claim.image}
@@ -72,13 +72,13 @@ export default function ProductClaims({
                                         <Icon
                                             size={21}
                                             strokeWidth={1.7}
-                                            className="text-[#c5df50]"
+                                            className="text-accent-lime"
                                         />
                                     )}
                                 </div>
 
                                 {/* Title */}
-                                <h3 className="mb-2 font-body text-xs font-bold leading-snug text-[#103e3a] sm:text-sm">
+                                <h3 className="mb-2 font-body text-xs font-semibold leading-snug text-accent-green-deep sm:text-sm">
                                     {claim.title}
                                 </h3>
 

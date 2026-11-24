@@ -174,22 +174,22 @@ export default function SupportPage() {
         <main className="min-h-screen bg-[#f7f8fa]">
             <div className="mx-auto w-full max-w-[1440px] px-4 py-7 sm:px-6 sm:py-9 lg:px-10 lg:py-12 pb-28 lg:pb-28">
                 <header className="mb-7 sm:mb-8">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#176348]">Your account</p>
-                    <h1 className="mt-2 font-heading text-2xl font-bold tracking-wide text-[#07152e] sm:text-3xl">HELP &amp; SUPPORT</h1>
-                    <p className="mt-2 text-xs text-[#91857b] sm:text-sm">Find answers or get in touch with our team.</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-success-green">Your account</p>
+                    <h1 className="mt-2 font-heading text-2xl font-semibold tracking-wide text-brand-navy sm:text-3xl">HELP &amp; SUPPORT</h1>
+                    <p className="mt-2 text-xs text-brand-navy-muted sm:text-sm">Find answers or get in touch with our team.</p>
                 </header>
 
                 <div className="grid items-start gap-5 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-7 xl:grid-cols-[290px_minmax(0,1fr)]">
                     <AccountSidebar name={normalizedName} email={profile?.email} orderCount={orderCount} privacyNote="Your conversations with our team stay private." />
 
                     <div className="min-w-0">
-                        <section className="relative overflow-hidden rounded-[22px] bg-[#07152e] px-5 py-7 text-white sm:px-8 sm:py-9 lg:px-9">
+                        <section className="relative overflow-hidden rounded-[22px] bg-brand-navy px-5 py-7 text-white sm:px-8 sm:py-9 lg:px-9">
                             <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-16 h-56 w-56 rounded-full border-[28px] border-white/[0.035]" />
                             <div aria-hidden="true" className="pointer-events-none absolute -right-4 top-8 h-36 w-36 rounded-full border border-white/[0.06]" />
-                            <h2 className="relative text-xl font-bold sm:text-2xl">How can we help you today?</h2>
+                            <h2 className="relative text-xl font-semibold sm:text-2xl">How can we help you today?</h2>
                             <label className="relative mt-5 flex h-12 items-center gap-3 rounded-xl bg-white px-4 text-[#718096] sm:h-[58px] sm:px-5">
                                 <Search size={19} className="shrink-0" />
-                                <input aria-label="Search support articles" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search e.g. track order, refund, packaging" className="h-full min-w-0 flex-1 bg-transparent text-sm text-[#07152e] outline-none placeholder:text-[#8b94a3] sm:text-base" />
+                                <input aria-label="Search support articles" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search e.g. track order, refund, packaging" className="h-full min-w-0 flex-1 bg-transparent text-sm text-brand-navy outline-none placeholder:text-[#8b94a3] sm:text-base" />
                             </label>
                             <div className="relative mt-4 flex flex-wrap items-center gap-2 text-xs sm:gap-2.5">
                                 <span className="mr-1 text-white/75">Popular:</span>
@@ -207,15 +207,15 @@ export default function SupportPage() {
                         </section>
 
                         <section className="mt-6 sm:mt-7">
-                            <h2 className="mb-3 text-base font-bold text-[#07152e] sm:text-lg">Browse by topic</h2>
+                            <h2 className="mb-3 text-base font-semibold text-brand-navy sm:text-lg">Browse by topic</h2>
                             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3 xl:grid-cols-3">
                                 {topics.map((topic) => {
                                     const Icon = topic.icon;
                                     const selected = activeTopic === topic.key;
                                     return (
-                                        <button key={topic.key} type="button" onClick={() => chooseTopic(topic.key)} aria-pressed={selected} className={`flex min-h-[76px] items-center gap-3 rounded-[18px] border p-3 text-left transition sm:min-h-[84px] sm:gap-4 sm:p-4 ${selected ? "border-[#07152e] bg-[#eef1f6]" : "border-[#e1e6ee] bg-white hover:border-[#07152e]/40"}`}>
-                                            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#edf0f4] text-[#07152e] sm:h-[54px] sm:w-[54px]"><Icon size={20} /></span>
-                                            <span className="min-w-0"><span className="block text-sm font-bold text-[#07152e] sm:text-[15px]">{topic.title}</span><span className="mt-0.5 block text-xs text-[#718096]">{topic.subtitle}</span></span>
+                                        <button key={topic.key} type="button" onClick={() => chooseTopic(topic.key)} aria-pressed={selected} className={`flex min-h-[76px] items-center gap-3 rounded-[18px] border p-3 text-left transition sm:min-h-[84px] sm:gap-4 sm:p-4 ${selected ? "border-brand-navy bg-pale-gray" : "border-[#e1e6ee] bg-white hover:border-brand-navy/40"}`}>
+                                            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pale-gray text-brand-navy sm:h-[54px] sm:w-[54px]"><Icon size={20} /></span>
+                                            <span className="min-w-0"><span className="block text-sm font-bold text-brand-navy sm:text-[15px]">{topic.title}</span><span className="mt-0.5 block text-xs text-[#718096]">{topic.subtitle}</span></span>
                                         </button>
                                     );
                                 })}
@@ -225,22 +225,22 @@ export default function SupportPage() {
                         <div className="mt-6 grid items-start gap-4 xl:grid-cols-[minmax(0,1.45fr)_minmax(300px,.8fr)] xl:gap-5">
                             <section className="overflow-hidden rounded-[22px] border border-[#e1e6ee] bg-white">
                                 <div className="flex items-center gap-3 border-b border-[#e7ebf1] bg-[#f1f3f6] px-5 py-4 sm:px-6 sm:py-5">
-                                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#07152e] text-white"><HelpCircle size={21} /></span>
-                                    <div><h2 className="text-base font-bold text-[#07152e] sm:text-lg">Frequently asked questions</h2><p className="text-xs text-[#718096]">{visibleFAQs.length} {visibleFAQs.length === 1 ? "answer" : "answers"}</p></div>
+                                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-navy text-white"><HelpCircle size={21} /></span>
+                                    <div><h2 className="text-base font-semibold text-brand-navy sm:text-lg">Frequently asked questions</h2><p className="text-xs text-[#718096]">{visibleFAQs.length} {visibleFAQs.length === 1 ? "answer" : "answers"}</p></div>
                                 </div>
 
                                 {visibleFAQs.length === 0 ? (
-                                    <div className="px-5 py-12 text-center sm:px-8"><p className="text-sm font-semibold text-[#07152e]">No answers found</p><p className="mt-1 text-xs text-[#718096]">Try another search or browse a different topic.</p><button type="button" onClick={() => { setQuery(""); setActiveTopic("All"); }} className="mt-4 text-xs font-bold text-[#176348] underline underline-offset-4">Clear filters</button></div>
+                                    <div className="px-5 py-12 text-center sm:px-8"><p className="text-sm font-semibold text-brand-navy">No answers found</p><p className="mt-1 text-xs text-[#718096]">Try another search or browse a different topic.</p><button type="button" onClick={() => { setQuery(""); setActiveTopic("All"); }} className="mt-4 text-xs font-bold text-success-green underline underline-offset-4">Clear filters</button></div>
                                 ) : visibleFAQs.map((faq) => {
                                     const isOpen = expandedFaq === faq.index;
                                     return (
                                         <article key={faq.question} className="border-b border-[#e7ebf1] last:border-0">
                                             <button type="button" aria-expanded={isOpen} onClick={() => setExpandedFaq(isOpen ? -1 : faq.index)} className="flex min-h-[58px] w-full items-center gap-2 px-4 py-3 text-left sm:gap-3 sm:px-6 sm:py-4">
-                                                <span className="hidden shrink-0 rounded-md bg-[#edf0f4] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#61728d] sm:inline-flex">{faq.topic}</span>
-                                                <span className="min-w-0 flex-1 text-sm font-bold text-[#07152e] sm:text-[15px]">{faq.question}</span>
-                                                {isOpen ? <ChevronUp size={18} className="shrink-0 text-[#07152e]" /> : <ChevronDown size={18} className="shrink-0 text-[#07152e]" />}
+                                                <span className="hidden shrink-0 rounded-md bg-pale-gray px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#61728d] sm:inline-flex">{faq.topic}</span>
+                                                <span className="min-w-0 flex-1 text-sm font-bold text-brand-navy sm:text-[15px]">{faq.question}</span>
+                                                {isOpen ? <ChevronUp size={18} className="shrink-0 text-brand-navy" /> : <ChevronDown size={18} className="shrink-0 text-brand-navy" />}
                                             </button>
-                                            {isOpen && <div className="px-4 pb-5 sm:px-6 sm:pb-6"><span className="mb-2 inline-flex rounded-md bg-[#edf0f4] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#61728d] sm:hidden">{faq.topic}</span><p className="text-sm leading-6 text-[#526078]">{faq.answer}</p><div className="mt-4 flex flex-wrap items-center gap-2 text-xs"><span className="mr-1 text-[#718096]">Was this helpful?</span>{([true, false] as const).map((vote) => <button key={String(vote)} type="button" aria-pressed={helpful[faq.index] === vote} onClick={() => setHelpful((current) => ({ ...current, [faq.index]: vote }))} className={`rounded-full border px-3.5 py-1.5 font-semibold transition ${helpful[faq.index] === vote ? "border-[#07152e] bg-[#07152e] text-white" : "border-[#dce2ea] text-[#07152e] hover:bg-[#f5f7fa]"}`}>{vote ? "Yes" : "No"}</button>)}</div></div>}
+                                            {isOpen && <div className="px-4 pb-5 sm:px-6 sm:pb-6"><span className="mb-2 inline-flex rounded-md bg-pale-gray px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#61728d] sm:hidden">{faq.topic}</span><p className="text-sm leading-6 text-brand-navy-muted">{faq.answer}</p><div className="mt-4 flex flex-wrap items-center gap-2 text-xs"><span className="mr-1 text-[#718096]">Was this helpful?</span>{([true, false] as const).map((vote) => <button key={String(vote)} type="button" aria-pressed={helpful[faq.index] === vote} onClick={() => setHelpful((current) => ({ ...current, [faq.index]: vote }))} className={`rounded-full border px-3.5 py-1.5 font-semibold transition ${helpful[faq.index] === vote ? "border-brand-navy bg-brand-navy text-white" : "border-[#dce2ea] text-brand-navy hover:bg-[#f5f7fa]"}`}>{vote ? "Yes" : "No"}</button>)}</div></div>}
                                         </article>
                                     );
                                 })}
@@ -248,42 +248,42 @@ export default function SupportPage() {
 
                             <div className="space-y-4">
                                 <section className="rounded-[22px] border border-[#e1e6ee] bg-white p-5 sm:p-6">
-                                    <div className="mb-4 flex items-center gap-3"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#07152e] text-white"><Headphones size={20} /></span><div><h2 className="text-base font-bold text-[#07152e]">Talk to us</h2><p className="text-xs text-[#718096]">Mon–Sat, 10 am – 6 pm IST</p></div></div>
+                                    <div className="mb-4 flex items-center gap-3"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-navy text-white"><Headphones size={20} /></span><div><h2 className="text-base font-semibold text-brand-navy">Talk to us</h2><p className="text-xs text-[#718096]">Mon–Sat, 10 am – 6 pm IST</p></div></div>
                                     <div className="space-y-2.5">
-                                        <a href={`https://wa.me/${SUPPORT_PHONE_LINK.slice(1)}`} target="_blank" rel="noreferrer" className="flex min-h-[72px] items-center gap-3 rounded-2xl bg-[#e8f5ef] p-3 transition hover:bg-[#ddf0e7]"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#19985d] text-white"><MessageCircle size={19} /></span><span className="min-w-0 flex-1"><span className="block text-sm font-bold text-[#07152e]">Chat on WhatsApp</span><span className="block break-words text-xs text-[#526078]">Usually the fastest way · {SUPPORT_PHONE}</span></span><span className="text-[#07152e]">›</span></a>
-                                        <a href={`mailto:${SUPPORT_EMAIL}`} className="flex min-h-[65px] items-center gap-3 rounded-2xl border border-[#e1e6ee] p-3 transition hover:bg-[#f8f9fb]"><Mail size={20} className="ml-1 shrink-0 text-[#07152e]" /><span className="min-w-0 flex-1"><span className="block text-sm font-bold text-[#07152e]">Email us</span><span className="block break-all text-xs text-[#718096]">{SUPPORT_EMAIL}</span></span><span>›</span></a>
-                                        <a href={`tel:${SUPPORT_PHONE_LINK}`} className="flex min-h-[65px] items-center gap-3 rounded-2xl border border-[#e1e6ee] p-3 transition hover:bg-[#f8f9fb]"><Phone size={19} className="ml-1 shrink-0 text-[#07152e]" /><span className="min-w-0 flex-1"><span className="block text-sm font-bold text-[#07152e]">Call us</span><span className="block text-xs text-[#718096]">{SUPPORT_PHONE}</span></span><span>›</span></a>
+                                        <a href={`https://wa.me/${SUPPORT_PHONE_LINK.slice(1)}`} target="_blank" rel="noreferrer" className="flex min-h-[72px] items-center gap-3 rounded-2xl bg-[#e8f5ef] p-3 transition hover:bg-[#ddf0e7]"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#19985d] text-white"><MessageCircle size={19} /></span><span className="min-w-0 flex-1"><span className="block text-sm font-bold text-brand-navy">Chat on WhatsApp</span><span className="block break-words text-xs text-brand-navy-muted">Usually the fastest way · {SUPPORT_PHONE}</span></span><span className="text-brand-navy">›</span></a>
+                                        <a href={`mailto:${SUPPORT_EMAIL}`} className="flex min-h-[65px] items-center gap-3 rounded-2xl border border-[#e1e6ee] p-3 transition hover:bg-[#f8f9fb]"><Mail size={20} className="ml-1 shrink-0 text-brand-navy" /><span className="min-w-0 flex-1"><span className="block text-sm font-bold text-brand-navy">Email us</span><span className="block break-all text-xs text-[#718096]">{SUPPORT_EMAIL}</span></span><span>›</span></a>
+                                        <a href={`tel:${SUPPORT_PHONE_LINK}`} className="flex min-h-[65px] items-center gap-3 rounded-2xl border border-[#e1e6ee] p-3 transition hover:bg-[#f8f9fb]"><Phone size={19} className="ml-1 shrink-0 text-brand-navy" /><span className="min-w-0 flex-1"><span className="block text-sm font-bold text-brand-navy">Call us</span><span className="block text-xs text-[#718096]">{SUPPORT_PHONE}</span></span><span>›</span></a>
                                     </div>
                                 </section>
 
                                 <section className="rounded-[22px] border border-[#e1e6ee] bg-white p-5 sm:p-6">
-                                    <h2 className="text-base font-bold text-[#07152e]">Raise a request</h2>
+                                    <h2 className="text-base font-semibold text-brand-navy">Raise a request</h2>
                                     <p className="mt-1 text-xs leading-5 text-[#718096]">Tell us what went wrong and we&apos;ll get back to you.</p>
                                     <form onSubmit={submitRequest} className="mt-4 space-y-3.5">
-                                        <label className="block text-xs font-bold text-[#07152e]">Related order
-                                            <select value={selectedOrder} onChange={(event) => setSelectedOrder(event.target.value)} className="mt-2 h-12 w-full min-w-0 rounded-xl border border-[#dce2ea] bg-white px-3 text-sm font-semibold text-[#07152e] outline-none focus:border-[#07152e]">
+                                        <label className="block text-xs font-bold text-brand-navy">Related order
+                                            <select value={selectedOrder} onChange={(event) => setSelectedOrder(event.target.value)} className="mt-2 h-12 w-full min-w-0 rounded-xl border border-[#dce2ea] bg-white px-3 text-sm font-semibold text-brand-navy outline-none focus:border-brand-navy">
                                                 <option value="">Select an order (optional)</option>
                                                 {orders.map((order, index) => <option key={order._id || index} value={order._id || order.orderNumber || ""}>{order.orderNumber || `Order ${index + 1}`} · {order.shipmentCurrentStatus || order.status || "Placed"}{order.createdAt ? ` · ${new Date(order.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}` : ""}</option>)}
                                             </select>
                                         </label>
-                                        <label className="block text-xs font-bold text-[#07152e]">What&apos;s the issue?
-                                            <select value={issue} onChange={(event) => setIssue(event.target.value)} className="mt-2 h-12 w-full min-w-0 rounded-xl border border-[#dce2ea] bg-white px-3 text-sm font-semibold text-[#07152e] outline-none focus:border-[#07152e]">{issueOptions.map((option) => <option key={option}>{option}</option>)}</select>
+                                        <label className="block text-xs font-bold text-brand-navy">What&apos;s the issue?
+                                            <select value={issue} onChange={(event) => setIssue(event.target.value)} className="mt-2 h-12 w-full min-w-0 rounded-xl border border-[#dce2ea] bg-white px-3 text-sm font-semibold text-brand-navy outline-none focus:border-brand-navy">{issueOptions.map((option) => <option key={option}>{option}</option>)}</select>
                                         </label>
-                                        <label className="block text-xs font-bold text-[#07152e]">Details
-                                            <textarea required minLength={10} maxLength={2000} rows={4} value={details} onChange={(event) => setDetails(event.target.value)} placeholder="Describe the issue" className="mt-2 block min-h-28 w-full resize-y rounded-xl border border-[#dce2ea] px-3.5 py-3 text-sm font-normal text-[#07152e] outline-none placeholder:text-[#718096] focus:border-[#07152e]" />
+                                        <label className="block text-xs font-bold text-brand-navy">Details
+                                            <textarea required minLength={10} maxLength={2000} rows={4} value={details} onChange={(event) => setDetails(event.target.value)} placeholder="Describe the issue" className="mt-2 block min-h-28 w-full resize-y rounded-xl border border-[#dce2ea] px-3.5 py-3 text-sm font-normal text-brand-navy outline-none placeholder:text-[#718096] focus:border-brand-navy" />
                                         </label>
                                         <label className="flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-[#d5dce7] px-3 py-2.5 text-sm font-semibold text-[#344054] transition hover:bg-[#f8f9fb]"><Paperclip size={17} />{attachmentName || "Attach photos (optional)"}<input type="file" accept="image/*" multiple className="sr-only" onChange={(event) => setAttachmentName(Array.from(event.target.files || []).map((file) => file.name).join(", "))} /></label>
-                                        <button type="submit" className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07152e] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#12294b]"><Mail size={16} />Prepare request email</button>
-                                        {submitMessage && <p role="status" className="flex items-start gap-2 text-xs leading-5 text-[#176348]"><CheckCircle2 size={15} className="mt-0.5 shrink-0" />{submitMessage}</p>}
+                                        <button type="submit" className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-navy px-4 py-3 text-sm font-bold text-white transition hover:bg-[#12294b]"><Mail size={16} />Prepare request email</button>
+                                        {submitMessage && <p role="status" className="flex items-start gap-2 text-xs leading-5 text-success-green"><CheckCircle2 size={15} className="mt-0.5 shrink-0" />{submitMessage}</p>}
                                         <p className="text-[11px] leading-4 text-[#8a94a5]">Your email app opens with the details. Attach any selected photos there before sending.</p>
                                     </form>
                                 </section>
 
                                 <section className="rounded-[22px] border border-[#e1e6ee] bg-white p-5 sm:p-6">
-                                    <h2 className="text-base font-bold text-[#07152e]">My requests</h2>
+                                    <h2 className="text-base font-semibold text-brand-navy">My requests</h2>
                                     <div className="mt-3 rounded-2xl border border-dashed border-[#dce2ea] bg-[#fafbfc] px-4 py-5 text-center">
                                         <p className="text-xs leading-5 text-[#718096]">Requests sent by email aren&apos;t listed here yet. Contact our team by email or WhatsApp to follow up.</p>
-                                        <div className="mt-3 flex flex-wrap justify-center gap-3 text-xs font-semibold"><a href={`mailto:${SUPPORT_EMAIL}`} className="text-[#07152e] underline underline-offset-4">Email support</a><Link href="/user/orders" className="text-[#07152e] underline underline-offset-4">View my orders</Link></div>
+                                        <div className="mt-3 flex flex-wrap justify-center gap-3 text-xs font-semibold"><a href={`mailto:${SUPPORT_EMAIL}`} className="text-brand-navy underline underline-offset-4">Email support</a><Link href="/user/orders" className="text-brand-navy underline underline-offset-4">View my orders</Link></div>
                                     </div>
                                 </section>
                             </div>

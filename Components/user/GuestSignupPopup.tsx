@@ -121,7 +121,7 @@ export default function GuestSignupPopup() {
     return (
 
         // <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/50 p-4 sm:p-6">
-        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-[#07152e]/50 p-3 sm:p-6">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-brand-navy/50 p-3 sm:p-6">
 
             <div
                 ref={dialogRef}
@@ -129,7 +129,7 @@ export default function GuestSignupPopup() {
                 aria-modal="true"
                 aria-labelledby="guest-signup-title"
                 tabIndex={-1}
-                className="relative mx-auto grid w-full max-w-[1100px] items-center gap-0 rounded-2xl bg-transparent p-0 outline-none lg:grid-cols-2 lg:gap-6 lg:bg-[#07162f] lg:p-5"
+                className="relative mx-auto grid w-full max-w-[1100px] items-center gap-0 rounded-2xl bg-transparent p-0 outline-none lg:grid-cols-2 lg:gap-6 lg:bg-brand-navy lg:p-5"
             >
 
                 {/* LEFT BRAND PANEL */}
@@ -152,7 +152,7 @@ export default function GuestSignupPopup() {
                         DRIVE · STAMINA · ENERGY
                     </p>
 
-                    <h2 className="mx-auto mb-12 max-w-md text-xl font-bold leading-7">
+                    <h2 className="mx-auto mb-12 max-w-md text-xl font-semibold leading-7">
                         Premium men's wellness, delivered
                         <br />
                         discreetly.
@@ -178,7 +178,7 @@ export default function GuestSignupPopup() {
                         />
                     </div>
 
-                    <div className="pointer-events-none absolute -bottom-24 left-1/3 h-64 w-64 rounded-full bg-[#176348]/10 blur-3xl" />
+                    <div className="pointer-events-none absolute -bottom-24 left-1/3 h-64 w-64 rounded-full bg-success-green/10 blur-3xl" />
                 </div>
 
                 {/* RIGHT SIGNUP CARD */}
@@ -189,13 +189,13 @@ export default function GuestSignupPopup() {
                         type="button"
                         onClick={closePopup}
                         aria-label="Close signup popup"
-                        className="absolute right-4 top-4 rounded-full p-1 text-[#718096] transition hover:bg-gray-100 hover:text-[#07152e]"
+                        className="absolute right-4 top-4 rounded-full p-1 text-[#718096] transition hover:bg-gray-100 hover:text-brand-navy"
                     >
                         <X size={19} />
                     </button>
 
                     <div className="mx-auto max-w-[350px]">
-                        <h2 id="guest-signup-title" className="mb-2 text-center text-xl font-bold leading-7 text-[#07152e]">
+                        <h2 id="guest-signup-title" className="mb-2 text-center text-xl font-semibold leading-7 text-brand-navy">
                             Unlock members-only
                             <br />
                             offers
@@ -206,12 +206,12 @@ export default function GuestSignupPopup() {
                         </p>
 
                         <form onSubmit={handleGetOtp}>
-                            <label htmlFor="guest-signup-mobile" className="mb-2 block text-sm font-semibold text-[#07152e]">
+                            <label htmlFor="guest-signup-mobile" className="mb-2 block text-sm font-semibold text-brand-navy">
                                 Mobile number
                             </label>
 
-                            <div className="flex h-12 overflow-hidden rounded-lg border border-[#dce2ea] bg-white focus-within:border-[#176348]">
-                                <div className="flex shrink-0 items-center gap-2 border-r border-[#e5e9ef] bg-[#f5f7fa] px-3 text-xs font-semibold text-[#07152e]">
+                            <div className="flex h-12 overflow-hidden rounded-lg border border-[#dce2ea] bg-white focus-within:border-success-green">
+                                <div className="flex shrink-0 items-center gap-2 border-r border-[#e5e9ef] bg-[#f5f7fa] px-3 text-xs font-semibold text-brand-navy">
                                     <span>🇮🇳</span>
                                     <span>+91</span>
                                 </div>
@@ -228,7 +228,7 @@ export default function GuestSignupPopup() {
                                     }
                                     placeholder="10-digit mobile number"
                                     required
-                                    className="min-w-0 flex-1 px-3 text-sm text-[#07152e] outline-none placeholder:text-[#6B6158]"
+                                    className="min-w-0 flex-1 px-3 text-sm text-brand-navy outline-none placeholder:text-[#6B6158]"
                                 />
                             </div>
 
@@ -238,7 +238,7 @@ export default function GuestSignupPopup() {
                                     type="checkbox"
                                     checked={marketingConsent}
                                     onChange={(e) => setMarketingConsent(e.target.checked)}
-                                    className="mt-1 shrink-0 accent-[#07152e]"
+                                    className="mt-1 shrink-0 accent-brand-navy"
                                 />
 
                                 <span>
@@ -255,7 +255,7 @@ export default function GuestSignupPopup() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-[#07152e] text-sm font-bold text-white transition hover:bg-[#14284d] disabled:opacity-60"
+                                className="mt-5 flex h-12 w-full items-center justify-center rounded-lg bg-brand-navy text-sm font-bold text-white transition hover:bg-[#14284d] disabled:opacity-60"
                             >
                                 {loading ? "PLEASE WAIT..." : "GET OTP"}
                             </button>
@@ -301,11 +301,11 @@ function Benefit({
 }) {
     return (
         <div className="rounded-xl border border-white/10 bg-white/[0.07] px-3 py-4">
-            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#07152e]">
+            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand-navy">
                 {icon}
             </div>
 
-            <h3 className="mb-2 text-sm font-bold">{title}</h3>
+            <h3 className="mb-2 text-sm font-semibold">{title}</h3>
 
             <p className="text-xs leading-5 text-[#c2d0df]">
                 {description}

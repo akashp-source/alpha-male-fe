@@ -30,7 +30,7 @@ function Inline({ text }: { text: string }) {
         <>
             {parts.map((part, i) =>
                 i % 2 === 1 ? (
-                    <strong key={i} className="font-semibold text-[#211b17]">
+                    <strong key={i} className="font-semibold text-brand-navy">
                         {part}
                     </strong>
                 ) : (
@@ -100,7 +100,7 @@ export default function RichDescription({ text, className = "" }: { text?: strin
             {blocks.map((block, index) => {
                 if (block.type === "heading") {
                     return (
-                        <p key={index} className="pt-2 font-semibold text-[#211b17] first:pt-0">
+                        <p key={index} className="pt-2 font-semibold text-brand-navy first:pt-0">
                             <Inline text={block.text} />
                         </p>
                     );
@@ -125,9 +125,9 @@ export default function RichDescription({ text, className = "" }: { text?: strin
                         {block.items.map((item, i) => (
                             <li key={i} className="flex gap-2.5">
                                 {block.type === "bullets" ? (
-                                    <span aria-hidden="true" className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#212E49]" />
+                                    <span aria-hidden="true" className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-navy" />
                                 ) : (
-                                    <span aria-hidden="true" className="min-w-[1.25rem] shrink-0 font-semibold text-[#212E49]">
+                                    <span aria-hidden="true" className="min-w-[1.25rem] shrink-0 font-semibold text-brand-navy">
                                         {i + 1}.
                                     </span>
                                 )}

@@ -226,22 +226,22 @@ export default function Home() {
   ];
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(ellipse_at_50%_20%,#19243B_0%,#0C1221_75%)] text-[#D5D5D7]">
+    <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(ellipse_at_50%_20%,var(--color-brand-navy)_0%,#19243B_75%)] text-olympus">
 
       {/* Double Border Frame */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-3 border hidden sm:block border-[#D5D5D7]/[0.18] border-0 sm:inset-6"
+        className="pointer-events-none absolute inset-3 border hidden sm:block border-olympus/[0.18] border-0 sm:inset-6"
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-4  border hidden sm:block border-[#D5D5D7]/[0.08] sm:inset-8 "
+        className="pointer-events-none absolute inset-4  border hidden sm:block border-olympus/[0.08] sm:inset-8 "
       />
 
       {/* Header
       <header className="relative flex items-center justify-end px-8 pt-8 sm:px-[72px] sm:pt-10">
-        <p className="m-0 text-[9px] uppercase tracking-[0.32em] text-[#B0B1B0]">
+        <p className="m-0 text-[9px] uppercase tracking-[0.32em] text-palladium">
           ALPHAMALE.CO.IN
         </p>
       </header> */}
@@ -272,7 +272,7 @@ export default function Home() {
         <div className="flex h-full w-full flex-col items-center justify-start gap-6  px-4 py-2 text-center sm:gap-7 sm:px-8">
 
           {/* Tagline */}
-          <p className="m-0 text-[9px] font-body font-bold uppercase tracking-[0.22em] text-[#B0B1B0] sm:text-[11px] sm:tracking-[0.42em]">
+          <p className="m-0 text-[9px] font-body font-bold uppercase tracking-[0.22em] text-palladium sm:text-[11px] sm:tracking-[0.42em]">
             India's first premium science-backed men's wellness brand
           </p>
 
@@ -283,9 +283,9 @@ export default function Home() {
 
           {/* Decorative Divider */}
           <div className="flex w-[280px] max-w-full items-center gap-4">
-            <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#B0B1B0]" />
-            <span className="h-2 w-2 rotate-45 bg-[#D5D5D7]" />
-            <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#B0B1B0]" />
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent to-palladium" />
+            <span className="h-2 w-2 rotate-45 bg-olympus" />
+            <span className="h-px flex-1 bg-gradient-to-l from-transparent to-palladium" />
           </div>
 
           {/* Countdown */}
@@ -304,7 +304,7 @@ export default function Home() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="flex min-w-[62px] flex-col items-center border border-[#D5D5D7]/10 bg-white/[0.035] px-3 py-3 sm:min-w-[80px] sm:px-5"
+                  className="flex min-w-[62px] flex-col items-center border border-olympus/10 bg-white/[0.035] px-3 py-3 sm:min-w-[80px] sm:px-5"
                 >
                   <span className="font-serif text-2xl text-[#E5E5E7] sm:text-3xl">
                     {item.value}
@@ -318,19 +318,19 @@ export default function Home() {
           </div>
 
           {/* Description */}
-          <p className="m-0 max-w-[600px] text-[13px] font-body font-normal leading-[1.9] text-[#D5D5D7] sm:text-[14px]">
+          <p className="m-0 max-w-[600px] text-[13px] font-body font-normal leading-[1.9] text-olympus sm:text-[14px]">
             Confidence, refined. Science-backed wellness for the man who expects
             more - made in a WHO-GMP certified facility and delivered with
             complete discretion.
           </p>
 
           {/* Early Access */}
-          <div className="flex flex-wrap items-center justify-center gap-3 border border-[#D5D5D7]/10 bg-white/[0.025] px-4 py-3 text-[9px] sm:text-[10px]">
+          <div className="flex flex-wrap items-center justify-center gap-3 border border-olympus/10 bg-white/[0.025] px-4 py-3 text-[9px] sm:text-[10px]">
 
             <button
               type="button"
               onClick={() => setShowEarlyAccess(true)}
-              className="cursor-pointer border border-[#D5D5D7]/30 bg-[#E9E9EA] px-2 py-1 font-body font-normal uppercase tracking-[0.15em] text-[#212E49] transition hover:bg-white"
+              className="cursor-pointer border border-olympus/30 bg-pale-gray px-2 py-1 font-body font-normal uppercase tracking-[0.15em] text-brand-navy transition hover:bg-white"
             >
               EARLY ACCESS
             </button>
@@ -357,13 +357,13 @@ export default function Home() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               disabled={loading}
-              className="min-h-[46px] min-w-0 flex-1 rounded-[2px] border border-[#D5D5D7]/20 bg-white/[0.04] px-4 text-xs text-white outline-none placeholder:text-[#9FA6B5] focus:border-[#D5D5D7]/70"
+              className="min-h-[46px] min-w-0 flex-1 rounded-[2px] border border-olympus/20 bg-white/[0.04] px-4 text-xs text-white outline-none placeholder:text-[#9FA6B5] focus:border-olympus/70"
             />
 
             <button
               type="submit"
               disabled={loading}
-              className="am-button min-h-[46px] cursor-pointer rounded-[2px] bg-[#E9E9EA] px-7 text-[9px] font-body font-bold uppercase tracking-[0.18em] text-[#212E49] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+              className="am-button min-h-[46px] cursor-pointer rounded-[2px] bg-pale-gray px-7 text-[9px] font-body font-bold uppercase tracking-[0.18em] text-brand-navy transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? "PLEASE WAIT..." : "NOTIFY ME"}
             </button>
@@ -379,7 +379,7 @@ export default function Home() {
             href="#products"
             className="group mt-3 flex w-fit flex-col items-center gap-3"
           >
-            <span className="text-[8px] font-body font-normal tracking-[0.3em] text-[#AEB5C3] transition-colors group-hover:text-white">
+            <span className="text-[8px] font-body font-normal tracking-[0.3em] text-palladium transition-colors group-hover:text-white">
               SCROLL DOWN TO EXPLORE OUR PRODUCTS
             </span>
 
@@ -397,7 +397,7 @@ export default function Home() {
             href="#products"
             className="group mt-3 flex w-fit flex-col items-center gap-3"
           >
-            <span className="text-[8px] font-body font-normal tracking-[0.3em] text-[#AEB5C3] transition-colors group-hover:text-white">
+            <span className="text-[8px] font-body font-normal tracking-[0.3em] text-palladium transition-colors group-hover:text-white">
               SCROLL DOWN TO EXPLORE OUR PRODUCTS
             </span>
 
@@ -438,11 +438,11 @@ export default function Home() {
             OUR STANDARD
           </p>
 
-          <h2 className="mb-2 font-serif text-xl tracking-[0.08em] text-[#D5D5D7] font-heading">
+          <h2 className="mb-2 font-heading text-xl tracking-[0.08em] text-olympus">
             WHO-GMP CERTIFIED
           </h2>
 
-          <p className="max-w-[440px] text-[11px] leading-[1.8] text-[#AEB5C3]font-body font-normal">
+          <p className="max-w-[440px] text-[11px] leading-[1.8] text-palladiumfont-body font-normal">
             Every Alpha Male product is made in our own licensed facility,
             certified to WHO Good Manufacturing Practice standards.
           </p>
@@ -451,18 +451,18 @@ export default function Home() {
 
       {/* Brand Highlights */}
       <section className="relative mx-auto w-full max-w-[760px] px-6 pb-10">
-        <div className="grid grid-cols-2 gap-5 border-y border-[#D5D5D7]/10 py-5 sm:grid-cols-4 sm:gap-4">
+        <div className="grid grid-cols-2 gap-5 border-y border-olympus/10 py-5 sm:grid-cols-4 sm:gap-4">
 
           {features.map((feature) => (
             <div
               key={feature.title}
               className="flex flex-col items-center gap-2 text-center"
             >
-              <span className="text-lg text-[#D5D5D7]">
+              <span className="text-lg text-olympus">
                 <feature.icon
                   // size={24}
                   strokeWidth={1.3}
-                  className="text-[#D5D5D7]"
+                  className="text-olympus"
                 />
               </span>
 
@@ -499,7 +499,7 @@ export default function Home() {
           {products.map((product) => (
             <div
               key={product.title}
-              className="group flex min-h-[205px] flex-col border border-[#D5D5D7]/10 bg-white/[0.025] p-5 transition duration-300 hover:border-[#D5D5D7]/35 hover:bg-white/[0.045] sm:p-4"
+              className="group flex min-h-[205px] flex-col border border-olympus/10 bg-white/[0.025] p-5 transition duration-300 hover:border-olympus/35 hover:bg-white/[0.045] sm:p-4"
             >
               <div className="mb-4 flex h-15 w-15 items-center">
                 <Image
@@ -531,11 +531,11 @@ export default function Home() {
       <FAQ />
 
       {/* Footer */}
-      <footer className="relative border-t border-[#D5D5D7]/10 px-8 py-8 sm:px-[72px]">
+      <footer className="relative border-t border-olympus/10 px-8 py-8 sm:px-[72px]">
 
         <div className="mx-auto flex max-w-[880px] flex-col gap-5">
 
-          <div className="flex flex-wrap justify-center gap-5 text-[9px] text-[#B0B1B0] sm:justify-start">
+          <div className="flex flex-wrap justify-center gap-5 text-[9px] text-palladium sm:justify-start">
             <a href="/policies/privacy" className="transition hover:text-white">
               Privacy Policy
             </a>
@@ -568,14 +568,14 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="flex flex-col items-center justify-between gap-4 border-t border-[#D5D5D7]/10 pt-5 text-center sm:flex-row sm:text-left">
+          <div className="flex flex-col items-center justify-between gap-4 border-t border-olympus/10 pt-5 text-center sm:flex-row sm:text-left">
 
-            <p className="m-0 text-[8px] tracking-[0.08em] text-[#858E9E]">
+            <p className="m-0 text-[8px] tracking-[0.08em] text-palladium">
               © 2026 Alpha Male. All rights reserved.
             </p>
 
-            <p className="m-0 text-[8px] tracking-[0.08em] text-[#858E9E]">
-              <strong className="mr-2 border border-[#D5D5D7]/30 px-2 py-1 text-[#D5D5D7]">
+            <p className="m-0 text-[8px] tracking-[0.08em] text-palladium">
+              <strong className="mr-2 border border-olympus/30 px-2 py-1 text-olympus">
                 18+
               </strong>
               For adults aged 18 and above only.
@@ -591,28 +591,28 @@ export default function Home() {
           onClick={() => setShowEarlyAccess(false)}
         >
           <div
-            className="relative w-full max-w-[440px] border border-[#D5D5D7]/25 bg-[#172139] p-7 shadow-2xl sm:p-9"
+            className="relative w-full max-w-[440px] border border-olympus/25 bg-[#172139] p-7 shadow-2xl sm:p-9"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
               onClick={() => setShowEarlyAccess(false)}
-              className="absolute right-4 top-3 cursor-pointer text-2xl text-[#AEB5C3] transition hover:text-white"
+              className="absolute right-4 top-3 cursor-pointer text-2xl text-palladium transition hover:text-white"
               aria-label="Close modal"
             >
               &times;
             </button>
 
             <div className="mb-7 text-center">
-              <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.3em] text-[#AEB5C3]">
+              <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.3em] text-palladium">
                 ALPHA MALE
               </p>
 
-              <h2 className="silver-text font-serif text-2xl uppercase tracking-[0.08em]">
+              <h2 className="silver-text font-heading text-2xl uppercase tracking-[0.08em]">
                 Get Early Access
               </h2>
 
-              <p className="mt-3 text-xs leading-6 text-[#AEB5C3]">
+              <p className="mt-3 text-xs leading-6 text-palladium">
                 Join our exclusive launch list and get 10% off your first order.
               </p>
             </div>
@@ -621,7 +621,7 @@ export default function Home() {
               <div>
                 <label
                   htmlFor="early-name"
-                  className="mb-2 block text-[9px] uppercase tracking-[0.15em] text-[#AEB5C3]"
+                  className="mb-2 block text-[9px] uppercase tracking-[0.15em] text-palladium"
                 >
                   Full Name
                 </label>
@@ -641,14 +641,14 @@ export default function Home() {
                     })
                   }
                   placeholder="Enter your full name"
-                  className="min-h-[46px] w-full border border-[#D5D5D7]/20 bg-white/[0.04] px-4 text-xs text-white outline-none placeholder:text-[#9FA6B5] focus:border-[#D5D5D7]/70"
+                  className="min-h-[46px] w-full border border-olympus/20 bg-white/[0.04] px-4 text-xs text-white outline-none placeholder:text-[#9FA6B5] focus:border-olympus/70"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="early-email"
-                  className="mb-2 block text-[9px] uppercase tracking-[0.15em] text-[#AEB5C3]"
+                  className="mb-2 block text-[9px] uppercase tracking-[0.15em] text-palladium"
                 >
                   Email Address
                 </label>
@@ -666,14 +666,14 @@ export default function Home() {
                     })
                   }
                   placeholder="Enter your email"
-                  className="min-h-[46px] w-full border border-[#D5D5D7]/20 bg-white/[0.04] px-4 text-xs text-white outline-none placeholder:text-[#9FA6B5] focus:border-[#D5D5D7]/70"
+                  className="min-h-[46px] w-full border border-olympus/20 bg-white/[0.04] px-4 text-xs text-white outline-none placeholder:text-[#9FA6B5] focus:border-olympus/70"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="early-phone"
-                  className="mb-2 block text-[9px] uppercase tracking-[0.15em] text-[#AEB5C3]"
+                  className="mb-2 block text-[9px] uppercase tracking-[0.15em] text-palladium"
                 >
                   Phone Number
                 </label>
@@ -691,7 +691,7 @@ export default function Home() {
                     })
                   }
                   placeholder="Enter your phone number"
-                  className="min-h-[46px] w-full border border-[#D5D5D7]/20 bg-white/[0.04] px-4 text-xs text-white outline-none placeholder:text-[#9FA6B5] focus:border-[#D5D5D7]/70"
+                  className="min-h-[46px] w-full border border-olympus/20 bg-white/[0.04] px-4 text-xs text-white outline-none placeholder:text-[#9FA6B5] focus:border-olympus/70"
                 />
               </div>
               {earlyAccessError && (
@@ -705,13 +705,13 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={earlyAccessLoading}
-                className="am-button mt-2 min-h-[48px] cursor-pointer bg-[#E9E9EA] px-6 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#212E49] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+                className="am-button mt-2 min-h-[48px] cursor-pointer bg-pale-gray px-6 text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-navy transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {earlyAccessLoading ? "PLEASE WAIT..." : "GET EARLY ACCESS"}
               </button>
             </form>
 
-            <p className="mt-5 text-center text-[8px] leading-5 text-[#858E9E]">
+            <p className="mt-5 text-center text-[8px] leading-5 text-palladium">
               Your information will only be used for launch updates and early access.
             </p>
           </div>
@@ -725,13 +725,13 @@ export default function Home() {
           onClick={closePopup}
         >
           <div
-            className="relative w-full max-w-[420px] border border-[#D5D5D7]/30 bg-[#202D47] px-7 py-10 text-center shadow-2xl"
+            className="relative w-full max-w-[420px] border border-olympus/30 bg-[#202D47] px-7 py-10 text-center shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
 
             <button
               onClick={closePopup}
-              className="absolute right-4 top-3 cursor-pointer text-2xl text-[#B0B1B0] hover:text-white"
+              className="absolute right-4 top-3 cursor-pointer text-2xl text-palladium hover:text-white"
               aria-label="Close popup"
             >
               &times;
@@ -747,19 +747,19 @@ export default function Home() {
               {popup.type === "success" ? "✓" : "!"}
             </div>
 
-            <h2 className="silver-text mb-3 font-serif text-2xl font-semibold">
+            <h2 className="silver-text mb-3 font-heading text-2xl font-semibold">
               {popup.type === "success"
                 ? "You're on the list!"
                 : "Oops!"}
             </h2>
 
-            <p className="mb-7 text-sm leading-7 text-[#D5D5D7]">
+            <p className="mb-7 text-sm leading-7 text-olympus">
               {popup.message}
             </p>
 
             <button
               onClick={closePopup}
-              className="w-full cursor-pointer bg-[#E9E9EA] px-6 py-4 text-xs font-semibold uppercase tracking-[0.25em] text-[#212E49] transition hover:bg-white"
+              className="w-full cursor-pointer bg-pale-gray px-6 py-4 text-xs font-semibold uppercase tracking-[0.25em] text-brand-navy transition hover:bg-white"
             >
               {popup.type === "success" ? "Awesome" : "Try Again"}
             </button>
