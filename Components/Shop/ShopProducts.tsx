@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Search, ShoppingCart, SlidersHorizontal, X } from "lucide-react";
 import AddToCartButton from "../Cart/AddToCartButton";
 import { categoryLabel, useStoreCategories } from "@/lib/categories";
+import { productHref } from "@/lib/productUrl";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
@@ -469,7 +470,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
 
                                             {/* Fixed image area */}
                                             <Link
-                                                href={`/products/${product._id}`}
+                                                href={productHref(product)}
                                                 className="relative block aspect-square overflow-hidden bg-[#e9edf3] p-4"
                                             >
                                                 {image ? (
@@ -494,7 +495,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                                     {product.category}
                                                 </p>
 
-                                                <Link href={`/products/${product._id}`}>
+                                                <Link href={productHref(product)}>
                                                     <h2 className="min-h-10 text-xs font-bold leading-snug text-[#071630] hover:text-[#176348] md:min-h-12 md:text-sm">
                                                         {product.name}
                                                     </h2>
@@ -515,7 +516,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
 
                                                 <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-2 pt-4">
                                                     <Link
-                                                        href={`/products/${product._id}`}
+                                                        href={productHref(product)}
                                                         className="flex w-full min-h-10 items-center justify-center rounded-xl border border-[#071630]
         bg-white px-3 py-2 text-sm font-semibold text-[#071630]
         whitespace-nowrap transition hover:bg-slate-100"

@@ -48,6 +48,9 @@ export default function ProductBuySection({
     const [quantity, setQuantity] = useState(1);
     const [pending, setPending] = useState<"cart" | "buy" | null>(null);
     const [cartError, setCartError] = useState("");
+    // Add-on tick-box next to the buy buttons (set up in admin).
+    const [addOnSelected, setAddOnSelected] = useState(false);
+    const [addOnNotice, setAddOnNotice] = useState("");
 
     // -----------------------------------
     // Pricing calculation
@@ -72,6 +75,28 @@ export default function ProductBuySection({
 
     const totalPrice = pricing.total;
 
+    // Add-on (upsell): shown only when the backend returned one that is
+    // active and in stock. It is charged at its own price at checkout.
+    const addOn =
+        product.upsellProduct &&
+            product.upsellProduct._id &&
+            Number.isFinite(product.upsellProduct.price) &&
+            product.upsellProduct.stock > 0
+            ? product.upsellProduct
+            : null;
+    const addOnActive = Boolean(addOn && addOnSelected);
+    const addOnTitle = addOn ? addOn.title?.trim() || `Add ${addOn.name}` : "";
+    const addOnHasMrp = Boolean(
+        addOn?.compareAtPrice && addOn.compareAtPrice > addOn.price
+    );
+    // What the summary shows: main product (+ add-on when ticked).
+    const displayTotal = totalPrice + (addOnActive && addOn ? addOn.price : 0);
+    const displayItems = quantity + (addOnActive ? 1 : 0);
+    const addOnSavings =
+        addOnActive && addOn && addOnHasMrp && addOn.compareAtPrice
+            ? addOn.compareAtPrice - addOn.price
+            : 0;
+
     // Savings are measured against the 1-qty strike-through price (MRP)
     // when there is one, so combos show the full discount off MRP.
     const unitMrp =
@@ -82,6 +107,7 @@ export default function ProductBuySection({
     const originalPrice = unitMrp * quantity;
 
     const savings = Math.max(0, originalPrice - totalPrice);
+    const displaySavings = savings + addOnSavings;
 
     const discountPercentage =
         product.compareAtPrice &&
@@ -104,14 +130,33 @@ export default function ProductBuySection({
     // added to the cart through the cart API.
     // -----------------------------------
 
+    /**
+     * Adds the ticked add-on after the main product. The main product is
+     * already in the cart at this point, so an add-on failure (e.g. it just
+     * sold out) is reported without undoing the main item.
+     */
+    const addSelectedAddOn = async () => {
+        if (!addOnActive || !addOn) return;
+        try {
+            await addToCart(addOn._id, 1);
+        } catch (error) {
+            const reason = error instanceof Error ? error.message : "";
+            setAddOnNotice(
+                `${product.name} was added, but ${addOn.name} couldn't be added${reason ? `: ${reason}` : "."}`
+            );
+        }
+    };
+
     const handleAddToCart = async () => {
         if (onAddToCart) return onAddToCart(product, quantity, totalPrice);
         if (pending || outOfStock) return;
 
         setPending("cart");
         setCartError("");
+        setAddOnNotice("");
         try {
             await addToCart(product._id, quantity);
+            await addSelectedAddOn();
             // Show the updated cart (the navbar listens for this event).
             window.dispatchEvent(new Event("open-cart"));
         } catch (error) {
@@ -127,8 +172,11 @@ export default function ProductBuySection({
 
         setPending("buy");
         setCartError("");
+        setAddOnNotice("");
         try {
             await addToCart(product._id, quantity);
+            // Checkout shows the real cart, so carry on even if the add-on failed.
+            await addSelectedAddOn();
             router.push("/checkout");
             // Keep the spinner while the checkout page loads.
         } catch (error) {
@@ -539,28 +587,85 @@ export default function ProductBuySection({
                         <div className="order-5 mt-2 flex items-center justify-between gap-3 rounded-xl border border-[#eee5dc] bg-white p-2.5 sm:p-3">
 
                             <div>
-                                <p className="font-body text-[10px] text-[#91857b] sm:text-xs">
-                                    Total amount ({quantity}{" "}
-                                    {quantity === 1 ? "item" : "items"})
+                                <p className="font-body text-xs text-[#5c534b]">
+                                    Total amount ({displayItems}{" "}
+                                    {displayItems === 1 ? "item" : "items"})
                                 </p>
 
-                                <p className="mt-1 font-body text-xl font-bold sm:text-2xl">
-                                    {formatPrice(totalPrice)}
+                                <p className="mt-1 font-body text-xl font-bold sm:text-2xl" aria-live="polite">
+                                    {formatPrice(displayTotal)}
                                 </p>
                             </div>
 
-                            {savings > 0 && (
+                            {displaySavings > 0 && (
                                 <div className="text-right">
-                                    <p className="font-body text-[10px] text-[#91857b]">
+                                    <p className="font-body text-xs text-[#5c534b]">
                                         You save
                                     </p>
 
                                     <p className="mt-1 font-body text-xs font-bold text-[#176348] sm:text-sm">
-                                        {formatPrice(savings)}
+                                        {formatPrice(displaySavings)}
                                     </p>
                                 </div>
                             )}
                         </div>
+
+                        {/* Add-on (upsell): tick to add it to the cart with this product */}
+                        {addOn && !outOfStock && (
+                            <label
+                                className={`order-5 mt-2 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed p-3 transition sm:gap-4 sm:p-3.5 ${addOnActive
+                                    ? "border-[#071630] bg-[#eef1f6]"
+                                    : "border-[#d9cfc4] bg-white hover:border-[#071630]/50"
+                                    }`}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={addOnSelected}
+                                    onChange={(event) => {
+                                        setAddOnSelected(event.target.checked);
+                                        setAddOnNotice("");
+                                    }}
+                                    disabled={pending !== null}
+                                    className="h-5 w-5 shrink-0 cursor-pointer rounded accent-[#071630] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#071630] focus-visible:ring-offset-2"
+                                />
+
+                                <span className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#eee8de]">
+                                    {addOn.image ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img
+                                            src={addOn.image}
+                                            alt=""
+                                            loading="lazy"
+                                            className="h-full w-full object-contain p-1"
+                                        />
+                                    ) : (
+                                        <Package size={22} aria-hidden="true" className="text-[#5c534b]" />
+                                    )}
+                                </span>
+
+                                <span className="min-w-0 flex-1">
+                                    <span className="block font-body text-sm font-bold leading-snug text-[#211b17]">
+                                        {addOnTitle}
+                                        {" · "}
+                                        {formatPrice(addOn.price)}
+                                        {addOnHasMrp && addOn.compareAtPrice && (
+                                            <>
+                                                {" "}
+                                                <s className="font-medium text-[#5c534b]">
+                                                    <span className="sr-only">was </span>
+                                                    {formatPrice(addOn.compareAtPrice)}
+                                                </s>
+                                            </>
+                                        )}
+                                    </span>
+                                    {addOn.description?.trim() && (
+                                        <span className="mt-0.5 block font-body text-sm leading-snug text-[#5c534b]">
+                                            {addOn.description}
+                                        </span>
+                                    )}
+                                </span>
+                            </label>
+                        )}
 
                         {/* Add to Cart / Buy Now */}
                         <div className="order-6 mt-1 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -596,6 +701,12 @@ export default function ProductBuySection({
                             {cartError && (
                                 <p role="alert" className="font-body text-xs text-red-600 sm:col-span-2">
                                     {cartError}
+                                </p>
+                            )}
+
+                            {addOnNotice && (
+                                <p role="status" className="font-body text-xs text-[#8a4b08] sm:col-span-2">
+                                    {addOnNotice}
                                 </p>
                             )}
                         </div>

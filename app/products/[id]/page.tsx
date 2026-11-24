@@ -1,26 +1,31 @@
 
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import type { Product } from "@/types/product";
 
 import Navbar from "@/Components/Home/NavBar";
 import ProductPageView from "@/Components/Product/ProductPageView";
+import { productHref } from "@/lib/productUrl";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
 
-async function getProduct(id: string) {
+// URL: /products/<slug>. The folder is still named [id] because the segment
+// also accepts the old /products/<id> form, which redirects to the slug URL.
+// GET /product/info/:id accepts either an id or a slug.
+async function getProduct(idOrSlug: string) {
     try {
         const response = await fetch(
-            `${API_URL}/product/info/${id}`,
+            `${API_URL}/product/info/${encodeURIComponent(idOrSlug)}`,
             {
                 method: "GET",
                 cache: "no-store",
             }
         );
 
-        if (response.status === 404) {
+        // 400 = not a valid id or slug: treat like a missing product.
+        if (response.status === 404 || response.status === 400) {
             return null;
         }
 
@@ -78,7 +83,8 @@ export async function generateMetadata({
         product.metaDescription?.trim() ||
         (product.description ? truncate(product.description) : undefined);
     const image = product.images?.[0];
-    const url = `/products/${id}`;
+    // Canonical is always the slug URL, even when reached via an old id link.
+    const url = productHref(product);
 
     return {
         title,
@@ -108,6 +114,18 @@ export default async function ProductDetailsPage({
 
     if (!product || !product.isActive) {
         notFound();
+    }
+
+    // Old id links (and differently-cased slugs) -> permanent (308) redirect
+    // to the one canonical slug URL, so search engines index a single page.
+    let requested = id;
+    try {
+        requested = decodeURIComponent(id);
+    } catch {
+        // Malformed escape: keep the raw value (it simply won't match).
+    }
+    if (product.slug && requested !== product.slug) {
+        permanentRedirect(productHref(product));
     }
 
     return (
