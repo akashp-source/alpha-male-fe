@@ -26,16 +26,16 @@ const selectStyles: StylesConfig<Option, false> = {
         height: "52px",
         borderRadius: "10px",
         border: state.isFocused
-            ? "1px solid #176348"
+            ? "1px solid var(--color-success-green)"
             : "1px solid #e2e5e2",
         boxShadow: state.isFocused
             ? "0 0 0 3px rgba(23, 99, 72, 0.08)"
             : "none",
-        backgroundColor: "#ffffff",
+        backgroundColor: "var(--color-white)",
         cursor: "pointer",
         transition: "all 150ms ease",
         "&:hover": {
-            borderColor: "#176348",
+            borderColor: "var(--color-success-green)",
         },
     }),
 
@@ -46,7 +46,7 @@ const selectStyles: StylesConfig<Option, false> = {
 
     singleValue: (base) => ({
         ...base,
-        color: "#071630",
+        color: "var(--color-brand-navy)",
         fontSize: "15px",
         fontWeight: 500,
     }),
@@ -59,7 +59,7 @@ const selectStyles: StylesConfig<Option, false> = {
 
     input: (base) => ({
         ...base,
-        color: "#071630",
+        color: "var(--color-brand-navy)",
         fontSize: "15px",
     }),
 
@@ -69,14 +69,14 @@ const selectStyles: StylesConfig<Option, false> = {
 
     dropdownIndicator: (base, state) => ({
         ...base,
-        color: state.isFocused ? "#176348" : "#89918b",
+        color: state.isFocused ? "var(--color-success-green)" : "#89918b",
         padding: "0 14px",
         transition: "transform 150ms ease",
         transform: state.selectProps.menuIsOpen
             ? "rotate(180deg)"
             : "rotate(0deg)",
         "&:hover": {
-            color: "#176348",
+            color: "var(--color-success-green)",
         },
     }),
 
@@ -102,12 +102,12 @@ const selectStyles: StylesConfig<Option, false> = {
         padding: "10px 12px",
         fontSize: "14px",
         cursor: "pointer",
-        color: state.isSelected ? "#ffffff" : "#26332d",
+        color: state.isSelected ? "var(--color-white)" : "#26332d",
         backgroundColor: state.isSelected
-            ? "#176348"
+            ? "var(--color-success-green)"
             : state.isFocused
                 ? "#edf5f0"
-                : "#ffffff",
+                : "var(--color-white)",
         "&:active": {
             backgroundColor: "#dcece3",
         },
@@ -216,7 +216,7 @@ export default function LocationSelect({
 
             {/* State */}
             <div className="min-w-0 ">
-                <label className="mb-2 block text-sm font-semibold text-[#071630]">
+                <label className="mb-2 block text-sm font-semibold text-brand-navy">
                     State
                 </label>
 
@@ -236,7 +236,7 @@ export default function LocationSelect({
 
             {/* City */}
             <div className="min-w-0">
-                <label className="mb-2 block text-sm font-semibold text-[#071630]">
+                <label className="mb-2 block text-sm font-semibold text-brand-navy">
                     City
                 </label>
 

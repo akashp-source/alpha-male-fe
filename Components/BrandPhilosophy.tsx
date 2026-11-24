@@ -28,10 +28,10 @@ const principles = [
 
 export default function BrandPhilosophy() {
     return (
-        <section className="relative w-full overflow-hidden text-[#D5D5D7] ">
+        <section className="relative w-full overflow-hidden text-olympus ">
 
             {/* Decorative Border */}
-            <div className="pointer-events-none absolute inset-x-4 top-0 bottom-0 border-x hidden sm:block border-[#D5D5D7]/[0.08] sm:inset-x-6" />
+            <div className="pointer-events-none absolute inset-x-4 top-0 bottom-0 border-x hidden sm:block border-olympus/[0.08] sm:inset-x-6" />
 
             <div className="relative mx-auto max-w-[920px]">
 
@@ -54,22 +54,22 @@ export default function BrandPhilosophy() {
                 </div>
 
                 {/* Four Principles */}
-                <div className="grid grid-cols-1 border border-[#D5D5D7]/[0.12] sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-1 border border-olympus/[0.12] sm:grid-cols-2 lg:grid-cols-4">
 
                     {principles.map((item, index) => (
                         <div
                             key={item.number}
                             className={`group min-h-[190px] px-6 py-7 transition-colors duration-300 font-heading hover:bg-white/[0.025] sm:px-6 sm:py-7 ${index !== 0
-                                ? "border-t border-[#D5D5D7]/[0.10] sm:border-t-0"
+                                ? "border-t border-olympus/[0.10] sm:border-t-0"
                                 : ""
                                 } ${index % 2 !== 0
-                                    ? "sm:border-l sm:border-[#D5D5D7]/[0.10]"
+                                    ? "sm:border-l sm:border-olympus/[0.10]"
                                     : ""
                                 } ${index > 1
                                     ? "lg:border-t-0"
                                     : ""
                                 } ${index !== 0 && index !== 2
-                                    ? "lg:border-l lg:border-[#D5D5D7]/[0.10]"
+                                    ? "lg:border-l lg:border-olympus/[0.10]"
                                     : ""
                                 }`}
                         >
@@ -80,12 +80,12 @@ export default function BrandPhilosophy() {
                             </span>
 
                             {/* Title */}
-                            <h3 className="mb-3 font-heading text-[15px] font-semibold uppercase leading-[1.45] tracking-[0.035em] text-[#E5E5E7]">
+                            <h3 className="mb-3 font-body text-[15px] font-semibold uppercase leading-[1.45] tracking-[0.035em] text-[#E5E5E7]">
                                 {item.title}
                             </h3>
 
                             {/* Description */}
-                            <p className="m-0 w-full max-w-none text-[12px] font-body leading-[1.75] text-[#AEB5C3] sm:max-w-[220px]">
+                            <p className="m-0 w-full max-w-none text-[12px] font-body leading-[1.75] text-palladium sm:max-w-[220px]">
                                 {item.description}
                             </p>
 

@@ -502,20 +502,20 @@ export default function CartDrawer({
                     ) : (
                         <ShoppingBag
                             size={32}
-                            className="text-[#91857b]"
+                            className="text-brand-navy-muted"
                         />
                     )}
                 </div>
 
                 {/* PRODUCT DETAILS */}
                 <div className="flex min-h-[112px] flex-col p-3">
-                    <p className="line-clamp-2 min-h-[40px] text-[13px] font-semibold leading-[19px] text-[#071630]">
+                    <p className="line-clamp-2 min-h-[40px] text-[13px] font-semibold leading-[19px] text-brand-navy">
                         {product.name || product.title}
                     </p>
 
                     {/* PRICE + ADD BUTTON */}
                     <div className="mt-auto flex items-center justify-between gap-2 pt-2">
-                        <span className="whitespace-nowrap text-sm font-bold text-[#071630]">
+                        <span className="whitespace-nowrap text-sm font-bold text-brand-navy">
                             {formatPrice(price)}
                         </span>
 
@@ -523,9 +523,9 @@ export default function CartDrawer({
                             type="button"
                             onClick={() => addRecommendedProduct(product)}
                             disabled={isAdding || isAdded || clearing}
-                            className={`flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full border border-[#071630] px-3 text-xs font-semibold transition ${isAdded
-                                    ? "border-[#176348] bg-[#176348] text-white"
-                                    : "bg-white text-[#071630] hover:bg-[#071630] hover:text-white"
+                            className={`flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-full border border-brand-navy px-3 text-xs font-semibold transition ${isAdded
+                                    ? "border-success-green bg-success-green text-white"
+                                    : "bg-white text-brand-navy hover:bg-brand-navy hover:text-white"
                                 } disabled:cursor-not-allowed disabled:opacity-60`}
                         >
                             {isAdding ? (
@@ -560,15 +560,15 @@ export default function CartDrawer({
             />
 
             {/* DRAWER */}
-            <aside className="absolute right-0 top-0 flex h-[100dvh] w-full max-w-[520px] flex-col overflow-hidden bg-[#faf7f2] shadow-2xl">
+            <aside className="absolute right-0 top-0 flex h-[100dvh] w-full max-w-[520px] flex-col overflow-hidden bg-pale-gray shadow-2xl">
                 {/* HEADER */}
                 <div className="flex shrink-0 items-center justify-between border-b border-[#e8e1d8] px-5 py-4 sm:px-7 sm:py-5">
                     <div>
-                        <h2 className="font-heading text-xl font-semibold tracking-wide text-[#071630]">
+                        <h2 className="font-heading text-xl font-semibold tracking-wide text-brand-navy">
                             YOUR CART
                         </h2>
 
-                        <p className="mt-1 text-[10px] font-medium tracking-widest text-[#91857b]">
+                        <p className="mt-1 text-[10px] font-medium tracking-widest text-brand-navy-muted">
                             {totalQuantity}{" "}
                             {totalQuantity === 1 ? "ITEM" : "ITEMS"}
                         </p>
@@ -578,7 +578,7 @@ export default function CartDrawer({
                         type="button"
                         onClick={onClose}
                         aria-label="Close cart"
-                        className="rounded-full p-2 text-[#071630] transition hover:bg-[#eee8df]"
+                        className="rounded-full p-2 text-brand-navy transition hover:bg-[#eee8df]"
                     >
                         <X size={22} />
                     </button>
@@ -597,7 +597,7 @@ export default function CartDrawer({
                         <div className="flex h-48 items-center justify-center">
                             <Loader2
                                 size={30}
-                                className="animate-spin text-[#176348]"
+                                className="animate-spin text-success-green"
                             />
                         </div>
                     ) : items.length === 0 ? (
@@ -605,15 +605,15 @@ export default function CartDrawer({
                             <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#eee8df]">
                                 <ShoppingBag
                                     size={34}
-                                    className="text-[#91857b]"
+                                    className="text-brand-navy-muted"
                                 />
                             </div>
 
-                            <h3 className="mt-5 font-heading text-lg text-[#071630]">
+                            <h3 className="mt-5 font-body text-lg text-brand-navy">
                                 YOUR CART IS EMPTY
                             </h3>
 
-                            <p className="mt-2 max-w-[260px] text-sm leading-6 text-[#91857b]">
+                            <p className="mt-2 max-w-[260px] text-sm leading-6 text-brand-navy-muted">
                                 Looks like you haven't added anything to
                                 your cart yet.
                             </p>
@@ -621,7 +621,7 @@ export default function CartDrawer({
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="mt-6 min-h-11 bg-[#071630] px-7 py-3 text-xs font-semibold tracking-widest text-white transition hover:bg-[#14284d]"
+                                className="mt-6 min-h-11 bg-brand-navy px-7 py-3 text-xs font-semibold tracking-widest text-white transition hover:bg-[#14284d]"
                             >
                                 CONTINUE SHOPPING
                             </button>
@@ -630,7 +630,7 @@ export default function CartDrawer({
                         <>
                             {/* CART ITEMS HEADER */}
                             <div className="mb-5 flex items-center justify-between">
-                                <p className="text-[10px] font-bold tracking-[0.18em] text-[#91857b]">
+                                <p className="text-[10px] font-bold tracking-[0.18em] text-brand-navy-muted">
                                     CART ITEMS
                                 </p>
 
@@ -684,7 +684,7 @@ export default function CartDrawer({
                                             {/* DETAILS */}
                                             <div className="flex min-w-0 flex-1 flex-col">
                                                 <div className="flex items-start justify-between gap-2">
-                                                    <h3 className="line-clamp-2 text-sm font-semibold leading-5 text-[#071630]">
+                                                    <h3 className="line-clamp-2 text-sm font-semibold leading-5 text-brand-navy">
                                                         {product.name}
                                                     </h3>
 
@@ -699,13 +699,13 @@ export default function CartDrawer({
                                                             isBusy || clearing
                                                         }
                                                         aria-label={`Remove ${product.name}`}
-                                                        className="shrink-0 rounded-md p-1 text-[#91857b] transition hover:bg-red-50 hover:text-red-600 disabled:opacity-40"
+                                                        className="shrink-0 rounded-md p-1 text-brand-navy-muted transition hover:bg-red-50 hover:text-red-600 disabled:opacity-40"
                                                     >
                                                         <Trash2 size={17} />
                                                     </button>
                                                 </div>
 
-                                                <p className="mt-2 text-sm font-bold text-[#176348]">
+                                                <p className="mt-2 text-sm font-bold text-success-green">
                                                     {formatPrice(itemPrice)}
                                                 </p>
 
@@ -725,13 +725,13 @@ export default function CartDrawer({
                                                                 clearing ||
                                                                 item.quantity <= 1
                                                             }
-                                                            className="flex h-8 w-8 items-center justify-center text-[#071630] hover:bg-[#eee8df] disabled:opacity-30"
+                                                            className="flex h-8 w-8 items-center justify-center text-brand-navy hover:bg-[#eee8df] disabled:opacity-30"
                                                             aria-label="Decrease quantity"
                                                         >
                                                             <Minus size={13} />
                                                         </button>
 
-                                                        <span className="flex h-8 min-w-8 items-center justify-center text-xs font-semibold text-[#071630]">
+                                                        <span className="flex h-8 min-w-8 items-center justify-center text-xs font-semibold text-brand-navy">
                                                             {isBusy
                                                                 ? "..."
                                                                 : item.quantity}
@@ -751,7 +751,7 @@ export default function CartDrawer({
                                                                 (typeof product.stock === "number" &&
                                                                     item.quantity >= product.stock)
                                                             }
-                                                            className="flex h-8 w-8 items-center justify-center text-[#071630] hover:bg-[#eee8df] disabled:opacity-30"
+                                                            className="flex h-8 w-8 items-center justify-center text-brand-navy hover:bg-[#eee8df] disabled:opacity-30"
                                                             aria-label="Increase quantity"
                                                         >
                                                             <Plus size={13} />
@@ -760,15 +760,15 @@ export default function CartDrawer({
 
                                                     <div className="text-right">
                                                         {lineSaving > 0 && (
-                                                            <p className="text-[10px] text-[#91857b] line-through">
+                                                            <p className="text-[10px] text-brand-navy-muted line-through">
                                                                 {formatPrice(itemPrice * item.quantity)}
                                                             </p>
                                                         )}
-                                                        <p className="text-sm font-bold text-[#071630]">
+                                                        <p className="text-sm font-bold text-brand-navy">
                                                             {formatPrice(lineTotal)}
                                                         </p>
                                                         {lineSaving > 0 && (
-                                                            <p className="text-[10px] font-semibold text-[#176348]">
+                                                            <p className="text-[10px] font-semibold text-success-green">
                                                                 Combo saves {formatPrice(lineSaving)}
                                                             </p>
                                                         )}
@@ -789,10 +789,10 @@ export default function CartDrawer({
                                 <section className="mt-5 border-t border-[#e8e1d8] pt-4">
                                     <div className="mb-3 flex items-center justify-between">
                                         <div>
-                                            <h3 className="text-xs font-bold text-[#071630]">
+                                            <h3 className="text-xs font-semibold text-brand-navy">
                                                 Frequently bought together
                                             </h3>
-                                            <p className="mt-0.5 text-[10px] text-[#91857b]">
+                                            <p className="mt-0.5 text-[10px] text-brand-navy-muted">
                                                 Often purchased with your items
                                             </p>
                                         </div>
@@ -813,7 +813,7 @@ export default function CartDrawer({
                                                         className="w-[88px] min-w-[88px] shrink-0"
                                                     >
                                                         {/* PRODUCT IMAGE */}
-                                                        <div className="relative flex h-[82px] w-full items-center justify-center overflow-hidden rounded-lg bg-[#edf0f4]">
+                                                        <div className="relative flex h-[82px] w-full items-center justify-center overflow-hidden rounded-lg bg-pale-gray">
                                                             {image ? (
                                                                 <Image
                                                                     src={image}
@@ -825,19 +825,19 @@ export default function CartDrawer({
                                                             ) : (
                                                                 <ShoppingBag
                                                                     size={22}
-                                                                    className="text-[#91857b]"
+                                                                    className="text-brand-navy-muted"
                                                                 />
                                                             )}
                                                         </div>
 
                                                         {/* PRODUCT NAME */}
-                                                        <p className="mt-1.5 line-clamp-2 min-h-[28px] text-[10px] font-semibold leading-[14px] text-[#071630]">
+                                                        <p className="mt-1.5 line-clamp-2 min-h-[28px] text-[10px] font-semibold leading-[14px] text-brand-navy">
                                                             {product.name || product.title}
                                                         </p>
 
                                                         {/* PRICE + ADD */}
                                                         <div className="mt-1.5 flex items-center justify-between gap-1">
-                                                            <span className="text-[10px] font-semibold text-[#071630]">
+                                                            <span className="text-[10px] font-semibold text-brand-navy">
                                                                 {formatPrice(price)}
                                                             </span>
 
@@ -845,9 +845,9 @@ export default function CartDrawer({
                                                                 type="button"
                                                                 onClick={() => addRecommendedProduct(product)}
                                                                 disabled={isAdding || isAdded || clearing}
-                                                                className={`flex h-[23px] min-w-[34px] items-center justify-center gap-0.5 rounded-full border border-[#071630] px-1.5 text-[9px] font-semibold whitespace-nowrap transition disabled:opacity-60 ${isAdded
-                                                                    ? "border-[#176348] bg-[#176348] text-white"
-                                                                    : "bg-white text-[#071630] hover:bg-[#071630] hover:text-white"
+                                                                className={`flex h-[23px] min-w-[34px] items-center justify-center gap-0.5 rounded-full border border-brand-navy px-1.5 text-[9px] font-semibold whitespace-nowrap transition disabled:opacity-60 ${isAdded
+                                                                    ? "border-success-green bg-success-green text-white"
+                                                                    : "bg-white text-brand-navy hover:bg-brand-navy hover:text-white"
                                                                     }`}
                                                             >
                                                                 {isAdding ? (
@@ -875,11 +875,11 @@ export default function CartDrawer({
                             {youMayAlsoLikeProducts.length > 0 && (
                                 <section className="mt-7 border-t border-[#e8e1d8] pt-6">
                                     <div className="mb-3">
-                                        <h3 className="font-heading text-sm font-semibold tracking-wide text-[#071630]">
+                                        <h3 className="font-body text-sm font-semibold tracking-wide text-brand-navy">
                                             YOU MAY ALSO LIKE
                                         </h3>
 
-                                        <p className="mt-1 text-[10px] text-[#91857b]">
+                                        <p className="mt-1 text-[10px] text-brand-navy-muted">
                                             More products selected for you
                                         </p>
                                     </div>
@@ -897,7 +897,7 @@ export default function CartDrawer({
                                 </section>
                             )}
 
-                            <p className="pb-3 pt-5 text-center text-[10px] tracking-wide text-[#91857b]">
+                            <p className="pb-3 pt-5 text-center text-[10px] tracking-wide text-brand-navy-muted">
                                 YOU'RE ONE STEP CLOSER TO YOUR ORDER
                             </p>
                         </>
@@ -908,22 +908,22 @@ export default function CartDrawer({
                 {items.length > 0 && (
                     <div className="shrink-0 border-t border-[#e8e1d8] bg-white px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 sm:px-7 sm:pt-5">
                         <div className="mb-2 flex items-center justify-between">
-                            <span className="text-sm text-[#91857b]">
+                            <span className="text-sm text-brand-navy-muted">
                                 Subtotal ({totalQuantity} items)
                             </span>
 
-                            <span className="text-lg font-bold text-[#071630]">
+                            <span className="text-lg font-bold text-brand-navy">
                                 {formatPrice(subtotal)}
                             </span>
                         </div>
 
                         {comboSavings > 0 && (
-                            <p className="mb-1 text-right text-xs font-semibold text-[#176348]">
+                            <p className="mb-1 text-right text-xs font-semibold text-success-green">
                                 Combo savings {formatPrice(comboSavings)}
                             </p>
                         )}
 
-                        <p className="mb-4 text-[10px] leading-4 text-[#91857b]">
+                        <p className="mb-4 text-[10px] leading-4 text-brand-navy-muted">
                             Shipping and discounts are calculated at checkout.
                         </p>
 
@@ -936,7 +936,7 @@ export default function CartDrawer({
                                 !!busyProductId ||
                                 !!addingProductId
                             }
-                            className="flex min-h-12 w-full items-center justify-center gap-2 rounded-sm bg-[#071630] px-5 py-3 text-xs font-bold tracking-[0.15em] text-white transition hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
+                            className="flex min-h-12 w-full items-center justify-center gap-2 rounded-sm bg-brand-navy px-5 py-3 text-xs font-bold tracking-[0.15em] text-white transition hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             PROCEED TO CHECKOUT
                             <ArrowRight size={16} />
@@ -945,7 +945,7 @@ export default function CartDrawer({
                         <button
                             type="button"
                             onClick={onClose}
-                            className="mt-2 min-h-9 w-full py-2 text-center text-[10px] font-semibold tracking-widest text-[#91857b] underline underline-offset-4"
+                            className="mt-2 min-h-9 w-full py-2 text-center text-[10px] font-semibold tracking-widest text-brand-navy-muted underline underline-offset-4"
                         >
                             CONTINUE SHOPPING
                         </button>

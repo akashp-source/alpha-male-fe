@@ -8,32 +8,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-## Brand guidelines (required for every visual change)
+## Brand guidelines (required before any UI change)
 
-Check and follow these rules for **every** change that affects how the site looks: new pages, new components, and edits to existing components, styles, images or copy. If a change can't follow them, say so explicitly instead of silently deviating.
+**Before changing the UI or adding anything to it, read [`BRAND_GUIDELINES.md`](BRAND_GUIDELINES.md) in full and follow it.** This applies to every change that affects how the site looks: new pages, new components, and edits to existing components, styles, images or copy.
 
-Source: *Alpha Male Brand Guidelines* PDF (kept outside this repo). It covers only the logo, colour palette and typography, summarised below. It has **no** rules on imagery, layout, tone of voice or copy, so don't present anything as a brand rule for those.
-
-### Logo
-- The logo is a white/silver lion head inside a dark-navy "A"-shaped triangle, with the **ALPHA MALE** wordmark underneath and the tagline **DRIVE • STAMINA • ENERGY**.
-- Use the supplied logo artwork (e.g. `public/images/logo.png`); don't redraw or rebuild it in code.
-- Keep its proportions: triangle 86.95 mm wide × 64.58 mm high, wordmark 51.22 mm wide. Don't stretch, squash or crop it.
-- Standard square export sizes: **500×500**, **300×300** and **150×150 px**. Pick the nearest size for the slot rather than upscaling a smaller one.
-
-### Colour palette (primary colours)
-| Name | Hex | RGB |
-|---|---|---|
-| Dark navy blue | `#212E49` | 33, 46, 73 |
-| White | `#FEFEFE` | 254, 254, 254 |
-| Palladium | `#B0B1B0` | 176, 177, 176 |
-| Pale light gray | `#E9E9EA` | 233, 233, 234 |
-| Olympus white | `#D5D5D7` | 213, 213, 215 |
-| Medium Gray | `#B5B5B5` | 181, 181, 181 |
-
-- Build new UI from these colours. Dark navy is the brand colour; the whites and greys are its supporting neutrals.
-- Existing components also use other shades (e.g. `#07162f` / `#071630` navy, `#161f33` page background, green `#176348`). Treat the table above as the reference when adding or changing styles, and don't introduce further off-palette colours without a stated reason. These guidelines don't require recolouring untouched code.
-
-### Typography
-- **Cinzel** (shown in SemiBold): the brand display typeface, for headings and titles. In this project it is the `font-heading` token.
-- **Montserrat**: the supporting typeface for body and small text. In this project it is the `font-body` token.
-- Use these two typefaces only; don't add other font families. Load fonts through the existing setup in `app/layout.tsx` and the `@theme` tokens in `app/globals.css`, not ad-hoc imports.
+- `BRAND_GUIDELINES.md` is the single source of truth for the logo, colour palette, typography, colour/font tokens, the heading rule, contrast requirements and the pending accent colours. Don't rely on memory or on colours you see in existing code.
+- Use the design tokens defined in `app/globals.css` (e.g. `bg-brand-navy`, `text-palladium`, `font-heading`). Don't hard-code hex values or add new fonts.
+- Before finishing, run through the checklist at the end of `BRAND_GUIDELINES.md`.
+- If a change can't follow the guidelines (for example a contrast failure, or a colour that isn't in the palette), say so explicitly and explain why instead of deviating silently.
+- If the brand guidelines change, update `BRAND_GUIDELINES.md` (and the tokens in `app/globals.css`) rather than adding rules here.

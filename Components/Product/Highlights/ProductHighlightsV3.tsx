@@ -19,17 +19,17 @@ export default function ProductHighlightsV3({
     if (!highlights.length) return null;
 
     return (
-        <section className="w-full overflow-hidden bg-[#07162f] px-4 py-14 sm:px-6 sm:py-16 lg:px-10 lg:py-16">
+        <section className="w-full overflow-hidden bg-brand-navy px-4 py-14 sm:px-6 sm:py-16 lg:px-10 lg:py-16">
 
             <div className="mx-auto max-w-[1400px]">
 
                 {/* Heading */}
                 <div className="mb-12 text-center sm:mb-16">
-                    <p className="mb-3 font-body text-[11px] font-bold tracking-[0.3em] text-[#c5df50] sm:text-xs">
+                    <p className="mb-3 font-body text-[11px] font-bold tracking-[0.3em] text-accent-lime sm:text-xs">
                         {eyebrow}
                     </p>
 
-                    <h2 className="font-heading text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
+                    <h2 className="font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl lg:text-4xl">
                         {heading}
                     </h2>
                 </div>
@@ -60,7 +60,7 @@ export default function ProductHighlightsV3({
 
                             const TextBlock = (
                                 <div className={`flex min-h-[110px] flex-col justify-center ${imageOnTop ? "text-center" : "text-center"}`}>
-                                    <h3 className="mb-2 font-body text-base font-bold leading-snug text-white sm:text-lg">
+                                    <h3 className="mb-2 font-body text-base font-semibold leading-snug text-white sm:text-lg">
                                         {item.title}
                                     </h3>
 
@@ -83,7 +83,7 @@ export default function ProductHighlightsV3({
 
                                     {/* Timeline number */}
                                     <div className="relative z-10 flex items-center justify-center py-3 lg:row-start-2 lg:py-0">
-                                        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#c5df50] bg-[#0d403d] font-body text-xs font-bold text-[#c5df50] shadow-[0_0_0_5px_#0d403d]">
+                                        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-accent-lime bg-[#0d403d] font-body text-xs font-bold text-accent-lime shadow-[0_0_0_5px_#0d403d]">
                                             {String(index + 1).padStart(2, "0")}
                                         </div>
                                     </div>

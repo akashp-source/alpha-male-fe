@@ -62,8 +62,8 @@ export default async function ProductPreviewPage({
         return (
             <>
                 <Navbar />
-                <main className="flex min-h-[60vh] w-full flex-col items-center justify-center bg-white px-6 text-center text-[#212E49]">
-                    <p className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-[#B0B1B0]">Admin preview</p>
+                <main className="flex min-h-[60vh] w-full flex-col items-center justify-center bg-white px-6 text-center text-brand-navy">
+                    <p className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-palladium">Admin preview</p>
                     <h1 className="mt-3 font-heading text-2xl font-semibold">Preview unavailable</h1>
                     <p className="mt-3 max-w-md font-body text-sm">{result.message}</p>
                 </main>
@@ -78,10 +78,10 @@ export default async function ProductPreviewPage({
             {/* Preview notice, above the regular site header */}
             <div
                 role="status"
-                className="sticky top-0 z-[60] w-full bg-[#212E49] px-4 py-2.5 text-center font-body text-xs text-[#FEFEFE] sm:text-sm"
+                className="sticky top-0 z-[60] w-full bg-brand-navy px-4 py-2.5 text-center font-body text-xs text-white sm:text-sm"
             >
                 <strong className="font-semibold uppercase tracking-[0.15em]">Admin preview</strong>
-                <span className="mx-2 text-[#B0B1B0]">·</span>
+                <span className="mx-2 text-palladium">·</span>
                 {product.isActive
                     ? "This product is live. This is how customers see it."
                     : "Not published — customers can't see this page. Buying is disabled until the product is active."}

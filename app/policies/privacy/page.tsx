@@ -15,10 +15,10 @@ function Section({
 }) {
     return (
         <section className="border-b border-white/[0.08] py-7 last:border-0">
-            <h2 className="mb-4 font-heading text-lg tracking-wide text-[#D5D5D7] sm:text-xl">
+            <h2 className="mb-4 font-heading text-lg tracking-wide text-olympus sm:text-xl">
                 {title}
             </h2>
-            <div className="space-y-3 text-sm font-body leading-7 text-[#AEB5C3]">
+            <div className="space-y-3 text-sm font-body leading-7 text-palladium">
                 {children}
             </div>
         </section>
@@ -36,7 +36,7 @@ function PolicyTable({
         <div className="my-5 overflow-x-auto">
             <table className="w-full min-w-[500px] border-collapse text-left text-xs sm:text-sm font-body">
                 <thead>
-                    <tr className="border-b border-white/20 text-[#D5D5D7]">
+                    <tr className="border-b border-white/20 text-olympus">
                         {headers.map((header) => (
                             <th key={header} className="px-4 py-3 font-medium">
                                 {header}
@@ -48,7 +48,7 @@ function PolicyTable({
                     {rows.map((row, index) => (
                         <tr
                             key={index}
-                            className="border-b border-white/[0.07] text-[#AEB5C3]"
+                            className="border-b border-white/[0.07] text-palladium"
                         >
                             {row.map((cell, cellIndex) => (
                                 <td
@@ -76,7 +76,7 @@ function ContactLink({
     return (
         <a
             href={href}
-            className="text-[#D5D5D7] underline decoration-white/30 underline-offset-4 transition hover:text-white"
+            className="text-olympus underline decoration-white/30 underline-offset-4 transition hover:text-white"
         >
             {children}
         </a>
@@ -91,14 +91,14 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
     return (
-        <main className="min-h-screen bg-[#0C1221] px-5 py-8 text-[#D5D5D7] sm:px-8 sm:py-12">
+        <main className="min-h-screen bg-brand-navy px-5 py-8 text-olympus sm:px-8 sm:py-12">
             <div className="mx-auto max-w-4xl">
 
                 {/* Back to Home */}
                 <div className="mb-12">
                     <Link
                         href="/"
-                        className="group inline-flex items-center gap-2 rounded-full border border-[#354158] px-5 py-2.5 text-sm text-[#AEB5C3] transition-all duration-300 hover:border-[#D5D5D7] hover:bg-[#19243B] hover:text-white"
+                        className="group inline-flex items-center gap-2 rounded-full border border-[#354158] px-5 py-2.5 text-sm text-palladium transition-all duration-300 hover:border-olympus hover:bg-[#19243B] hover:text-white"
                     >
                         <span className="transition-transform duration-300 group-hover:-translate-x-1">
                             ←
@@ -121,7 +121,7 @@ export default function PrivacyPolicyPage() {
                         />
                     </div>
 
-                    <h1 className="font-heading text-3xl uppercase tracking-[0.12em] text-[#D5D5D7] sm:text-5xl">
+                    <h1 className="font-heading text-3xl uppercase tracking-[0.12em] text-olympus sm:text-5xl">
                         Privacy Policy
                     </h1>
 
@@ -129,10 +129,10 @@ export default function PrivacyPolicyPage() {
                         Effective: 02 November 2026
                     </p>
 
-                    <div className="mx-auto mt-7 h-px w-16 bg-gradient-to-r from-transparent via-[#AEB5C3] to-transparent" />
+                    <div className="mx-auto mt-7 h-px w-16 bg-gradient-to-r from-transparent via-palladium to-transparent" />
                 </header>
 
-                <div className="mb-8 text-sm leading-7 font-body text-[#AEB5C3]">
+                <div className="mb-8 text-sm leading-7 font-body text-palladium">
                     As India’s first premium men’s wellness brand, Alpha Male treats
                     discretion as part of the product. This Privacy Policy explains what
                     personal data we collect when you visit alphamale.co.in, shop with us
@@ -144,7 +144,7 @@ export default function PrivacyPolicyPage() {
 
                 {/* At a Glance */}
                 <section className="mb-8 border border-white/10 bg-white/[0.025] p-5 sm:p-7 font-body">
-                    <h2 className="mb-4  text-xl text-[#D5D5D7] font-heading font-semibold">
+                    <h2 className="mb-4  text-xl text-olympus font-heading font-semibold">
                         At a Glance
                     </h2>
 
@@ -237,18 +237,18 @@ export default function PrivacyPolicyPage() {
                     <Section title="3. How It Reaches Us">
                         <ul className="list-disc space-y-3 pl-5">
                             <li>
-                                <strong className="text-[#D5D5D7]">From you:</strong> When you
+                                <strong className="text-olympus">From you:</strong> When you
                                 create an account, place an order, fill in a form, enter a
                                 promotion, or contact our team by email, phone or WhatsApp.
                             </li>
                             <li>
-                                <strong className="text-[#D5D5D7]">Automatically:</strong>{" "}
+                                <strong className="text-olympus">Automatically:</strong>{" "}
                                 Through cookies, pixels and similar tools as you browse. They
                                 tell us which pages are popular and help keep your cart and
                                 login working.
                             </li>
                             <li>
-                                <strong className="text-[#D5D5D7]">From partners:</strong> For
+                                <strong className="text-olympus">From partners:</strong> For
                                 example, a corrected delivery address from our courier, or
                                 details a social media platform shares with us when you engage
                                 with Alpha Male there, depending on your settings on that platform.
@@ -270,7 +270,7 @@ export default function PrivacyPolicyPage() {
 
                     <Section title="5. Messages We Send You">
                         <p>
-                            <strong className="text-[#D5D5D7]">Service messages.</strong>{" "}
+                            <strong className="text-olympus">Service messages.</strong>{" "}
                             When you sign up, verify your number or place an order, we will
                             contact you about your account, payments, deliveries and any
                             legal matter. We may use SMS, WhatsApp, RCS, email, push
@@ -279,14 +279,14 @@ export default function PrivacyPolicyPage() {
                         </p>
 
                         <p>
-                            <strong className="text-[#D5D5D7]">Offers and launches.</strong>{" "}
+                            <strong className="text-olympus">Offers and launches.</strong>{" "}
                             Promotional messages are sent only if you tick the opt-in box or
                             opt in later. They may come by WhatsApp, SMS, RCS or email. You
                             never need to opt in to shop with us.
                         </p>
 
                         <p>
-                            <strong className="text-[#D5D5D7]">Channels.</strong> WhatsApp
+                            <strong className="text-olympus">Channels.</strong> WhatsApp
                             messages come only from Alpha Male’s verified WhatsApp Business
                             account. RCS messages are delivered through your mobile network
                             and messaging app, and fall back to SMS if your device does not
@@ -295,7 +295,7 @@ export default function PrivacyPolicyPage() {
                         </p>
 
                         <p>
-                            <strong className="text-[#D5D5D7]">DND and TRAI rules.</strong>{" "}
+                            <strong className="text-olympus">DND and TRAI rules.</strong>{" "}
                             We follow the TRAI Telecom Commercial Communications Customer
                             Preference Regulations, 2018. If your number is on the National
                             Customer Preference Register (DND), you will receive promotional
@@ -304,7 +304,7 @@ export default function PrivacyPolicyPage() {
                         </p>
 
                         <p>
-                            <strong className="text-[#D5D5D7]">Opting out.</strong> Reply
+                            <strong className="text-olympus">Opting out.</strong> Reply
                             STOP to any SMS or WhatsApp message, tap unsubscribe in any
                             email, or write to info@alphamale.co.in. We will act on your
                             request within 7 working days. Messages about orders you have
@@ -312,7 +312,7 @@ export default function PrivacyPolicyPage() {
                         </p>
 
                         <p>
-                            <strong className="text-[#D5D5D7]">Consent records.</strong> We
+                            <strong className="text-olympus">Consent records.</strong> We
                             keep a record of when and how you gave or withdrew consent.
                         </p>
                     </Section>
@@ -435,25 +435,25 @@ export default function PrivacyPolicyPage() {
                         <p>For privacy questions, data requests or complaints:</p>
                         <ul className="space-y-3">
                             <li>
-                                <span className="text-[#D5D5D7]">Email: </span>
+                                <span className="text-olympus">Email: </span>
                                 <ContactLink href="mailto:info@alphamale.co.in">
                                     info@alphamale.co.in
                                 </ContactLink>
                             </li>
                             <li>
-                                <span className="text-[#D5D5D7]">Phone: </span>
+                                <span className="text-olympus">Phone: </span>
                                 <ContactLink href="tel:+919000937222">
                                     +91 90009 37222
                                 </ContactLink>
                             </li>
                             <li>
-                                <span className="text-[#D5D5D7]">WhatsApp: </span>
+                                <span className="text-olympus">WhatsApp: </span>
                                 <ContactLink href="https://wa.me/919000937222">
                                     +91 90009 37222
                                 </ContactLink>
                             </li>
                             <li>
-                                <span className="text-[#D5D5D7]">Address: </span>
+                                <span className="text-olympus">Address: </span>
                                 Hyderabad, Telangana, India
                             </li>
                         </ul>
@@ -463,7 +463,7 @@ export default function PrivacyPolicyPage() {
                 <FooterPage />
                 {/* Footer */}
                 {/* <footer className="mt-12 border-t border-white/10 pt-8 text-center">
-                    <p className="font-serif text-sm uppercase tracking-[0.35em] text-[#D5D5D7]">
+                    <p className="font-serif text-sm uppercase tracking-[0.35em] text-olympus">
                         ALPHA MALE
                     </p>
                     <p className="mt-2 text-[9px] uppercase tracking-[0.3em] text-[#929BAE]">

@@ -76,7 +76,7 @@ export default function OrderTimeline({ order }: Props) {
     return (
         <div className="grid gap-8 border-t border-[#e7ebf1] bg-[#fafbfc] p-5 sm:grid-cols-2 sm:p-6">
             <div>
-                <h3 className="mb-5 text-sm font-bold text-[#07152e]">
+                <h3 className="mb-5 text-sm font-semibold text-brand-navy">
                     Order timeline
                 </h3>
 
@@ -100,7 +100,7 @@ export default function OrderTimeline({ order }: Props) {
                                 <div key={step.label} className="flex items-start gap-3">
                                     <div
                                         className={`relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${completed
-                                                ? "bg-[#07152e] text-white"
+                                                ? "bg-brand-navy text-white"
                                                 : "border border-[#cbd3df] bg-white text-[#a0a9b7]"
                                             }`}
                                     >
@@ -113,7 +113,7 @@ export default function OrderTimeline({ order }: Props) {
 
                                     <div>
                                         <p
-                                            className={`text-sm font-semibold ${completed ? "text-[#07152e]" : "text-[#9aa3b2]"
+                                            className={`text-sm font-semibold ${completed ? "text-brand-navy" : "text-[#9aa3b2]"
                                                 }`}
                                         >
                                             {step.label}
@@ -161,12 +161,12 @@ export default function OrderTimeline({ order }: Props) {
             </div>
 
             <div>
-                <h3 className="mb-5 text-sm font-bold text-[#07152e]">
+                <h3 className="mb-5 text-sm font-semibold text-brand-navy">
                     Delivery address
                 </h3>
 
-                <div className="space-y-1 text-xs leading-5 text-[#526078]">
-                    <p className="font-semibold text-[#07152e]">
+                <div className="space-y-1 text-xs leading-5 text-brand-navy-muted">
+                    <p className="font-semibold text-brand-navy">
                         {order.customer?.firstName} {order.customer?.lastName}
                     </p>
 
@@ -190,20 +190,20 @@ export default function OrderTimeline({ order }: Props) {
                 </div>
 
                 <div className="mt-5 border-t border-[#e7ebf1] pt-4">
-                    <h4 className="text-xs font-bold text-[#07152e]">
+                    <h4 className="text-xs font-semibold text-brand-navy">
                         Payment details
                     </h4>
 
                     <div className="mt-2 flex justify-between text-xs">
                         <span className="text-[#718096]">Payment method</span>
-                        <span className="font-semibold text-[#07152e]">
+                        <span className="font-semibold text-brand-navy">
                             {order.paymentMethod}
                         </span>
                     </div>
 
                     <div className="mt-2 flex justify-between text-xs">
                         <span className="text-[#718096]">Payment status</span>
-                        <span className="font-semibold text-[#07152e]">
+                        <span className="font-semibold text-brand-navy">
                             {order.paymentStatus}
                         </span>
                     </div>
@@ -211,7 +211,7 @@ export default function OrderTimeline({ order }: Props) {
                     {order.awb && (
                         <div className="mt-2 flex justify-between gap-3 text-xs">
                             <span className="text-[#718096]">AWB number</span>
-                            <span className="break-all font-semibold text-[#07152e]">
+                            <span className="break-all font-semibold text-brand-navy">
                                 {order.awb}
                             </span>
                         </div>
@@ -220,7 +220,7 @@ export default function OrderTimeline({ order }: Props) {
                     {order.courierName && (
                         <div className="mt-2 flex justify-between text-xs">
                             <span className="text-[#718096]">Courier</span>
-                            <span className="font-semibold text-[#07152e]">
+                            <span className="font-semibold text-brand-navy">
                                 {order.courierName}
                             </span>
                         </div>

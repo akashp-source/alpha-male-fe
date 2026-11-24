@@ -27,18 +27,18 @@ export default function HeroBanner() {
 
                 {/* Text: below the image on mobile, left column on desktop */}
                 <div className="order-2 px-6 pb-10 pt-2 sm:px-10 sm:pb-12 lg:order-1 lg:px-0 lg:py-0">
-                    <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.24em] text-[#D5D5D7] sm:mb-4 sm:text-sm sm:tracking-[0.3em]">
+                    <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.24em] text-olympus sm:mb-4 sm:text-sm sm:tracking-[0.3em]">
                         Drive · Stamina · Energy
                     </p>
                     <h1 className="font-heading text-[34px] font-semibold uppercase leading-[1.08] tracking-wide text-white sm:text-5xl lg:text-[52px] xl:text-[58px]">
                         Performance Strips
                     </h1>
-                    <p className="mt-3 font-heading text-xl text-[#E9E9EA] sm:mt-4 sm:text-2xl">
+                    <p className="mt-3 font-heading text-xl text-pale-gray sm:mt-4 sm:text-2xl">
                         Single Melt
                     </p>
                     <Link
                         href="/products"
-                        className="mt-6 inline-flex min-h-11 items-center gap-3 rounded-xl border border-white/80 px-5 py-3 font-body text-sm font-semibold text-white transition hover:bg-white hover:text-[#212E49] sm:mt-8 sm:px-7"
+                        className="mt-6 inline-flex min-h-11 items-center gap-3 rounded-xl border border-white/80 px-5 py-3 font-body text-sm font-semibold text-white transition hover:bg-white hover:text-brand-navy sm:mt-8 sm:px-7"
                     >
                         Explore the range <ArrowRight size={18} aria-hidden="true" />
                     </Link>

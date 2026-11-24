@@ -732,7 +732,7 @@ export default function CheckoutPage() {
         return (
             <main className="flex min-h-[70vh] items-center justify-center bg-[#fafafa]">
                 <div className="text-center">
-                    <div className="mx-auto h-9 w-9 animate-spin rounded-full border-2 border-[#071630] border-t-transparent" />
+                    <div className="mx-auto h-9 w-9 animate-spin rounded-full border-2 border-brand-navy border-t-transparent" />
                     <p className="mt-4 text-sm text-gray-500">
                         Preparing your checkout...
                     </p>
@@ -745,7 +745,7 @@ export default function CheckoutPage() {
         return (
             <main className="flex min-h-[70vh] flex-col items-center justify-center bg-[#fafafa] px-5 text-center">
                 <ShoppingBag size={48} className="text-gray-400" />
-                <h1 className="mt-5 font-heading text-2xl text-[#071630]">
+                <h1 className="mt-5 font-heading text-2xl text-brand-navy">
                     YOUR CART IS EMPTY
                 </h1>
                 <p className="mt-2 text-sm text-gray-500">
@@ -753,7 +753,7 @@ export default function CheckoutPage() {
                 </p>
                 <button
                     onClick={() => router.push("/shop")}
-                    className="mt-6 bg-[#071630] px-7 py-3 text-sm font-semibold text-white"
+                    className="mt-6 bg-brand-navy px-7 py-3 text-sm font-semibold text-white"
                 >
                     CONTINUE SHOPPING
                 </button>
@@ -762,13 +762,13 @@ export default function CheckoutPage() {
     }
 
     return (
-        <main className="min-h-screen bg-[#fafafa] text-[#071630]">
+        <main className="min-h-screen bg-[#fafafa] text-brand-navy">
             {/* Header */}
             <header className="border-b border-gray-200 bg-white">
                 <div className="mx-auto flex max-w-[1250px] items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
                     <button
                         onClick={() => router.back()}
-                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#071630]"
+                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-brand-navy"
                     >
                         <ArrowLeft size={18} />
                         <span className="hidden sm:inline">
@@ -777,7 +777,7 @@ export default function CheckoutPage() {
                     </button>
 
                     <div className="text-center">
-                        <h1 className="font-heading text-xl font-bold tracking-[0.1em] sm:text-2xl">
+                        <h1 className="font-heading text-xl font-semibold tracking-[0.1em] sm:text-2xl">
                             ALPHA MALE
                         </h1>
                         <p className="mt-0.5 text-[10px] tracking-[0.25em] text-gray-500">
@@ -785,7 +785,7 @@ export default function CheckoutPage() {
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-1.5 text-xs text-[#176348]">
+                    <div className="flex items-center gap-1.5 text-xs text-success-green">
                         <LockKeyhole size={15} />
                         <span className="hidden sm:inline">Secure</span>
                     </div>
@@ -820,7 +820,7 @@ export default function CheckoutPage() {
                                 setUseNewAddress(true);
                                 setShowAddressForm(true);
                             }}
-                            className="text-xs font-semibold text-[#176348] underline"
+                            className="text-xs font-semibold text-success-green underline"
                         >
                             Sign out
                         </button>
@@ -837,7 +837,7 @@ export default function CheckoutPage() {
                         </div>
                         <button
                             onClick={() => router.push("/user/login")}
-                            className="text-xs font-bold text-[#176348] underline"
+                            className="text-xs font-bold text-success-green underline"
                         >
                             SIGN IN
                         </button>
@@ -851,7 +851,7 @@ export default function CheckoutPage() {
                         {/* Contact */}
                         <div className="rounded-lg border border-gray-200 bg-white p-5 sm:p-7">
                             <div className="mb-5 flex items-center gap-3">
-                                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#071630] text-white">
+                                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-navy text-white">
                                     <UserRound size={17} />
                                 </div>
                                 <div>
@@ -885,7 +885,7 @@ export default function CheckoutPage() {
                         {/* Delivery address */}
                         <div className="rounded-lg border border-gray-200 bg-white p-5 sm:p-7">
                             <div className="mb-5 flex items-center gap-3">
-                                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#071630] text-white">
+                                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-navy text-white">
                                     <MapPin size={17} />
                                 </div>
                                 <div>
@@ -911,14 +911,14 @@ export default function CheckoutPage() {
                                                         selectSavedAddress(index)
                                                     }
                                                     className={`w-full rounded-lg border p-4 text-left transition ${selectedAddress === index
-                                                        ? "border-[#176348] bg-[#f3f8f4]"
+                                                        ? "border-success-green bg-[#f3f8f4]"
                                                         : "border-gray-200 hover:border-gray-400"
                                                         }`}
                                                 >
                                                     <div className="flex items-start gap-3">
                                                         <span
                                                             className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${selectedAddress === index
-                                                                ? "border-[#176348] bg-[#176348]"
+                                                                ? "border-success-green bg-success-green"
                                                                 : "border-gray-400"
                                                                 }`}
                                                         >
@@ -936,7 +936,7 @@ export default function CheckoutPage() {
                                                                     {address.fullName}
                                                                 </p>
                                                                 {address.isDefault && (
-                                                                    <span className="rounded bg-[#e5f2e8] px-2 py-0.5 text-[10px] font-bold text-[#176348]">
+                                                                    <span className="rounded bg-[#e5f2e8] px-2 py-0.5 text-[10px] font-bold text-success-green">
                                                                         DEFAULT
                                                                     </span>
                                                                 )}
@@ -967,7 +967,7 @@ export default function CheckoutPage() {
                                                 setSelectedAddress(-1);
                                                 setDeliveryAddress(emptyAddress);
                                             }}
-                                            className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-[#176348] py-3 text-sm font-semibold text-[#176348] hover:bg-[#f3f8f4]"
+                                            className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-success-green py-3 text-sm font-semibold text-success-green hover:bg-[#f3f8f4]"
                                         >
                                             <Plus size={17} />
                                             ADD NEW ADDRESS
@@ -990,7 +990,7 @@ export default function CheckoutPage() {
                                                         selectSavedAddress(0);
                                                     }
                                                 }}
-                                                className="mb-1 text-xs font-semibold text-[#176348] underline"
+                                                className="mb-1 text-xs font-semibold text-success-green underline"
                                             >
                                                 ← Back to saved addresses
                                             </button>
@@ -1086,7 +1086,7 @@ export default function CheckoutPage() {
                                     onChange={(e) =>
                                         setSameBillingAddress(e.target.checked)
                                     }
-                                    className="h-4 w-4 accent-[#176348]"
+                                    className="h-4 w-4 accent-success-green"
                                 />
                                 Same as delivery address
                             </label>
@@ -1190,7 +1190,7 @@ export default function CheckoutPage() {
                             type="button"
                             onClick={placeOrder}
                             disabled={submitting || !paymentMethod}
-                            className="hidden min-h-14 w-full items-center justify-center gap-2 bg-[#071630] px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-60 lg:flex"
+                            className="hidden min-h-14 w-full items-center justify-center gap-2 bg-brand-navy px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-60 lg:flex"
                         >
                             {submitting
                                 ? "PROCESSING..."
@@ -1239,7 +1239,7 @@ export default function CheckoutPage() {
                                                     <ShoppingBag className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-400" />
                                                 )}
 
-                                                <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#071630] px-1 text-[10px] font-bold text-white">
+                                                <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-navy px-1 text-[10px] font-bold text-white">
                                                     {item.quantity}
                                                 </span>
                                             </div>
@@ -1309,7 +1309,7 @@ export default function CheckoutPage() {
                                                     {formatPrice(getItemLineTotal(item))}
                                                 </p>
                                                 {Number(item.comboDiscount ?? 0) > 0 && (
-                                                    <p className="text-[10px] font-semibold text-[#176348]">
+                                                    <p className="text-[10px] font-semibold text-success-green">
                                                         Combo offer applied
                                                     </p>
                                                 )}
@@ -1322,14 +1322,14 @@ export default function CheckoutPage() {
                             {/* FREQUENTLY BOUGHT TOGETHER */}
                             {recommendations.frequentlyBoughtTogether.length > 0 && (
                                 <section className="mx-4 mb-4 rounded-xl border border-gray-200 bg-white p-3 sm:mx-5">
-                                    <h3 className="text-sm font-bold text-[#071630]">Frequently bought together</h3>
+                                    <h3 className="text-sm font-semibold text-brand-navy">Frequently bought together</h3>
                                     <p className="mt-1 text-[10px] text-gray-500">
                                         Often ordered with {items[0]?.productId?.name || "your items"}
                                     </p>
 
-                                    <div className="mt-3 flex items-center justify-center gap-2 rounded-lg bg-[#f3f5f8] p-3">
+                                    <div className="mt-3 flex items-center justify-center gap-2 rounded-lg bg-pale-gray p-3">
                                         {items[0]?.productId?.images?.[0] && (
-                                            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-[#071630] bg-white">
+                                            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-brand-navy bg-white">
                                                 <Image src={items[0].productId.images[0]} alt={items[0].productId.name} fill sizes="48px" className="object-contain p-1" />
                                             </div>
                                         )}
@@ -1339,7 +1339,7 @@ export default function CheckoutPage() {
                                             .map(({ product }) => (
                                                 <div key={product._id} className="flex items-center gap-2">
                                                     <span className="text-sm font-bold">+</span>
-                                                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-[#071630] bg-white">
+                                                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-brand-navy bg-white">
                                                         {product.images?.[0] && <Image src={product.images[0]} alt={product.name || product.title || "Product"} fill sizes="48px" className="object-contain p-1" />}
                                                     </div>
                                                 </div>
@@ -1349,8 +1349,8 @@ export default function CheckoutPage() {
                                     <div className="mt-3 space-y-3">
                                         {recommendations.frequentlyBoughtTogether.map(({ product }) => (
                                             <label key={product._id} className="flex cursor-pointer items-center gap-2">
-                                                <input type="checkbox" checked={selectedBundleIds.includes(product._id)} onChange={() => toggleBundleProduct(product._id)} className="h-4 w-4 accent-[#071630]" />
-                                                <span className="min-w-0 flex-1 text-xs text-[#071630]">{product.name || product.title}</span>
+                                                <input type="checkbox" checked={selectedBundleIds.includes(product._id)} onChange={() => toggleBundleProduct(product._id)} className="h-4 w-4 accent-brand-navy" />
+                                                <span className="min-w-0 flex-1 text-xs text-brand-navy">{product.name || product.title}</span>
                                                 <span className="shrink-0 text-xs font-bold">{formatPrice(getRecommendationPrice(product))}</span>
                                             </label>
                                         ))}
@@ -1359,9 +1359,9 @@ export default function CheckoutPage() {
                                     <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
                                         <div>
                                             <p className="text-[10px] text-gray-500">Add {selectedBundleIds.length} items</p>
-                                            <p className="text-sm font-bold text-[#071630]">{formatPrice(selectedBundleTotal)}</p>
+                                            <p className="text-sm font-bold text-brand-navy">{formatPrice(selectedBundleTotal)}</p>
                                         </div>
-                                        <button type="button" onClick={addSelectedBundle} disabled={!selectedBundleIds.length || addingRecommendations} className="rounded-lg bg-[#071630] px-4 py-2.5 text-xs font-semibold text-white disabled:opacity-50">
+                                        <button type="button" onClick={addSelectedBundle} disabled={!selectedBundleIds.length || addingRecommendations} className="rounded-lg bg-brand-navy px-4 py-2.5 text-xs font-semibold text-white disabled:opacity-50">
                                             {addingRecommendations ? "Adding..." : "Add to order"}
                                         </button>
                                     </div>
@@ -1372,7 +1372,7 @@ export default function CheckoutPage() {
                             {recommendations.youMayAlsoLike.length > 0 && (
                                 <section className="mx-4 mb-5 overflow-hidden rounded-xl border border-gray-200 bg-white sm:mx-5">
                                     <div className="px-3 pb-2 pt-3">
-                                        <h3 className="text-sm font-bold text-[#071630]">You may also like</h3>
+                                        <h3 className="text-sm font-semibold text-brand-navy">You may also like</h3>
                                     </div>
                                     <div className="overflow-x-auto px-3 pb-3">
                                         <div className="flex w-max gap-2">
@@ -1385,14 +1385,14 @@ export default function CheckoutPage() {
                                                 return (
                                                     <article key={product._id} className="w-[140px] shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-white">
                                                         <div className="relative flex h-[98px] items-center justify-center bg-[#edf0f5]">
-                                                            {discount > 0 && <span className="absolute left-1 top-1 z-10 rounded bg-[#071630] px-1.5 py-0.5 text-[8px] font-bold text-white">{discount}% OFF</span>}
+                                                            {discount > 0 && <span className="absolute left-1 top-1 z-10 rounded bg-brand-navy px-1.5 py-0.5 text-[8px] font-bold text-white">{discount}% OFF</span>}
                                                             {product.images?.[0] && <Image src={product.images[0]} alt={product.name || product.title || "Product"} fill sizes="116px" className="object-contain p-2" />}
                                                         </div>
                                                         <div className="p-2">
-                                                            <p className="line-clamp-2 min-h-[30px] text-[10px] font-semibold leading-4 text-[#071630]">{product.name || product.title}</p>
+                                                            <p className="line-clamp-2 min-h-[30px] text-[10px] font-semibold leading-4 text-brand-navy">{product.name || product.title}</p>
                                                             <div className="mt-1.5 flex flex-col gap-1.5">
-                                                                <span className="text-xs font-bold text-[#071630]">{formatPrice(price)}</span>
-                                                                <button type="button" onClick={() => addRecommendedProduct(product._id)} disabled={addingProductId === product._id} className="flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border border-[#071630] text-[10px] font-bold text-[#071630] transition-colors hover:bg-[#071630] hover:text-white disabled:opacity-50">
+                                                                <span className="text-xs font-bold text-brand-navy">{formatPrice(price)}</span>
+                                                                <button type="button" onClick={() => addRecommendedProduct(product._id)} disabled={addingProductId === product._id} className="flex h-9 w-full items-center justify-center whitespace-nowrap rounded-lg border border-brand-navy text-[10px] font-bold text-brand-navy transition-colors hover:bg-brand-navy hover:text-white disabled:opacity-50">
                                                                     {addingProductId === product._id ? "..." : "+ Add"}
                                                                 </button>
                                                             </div>
@@ -1417,7 +1417,7 @@ export default function CheckoutPage() {
                                     {comboSavings > 0 && (
                                         <div className="flex justify-between text-gray-600">
                                             <span>Combo savings</span>
-                                            <span className="text-[#176348]">
+                                            <span className="text-success-green">
                                                 - {formatPrice(comboSavings)}
                                             </span>
                                         </div>
@@ -1430,7 +1430,7 @@ export default function CheckoutPage() {
 
                                     <div className="flex justify-between text-gray-600">
                                         <span>Shipping</span>
-                                        <span className="text-[#176348]">
+                                        <span className="text-success-green">
                                             {shippingCharge === 0
                                                 ? "Free"
                                                 : formatPrice(shippingCharge)}
@@ -1442,7 +1442,7 @@ export default function CheckoutPage() {
                                             <span className="font-semibold">
                                                 Total
                                             </span>
-                                            <span className="text-xl font-bold text-[#071630]">
+                                            <span className="text-xl font-bold text-brand-navy">
                                                 {formatPrice(total)}
                                             </span>
                                         </div>
@@ -1454,7 +1454,7 @@ export default function CheckoutPage() {
                             </div>
 
                             <div className="border-t border-gray-200 bg-[#f8faf8] px-5 py-4">
-                                <div className="flex items-center gap-2 text-xs text-[#176348]">
+                                <div className="flex items-center gap-2 text-xs text-success-green">
                                     <ShieldCheck size={17} />
                                     <span>
                                         Your information is protected with secure checkout.
@@ -1476,7 +1476,7 @@ export default function CheckoutPage() {
                             type="button"
                             onClick={placeOrder}
                             disabled={submitting || !paymentMethod}
-                            className="flex min-h-14 w-full items-center justify-center gap-2 bg-[#071630] px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-60"
+                            className="flex min-h-14 w-full items-center justify-center gap-2 bg-brand-navy px-6 text-sm font-bold tracking-widest text-white transition hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-60"
                         >
                             {submitting
                                 ? "PROCESSING..."
@@ -1518,7 +1518,7 @@ function Field({
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
                 placeholder={placeholder}
-                className="h-12 w-full rounded-md border border-gray-200 bg-white px-3 text-sm text-[#071630] outline-none transition placeholder:text-gray-400 focus:border-[#176348] focus:ring-1 focus:ring-[#176348]"
+                className="h-12 w-full rounded-md border border-gray-200 bg-white px-3 text-sm text-brand-navy outline-none transition placeholder:text-gray-400 focus:border-success-green focus:ring-1 focus:ring-success-green"
             />
         </label>
     );
@@ -1543,13 +1543,13 @@ function PaymentOption({
             type="button"
             onClick={onClick}
             className={`flex w-full items-center gap-3 rounded-lg border p-4 text-left transition ${selected
-                ? "border-[#176348] bg-[#f3f8f4]"
+                ? "border-success-green bg-[#f3f8f4]"
                 : "border-gray-200 hover:border-gray-400"
                 }`}
         >
             <span
                 className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${selected
-                    ? "border-[#176348] bg-[#176348]"
+                    ? "border-success-green bg-success-green"
                     : "border-gray-400"
                     }`}
             >
@@ -1560,7 +1560,7 @@ function PaymentOption({
                 <span className="flex flex-wrap items-center gap-2">
                     <span className="text-sm font-semibold">{title}</span>
                     {tag && (
-                        <span className="rounded bg-[#e5f2e8] px-2 py-0.5 text-[9px] font-bold tracking-wide text-[#176348]">
+                        <span className="rounded bg-[#e5f2e8] px-2 py-0.5 text-[9px] font-bold tracking-wide text-success-green">
                             {tag}
                         </span>
                     )}

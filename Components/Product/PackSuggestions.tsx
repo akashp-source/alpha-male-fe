@@ -40,16 +40,16 @@ export function PackSuggestionsBox({
     return (
         <section
             aria-labelledby="pack-suggestions-heading"
-            className="order-5 mt-2 rounded-xl border border-[#D5D5D7] bg-white p-3 sm:p-3.5"
+            className="order-5 mt-2 rounded-xl border border-olympus bg-white p-3 sm:p-3.5"
         >
-            <h2
+            <h3
                 id="pack-suggestions-heading"
-                className="flex items-center gap-1.5 font-body text-sm font-bold text-[#212E49]"
+                className="flex items-center gap-1.5 font-body text-sm font-semibold text-brand-navy"
             >
                 <Sparkles size={15} aria-hidden="true" />
                 Better ways to buy
-            </h2>
-            <p className="mt-1 font-body text-xs leading-5 text-[#5c534b]">
+            </h3>
+            <p className="mt-1 font-body text-xs leading-5 text-brand-navy-muted">
                 {selectionLabel} = {current.units} {units} for {formatPrice(current.total)}.
             </p>
 
@@ -95,16 +95,16 @@ function PlanRow({
     onChoose: (plan: PackPlan) => void;
 }) {
     return (
-        <li className="flex flex-col gap-2 rounded-lg bg-[#E9E9EA]/60 p-2.5 sm:flex-row sm:items-center sm:justify-between">
+        <li className="flex flex-col gap-2 rounded-lg bg-pale-gray/60 p-2.5 sm:flex-row sm:items-center sm:justify-between">
             <div className="min-w-0">
-                <p className="font-body text-xs font-bold text-[#212E49] sm:text-sm">{heading}</p>
-                <p className="mt-0.5 font-body text-xs leading-5 text-[#5c534b]">{text}</p>
+                <p className="font-body text-xs font-bold text-brand-navy sm:text-sm">{heading}</p>
+                <p className="mt-0.5 font-body text-xs leading-5 text-brand-navy-muted">{text}</p>
             </div>
             <button
                 type="button"
                 disabled={disabled}
                 onClick={() => onChoose(plan)}
-                className="flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-lg border-2 border-[#212E49] px-3 font-body text-xs font-semibold text-[#212E49] transition hover:bg-[#212E49] hover:text-[#FEFEFE] disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-lg border-2 border-brand-navy px-3 font-body text-xs font-semibold text-brand-navy transition hover:bg-brand-navy hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
             >
                 {pending && <Loader2 size={14} className="animate-spin" />}
                 Add to cart · {formatPrice(plan.total)}
@@ -153,7 +153,7 @@ export function PackUpgradeDialog({
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-end justify-center bg-[#212E49]/50 p-0 sm:items-center sm:p-4"
+            className="fixed inset-0 z-50 flex items-end justify-center bg-brand-navy/50 p-0 sm:items-center sm:p-4"
             onClick={() => !busy && onClose()}
         >
             <div
@@ -164,10 +164,10 @@ export function PackUpgradeDialog({
                 aria-describedby="pack-upgrade-text"
                 tabIndex={-1}
                 onClick={(event) => event.stopPropagation()}
-                className="w-full rounded-t-[22px] bg-[#FEFEFE] p-5 shadow-xl outline-none sm:max-w-md sm:rounded-[22px] sm:p-6"
+                className="w-full rounded-t-[22px] bg-white p-5 shadow-xl outline-none sm:max-w-md sm:rounded-[22px] sm:p-6"
             >
                 <div className="flex items-start justify-between gap-4">
-                    <p className="font-body text-[10px] font-bold uppercase tracking-[0.2em] text-[#176348]">
+                    <p className="font-body text-[10px] font-bold uppercase tracking-[0.2em] text-success-green">
                         Better deal
                     </p>
                     <button
@@ -175,26 +175,26 @@ export function PackUpgradeDialog({
                         aria-label="Close"
                         onClick={onClose}
                         disabled={busy}
-                        className="rounded-lg p-1.5 text-[#5c534b] transition hover:bg-[#E9E9EA] disabled:opacity-40"
+                        className="rounded-lg p-1.5 text-brand-navy-muted transition hover:bg-pale-gray disabled:opacity-40"
                     >
                         <X size={18} />
                     </button>
                 </div>
 
-                <h2 id="pack-upgrade-title" className="mt-1 font-heading text-lg font-semibold text-[#212E49] sm:text-xl">
+                <h2 id="pack-upgrade-title" className="mt-1 font-heading text-lg font-semibold text-brand-navy sm:text-xl">
                     {headline}
                 </h2>
 
-                <div id="pack-upgrade-text" className="mt-3 rounded-xl bg-[#E9E9EA] p-3 font-body text-sm leading-6 text-[#212E49]">
+                <div id="pack-upgrade-text" className="mt-3 rounded-xl bg-pale-gray p-3 font-body text-sm leading-6 text-brand-navy">
                     <p>
                         <span className="font-semibold">{describePlan(plan)}</span>:{" "}
                         {plan.units} {units} for <span className="font-bold">{formatPrice(plan.total)}</span>
                     </p>
-                    <p className="text-[#5c534b]">
+                    <p className="text-brand-navy-muted">
                         Instead of {selectionLabel}: {suggestions.current.units} {units} for{" "}
                         {formatPrice(suggestions.current.total)}
                     </p>
-                    <p className="mt-1 font-semibold text-[#176348]">
+                    <p className="mt-1 font-semibold text-success-green">
                         {plan.extraUnits} more {units} for {priceDelta(plan)}.
                     </p>
                 </div>
@@ -204,7 +204,7 @@ export function PackUpgradeDialog({
                         type="button"
                         onClick={onSwitch}
                         disabled={busy}
-                        className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-[#212E49] bg-[#212E49] px-4 font-body text-sm font-semibold text-[#FEFEFE] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-brand-navy px-4 font-body text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {pending === "switch" && <Loader2 size={16} className="animate-spin" />}
                         Switch to {describePlan(plan)} · {formatPrice(plan.total)}
@@ -213,7 +213,7 @@ export function PackUpgradeDialog({
                         type="button"
                         onClick={onKeep}
                         disabled={busy}
-                        className="flex h-11 items-center justify-center gap-2 rounded-lg px-4 font-body text-sm font-semibold text-[#212E49] underline underline-offset-4 transition hover:bg-[#E9E9EA] disabled:cursor-not-allowed disabled:opacity-50"
+                        className="flex h-11 items-center justify-center gap-2 rounded-lg px-4 font-body text-sm font-semibold text-brand-navy underline underline-offset-4 transition hover:bg-pale-gray disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {pending === "keep" && <Loader2 size={16} className="animate-spin" />}
                         No thanks, keep {selectionLabel}

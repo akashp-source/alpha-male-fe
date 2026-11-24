@@ -188,20 +188,20 @@ export default function ShopProducts({ onAddToCart }: Props) {
     const FilterPanel = (
         <div className="rounded-2xl border border-slate-200 bg-white p-5">
             <div className="mb-5 flex items-center justify-between">
-                <h3 className="text-base font-bold text-[#071630]">
+                <h3 className="text-base font-semibold text-brand-navy">
                     Filters
                 </h3>
 
                 <button
                     onClick={clearFilters}
-                    className="text-xs font-semibold text-[#071630] underline"
+                    className="text-xs font-semibold text-brand-navy underline"
                 >
                     Clear all
                 </button>
             </div>
 
             <div className="border-t border-slate-200 py-4">
-                <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                <h4 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500">
                     Category
                 </h4>
 
@@ -209,7 +209,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                     {categories.map((item) => (
                         <label
                             key={item.value}
-                            className="flex cursor-pointer items-center gap-3 text-sm text-[#071630]"
+                            className="flex cursor-pointer items-center gap-3 text-sm text-brand-navy"
                         >
                             <input
                                 type="checkbox"
@@ -223,7 +223,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                         )
                                     )
                                 }
-                                className="h-4 w-4 accent-[#071630]"
+                                className="h-4 w-4 accent-brand-navy"
                             />
                             <span className="flex-1">{item.label}</span>
                         </label>
@@ -232,7 +232,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
             </div>
 
             <div className="border-t border-slate-200 py-4">
-                <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                <h4 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500">
                     Price
                 </h4>
 
@@ -240,7 +240,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                     {priceOptions.map((item) => (
                         <label
                             key={item.value}
-                            className="flex cursor-pointer items-center gap-3 text-sm text-[#071630]"
+                            className="flex cursor-pointer items-center gap-3 text-sm text-brand-navy"
                         >
                             <input
                                 type="radio"
@@ -251,7 +251,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                         setPriceRange(item.value)
                                     )
                                 }
-                                className="h-4 w-4 accent-[#071630]"
+                                className="h-4 w-4 accent-brand-navy"
                             />
                             {item.label}
                         </label>
@@ -260,45 +260,45 @@ export default function ShopProducts({ onAddToCart }: Props) {
             </div>
 
             <div className="border-t border-slate-200 py-4">
-                <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                <h4 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500">
                     Availability
                 </h4>
 
-                <label className="flex cursor-pointer items-center gap-3 text-sm text-[#071630]">
+                <label className="flex cursor-pointer items-center gap-3 text-sm text-brand-navy">
                     <input
                         type="checkbox"
                         checked={inStock}
                         onChange={(e) =>
                             changeFilter(() => setInStock(e.target.checked))
                         }
-                        className="h-4 w-4 accent-[#071630]"
+                        className="h-4 w-4 accent-brand-navy"
                     />
                     In stock only
                 </label>
             </div>
 
             <div className="border-t border-slate-200 py-4">
-                <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                <h4 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500">
                     Offers
                 </h4>
 
                 <div className="space-y-3">
-                    <label className="flex cursor-pointer items-center gap-3 text-sm text-[#071630]">
+                    <label className="flex cursor-pointer items-center gap-3 text-sm text-brand-navy">
                         <input
                             type="checkbox"
                             checked={saleOnly}
                             onChange={(e) => setSaleOnly(e.target.checked)}
-                            className="h-4 w-4 accent-[#071630]"
+                            className="h-4 w-4 accent-brand-navy"
                         />
                         On sale only
                     </label>
 
-                    <label className="flex cursor-pointer items-center gap-3 text-sm text-[#071630]">
+                    <label className="flex cursor-pointer items-center gap-3 text-sm text-brand-navy">
                         <input
                             type="checkbox"
                             checked={comboOnly}
                             onChange={(e) => setComboOnly(e.target.checked)}
-                            className="h-4 w-4 accent-[#071630]"
+                            className="h-4 w-4 accent-brand-navy"
                         />
                         Combo packs
                     </label>
@@ -308,9 +308,9 @@ export default function ShopProducts({ onAddToCart }: Props) {
     );
 
     return (
-        <main className="min-h-screen bg-[#f3f5f8]">
+        <main className="min-h-screen bg-pale-gray">
             {/* Shop header */}
-            <section className="bg-[#071630] px-5 py-8 text-white md:px-8 md:py-10">
+            <section className="bg-brand-navy px-5 py-8 text-white md:px-8 md:py-10">
                 <div className="mx-auto flex max-w-[1320px] flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
                     <div>
                         <p className="mb-3 text-sm text-slate-300">
@@ -319,7 +319,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                             Shop
                         </p>
 
-                        <h1 className="font-heading text-3xl font-bold uppercase md:text-4xl">
+                        <h1 className="font-heading text-3xl font-semibold uppercase md:text-4xl">
                             Shop All Products
                         </h1>
 
@@ -333,7 +333,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                             e.preventDefault();
                             setPage(1);
                         }}
-                        className="flex w-full max-w-md items-center rounded-full bg-white p-1.5 text-[#071630] focus-within:ring-2 focus-within:ring-[#e9b949] focus-within:ring-offset-2 focus-within:ring-offset-[#071630]"
+                        className="flex w-full max-w-md items-center rounded-full bg-white p-1.5 text-brand-navy focus-within:ring-2 focus-within:ring-[#e9b949] focus-within:ring-offset-2 focus-within:ring-offset-brand-navy"
                     >
                         <Search size={18} className="ml-3 shrink-0 text-slate-500" />
 
@@ -348,7 +348,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                             className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none"
                         />
 
-                        <button className="rounded-full bg-[#071630] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#14284d]">
+                        <button className="rounded-full bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#14284d]">
                             Search
                         </button>
                     </form>
@@ -371,7 +371,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                             <div className="flex items-center gap-3">
                                 <button
                                     onClick={() => setMobileFiltersOpen(true)}
-                                    className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-[#071630] lg:hidden"
+                                    className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-brand-navy lg:hidden"
                                 >
                                     <SlidersHorizontal size={16} />
                                     Filters
@@ -379,7 +379,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
 
                                 <p className="text-sm text-slate-600">
                                     Showing{" "}
-                                    <strong className="text-[#071630]">
+                                    <strong className="text-brand-navy">
                                         {total}
                                     </strong>{" "}
                                     products
@@ -394,7 +394,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value)}
-                                    className="rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm font-semibold text-[#071630] outline-none"
+                                    className="rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm font-semibold text-brand-navy outline-none"
                                 >
                                     <option value="featured">Featured</option>
                                     <option value="price-low">Price: Low to High</option>
@@ -425,14 +425,14 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                 <p className="text-sm text-red-600">{error}</p>
                                 <button
                                     onClick={() => setRetry((v) => v + 1)}
-                                    className="mt-4 rounded-lg bg-[#071630] px-5 py-2.5 text-sm font-semibold text-white"
+                                    className="mt-4 rounded-lg bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white"
                                 >
                                     Try again
                                 </button>
                             </div>
                         ) : visibleProducts.length === 0 ? (
                             <div className="rounded-2xl bg-white p-12 text-center">
-                                <h3 className="font-bold text-[#071630]">
+                                <h3 className="font-semibold text-brand-navy">
                                     No products found
                                 </h3>
                                 <p className="mt-2 text-sm text-slate-500">
@@ -457,13 +457,13 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                             className="group relative min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-1 hover:shadow-lg"
                                         >
                                             {sale > 0 && (
-                                                <span className="absolute left-3 top-3 z-10 rounded-full bg-[#071630] px-2.5 py-1 text-[10px] font-bold text-white md:text-xs">
+                                                <span className="absolute left-3 top-3 z-10 rounded-full bg-brand-navy px-2.5 py-1 text-[10px] font-bold text-white md:text-xs">
                                                     {sale}% OFF
                                                 </span>
                                             )}
 
                                             {!!product.comboOffers?.length && (
-                                                <span className="absolute right-3 top-3 z-10 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-bold text-[#071630] md:text-xs">
+                                                <span className="absolute right-3 top-3 z-10 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-bold text-brand-navy md:text-xs">
                                                     Combo
                                                 </span>
                                             )}
@@ -471,7 +471,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                             {/* Fixed image area */}
                                             <Link
                                                 href={productHref(product)}
-                                                className="relative block aspect-square overflow-hidden bg-[#e9edf3] p-4"
+                                                className="relative block aspect-square overflow-hidden bg-pale-gray p-4"
                                             >
                                                 {image ? (
                                                     <Image
@@ -496,13 +496,13 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                                 </p>
 
                                                 <Link href={productHref(product)}>
-                                                    <h2 className="min-h-10 text-xs font-bold leading-snug text-[#071630] hover:text-[#176348] md:min-h-12 md:text-sm">
+                                                    <h3 className="min-h-10 text-xs font-semibold leading-snug text-brand-navy hover:text-success-green md:min-h-12 md:text-sm">
                                                         {product.name}
-                                                    </h2>
+                                                    </h3>
                                                 </Link>
 
                                                 <div className="mt-3 flex flex-wrap items-center gap-2">
-                                                    <span className="text-base font-extrabold text-[#071630] md:text-lg">
+                                                    <span className="text-base font-extrabold text-brand-navy md:text-lg">
                                                         {money(product.price)}
                                                     </span>
 
@@ -517,8 +517,8 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                                 <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-2 pt-4">
                                                     <Link
                                                         href={productHref(product)}
-                                                        className="flex w-full min-h-10 items-center justify-center rounded-xl border border-[#071630]
-        bg-white px-3 py-2 text-sm font-semibold text-[#071630]
+                                                        className="flex w-full min-h-10 items-center justify-center rounded-xl border border-brand-navy
+        bg-white px-3 py-2 text-sm font-semibold text-brand-navy
         whitespace-nowrap transition hover:bg-slate-100"
                                                     >
                                                         View
@@ -527,7 +527,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                                     {/* <button
                                                         // onClick={() => handleAddToCart(product)}
                                                         disabled={!product.stock || product.stock <= 0}
-                                                        className="w-full min-h-10 rounded-xl bg-[#071630] 
+                                                        className="w-full min-h-10 rounded-xl bg-brand-navy 
         px-3 py-2 text-sm font-semibold text-white
         whitespace-nowrap transition hover:bg-[#142747]
         disabled:cursor-not-allowed disabled:opacity-50"
@@ -537,7 +537,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
 
                                                     <AddToCartButton
                                                         productId={product._id}
-                                                        className="w-full min-h-10 rounded-xl bg-[#071630] 
+                                                        className="w-full min-h-10 rounded-xl bg-brand-navy 
         px-3 py-2 text-sm font-semibold text-white
         whitespace-nowrap transition hover:bg-[#14284d]
         disabled:cursor-not-allowed disabled:opacity-50"
@@ -569,8 +569,8 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                         key={number}
                                         onClick={() => setPage(number)}
                                         className={`h-10 min-w-10 rounded-lg px-3 text-sm font-bold ${page === number
-                                            ? "bg-[#071630] text-white"
-                                            : "border bg-white text-[#071630]"
+                                            ? "bg-brand-navy text-white"
+                                            : "border bg-white text-brand-navy"
                                             }`}
                                     >
                                         {number}
@@ -599,9 +599,9 @@ export default function ShopProducts({ onAddToCart }: Props) {
                         className="absolute inset-0 bg-black/50"
                     />
 
-                    <div className="absolute bottom-0 left-0 top-0 w-[min(85%,340px)] overflow-y-auto bg-[#f3f5f8] p-4 shadow-2xl">
+                    <div className="absolute bottom-0 left-0 top-0 w-[min(85%,340px)] overflow-y-auto bg-pale-gray p-4 shadow-2xl">
                         <div className="mb-4 flex items-center justify-between">
-                            <h2 className="font-bold text-[#071630]">
+                            <h2 className="font-semibold text-brand-navy">
                                 Product filters
                             </h2>
                             <button
@@ -616,7 +616,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
 
                         <button
                             onClick={() => setMobileFiltersOpen(false)}
-                            className="mt-4 w-full rounded-lg bg-[#071630] py-3 font-bold text-white"
+                            className="mt-4 w-full rounded-lg bg-brand-navy py-3 font-bold text-white"
                         >
                             Show products
                         </button>

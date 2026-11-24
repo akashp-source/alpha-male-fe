@@ -344,14 +344,14 @@ export default function ProductBuySection({
     const anyOfferSelected = activeCombo !== null || bulkActive;
 
     return (
-        <section className="w-full bg-[#faf7f2] text-[#211b17]">
+        <section className="w-full bg-pale-gray text-brand-navy">
             <div className="pdp-container py-4 sm:py-5 lg:py-6">
 
                 {/* Breadcrumb */}
-                <nav className="mb-4 flex min-w-0 flex-wrap items-center gap-2 font-body text-xs text-[#968a80] sm:mb-5 sm:text-sm">
+                <nav className="mb-4 flex min-w-0 flex-wrap items-center gap-2 font-body text-xs text-brand-navy-muted sm:mb-5 sm:text-sm">
                     <a
                         href="/"
-                        className="transition hover:text-[#176348]"
+                        className="transition hover:text-success-green"
                     >
                         Home
                     </a>
@@ -360,14 +360,14 @@ export default function ProductBuySection({
 
                     <a
                         href="/products"
-                        className="transition hover:text-[#176348]"
+                        className="transition hover:text-success-green"
                     >
                         Shop
                     </a>
 
                     <ChevronRight size={13} />
 
-                    <span className="min-w-0 break-words font-medium uppercase text-[#211b17]">
+                    <span className="min-w-0 break-words font-medium uppercase text-brand-navy">
                         {product.name}
                     </span>
                 </nav>
@@ -385,19 +385,19 @@ export default function ProductBuySection({
                     <div className="flex min-w-0 flex-col">
 
                         {/* Category */}
-                        <p className="order-1 mb-1 font-body text-[10px] font-bold uppercase tracking-[0.25em] text-[#176348] sm:text-xs">
+                        <p className="order-1 mb-1 font-body text-[10px] font-bold uppercase tracking-[0.25em] text-success-green sm:text-xs">
                             {product.category}
                         </p>
 
                         {/* Product Name */}
-                        <h1 className="order-1 break-words font-heading text-[25px] font-bold uppercase leading-[1.2] tracking-wide sm:text-3xl lg:text-[34px]">
+                        <h1 className="order-1 break-words font-heading text-[25px] font-semibold uppercase leading-[1.2] tracking-wide sm:text-3xl lg:text-[34px]">
                             {product.name}
                         </h1>
 
                         {/* Description: bullet lines ("- ", "• ", "* ") render as points */}
                         <RichDescription
                             text={product.description}
-                            className="order-8 mt-3 font-body text-xs leading-6 text-[#5c534b] sm:text-sm md:order-2"
+                            className="order-8 mt-3 font-body text-xs leading-6 text-brand-navy-muted sm:text-sm md:order-2"
                         />
 
                         {/* Product Price */}
@@ -409,13 +409,13 @@ export default function ProductBuySection({
                             {product.compareAtPrice &&
                                 product.compareAtPrice > product.price && (
                                     <>
-                                        <span className="font-body text-sm text-[#a69a90] line-through sm:text-base">
+                                        <span className="font-body text-sm text-brand-navy-muted line-through sm:text-base">
                                             {formatPrice(
                                                 product.compareAtPrice
                                             )}
                                         </span>
 
-                                        <span className="rounded-md bg-[#e5f1e9] px-2.5 py-1 font-body text-[10px] font-bold text-[#176348] sm:text-xs">
+                                        <span className="rounded-md bg-pale-gray px-2.5 py-1 font-body text-[10px] font-bold text-success-green sm:text-xs">
                                             {discountPercentage}% OFF
                                         </span>
                                     </>
@@ -466,7 +466,7 @@ export default function ProductBuySection({
                             <span
                                 className={`font-body text-xs ${outOfStock
                                     ? "text-red-600"
-                                    : "text-[#8b8077]"
+                                    : "text-brand-navy-muted"
                                     }`}
                             >
                                 {outOfStock
@@ -483,7 +483,7 @@ export default function ProductBuySection({
                                     <div>
                                         <h2
                                             id="combo-offers-heading"
-                                            className="font-heading text-base font-bold sm:text-lg"
+                                            className="font-heading text-base font-semibold sm:text-lg"
                                         >
                                             Special Combo Offers
                                         </h2>
@@ -493,7 +493,7 @@ export default function ProductBuySection({
                                         </p>
                                     </div>
 
-                                    <span className="shrink-0 rounded-full bg-[#e5f1e9] px-3 py-1 font-body text-xs font-bold uppercase tracking-wider text-[#176348]">
+                                    <span className="shrink-0 rounded-full bg-pale-gray px-3 py-1 font-body text-xs font-bold uppercase tracking-wider text-success-green">
                                         Best Deals
                                     </span>
                                 </div>
@@ -554,14 +554,14 @@ export default function ProductBuySection({
                                                         )
                                                     }
                                                     className={`relative min-w-0 rounded-xl border p-2 text-left transition-all sm:p-2.5 ${isSelected
-                                                        ? "border-[#176348] bg-[#edf5ef] ring-1 ring-[#176348]"
-                                                        : "border-[#e5dcd2] bg-white hover:border-[#176348]"
+                                                        ? "border-success-green bg-[#edf5ef] ring-1 ring-success-green"
+                                                        : "border-[#e5dcd2] bg-white hover:border-success-green"
                                                         } disabled:cursor-not-allowed disabled:opacity-40`}
                                                 >
                                                     {isSelected && (
                                                         <span
                                                             aria-hidden="true"
-                                                            className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#176348] text-white sm:right-3 sm:top-3"
+                                                            className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-success-green text-white sm:right-3 sm:top-3"
                                                         >
                                                             <Check size={12} strokeWidth={3} />
                                                         </span>
@@ -573,19 +573,19 @@ export default function ProductBuySection({
                                                     </p>
 
                                                     {offer.description && (
-                                                        <p className="mt-1 break-words font-body text-xs leading-4 text-[#91857b]">
+                                                        <p className="mt-1 break-words font-body text-xs leading-4 text-brand-navy-muted">
                                                             {offer.description}
                                                         </p>
                                                     )}
 
                                                     <div className="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
-                                                        <span className="font-body text-sm font-bold text-[#176348] sm:text-lg">
+                                                        <span className="font-body text-sm font-bold text-success-green sm:text-lg">
                                                             {formatPrice(
                                                                 offer.offerPrice
                                                             )}
                                                         </span>
 
-                                                        <span className="font-body text-xs text-[#a69a90] line-through">
+                                                        <span className="font-body text-xs text-brand-navy-muted line-through">
                                                             {formatPrice(
                                                                 regularPrice
                                                             )}
@@ -593,7 +593,7 @@ export default function ProductBuySection({
                                                     </div>
 
                                                     {offerSavings > 0 && (
-                                                        <p className="mt-1 font-body text-xs font-semibold text-[#176348]">
+                                                        <p className="mt-1 font-body text-xs font-semibold text-success-green">
                                                             Save{" "}
                                                             {formatPrice(
                                                                 offerSavings
@@ -604,7 +604,7 @@ export default function ProductBuySection({
                                                     )}
 
                                                     {isSelected && (
-                                                        <p className="mt-1 font-body text-xs font-semibold text-[#176348]">
+                                                        <p className="mt-1 font-body text-xs font-semibold text-success-green">
                                                             Selected
                                                         </p>
                                                     )}
@@ -634,14 +634,14 @@ export default function ProductBuySection({
                                                 : setQuantity(bulkMinQuantity)
                                         }
                                         className={`relative mt-2 w-full min-w-0 rounded-xl border p-2 text-left transition-all sm:p-2.5 ${bulkActive
-                                            ? "border-[#176348] bg-[#edf5ef] ring-1 ring-[#176348]"
-                                            : "border-[#e5dcd2] bg-white hover:border-[#176348]"
+                                            ? "border-success-green bg-[#edf5ef] ring-1 ring-success-green"
+                                            : "border-[#e5dcd2] bg-white hover:border-success-green"
                                             } disabled:cursor-not-allowed disabled:opacity-40`}
                                     >
                                         {bulkActive && (
                                             <span
                                                 aria-hidden="true"
-                                                className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#176348] text-white sm:right-3 sm:top-3"
+                                                className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-success-green text-white sm:right-3 sm:top-3"
                                             >
                                                 <Check size={12} strokeWidth={3} />
                                             </span>
@@ -651,15 +651,15 @@ export default function ProductBuySection({
                                             Buy {bulkMinQuantity}+ packs
                                         </p>
 
-                                        <p className="mt-1 font-body text-sm font-bold text-[#176348] sm:text-base">
+                                        <p className="mt-1 font-body text-sm font-bold text-success-green sm:text-base">
                                             {bulkPercent}% OFF
-                                            <span className="ml-1 font-body text-xs font-semibold text-[#91857b]">
+                                            <span className="ml-1 font-body text-xs font-semibold text-brand-navy-muted">
                                                 on every pack
                                             </span>
                                         </p>
 
                                         {bulkActive && (
-                                            <p className="mt-1 font-body text-xs font-semibold text-[#176348]">
+                                            <p className="mt-1 font-body text-xs font-semibold text-success-green">
                                                 Applied to {quantity} packs
                                             </p>
                                         )}
@@ -672,7 +672,7 @@ export default function ProductBuySection({
                                     <button
                                         type="button"
                                         onClick={() => setQuantity(1)}
-                                        className="mt-2 font-body text-xs font-semibold text-[#176348] underline underline-offset-4"
+                                        className="mt-2 font-body text-xs font-semibold text-success-green underline underline-offset-4"
                                     >
                                         Remove combo selection
                                     </button>
@@ -684,7 +684,7 @@ export default function ProductBuySection({
                         <div className="order-5 mt-2 flex items-center justify-between gap-3 rounded-xl border border-[#eee5dc] bg-white p-2.5 sm:p-3">
 
                             <div>
-                                <p className="font-body text-xs text-[#5c534b]">
+                                <p className="font-body text-xs text-brand-navy-muted">
                                     Total amount ({displayItems}{" "}
                                     {displayItems === 1 ? "item" : "items"})
                                 </p>
@@ -696,11 +696,11 @@ export default function ProductBuySection({
 
                             {displaySavings > 0 && (
                                 <div className="text-right">
-                                    <p className="font-body text-xs text-[#5c534b]">
+                                    <p className="font-body text-xs text-brand-navy-muted">
                                         You save
                                     </p>
 
-                                    <p className="mt-1 font-body text-xs font-bold text-[#176348] sm:text-sm">
+                                    <p className="mt-1 font-body text-xs font-bold text-success-green sm:text-sm">
                                         {formatPrice(displaySavings)}
                                     </p>
                                 </div>
@@ -722,8 +722,8 @@ export default function ProductBuySection({
                         {addOn && !outOfStock && (
                             <label
                                 className={`order-5 mt-2 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed p-3 transition sm:gap-4 sm:p-3.5 ${addOnActive
-                                    ? "border-[#071630] bg-[#eef1f6]"
-                                    : "border-[#d9cfc4] bg-white hover:border-[#071630]/50"
+                                    ? "border-brand-navy bg-pale-gray"
+                                    : "border-[#d9cfc4] bg-white hover:border-brand-navy/50"
                                     }`}
                             >
                                 <input
@@ -734,7 +734,7 @@ export default function ProductBuySection({
                                         setAddOnNotice("");
                                     }}
                                     disabled={pending !== null}
-                                    className="h-5 w-5 shrink-0 cursor-pointer rounded accent-[#071630] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#071630] focus-visible:ring-offset-2"
+                                    className="h-5 w-5 shrink-0 cursor-pointer rounded accent-brand-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-2"
                                 />
 
                                 <span className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#eee8de]">
@@ -747,19 +747,19 @@ export default function ProductBuySection({
                                             className="h-full w-full object-contain p-1"
                                         />
                                     ) : (
-                                        <Package size={22} aria-hidden="true" className="text-[#5c534b]" />
+                                        <Package size={22} aria-hidden="true" className="text-brand-navy-muted" />
                                     )}
                                 </span>
 
                                 <span className="min-w-0 flex-1">
-                                    <span className="block font-body text-sm font-bold leading-snug text-[#211b17]">
+                                    <span className="block font-body text-sm font-bold leading-snug text-brand-navy">
                                         {addOnTitle}
                                         {" · "}
                                         {formatPrice(addOn.price)}
                                         {addOnHasMrp && addOn.compareAtPrice && (
                                             <>
                                                 {" "}
-                                                <s className="font-medium text-[#5c534b]">
+                                                <s className="font-medium text-brand-navy-muted">
                                                     <span className="sr-only">was </span>
                                                     {formatPrice(addOn.compareAtPrice)}
                                                 </s>
@@ -767,7 +767,7 @@ export default function ProductBuySection({
                                         )}
                                     </span>
                                     {addOn.description?.trim() && (
-                                        <span className="mt-0.5 block font-body text-sm leading-snug text-[#5c534b]">
+                                        <span className="mt-0.5 block font-body text-sm leading-snug text-brand-navy-muted">
                                             {addOn.description}
                                         </span>
                                     )}
@@ -782,7 +782,7 @@ export default function ProductBuySection({
                                 type="button"
                                 disabled={outOfStock || pending !== null || planPending !== null}
                                 onClick={handleAddToCart}
-                                className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-[#071630] bg-[#071630] px-4 font-body text-sm font-semibold text-white transition hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-brand-navy px-4 font-body text-sm font-semibold text-white transition hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {pending === "cart" ? (
                                     <Loader2 size={16} className="animate-spin" />
@@ -796,7 +796,7 @@ export default function ProductBuySection({
                                 type="button"
                                 disabled={outOfStock || pending !== null}
                                 onClick={handleBuyNow}
-                                className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-[#071630] bg-transparent px-4 font-body text-sm font-semibold text-[#071630] transition hover:bg-[#E9E9EA] disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-transparent px-4 font-body text-sm font-semibold text-brand-navy transition hover:bg-pale-gray disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {pending === "buy" ? (
                                     <Loader2 size={16} className="animate-spin" />
@@ -822,17 +822,17 @@ export default function ProductBuySection({
                         {/* Trust Features */}
                         <div className="order-7 mt-3 grid grid-cols-3 gap-2 border-t border-[#e8ded4] pt-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-3 sm:pt-4">
 
-                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-[#5c534b] sm:flex-row">
+                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-brand-navy-muted sm:flex-row">
                                 <Package size={14} className="shrink-0" />
                                 Plain packaging
                             </div>
 
-                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-[#5c534b] sm:flex-row">
+                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-brand-navy-muted sm:flex-row">
                                 <ShieldCheck size={14} className="shrink-0" />
                                 Private billing
                             </div>
 
-                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-[#5c534b] sm:flex-row">
+                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-brand-navy-muted sm:flex-row">
                                 <RefreshCcw size={14} className="shrink-0" />
                                 Easy returns
                             </div>

@@ -25,16 +25,16 @@ export default function ProductHighlightsV4({
     const items = highlights.slice(0, 4);
 
     return (
-        <section className="pdp-section relative w-full overflow-hidden bg-[#07162f]">
+        <section className="pdp-section relative w-full overflow-hidden bg-brand-navy">
             <div className="pdp-container">
 
                 {/* Heading */}
                 <div className="mb-12 text-center sm:mb-16">
-                    <p className="mb-3 text-[10px] font-bold tracking-[0.35em] text-[#c5df50] sm:text-xs">
+                    <p className="mb-3 text-[10px] font-bold tracking-[0.35em] text-accent-lime sm:text-xs">
                         {eyebrow}
                     </p>
 
-                    <h2 className="font-heading text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+                    <h2 className="font-heading text-2xl font-semibold text-white sm:text-3xl lg:text-4xl">
                         {heading}
                     </h2>                </div>
 
@@ -57,20 +57,20 @@ export default function ProductHighlightsV4({
                     <div className="relative order-1 flex items-center justify-center py-3 lg:order-2 lg:py-0">
                         <div className="absolute h-[225px] w-[225px] rounded-full border border-dashed border-white/25 sm:h-[275px] sm:w-[275px]" />
 
-                        <div className="absolute h-[190px] w-[190px] rounded-full border-[7px] border-[#07162f] sm:h-[230px] sm:w-[230px]" />
+                        <div className="absolute h-[190px] w-[190px] rounded-full border-[7px] border-brand-navy sm:h-[230px] sm:w-[230px]" />
 
-                        <div className="relative z-10 flex h-[190px] w-[190px] flex-col items-center justify-center rounded-full bg-[#f5f0e7] text-center shadow-[0_10px_45px_rgba(0,0,0,0.2)] sm:h-[215px] sm:w-[215px]">
-                            <p className="mb-1 text-[9px] font-bold tracking-[0.35em] text-[#07162f]">
+                        <div className="relative z-10 flex h-[190px] w-[190px] flex-col items-center justify-center rounded-full bg-pale-gray text-center shadow-[0_10px_45px_rgba(0,0,0,0.2)] sm:h-[215px] sm:w-[215px]">
+                            <p className="mb-1 text-[9px] font-bold tracking-[0.35em] text-brand-navy">
                                 ALPHA MALE
 
                             </p>
                             <p className="text-[7px] text-black font-bold tracking-[0.35em]">Drive - Stamina - Energy</p>
 
-                            <h3 className="font-heading text-3xl font-bold leading-none text-[#07162f] sm:text-4xl">
+                            <h3 className="font-body text-3xl font-semibold leading-none text-brand-navy sm:text-4xl">
                                 {productName}
                             </h3>
 
-                            <p className="mt-2 text-sm font-bold text-[#07162f]">
+                            <p className="mt-2 text-sm font-bold text-brand-navy">
                                 {strength}
                             </p>
                         </div>
@@ -105,7 +105,7 @@ function HighlightCard({
     return (
         <article
             tabIndex={0}
-            className="group relative z-0 flex min-h-[126px] w-full cursor-default items-center gap-3 rounded-2xl border border-white/10 bg-[#07162f] p-3 transition-all duration-300 ease-out hover:z-20 hover:scale-[1.045] hover:border-[#c5df50]/60 hover:bg-[#0c1f40] hover:shadow-[0_18px_40px_rgba(0,0,0,0.3)] focus-visible:z-20 focus-visible:scale-[1.045] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5df50] sm:gap-4 sm:p-4"
+            className="group relative z-0 flex min-h-[126px] w-full cursor-default items-center gap-3 rounded-2xl border border-white/10 bg-brand-navy p-3 transition-all duration-300 ease-out hover:z-20 hover:scale-[1.045] hover:border-accent-lime/60 hover:bg-[#0c1f40] hover:shadow-[0_18px_40px_rgba(0,0,0,0.3)] focus-visible:z-20 focus-visible:scale-[1.045] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-lime sm:gap-4 sm:p-4"
         >
             {imageFirst && item.image && (
                 <div className="w-[34%] shrink-0 overflow-hidden rounded-lg">
@@ -121,15 +121,15 @@ function HighlightCard({
             )}
 
             <div className="min-w-0 flex-1">
-                <p className="mb-1 text-[10px] font-bold tracking-wider text-[#c5df50]">
+                <p className="mb-1 text-[10px] font-bold tracking-wider text-accent-lime">
                     {String(number).padStart(2, "0")}
                 </p>
 
-                <h3 className="mb-1 font-body text-sm font-bold leading-snug text-white sm:text-base">
+                <h3 className="mb-1 font-body text-sm font-semibold leading-snug text-white sm:text-base">
                     {item.title}
                 </h3>
 
-                <p className="font-body text-sm leading-relaxed text-[#E9E9EA]">
+                <p className="font-body text-sm leading-relaxed text-pale-gray">
                     {item.description}
                 </p>
             </div>

@@ -381,7 +381,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                         <p className="text-[10px] font-semibold uppercase tracking-wider text-[#718096]">
                             Order
                         </p>
-                        <p className="mt-0.5 text-sm font-bold text-[#07152e]">
+                        <p className="mt-0.5 text-sm font-bold text-brand-navy">
                             {order.orderNumber}
                         </p>
                     </div>
@@ -390,7 +390,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                         <p className="text-[10px] font-semibold uppercase tracking-wider text-[#718096]">
                             Placed on
                         </p>
-                        <p className="mt-0.5 text-sm font-bold text-[#07152e]">
+                        <p className="mt-0.5 text-sm font-bold text-brand-navy">
                             {formatDate(order.createdAt)}
                         </p>
                     </div>
@@ -399,7 +399,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                         <p className="text-[10px] font-semibold uppercase tracking-wider text-[#718096]">
                             Total
                         </p>
-                        <p className="mt-0.5 text-sm font-bold text-[#07152e]">
+                        <p className="mt-0.5 text-sm font-bold text-brand-navy">
                             {money(order.total)}
                         </p>
                     </div>
@@ -409,7 +409,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                             Payment
                         </p>
                         <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1">
-                            <p className="text-sm font-bold text-[#07152e]">
+                            <p className="text-sm font-bold text-brand-navy">
                                 {order.paymentMethod}
                             </p>
                             {canRetryPayment && (
@@ -452,7 +452,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                     <div className="mb-5 flex gap-3 rounded-xl border border-red-100 bg-red-50/60 px-4 py-3">
                         <XCircle size={18} className="mt-0.5 shrink-0 text-red-500" />
                         <div className="text-xs leading-5 text-[#4a5568]">
-                            <p className="font-bold text-[#07152e]">
+                            <p className="font-bold text-brand-navy">
                                 {order.status === "CANCELLATION_REQUESTED"
                                     ? "Cancellation requested — our team is reviewing it"
                                     : order.cancellation.source === "CUSTOMER"
@@ -470,7 +470,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                 {!cancelled && (
                     <div className="mb-5">
                         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                            <p className="text-sm font-bold text-[#07152e]">
+                            <p className="text-sm font-bold text-brand-navy">
                                 {order.deliveredAt
                                     ? `Delivered on ${formatDate(order.deliveredAt)}`
                                     : order.shipmentEtd
@@ -491,7 +491,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                             {[1, 2, 3, 4, 5].map((item) => (
                                 <div
                                     key={item}
-                                    className={`h-[5px] flex-1 rounded-full ${item <= step ? "bg-[#07152e]" : "bg-[#e3e8ef]"
+                                    className={`h-[5px] flex-1 rounded-full ${item <= step ? "bg-brand-navy" : "bg-[#e3e8ef]"
                                         }`}
                                 />
                             ))}
@@ -522,7 +522,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                             </div>
 
                             <div className="min-w-0 flex-1">
-                                <p className="line-clamp-2 text-sm font-semibold text-[#07152e]">
+                                <p className="line-clamp-2 text-sm font-semibold text-brand-navy">
                                     {item.name}
                                 </p>
                                 <p className="mt-1 text-[11px] text-[#718096]">
@@ -530,7 +530,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                                 </p>
                             </div>
 
-                            <p className="shrink-0 text-sm font-bold text-[#07152e]">
+                            <p className="shrink-0 text-sm font-bold text-brand-navy">
                                 {money(item.lineTotal)}
                             </p>
                         </div>
@@ -542,7 +542,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                     <button
                         type="button"
                         onClick={() => setExpanded(!expanded)}
-                        className="flex items-center gap-2 rounded-xl bg-[#07152e] px-4 py-3 text-xs font-bold text-white transition hover:bg-[#142b4c]"
+                        className="flex items-center gap-2 rounded-xl bg-brand-navy px-4 py-3 text-xs font-bold text-white transition hover:bg-[#142b4c]"
                     >
                         {expanded ? "Hide details" : "View details"}
                         {expanded ? (
@@ -560,7 +560,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                                 ? "Tracking details are available in your shipment information"
                                 : "Tracking is not available yet"
                         }
-                        className="flex items-center gap-2 rounded-xl border border-[#d5dce7] px-4 py-3 text-xs font-bold text-[#07152e] transition hover:bg-[#f5f7fa] disabled:cursor-not-allowed disabled:opacity-40"
+                        className="flex items-center gap-2 rounded-xl border border-[#d5dce7] px-4 py-3 text-xs font-bold text-brand-navy transition hover:bg-[#f5f7fa] disabled:cursor-not-allowed disabled:opacity-40"
                     >
                         <Truck size={14} />
                         Track order
@@ -570,7 +570,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                         type="button"
                         disabled
                         title="Invoice download API is not configured yet"
-                        className="flex items-center gap-2 rounded-xl border border-[#d5dce7] px-4 py-3 text-xs font-bold text-[#07152e] opacity-40"
+                        className="flex items-center gap-2 rounded-xl border border-[#d5dce7] px-4 py-3 text-xs font-bold text-brand-navy opacity-40"
                     >
                         <FileText size={14} />
                         Invoice
@@ -597,7 +597,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                             type="button"
                             onClick={openRatingPanel}
                             aria-expanded={ratingPanelOpen}
-                            className={`flex items-center gap-2 rounded-xl border px-4 py-3 text-xs font-bold transition ${ratingPanelOpen ? "border-[#07152e] bg-[#f5f7fa] text-[#07152e]" : "border-[#d5dce7] text-[#07152e] hover:bg-[#f5f7fa]"}`}
+                            className={`flex items-center gap-2 rounded-xl border px-4 py-3 text-xs font-bold transition ${ratingPanelOpen ? "border-brand-navy bg-[#f5f7fa] text-brand-navy" : "border-[#d5dce7] text-brand-navy hover:bg-[#f5f7fa]"}`}
                         >
                             <Star size={14} className={ratingsLoaded ? "fill-amber-400 text-amber-500" : ""} />
                             Rate products
@@ -609,10 +609,10 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                     <section className="mt-4 rounded-2xl border border-[#e1e6ee] bg-[#f8f9fb] p-4 sm:p-5">
                         <div className="mb-4 flex items-start justify-between gap-3">
                             <div>
-                                <h3 className="text-sm font-bold text-[#07152e]">Rate your products</h3>
+                                <h3 className="text-sm font-semibold text-brand-navy">Rate your products</h3>
                                 <p className="mt-1 text-xs text-[#718096]">Your feedback helps other customers.</p>
                             </div>
-                            <button type="button" aria-label="Close ratings" onClick={() => setRatingPanelOpen(false)} className="rounded-lg p-1.5 text-[#718096] transition hover:bg-white hover:text-[#07152e]"><X size={17} /></button>
+                            <button type="button" aria-label="Close ratings" onClick={() => setRatingPanelOpen(false)} className="rounded-lg p-1.5 text-[#718096] transition hover:bg-white hover:text-brand-navy"><X size={17} /></button>
                         </div>
 
                         {ratingsLoading && <div className="flex items-center gap-2 py-4 text-xs text-[#718096]"><RefreshCw size={14} className="animate-spin" />Loading your ratings...</div>}
@@ -631,7 +631,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                                         <div key={productId} className="rounded-xl border border-[#e1e6ee] bg-white p-4">
                                             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                                                 <div className="min-w-0">
-                                                    <p className="text-sm font-semibold text-[#07152e]">{item.name}</p>
+                                                    <p className="text-sm font-semibold text-brand-navy">{item.name}</p>
                                                     <div className="mt-2 flex items-center gap-1" role="group" aria-label={`Rate ${item.name}`}>
                                                         {[1, 2, 3, 4, 5].map((value) => (
                                                             <button key={value} type="button" onClick={() => setRatings((current) => ({ ...current, [productId]: { ...current[productId], rating: value } }))} aria-label={`${value} ${value === 1 ? "star" : "stars"}`} aria-pressed={entry.rating === value} className="rounded p-0.5 transition hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
@@ -641,24 +641,24 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                                                         <span className="ml-1 text-xs text-[#718096]">{entry.rating ? `${entry.rating}/5` : "Choose a rating"}</span>
                                                     </div>
                                                 </div>
-                                                {entry.existing && <span className="w-fit rounded-full bg-[#e8f5ef] px-2.5 py-1 text-[10px] font-semibold text-[#176348]">Your rating</span>}
+                                                {entry.existing && <span className="w-fit rounded-full bg-[#e8f5ef] px-2.5 py-1 text-[10px] font-semibold text-success-green">Your rating</span>}
                                             </div>
-                                            <label className="mt-3 block text-xs font-medium text-[#526078]">
+                                            <label className="mt-3 block text-xs font-medium text-brand-navy-muted">
                                                 Review title <span className="font-normal text-[#8b94a3]">(optional)</span>
-                                                <input type="text" value={entry.title} maxLength={150} onChange={(event) => setRatings((current) => ({ ...current, [productId]: { ...current[productId], title: event.target.value } }))} placeholder="Sum it up in a few words" className="mt-1.5 block w-full rounded-xl border border-[#dce2ea] bg-white px-3 py-2.5 text-sm text-[#07152e] outline-none placeholder:text-[#8b94a3] focus:border-[#07152e]" />
+                                                <input type="text" value={entry.title} maxLength={150} onChange={(event) => setRatings((current) => ({ ...current, [productId]: { ...current[productId], title: event.target.value } }))} placeholder="Sum it up in a few words" className="mt-1.5 block w-full rounded-xl border border-[#dce2ea] bg-white px-3 py-2.5 text-sm text-brand-navy outline-none placeholder:text-[#8b94a3] focus:border-brand-navy" />
                                             </label>
-                                            <label className="mt-3 block text-xs font-medium text-[#526078]">
+                                            <label className="mt-3 block text-xs font-medium text-brand-navy-muted">
                                                 Review <span className="font-normal text-[#8b94a3]">(optional)</span>
-                                                <textarea value={entry.description} maxLength={2000} rows={3} onChange={(event) => setRatings((current) => ({ ...current, [productId]: { ...current[productId], description: event.target.value } }))} placeholder="Share your experience" className="mt-1.5 block w-full resize-y rounded-xl border border-[#dce2ea] bg-white px-3 py-2.5 text-sm text-[#07152e] outline-none placeholder:text-[#8b94a3] focus:border-[#07152e]" />
+                                                <textarea value={entry.description} maxLength={2000} rows={3} onChange={(event) => setRatings((current) => ({ ...current, [productId]: { ...current[productId], description: event.target.value } }))} placeholder="Share your experience" className="mt-1.5 block w-full resize-y rounded-xl border border-[#dce2ea] bg-white px-3 py-2.5 text-sm text-brand-navy outline-none placeholder:text-[#8b94a3] focus:border-brand-navy" />
                                             </label>
                                             <div className="mt-3 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
                                                 <p className="text-[10px] text-[#8b94a3]">You can rate a product only after delivery.</p>
-                                                <button type="button" disabled={!entry.rating || savingRatingId !== null} onClick={() => saveRating(productId)} className="inline-flex min-h-9 items-center justify-center gap-2 rounded-lg bg-[#07152e] px-3.5 py-2 text-xs font-bold text-white transition hover:bg-[#142b4c] disabled:cursor-not-allowed disabled:opacity-50">
+                                                <button type="button" disabled={!entry.rating || savingRatingId !== null} onClick={() => saveRating(productId)} className="inline-flex min-h-9 items-center justify-center gap-2 rounded-lg bg-brand-navy px-3.5 py-2 text-xs font-bold text-white transition hover:bg-[#142b4c] disabled:cursor-not-allowed disabled:opacity-50">
                                                     {savingRatingId === productId && <RefreshCw size={13} className="animate-spin" />}
                                                     {savingRatingId === productId ? "Saving..." : entry.existing ? "Update rating" : "Submit rating"}
                                                 </button>
                                             </div>
-                                            {savedRatingId === productId && <p role="status" className="mt-2 text-xs font-medium text-[#176348]">Your rating has been saved.</p>}
+                                            {savedRatingId === productId && <p role="status" className="mt-2 text-xs font-medium text-success-green">Your rating has been saved.</p>}
                                         </div>
                                     );
                                 })}

@@ -135,7 +135,7 @@ export default function CancelOrderDialog({ order, open, onClose, onCancelled }:
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-end justify-center bg-[#07152e]/50 p-0 sm:items-center sm:p-4"
+            className="fixed inset-0 z-50 flex items-end justify-center bg-brand-navy/50 p-0 sm:items-center sm:p-4"
             onClick={() => !submitting && onClose()}
         >
             <div
@@ -151,7 +151,7 @@ export default function CancelOrderDialog({ order, open, onClose, onCancelled }:
                     <div>
                         <h2
                             id={`cancel-order-title-${order._id}`}
-                            className="text-base font-bold text-[#07152e]"
+                            className="text-base font-semibold text-brand-navy"
                         >
                             Cancel order
                         </h2>
@@ -162,7 +162,7 @@ export default function CancelOrderDialog({ order, open, onClose, onCancelled }:
                         aria-label="Close"
                         onClick={onClose}
                         disabled={submitting}
-                        className="rounded-lg p-1.5 text-[#718096] transition hover:bg-[#f5f7fa] hover:text-[#07152e] disabled:opacity-40"
+                        className="rounded-lg p-1.5 text-[#718096] transition hover:bg-[#f5f7fa] hover:text-brand-navy disabled:opacity-40"
                     >
                         <X size={18} />
                     </button>
@@ -175,7 +175,7 @@ export default function CancelOrderDialog({ order, open, onClose, onCancelled }:
                 </p>
 
                 <fieldset className="mt-5" disabled={submitting}>
-                    <legend className="text-sm font-bold text-[#07152e]">
+                    <legend className="text-sm font-bold text-brand-navy">
                         Why are you cancelling?
                     </legend>
 
@@ -190,8 +190,8 @@ export default function CancelOrderDialog({ order, open, onClose, onCancelled }:
                             <label
                                 key={item.value}
                                 className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition ${reason === item.value
-                                    ? "border-[#07152e] bg-[#f5f7fa] text-[#07152e]"
-                                    : "border-[#e1e6ee] text-[#4a5568] hover:border-[#07152e]"
+                                    ? "border-brand-navy bg-[#f5f7fa] text-brand-navy"
+                                    : "border-[#e1e6ee] text-[#4a5568] hover:border-brand-navy"
                                     }`}
                             >
                                 <input
@@ -200,7 +200,7 @@ export default function CancelOrderDialog({ order, open, onClose, onCancelled }:
                                     value={item.value}
                                     checked={reason === item.value}
                                     onChange={() => setReason(item.value)}
-                                    className="h-4 w-4 accent-[#07152e]"
+                                    className="h-4 w-4 accent-brand-navy"
                                 />
                                 {item.label}
                             </label>
@@ -212,7 +212,7 @@ export default function CancelOrderDialog({ order, open, onClose, onCancelled }:
                     <div className="mt-4">
                         <label
                             htmlFor={`cancel-note-${order._id}`}
-                            className="text-xs font-semibold text-[#07152e]"
+                            className="text-xs font-semibold text-brand-navy"
                         >
                             {noteRequired ? "Please tell us more" : "Anything else? (optional)"}
                         </label>
@@ -223,7 +223,7 @@ export default function CancelOrderDialog({ order, open, onClose, onCancelled }:
                             maxLength={500}
                             rows={3}
                             disabled={submitting}
-                            className="mt-2 w-full resize-none rounded-xl border border-[#dce2ea] px-4 py-3 text-sm text-[#07152e] outline-none transition focus:border-[#07152e] focus:ring-2 focus:ring-[#07152e]/5"
+                            className="mt-2 w-full resize-none rounded-xl border border-[#dce2ea] px-4 py-3 text-sm text-brand-navy outline-none transition focus:border-brand-navy focus:ring-2 focus:ring-brand-navy/5"
                         />
                         <p className="mt-1 text-right text-[10px] text-[#9aa3b2]">{note.length}/500</p>
                     </div>
@@ -240,7 +240,7 @@ export default function CancelOrderDialog({ order, open, onClose, onCancelled }:
                         type="button"
                         onClick={onClose}
                         disabled={submitting}
-                        className="rounded-xl border border-[#d5dce7] px-4 py-3 text-xs font-bold text-[#07152e] transition hover:bg-[#f5f7fa] disabled:opacity-40"
+                        className="rounded-xl border border-[#d5dce7] px-4 py-3 text-xs font-bold text-brand-navy transition hover:bg-[#f5f7fa] disabled:opacity-40"
                     >
                         Keep order
                     </button>

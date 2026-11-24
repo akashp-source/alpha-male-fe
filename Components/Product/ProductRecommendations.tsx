@@ -133,27 +133,27 @@ export default function ProductRecommendations({ product }: { product: Product }
     if (!frequentlyBoughtProducts.length && !youMayAlsoLike.length) return null;
 
     return (
-        <section className="pdp-section w-full bg-[#faf7f2] text-[#211b17]">
+        <section className="pdp-section w-full bg-pale-gray text-brand-navy">
             <div className="pdp-container space-y-10 sm:space-y-12">
                 {frequentlyBoughtProducts.length > 0 && (
-                    <div className="overflow-hidden rounded-2xl border border-[#211b17] bg-transparent p-5 text-[#211b17] shadow-[0_12px_32px_rgba(33,27,23,0.12)] sm:p-7 lg:p-9">
-                        <p className="font-body text-[9px] font-bold uppercase tracking-[0.25em] text-[#176348]">Complete the routine</p>
-                        <h2 className="mt-2 font-heading text-xl font-bold uppercase sm:text-2xl">Frequently bought together</h2>
-                        <p className="mt-1 font-body text-xs text-[#8b8077]">Picked to go well with {product.name}</p>
+                    <div className="overflow-hidden rounded-2xl border border-brand-navy bg-transparent p-5 text-brand-navy shadow-[0_12px_32px_rgba(33,27,23,0.12)] sm:p-7 lg:p-9">
+                        <p className="font-body text-[9px] font-bold uppercase tracking-[0.25em] text-success-green">Complete the routine</p>
+                        <h2 className="mt-2 font-heading text-xl font-semibold uppercase sm:text-2xl">Frequently bought together</h2>
+                        <p className="mt-1 font-body text-xs text-brand-navy-muted">Picked to go well with {product.name}</p>
 
                         <div className="mt-6 grid gap-5 lg:grid-cols-[1fr_230px] lg:items-center">
                             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
                                 {bundleProducts.map((item, index) => (
-                                    <label key={item._id} className="relative flex min-w-0 cursor-pointer gap-3 rounded-xl bg-[#faf7f2] p-3 text-[#211b17]">
+                                    <label key={item._id} className="relative flex min-w-0 cursor-pointer gap-3 rounded-xl bg-pale-gray p-3 text-brand-navy">
                                         <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-lg bg-[#eee8de]">
                                             {item.images?.[0] && <Image src={item.images[0]} alt={item.name} fill sizes="64px" className="object-contain p-1" />}
-                                            {index === 0 && <span className="absolute left-1 top-1 rounded bg-[#17120f] px-1 py-0.5 text-[7px] font-bold uppercase text-white">This item</span>}
+                                            {index === 0 && <span className="absolute left-1 top-1 rounded bg-brand-navy px-1 py-0.5 text-[7px] font-bold uppercase text-white">This item</span>}
                                         </div>
                                         <div className="flex min-w-0 flex-1 flex-col justify-between py-1">
                                             <span className="line-clamp-2 font-body text-xs font-semibold">{item.name}</span>
                                             <span className="font-body text-xs font-bold">{formatPrice(item.price)}</span>
-                                            <span className="flex items-center gap-1 font-body text-[10px] text-[#74695f]">
-                                                <input type="checkbox" checked={isSelected(item._id)} disabled={item._id === product._id} onChange={() => toggleBundleProduct(item._id)} className="accent-[#176348]" />
+                                            <span className="flex items-center gap-1 font-body text-[10px] text-brand-navy-muted">
+                                                <input type="checkbox" checked={isSelected(item._id)} disabled={item._id === product._id} onChange={() => toggleBundleProduct(item._id)} className="accent-success-green" />
                                                 {item._id === product._id ? "Current product" : "Add to bundle"}
                                             </span>
                                         </div>
@@ -161,9 +161,9 @@ export default function ProductRecommendations({ product }: { product: Product }
                                 ))}
                             </div>
                             <div className="rounded-xl border border-[#e8ded4] bg-white/70 p-4 shadow-sm">
-                                <p className="font-body text-[10px] text-[#8b8077]">Total for {selectedProducts.length} {selectedProducts.length === 1 ? "item" : "items"}</p>
+                                <p className="font-body text-[10px] text-brand-navy-muted">Total for {selectedProducts.length} {selectedProducts.length === 1 ? "item" : "items"}</p>
                                 <p className="mt-1 font-body text-2xl font-bold">{formatPrice(bundleTotal)}</p>
-                                <button type="button" onClick={addBundle} disabled={addingBundle || !selectedProducts.length} className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#071630] px-3 font-body text-xs font-bold text-white transition hover:bg-[#14284d] disabled:opacity-60">
+                                <button type="button" onClick={addBundle} disabled={addingBundle || !selectedProducts.length} className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-brand-navy px-3 font-body text-xs font-bold text-white transition hover:bg-[#14284d] disabled:opacity-60">
                                     {addingBundle ? <Loader2 size={15} className="animate-spin" /> : <ShoppingCart size={15} />}
                                     {addingBundle ? "Adding..." : `Add ${selectedProducts.length} to cart`}
                                 </button>
@@ -174,8 +174,8 @@ export default function ProductRecommendations({ product }: { product: Product }
 
                 {youMayAlsoLike.length > 0 && (
                     <div>
-                        <p className="font-body text-[9px] font-bold uppercase tracking-[0.25em] text-[#176348]">Handpicked for you</p>
-                        <h2 className="mt-1 font-heading text-xl font-bold uppercase sm:text-2xl">You may also like</h2>
+                        <p className="font-body text-[9px] font-bold uppercase tracking-[0.25em] text-success-green">Handpicked for you</p>
+                        <h2 className="mt-1 font-heading text-xl font-semibold uppercase sm:text-2xl">You may also like</h2>
                         <div className="mt-5 flex gap-3 overflow-x-auto pb-3 sm:grid sm:grid-cols-2 lg:grid-cols-4">
                             {youMayAlsoLike.map((item) => {
                                 const discount = item.compareAtPrice && item.compareAtPrice > item.price
@@ -184,17 +184,17 @@ export default function ProductRecommendations({ product }: { product: Product }
                                 return (
                                     <article key={item._id} className="w-[190px] shrink-0 overflow-hidden rounded-xl border border-[#e8ded4] bg-white sm:w-auto">
                                         <div className="relative flex aspect-square items-center justify-center bg-[#eee8de]">
-                                            {discount > 0 && <span className="absolute left-2 top-2 z-10 rounded bg-[#176348] px-2 py-1 font-body text-[9px] font-bold text-white">{discount}% OFF</span>}
-                                            {item.category && <span className="absolute right-2 top-2 z-10 rounded bg-white px-2 py-1 font-body text-[8px] font-bold uppercase text-[#211b17]">{item.category}</span>}
+                                            {discount > 0 && <span className="absolute left-2 top-2 z-10 rounded bg-success-green px-2 py-1 font-body text-[9px] font-bold text-white">{discount}% OFF</span>}
+                                            {item.category && <span className="absolute right-2 top-2 z-10 rounded bg-white px-2 py-1 font-body text-[8px] font-bold uppercase text-brand-navy">{item.category}</span>}
                                             {item.images?.[0] && <Image src={item.images[0]} alt={item.name} fill sizes="(max-width: 640px) 190px, 25vw" className="object-contain p-4" />}
                                         </div>
                                         <div className="p-3">
                                             <p className="line-clamp-2 min-h-9 font-body text-xs font-semibold leading-4">{item.name}</p>
                                             <div className="mt-2 flex items-baseline gap-2">
                                                 <span className="font-body text-sm font-bold">{formatPrice(item.price)}</span>
-                                                {item.compareAtPrice && item.compareAtPrice > item.price && <span className="font-body text-[10px] text-[#a69a90] line-through">{formatPrice(item.compareAtPrice)}</span>}
+                                                {item.compareAtPrice && item.compareAtPrice > item.price && <span className="font-body text-[10px] text-brand-navy-muted line-through">{formatPrice(item.compareAtPrice)}</span>}
                                             </div>
-                                            <button type="button" onClick={() => addRecommended(item)} disabled={addingProductId === item._id} className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#071630] font-body text-[10px] font-bold text-white transition hover:bg-[#14284d] disabled:opacity-60">
+                                            <button type="button" onClick={() => addRecommended(item)} disabled={addingProductId === item._id} className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-brand-navy font-body text-[10px] font-bold text-white transition hover:bg-[#14284d] disabled:opacity-60">
                                                 {addingProductId === item._id ? <Loader2 size={13} className="animate-spin" /> : <ShoppingCart size={13} />}
                                                 {addingProductId === item._id ? "Adding..." : "Add to cart"}
                                             </button>
@@ -205,7 +205,7 @@ export default function ProductRecommendations({ product }: { product: Product }
                         </div>
                     </div>
                 )}
-                {message && <p role="status" className="text-center font-body text-xs font-medium text-[#176348]">{message}</p>}
+                {message && <p role="status" className="text-center font-body text-xs font-medium text-success-green">{message}</p>}
             </div>
         </section>
     );

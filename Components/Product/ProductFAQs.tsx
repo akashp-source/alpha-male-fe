@@ -24,20 +24,20 @@ export default function ProductFAQs({
     if (!faqs.length) return null;
 
     return (
-        <section className="pdp-section pdp-last-section w-full bg-[#faf7f2]">
+        <section className="pdp-section pdp-last-section w-full bg-pale-gray">
             <div className="pdp-container">
             <div className="mx-auto max-w-4xl">
 
                 <div className="mb-10 text-center">
-                    <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.3em] text-[#07162f]">
+                    <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.3em] text-brand-navy">
                         Need to know?
                     </p>
 
-                    <h2 className="font-heading text-3xl font-semibold text-[#211b17] md:text-5xl">
+                    <h2 className="font-heading text-3xl font-semibold text-brand-navy md:text-5xl">
                         Frequently Asked Questions
                     </h2>
 
-                    <p className="mx-auto mt-4 max-w-xl font-body text-sm leading-7 text-[#5c534b] md:text-base">
+                    <p className="mx-auto mt-4 max-w-xl font-body text-sm leading-7 text-brand-navy-muted md:text-base">
                         Everything you need to know about {productName}.
                     </p>
                 </div>
@@ -52,7 +52,7 @@ export default function ProductFAQs({
                             <div
                                 key={index}
                                 className={`overflow-hidden rounded-xl border transition-all duration-300 ${isOpen
-                                    ? "border-[#07162f]/40 bg-white shadow-sm"
+                                    ? "border-brand-navy/40 bg-white shadow-sm"
                                     : "border-[#e8e1d8] bg-white"
                                     }`}
                             >
@@ -66,11 +66,11 @@ export default function ProductFAQs({
                                     aria-controls={panelId}
                                     className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left md:px-7"
                                 >
-                                    <span className="font-body text-sm font-semibold text-[#211b17] md:text-base">
+                                    <span className="font-body text-sm font-semibold text-brand-navy md:text-base">
                                         {faq.question}
                                     </span>
 
-                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#e8f2ed] text-[#07162f]">
+                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-pale-gray text-brand-navy">
                                         {isOpen ? (
                                             <Minus size={16} />
                                         ) : (
@@ -90,7 +90,7 @@ export default function ProductFAQs({
                                         }`}
                                 >
                                     <div className="overflow-hidden">
-                                        <p className="px-5 pb-6 font-body text-sm leading-7 text-[#4a423b] md:px-7 md:text-base">
+                                        <p className="px-5 pb-6 font-body text-sm leading-7 text-brand-navy-muted md:px-7 md:text-base">
                                             {faq.answer}
                                         </p>
                                     </div>

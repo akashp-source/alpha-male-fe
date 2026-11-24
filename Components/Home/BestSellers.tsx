@@ -34,7 +34,7 @@ function BestSellerCard({
             tabIndex={hidden ? -1 : undefined}
             className="group block h-full rounded-2xl border border-[#eee7de] bg-white p-2.5 shadow-[0_8px_30px_rgba(33,27,23,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(33,27,23,0.12)] sm:p-3"
         >
-            <div className="relative aspect-square overflow-hidden rounded-xl bg-[#f3ede5]">
+            <div className="relative aspect-square overflow-hidden rounded-xl bg-pale-gray">
                 {image ? (
                     <img
                         src={image}
@@ -48,7 +48,7 @@ function BestSellerCard({
                     </div>
                 )}
 
-                <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-[#211b17] px-2.5 py-1 font-body text-xs font-bold uppercase tracking-wider text-[#f0c65b]">
+                <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-brand-navy px-2.5 py-1 font-body text-xs font-bold uppercase tracking-wider text-accent-amber">
                     <Flame size={11} />
                     Best seller
                 </span>
@@ -56,17 +56,17 @@ function BestSellerCard({
             </div>
 
             <div className="px-1 pb-1 pt-3">
-                <h3 className="line-clamp-2 min-h-10 font-heading text-sm font-bold leading-5 text-[#211b17] transition-colors group-hover:text-[#176348] sm:text-base">
+                <h3 className="line-clamp-2 min-h-10 font-body text-sm font-semibold leading-5 text-brand-navy transition-colors group-hover:text-success-green sm:text-base">
                     {product.name}
                 </h3>
 
                 <div className="mt-2 flex items-center justify-between gap-2">
                     <div className="flex flex-wrap items-baseline gap-1.5">
-                        <span className="font-body text-sm font-bold text-[#211b17] sm:text-base">
+                        <span className="font-body text-sm font-bold text-brand-navy sm:text-base">
                             {money(product.price)}
                         </span>
                     </div>
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f3ede5] text-[#211b17] transition-colors group-hover:bg-[#071630] group-hover:text-white">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-pale-gray text-brand-navy transition-colors group-hover:bg-brand-navy group-hover:text-white">
                         <ArrowUpRight size={15} />
                     </span>
                 </div>
@@ -90,14 +90,14 @@ export default function BestSellers({ products }: BestSellersProps) {
         <section className="w-full bg-white px-3 py-10 sm:px-6 sm:py-14 lg:px-10" aria-labelledby="best-sellers-heading">
             <div className="mx-auto max-w-[1450px]">
                 <div className="mb-6 flex flex-col items-center text-center sm:mb-10">
-                    <p className="mb-2 inline-flex items-center gap-1.5 font-body text-xs font-bold uppercase tracking-[0.3em] text-[#176348]">
+                    <p className="mb-2 inline-flex items-center gap-1.5 font-body text-xs font-bold uppercase tracking-[0.3em] text-success-green">
                         <Flame size={13} className="text-[#c28a29]" />
                         Most loved
                     </p>
-                    <h2 id="best-sellers-heading" className="font-heading text-2xl font-bold text-[#211b17] sm:text-4xl">
+                    <h2 id="best-sellers-heading" className="font-heading text-2xl font-semibold text-brand-navy sm:text-4xl">
                         Best Sellers
                     </h2>
-                    <p className="mx-auto mt-2 max-w-xl font-body text-xs leading-6 text-[#8b8077] sm:text-sm">
+                    <p className="mx-auto mt-2 max-w-xl font-body text-xs leading-6 text-brand-navy-muted sm:text-sm">
                         The products men come back for again and again.
                     </p>
                 </div>
@@ -112,7 +112,7 @@ export default function BestSellers({ products }: BestSellersProps) {
                         ))}
                     </ul>
                     {products.length > 1 && (
-                        <p className="mt-1 text-center font-body text-xs uppercase tracking-[0.2em] text-[#5c534b]">
+                        <p className="mt-1 text-center font-body text-xs uppercase tracking-[0.2em] text-brand-navy-muted">
                             Swipe to see more →
                         </p>
                     )}

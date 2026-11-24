@@ -109,40 +109,40 @@ export default function LoginPage() {
     };
 
     return (
-        <main className="min-h-screen bg-[#07152e] lg:grid lg:grid-cols-2">
+        <main className="min-h-screen bg-brand-navy lg:grid lg:grid-cols-2">
             {/* LEFT: LOGIN SECTION */}
             <section className="flex min-h-screen flex-col bg-white px-6 py-7 sm:px-12 lg:px-16 xl:px-24">
                 {/* Logo */}
                 {/* <Link href="/" className="flex w-fit items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#07152e] text-white">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-navy text-white">
                         <ShieldCheck size={19} />
                     </div>
 
-                    <span className="font-heading text-sm font-bold tracking-[0.12em] text-[#07152e]">
+                    <span className="font-heading text-sm font-bold tracking-[0.12em] text-brand-navy">
                         ALPHA MALE
                     </span>
                 </Link> */}
 
                 <div className="mx-auto flex w-full max-w-[420px] flex-1 flex-col justify-center py-12 lg:py-16">
                     <div className="mb-7">
-                        <span className="font-heading text-[2rem] font-bold tracking-[0.12em] text-[#07152e]">
+                        <span className="font-heading text-[2rem] font-bold tracking-[0.12em] text-brand-navy">
                             ALPHA MALE
                         </span>
-                        <p className="mb-2 text-[8px] font-semibold uppercase tracking-[0.25em] text-[#176348]">
+                        <p className="mb-2 text-[8px] font-semibold uppercase tracking-[0.25em] text-success-green">
                             Drive · Stamina · Energy
                         </p>
 
-                        <h1 className="font-heading text-2xl font-bold tracking-wide text-[#07152e] sm:text-3xl">
+                        <h1 className="font-heading text-2xl font-semibold tracking-wide text-brand-navy sm:text-3xl">
                             WELCOME BACK
                         </h1>
 
-                        <p className="mt-2 max-w-xs text-xs leading-5 text-[#91857b]">
+                        <p className="mt-2 max-w-xs text-xs leading-5 text-brand-navy-muted">
                             Log in to track orders, reorder favourites and check out faster.
                         </p>
                     </div>
 
                     {/* Login mode tabs */}
-                    {/* <div className="mb-6 grid grid-cols-2 rounded-lg bg-[#e9edf3] p-1">
+                    {/* <div className="mb-6 grid grid-cols-2 rounded-lg bg-pale-gray p-1">
                         <button
                             type="button"
                             onClick={() => {
@@ -150,8 +150,8 @@ export default function LoginPage() {
                                 setError("");
                             }}
                             className={`rounded-md py-2.5 text-xs font-semibold transition ${mode === "password"
-                                ? "bg-[#07152e] text-white shadow-sm"
-                                : "text-[#07152e]"
+                                ? "bg-brand-navy text-white shadow-sm"
+                                : "text-brand-navy"
                                 }`}
                         >
                             Password
@@ -164,8 +164,8 @@ export default function LoginPage() {
                                 setError("");
                             }}
                             className={`rounded-md py-2.5 text-xs font-semibold transition ${mode === "otp"
-                                ? "bg-[#07152e] text-white shadow-sm"
-                                : "text-[#07152e]"
+                                ? "bg-brand-navy text-white shadow-sm"
+                                : "text-brand-navy"
                                 }`}
                         >
                             OTP
@@ -175,11 +175,11 @@ export default function LoginPage() {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {/* Email */}
                         <div>
-                            <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                            <label className="mb-2 block text-[11px] font-semibold text-brand-navy">
                                 Email or mobile number
                             </label>
 
-                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-[#176348]">
+                            <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-success-green">
                                 <Mail size={15} className="shrink-0 text-[#718096]" />
 
                                 <input
@@ -189,7 +189,7 @@ export default function LoginPage() {
                                     placeholder="you@example.com"
                                     required
                                     autoComplete="username"
-                                    className="w-full bg-transparent text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                    className="w-full bg-transparent text-xs text-brand-navy outline-none placeholder:text-[#9aa5b5]"
                                 />
                             </div>
                         </div>
@@ -197,11 +197,11 @@ export default function LoginPage() {
                         {/* Password */}
                         {mode === "password" && (
                             <div>
-                                <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                                <label className="mb-2 block text-[11px] font-semibold text-brand-navy">
                                     Password
                                 </label>
 
-                                <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-[#176348]">
+                                <div className="flex h-11 items-center gap-3 rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 focus-within:border-success-green">
                                     <Lock size={15} className="shrink-0 text-[#718096]" />
 
                                     <input
@@ -211,7 +211,7 @@ export default function LoginPage() {
                                         placeholder="Enter your password"
                                         required
                                         autoComplete="current-password"
-                                        className="w-full bg-transparent text-xs text-[#07152e] outline-none placeholder:text-[#9aa5b5]"
+                                        className="w-full bg-transparent text-xs text-brand-navy outline-none placeholder:text-[#9aa5b5]"
                                     />
 
                                     <button
@@ -229,7 +229,7 @@ export default function LoginPage() {
                         {/* OTP */}
                         {mode === "otp" && (
                             <div>
-                                <label className="mb-2 block text-[11px] font-semibold text-[#07152e]">
+                                <label className="mb-2 block text-[11px] font-semibold text-brand-navy">
                                     One-time password
                                 </label>
 
@@ -240,7 +240,7 @@ export default function LoginPage() {
                                     value={otp}
                                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
                                     placeholder="Enter 6-digit OTP"
-                                    className="h-11 w-full rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 text-xs tracking-[0.3em] text-[#07152e] outline-none focus:border-[#176348]"
+                                    className="h-11 w-full rounded-lg border border-[#dce2ea] bg-[#f5f7fa] px-3 text-xs tracking-[0.3em] text-brand-navy outline-none focus:border-success-green"
                                 />
                             </div>
                         )}
@@ -248,19 +248,19 @@ export default function LoginPage() {
                         {/* Remember / Forgot */}
                         {mode === "password" && (
                             <div className="flex items-center justify-between gap-3 text-[11px]">
-                                <label className="flex cursor-pointer items-center gap-2 text-[#526078]">
+                                <label className="flex cursor-pointer items-center gap-2 text-brand-navy-muted">
                                     <input
                                         type="checkbox"
                                         checked={rememberMe}
                                         onChange={(e) => setRememberMe(e.target.checked)}
-                                        className="accent-[#07152e]"
+                                        className="accent-brand-navy"
                                     />
                                     Keep me logged in
                                 </label>
 
                                 <Link
                                     href="/user/forgot-password"
-                                    className="font-semibold text-[#176348] underline underline-offset-2"
+                                    className="font-semibold text-success-green underline underline-offset-2"
                                 >
                                     Forgot password?
                                 </Link>
@@ -278,7 +278,7 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex h-12 w-full items-center justify-center rounded-lg bg-[#07152e] text-xs font-bold text-white transition hover:bg-[#10284b] disabled:cursor-not-allowed disabled:opacity-60"
+                            className="flex h-12 w-full items-center justify-center rounded-lg bg-brand-navy text-xs font-bold text-white transition hover:bg-[#10284b] disabled:cursor-not-allowed disabled:opacity-60"
                         >
                             {loading
                                 ? "PLEASE WAIT..."
@@ -301,7 +301,7 @@ export default function LoginPage() {
                         <button
                             type="button"
                             onClick={handleGoogleLogin}
-                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#9aa5b5] text-xs font-semibold text-[#07152e] transition hover:border-[#07152e] hover:bg-[#f7f8fa]"
+                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#9aa5b5] text-xs font-semibold text-brand-navy transition hover:border-brand-navy hover:bg-[#f7f8fa]"
                         >
                             <svg
                                 width="17"
@@ -351,7 +351,7 @@ export default function LoginPage() {
                     {/* Guest */}
                     {/* <Link
                         href="/"
-                        className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#9aa5b5] text-xs font-semibold text-[#07152e] transition hover:border-[#07152e] hover:bg-[#f7f8fa]"
+                        className="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-[#9aa5b5] text-xs font-semibold text-brand-navy transition hover:border-brand-navy hover:bg-[#f7f8fa]"
                     >
                         <ShoppingCart size={14} />
                         Continue as guest
@@ -362,7 +362,7 @@ export default function LoginPage() {
                         New to Alpha Male?{" "}
                         <Link
                             href="/user/register"
-                            className="font-bold text-[#176348] underline underline-offset-2"
+                            className="font-bold text-success-green underline underline-offset-2"
                         >
                             Create an account
                         </Link>
@@ -377,7 +377,7 @@ export default function LoginPage() {
             </section>
 
             {/* RIGHT: DESKTOP BRAND PANEL */}
-            <section className="relative hidden min-h-screen overflow-hidden bg-[#07152e] px-10 py-12 text-white lg:flex lg:items-center lg:justify-center xl:px-20">
+            <section className="relative hidden min-h-screen overflow-hidden bg-brand-navy px-10 py-12 text-white lg:flex lg:items-center lg:justify-center xl:px-20">
                 <div className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full border border-white/[0.06]" />
                 <div className="absolute -right-16 -top-16 h-[370px] w-[370px] rounded-full border border-white/[0.06]" />
                 <div className="absolute -bottom-40 -left-24 h-[450px] w-[450px] rounded-full border border-white/[0.04]" />
@@ -388,7 +388,7 @@ export default function LoginPage() {
                             Drive · Stamina · Energy
                         </p>
 
-                        <h2 className="font-heading text-3xl font-bold leading-tight xl:text-4xl">
+                        <h2 className="font-heading text-3xl font-semibold leading-tight xl:text-4xl">
                             YOUR WELLNESS,
                             <br />
                             DELIVERED
@@ -397,7 +397,7 @@ export default function LoginPage() {
                         </h2>
 
                         <div className="relative mt-7 flex h-56 items-center justify-center overflow-hidden rounded-2xl bg-[#10264a]">
-                            <div className="absolute h-48 w-48 rounded-full bg-[#176348]/20 blur-3xl" />
+                            <div className="absolute h-48 w-48 rounded-full bg-success-green/20 blur-3xl" />
 
                             <div className="relative flex h-40 w-28 -rotate-6 flex-col items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-[#263b5c] to-[#101d35] shadow-2xl">
                                 <ShieldCheck size={34} className="text-[#d5dce7]" />
@@ -409,7 +409,7 @@ export default function LoginPage() {
                                 </span>
                             </div>
 
-                            <div className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[#07152e] shadow-lg">
+                            <div className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white text-brand-navy shadow-lg">
                                 <ShieldCheck size={27} />
                             </div>
                         </div>
@@ -439,8 +439,8 @@ export default function LoginPage() {
             </section>
 
             {/* MOBILE BRAND HEADER */}
-            <div className="absolute left-0 top-0 flex w-full flex-col items-center bg-[#07152e] pb-12 pt-7 text-white lg:hidden">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[#07152e]">
+            <div className="absolute left-0 top-0 flex w-full flex-col items-center bg-brand-navy pb-12 pt-7 text-white lg:hidden">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-brand-navy">
                     <ShieldCheck size={30} />
                 </div>
 

@@ -36,7 +36,7 @@ const values = [
 
 export default function BrandValues() {
     return (
-        <section className="bg-[linear-gradient(125deg,#f7f7f8_0%,#f1f4f8_48%,#f7f5f1_100%)] px-4 py-14 text-[#071630] sm:px-6 sm:py-20 lg:px-8">
+        <section className="bg-[linear-gradient(125deg,#f7f7f8_0%,#f1f4f8_48%,#f7f5f1_100%)] px-4 py-14 text-brand-navy sm:px-6 sm:py-20 lg:px-8">
             <div className="mx-auto max-w-[1320px]">
                 <div className="mb-8 grid gap-4 sm:mb-10 md:grid-cols-[1fr_340px] md:items-end">
                     <div>
@@ -52,12 +52,12 @@ export default function BrandValues() {
 
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
                     {values.map((value) => (
-                        <article key={value.number} className="group relative min-h-[170px] rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white via-white to-[#f5f7fa] p-5 shadow-[0_6px_20px_rgba(7,22,48,0.035)] transition-all duration-300 hover:-translate-y-1 hover:border-[#cbd4e0] hover:shadow-[0_14px_34px_rgba(7,22,48,0.09)] sm:min-h-[190px] sm:p-6">
+                        <article key={value.number} className="group relative min-h-[170px] rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white via-white to-[#f5f7fa] p-5 shadow-[0_6px_20px_rgba(33,46,73,0.035)] transition-all duration-300 hover:-translate-y-1 hover:border-[#cbd4e0] hover:shadow-[0_14px_34px_rgba(33,46,73,0.09)] sm:min-h-[190px] sm:p-6">
                             <span className="absolute right-5 top-4 font-heading text-xl font-bold text-slate-200 sm:right-6 sm:top-5 sm:text-2xl">{value.number}</span>
-                            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef1f6]">
+                            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-pale-gray">
                                 <Image src={value.image} alt="" width={23} height={23} unoptimized className="h-6 w-6 object-contain" />
                             </div>
-                            <h3 className="mb-2 max-w-[85%] font-heading text-base font-bold leading-snug sm:text-lg">{value.title}</h3>
+                            <h3 className="mb-2 max-w-[85%] font-body text-base font-semibold leading-snug sm:text-lg">{value.title}</h3>
                             <p className="max-w-sm text-xs leading-5 text-slate-500 sm:text-[13px] sm:leading-[1.65]">{value.description}</p>
                         </article>
                     ))}
@@ -66,7 +66,7 @@ export default function BrandValues() {
                         Stacked on phone/tablet; side by side on desktop so this card is no
                         taller than cards 04-05 next to it (a tall card left them half empty).
                         info-products.png is info.png without its built-in badge column. */}
-                    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-[#071630] shadow-[0_6px_20px_rgba(7,22,48,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(7,22,48,0.18)] lg:flex-row">
+                    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-brand-navy shadow-[0_6px_20px_rgba(33,46,73,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(33,46,73,0.18)] lg:flex-row">
                         <div className="relative h-44 shrink-0 overflow-hidden bg-[linear-gradient(180deg,#f3e2d6_0%,#ecdcd1_100%)] sm:h-48 lg:h-auto lg:w-[42%]">
                             <Image
                                 src="/images/utils/info-products.png"
@@ -78,8 +78,8 @@ export default function BrandValues() {
                         </div>
                         <div className="p-5 text-white sm:p-6 lg:flex lg:flex-1 lg:flex-col lg:justify-center lg:p-5">
                             <p className="mb-1 text-xs font-bold uppercase tracking-[0.25em] text-[#d7c29e]">MADE FOR YOU</p>
-                            <h3 className="font-heading text-xl font-bold uppercase leading-snug sm:text-2xl lg:text-xl">Feel good about taking care.</h3>
-                            <Link href="/products" className="mt-4 inline-flex items-center gap-2 self-start rounded-lg border border-white/60 px-4 py-2.5 text-xs font-semibold transition hover:bg-white hover:text-[#071630]">
+                            <h3 className="font-body text-xl font-semibold uppercase leading-snug sm:text-2xl lg:text-xl">Feel good about taking care.</h3>
+                            <Link href="/products" className="mt-4 inline-flex items-center gap-2 self-start rounded-lg border border-white/60 px-4 py-2.5 text-xs font-semibold transition hover:bg-white hover:text-brand-navy">
                                 Explore the collection <span aria-hidden="true">→</span>
                             </Link>
                         </div>

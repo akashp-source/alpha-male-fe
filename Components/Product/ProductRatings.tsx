@@ -28,7 +28,7 @@ function Stars({ value, size = 16 }: { value: number; size?: number }) {
                     <span key={star} className="relative inline-flex" style={{ width: size, height: size }}>
                         <Star size={size} className="absolute inset-0 text-[#e3d9cc]" fill="currentColor" strokeWidth={0} />
                         <span className="absolute inset-0 overflow-hidden" style={{ width: `${fill * 100}%` }}>
-                            <Star size={size} className="text-[#d79b2b]" fill="currentColor" strokeWidth={0} />
+                            <Star size={size} className="text-accent-amber-dark" fill="currentColor" strokeWidth={0} />
                         </span>
                     </span>
                 );
@@ -95,15 +95,15 @@ export default function ProductRatings({
     }
 
     return (
-        <section className="pdp-section w-full bg-[#faf7f2]">
+        <section className="pdp-section w-full bg-pale-gray">
             <div className="pdp-container">
                 <div className="mx-auto max-w-5xl">
                     <header className="mb-8 text-center sm:mb-10">
-                        <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.3em] text-[#07162f]">
+                        <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.3em] text-brand-navy">
                             Customer reviews
                         </p>
 
-                        <h2 className="font-heading text-2xl font-semibold leading-tight text-[#211b17] sm:text-3xl md:text-4xl">
+                        <h2 className="font-heading text-2xl font-semibold leading-tight text-brand-navy sm:text-3xl md:text-4xl">
                             What men say about {productName}
                         </h2>
                     </header>
@@ -111,7 +111,7 @@ export default function ProductRatings({
                     <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8">
                         {/* Average + star distribution */}
                         <aside className="h-fit rounded-2xl border border-[#e8e1d8] bg-white p-6 text-center lg:sticky lg:top-24">
-                            <p className="font-heading text-5xl font-semibold text-[#211b17]">
+                            <p className="font-heading text-5xl font-semibold text-brand-navy">
                                 {summary.average.toFixed(1)}
                             </p>
 
@@ -119,7 +119,7 @@ export default function ProductRatings({
                                 <Stars value={summary.average} size={20} />
                             </div>
 
-                            <p className="mt-2 font-body text-sm text-[#91857b]">
+                            <p className="mt-2 font-body text-sm text-brand-navy-muted">
                                 Based on {summary.count} {summary.count === 1 ? "rating" : "ratings"}
                             </p>
 
@@ -129,11 +129,11 @@ export default function ProductRatings({
                                     const percent = summary.count ? (count / summary.count) * 100 : 0;
 
                                     return (
-                                        <div key={star} className="flex items-center gap-3 font-body text-xs text-[#746c65]">
+                                        <div key={star} className="flex items-center gap-3 font-body text-xs text-brand-navy-muted">
                                             <span className="w-6 shrink-0 text-left">{star}★</span>
-                                            <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#efe8de]">
+                                            <div className="h-2 flex-1 overflow-hidden rounded-full bg-pale-gray">
                                                 <div
-                                                    className="h-full rounded-full bg-[#d79b2b]"
+                                                    className="h-full rounded-full bg-accent-amber-dark"
                                                     style={{ width: `${percent}%` }}
                                                 />
                                             </div>
@@ -147,7 +147,7 @@ export default function ProductRatings({
                         {/* Review list (backend sends only 4★ and above) */}
                         <div>
                             {reviews.length === 0 ? (
-                                <div className="rounded-2xl border border-[#e8e1d8] bg-white p-6 text-center font-body text-sm text-[#91857b]">
+                                <div className="rounded-2xl border border-[#e8e1d8] bg-white p-6 text-center font-body text-sm text-brand-navy-muted">
                                     No written reviews yet.
                                 </div>
                             ) : (
@@ -159,29 +159,29 @@ export default function ProductRatings({
                                         >
                                             <div className="flex flex-wrap items-center justify-between gap-2">
                                                 <Stars value={review.rating} />
-                                                <span className="font-body text-xs text-[#91857b]">
+                                                <span className="font-body text-xs text-brand-navy-muted">
                                                     {formatDate(review.createdAt)}
                                                 </span>
                                             </div>
 
                                             {review.title && (
-                                                <h3 className="mt-3 break-words font-body text-base font-semibold leading-snug text-[#211b17] sm:text-lg">
+                                                <h3 className="mt-3 break-words font-body text-base font-semibold leading-snug text-brand-navy sm:text-lg">
                                                     {review.title}
                                                 </h3>
                                             )}
 
                                             {review.description && (
-                                                <p className={`${review.title ? "mt-1.5" : "mt-3"} whitespace-pre-line break-words font-body text-sm leading-7 text-[#746c65] sm:text-base`}>
+                                                <p className={`${review.title ? "mt-1.5" : "mt-3"} whitespace-pre-line break-words font-body text-sm leading-7 text-brand-navy-muted sm:text-base`}>
                                                     {review.description}
                                                 </p>
                                             )}
 
                                             <div className="mt-4 flex flex-wrap items-center gap-2 font-body text-sm">
-                                                <span className="font-semibold text-[#211b17]">
+                                                <span className="font-semibold text-brand-navy">
                                                     {review.userName}
                                                 </span>
                                                 {review.verifiedPurchase && (
-                                                    <span className="inline-flex items-center gap-1 rounded-full bg-[#e8f2ed] px-2.5 py-1 text-[11px] font-semibold text-[#315b3e]">
+                                                    <span className="inline-flex items-center gap-1 rounded-full bg-pale-gray px-2.5 py-1 text-[11px] font-semibold text-accent-green-moss">
                                                         <BadgeCheck size={13} />
                                                         Verified purchase
                                                     </span>
@@ -202,7 +202,7 @@ export default function ProductRatings({
                                         type="button"
                                         onClick={loadMore}
                                         disabled={loading}
-                                        className="inline-flex min-h-11 items-center rounded-full border border-[#07162f]/30 bg-white px-6 py-2 font-body text-sm font-semibold text-[#07162f] transition-colors hover:bg-[#e8f2ed] disabled:opacity-60"
+                                        className="inline-flex min-h-11 items-center rounded-full border border-brand-navy/30 bg-white px-6 py-2 font-body text-sm font-semibold text-brand-navy transition-colors hover:bg-pale-gray disabled:opacity-60"
                                     >
                                         {loading ? "Loading..." : "Load more reviews"}
                                     </button>
