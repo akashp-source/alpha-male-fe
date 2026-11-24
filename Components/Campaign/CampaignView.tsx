@@ -5,6 +5,7 @@ import { addToCart } from "@/lib/cart";
 import { readUtm, trackCampaignVisit } from "@/lib/campaign";
 import { CampaignActionsProvider, SectionRenderer, type CampaignActions } from "./SectionRenderer";
 import { isHiddenOn, type CampaignProduct, type CampaignSection, type Device } from "./config";
+import { productHref } from "@/lib/productUrl";
 
 const MOBILE_QUERY = "(max-width: 767px)";
 
@@ -64,7 +65,7 @@ export default function CampaignView({
                     throw new Error(data?.message || "Unable to subscribe. Please try again.");
                 }
             },
-            productHref: (product) => `/products/${product._id}`,
+            productHref: (product) => productHref(product),
         }),
         [],
     );

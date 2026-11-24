@@ -8,6 +8,7 @@ import { ArrowRight, Search, ShoppingBag, SlidersHorizontal, X } from "lucide-re
 import type { Product } from "@/types/product";
 import AddToCartButton from "@/Components/Cart/AddToCartButton";
 import { categoryLabel, useStoreCategories } from "@/lib/categories";
+import { productHref } from "@/lib/productUrl";
 
 type Props = { products: Product[] };
 type PriceFilter = "all" | "under500" | "500-1000" | "over1000";
@@ -198,10 +199,10 @@ export default function AllProductsSection({ products }: Props) {
                                     </div>
                                     <div className="p-2.5 sm:p-5">
                                         <p className="mb-1 truncate text-[9px] font-bold uppercase tracking-[0.12em] text-[#687b99] sm:text-xs sm:tracking-[0.16em]">{categoryName(product.category)}</p>
-                                        <Link href={`/products/${product._id}`} className="line-clamp-2 min-h-9 text-xs font-bold leading-4 hover:underline sm:min-h-12 sm:font-heading sm:text-base sm:leading-6">{product.name}</Link>
+                                        <Link href={productHref(product)} className="line-clamp-2 min-h-9 text-xs font-bold leading-4 hover:underline sm:min-h-12 sm:font-heading sm:text-base sm:leading-6">{product.name}</Link>
                                         <div className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 sm:mt-3 sm:gap-2"><strong className="text-sm sm:text-xl">{money(product.price)}</strong></div>
                                         <div className="mt-3 grid grid-cols-1 gap-1.5 min-[390px]:grid-cols-2 sm:mt-4 sm:gap-2">
-                                            <Link href={`/products/${product._id}`} className="flex h-9 items-center justify-center rounded-lg border border-[#071630] text-[11px] font-medium transition hover:bg-slate-50 sm:h-11 sm:rounded-xl sm:text-sm">View</Link>
+                                            <Link href={productHref(product)} className="flex h-9 items-center justify-center rounded-lg border border-[#071630] text-[11px] font-medium transition hover:bg-slate-50 sm:h-11 sm:rounded-xl sm:text-sm">View</Link>
                                             <AddToCartButton productId={product._id} label="Add" className="h-9 justify-center gap-1 rounded-lg bg-[#071630] px-1 text-[11px] font-medium text-white transition hover:bg-[#14284d] disabled:opacity-60 sm:h-11 sm:gap-2 sm:rounded-xl sm:px-2 sm:text-sm" />
                                         </div>
                                     </div>

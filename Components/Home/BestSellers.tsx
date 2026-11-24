@@ -2,10 +2,11 @@ import Link from "next/link";
 import { ArrowUpRight, Flame, ShoppingBag } from "lucide-react";
 
 import type { Product } from "@/types/product";
+import { productHref } from "@/lib/productUrl";
 
 type BestSellerProduct = Pick<
     Product,
-    "_id" | "name" | "price" | "images" | "category" | "stock"
+    "_id" | "slug" | "name" | "price" | "images" | "category" | "stock"
 >;
 
 interface BestSellersProps {
@@ -28,7 +29,7 @@ function BestSellerCard({
     const image = product.images?.[0];
     return (
         <Link
-            href={`/products/${product._id}`}
+            href={productHref(product)}
             aria-hidden={hidden || undefined}
             tabIndex={hidden ? -1 : undefined}
             className="group block h-full rounded-2xl border border-[#eee7de] bg-white p-2.5 shadow-[0_8px_30px_rgba(33,27,23,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(33,27,23,0.12)] sm:p-3"

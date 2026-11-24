@@ -9,8 +9,10 @@ import {
     Pause,
     Play,
 } from "lucide-react";
+import { productHref } from "@/lib/productUrl";
 
 interface FeaturedProduct {
+    slug?: string;
     _id: string;
     name: string;
     description: string;
@@ -190,7 +192,7 @@ export default function FeaturedProducts() {
                         {product.name}
                     </p>
                     <Link
-                        href={`/products/${product._id}`}
+                        href={productHref(product)}
                         className="mt-5 inline-flex h-11 max-w-full items-center gap-3 rounded-xl border border-[#d6b47e] px-5 font-body text-[10px] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#d6b47e] hover:text-[#07162f] sm:mt-7 sm:h-14 sm:gap-4 sm:px-8 sm:text-sm sm:tracking-[0.15em]"
                     >
                         Explore Product <ArrowRight size={17} />

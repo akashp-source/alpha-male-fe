@@ -2,6 +2,7 @@
 import Link from "next/link";
 import type { Product } from "@/types/product";
 import { ArrowUpRight, ShoppingBag } from "lucide-react";
+import { productHref } from "@/lib/productUrl";
 
 interface ProductShowcaseProps {
     products: Product[];
@@ -51,7 +52,7 @@ export default function ProductShowcase({
 
                             return (
                                 <Link
-                                    href={`/products/${product._id}`}
+                                    href={productHref(product)}
                                     key={product._id}
                                     className="group block min-w-0"
                                 >

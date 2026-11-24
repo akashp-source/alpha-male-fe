@@ -111,8 +111,26 @@ export interface Product {
     // Returned by GET /product/info/:id.
     recommendations?: ProductRecommendationsData;
 
+    // Add-on tick-box next to the buy buttons (GET /product/info/:id).
+    // null when the product has no add-on or it is inactive / out of stock.
+    upsellProduct?: ProductUpsell | null;
+
     createdAt: string;
     updatedAt: string;
+}
+
+export interface ProductUpsell {
+    _id: string;
+    name: string;
+    slug?: string;
+    // The add-on's own prices; cart and checkout charge `price`.
+    price: number;
+    compareAtPrice?: number | null;
+    image?: string;
+    stock: number;
+    // Admin wording; blank title falls back to "Add <name>".
+    title?: string;
+    description?: string;
 }
 
 export interface ProductReview {
