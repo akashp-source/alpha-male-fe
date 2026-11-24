@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import type { Product } from "@/types/product";
 import { addToCart } from "@/lib/cart";
@@ -10,7 +10,13 @@ import {
     getBulkDiscountMinQuantity,
     getBulkDiscountPercent,
 } from "@/lib/comboPricing";
+import {
+    fetchPackSuggestions,
+    type PackPlan,
+    type PackSuggestions,
+} from "@/lib/packSuggestions";
 import ProductGallery from "./ProductGallery";
+import { PackSuggestionsBox, PackUpgradeDialog } from "./PackSuggestions";
 import RichDescription from "./RichDescription";
 import {
     Loader2,
@@ -51,6 +57,15 @@ export default function ProductBuySection({
     // Add-on tick-box next to the buy buttons (set up in admin).
     const [addOnSelected, setAddOnSelected] = useState(false);
     const [addOnNotice, setAddOnNotice] = useState("");
+    // Pack-size suggestions (cheaper mix / better-value pack) for the
+    // current quantity, set up in admin under "Pack sizes".
+    const [packState, setPackState] = useState<{
+        quantity: number;
+        suggestions: PackSuggestions | null;
+    } | null>(null);
+    const [upgradeOpen, setUpgradeOpen] = useState(false);
+    const [upgradePending, setUpgradePending] = useState<"switch" | "keep" | null>(null);
+    const [planPending, setPlanPending] = useState<PackPlan | null>(null);
 
     // -----------------------------------
     // Pricing calculation
@@ -121,6 +136,30 @@ export default function ProductBuySection({
 
     const outOfStock = product.stock <= 0;
 
+    // Load suggestions shortly after the quantity settles.
+    useEffect(() => {
+        if (outOfStock || onAddToCart) return;
+
+        const controller = new AbortController();
+        const timer = window.setTimeout(() => {
+            fetchPackSuggestions(product._id, quantity, controller.signal)
+                .then((suggestions) => setPackState({ quantity, suggestions }))
+                .catch(() => {
+                    // Suggestions are optional; the page works without them.
+                });
+        }, 250);
+
+        return () => {
+            window.clearTimeout(timer);
+            controller.abort();
+        };
+    }, [product._id, quantity, outOfStock, onAddToCart]);
+
+    // Ignore suggestions loaded for a previous quantity.
+    const packSuggestions =
+        packState && packState.quantity === quantity ? packState.suggestions : null;
+    const selectionLabel = `${quantity} × ${product.name}`;
+
     const formatPrice = (price: number) =>
         `₹${price.toLocaleString("en-IN")}`;
 
@@ -147,18 +186,76 @@ export default function ProductBuySection({
         }
     };
 
+    /** Adds the selected quantity of this product (+ ticked add-on). */
+    const addSelectionToCart = async () => {
+        await addToCart(product._id, quantity);
+        await addSelectedAddOn();
+        // Show the updated cart (the navbar listens for this event).
+        window.dispatchEvent(new Event("open-cart"));
+    };
+
+    /** Adds a suggested pack mix instead of the selection (+ ticked add-on). */
+    const addPlanToCart = async (plan: PackPlan) => {
+        for (const item of plan.items) {
+            await addToCart(item.productId, item.quantity);
+        }
+        await addSelectedAddOn();
+        window.dispatchEvent(new Event("open-cart"));
+    };
+
+    const handleChoosePlan = async (plan: PackPlan) => {
+        if (pending || planPending) return;
+
+        setPlanPending(plan);
+        setCartError("");
+        setAddOnNotice("");
+        try {
+            await addPlanToCart(plan);
+        } catch (error) {
+            setCartError(error instanceof Error ? error.message : "Unable to add to cart");
+        } finally {
+            setPlanPending(null);
+        }
+    };
+
+    const closeUpgrade = useCallback(() => setUpgradeOpen(false), []);
+
+    const handleUpgradeChoice = async (choice: "switch" | "keep") => {
+        if (upgradePending || !packSuggestions?.bestValue) return;
+
+        setUpgradePending(choice);
+        setCartError("");
+        setAddOnNotice("");
+        try {
+            if (choice === "switch") {
+                await addPlanToCart(packSuggestions.bestValue);
+            } else {
+                await addSelectionToCart();
+            }
+            setUpgradeOpen(false);
+        } catch (error) {
+            setCartError(error instanceof Error ? error.message : "Unable to add to cart");
+            setUpgradeOpen(false);
+        } finally {
+            setUpgradePending(null);
+        }
+    };
+
     const handleAddToCart = async () => {
         if (onAddToCart) return onAddToCart(product, quantity, totalPrice);
         if (pending || outOfStock) return;
+
+        // A bigger pack gives more for less (or a little more): ask first.
+        if (packSuggestions?.bestValue) {
+            setUpgradeOpen(true);
+            return;
+        }
 
         setPending("cart");
         setCartError("");
         setAddOnNotice("");
         try {
-            await addToCart(product._id, quantity);
-            await addSelectedAddOn();
-            // Show the updated cart (the navbar listens for this event).
-            window.dispatchEvent(new Event("open-cart"));
+            await addSelectionToCart();
         } catch (error) {
             setCartError(error instanceof Error ? error.message : "Unable to add to cart");
         } finally {
@@ -610,6 +707,17 @@ export default function ProductBuySection({
                             )}
                         </div>
 
+                        {/* Pack sizes: cheaper mix / better-value pack for this quantity */}
+                        {packSuggestions && !outOfStock && (
+                            <PackSuggestionsBox
+                                suggestions={packSuggestions}
+                                selectionLabel={selectionLabel}
+                                pendingPlan={planPending}
+                                disabled={pending !== null || planPending !== null}
+                                onChoose={handleChoosePlan}
+                            />
+                        )}
+
                         {/* Add-on (upsell): tick to add it to the cart with this product */}
                         {addOn && !outOfStock && (
                             <label
@@ -672,7 +780,7 @@ export default function ProductBuySection({
 
                             <button
                                 type="button"
-                                disabled={outOfStock || pending !== null}
+                                disabled={outOfStock || pending !== null || planPending !== null}
                                 onClick={handleAddToCart}
                                 className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-[#071630] bg-[#071630] px-4 font-body text-sm font-semibold text-white transition hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
                             >
@@ -737,6 +845,18 @@ export default function ProductBuySection({
                     </div>
                 </div>
             </div>
+
+            {upgradeOpen && packSuggestions?.bestValue && (
+                <PackUpgradeDialog
+                    suggestions={packSuggestions}
+                    plan={packSuggestions.bestValue}
+                    selectionLabel={selectionLabel}
+                    pending={upgradePending}
+                    onSwitch={() => handleUpgradeChoice("switch")}
+                    onKeep={() => handleUpgradeChoice("keep")}
+                    onClose={closeUpgrade}
+                />
+            )}
         </section>
     );
 }

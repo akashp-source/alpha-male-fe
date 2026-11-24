@@ -1160,7 +1160,7 @@ export default function CheckoutPage() {
                             </div>
 
                             <div className="space-y-3">
-                                {/* <PaymentOption
+                                <PaymentOption
                                     selected={paymentMethod === "ONLINE"}
                                     onClick={() =>
                                         setPaymentMethod("ONLINE")
@@ -1168,7 +1168,7 @@ export default function CheckoutPage() {
                                     title="Pay Online"
                                     description="UPI, Credit / Debit Card, Net Banking"
                                     tag="SECURE PAYMENT"
-                                /> */}
+                                />
 
                                 <PaymentOption
                                     selected={paymentMethod === "COD"}
