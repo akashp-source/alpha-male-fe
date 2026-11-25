@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import { canOptimizeImage } from "@/lib/image-hosts";
 import Link from "next/link";
 import { Search, ShoppingCart, SlidersHorizontal, X } from "lucide-react";
 import AddToCartButton from "../Cart/AddToCartButton";
@@ -478,7 +479,7 @@ export default function ShopProducts({ onAddToCart }: Props) {
                                                         src={image}
                                                         alt={product.name}
                                                         fill
-                                                        unoptimized
+                                                        unoptimized={!canOptimizeImage(image)}
                                                         sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 280px"
                                                         className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
                                                     />

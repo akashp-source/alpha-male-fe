@@ -142,7 +142,6 @@ export default function GuestSignupPopup() {
                             width={100}
                             height={100}
                             priority
-                            unoptimized
                             className="block object-contain"
                         />
                     </div>

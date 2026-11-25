@@ -1,8 +1,8 @@
 
 import type { Metadata } from "next";
 
-import FooterPage from "@/Components/Footer";
-import Footer from "@/Components/Footer";
+// import FooterPage from "@/Components/Footer"; (replaced by FooterV2 in app/layout.tsx)
+// import Footer from "@/Components/Footer"; (replaced by FooterV2 in app/layout.tsx)
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -71,16 +71,17 @@ export default function CancellationPolicyPage() {
 
                 {/* Header */}
                 <header className="mb-10 border-b border-[#354158] pb-8">
-                    <div className="w-[80px] sm:w-[200px]">
-                        <Image
-                            src="/images/logo-cropped.png"
-                            alt="Alpha Male - Drive, Stamina, Energy"
-                            width={500}
-                            height={500}
-                            priority
-                            unoptimized
-                            className="block h-auto w-full object-contain"
-                        />
+                    <div className="mb-4 flex justify-center">
+                        <Link href="/home" aria-label="Alpha Male home">
+                            <Image
+                                src="/images/logo.png"
+                                alt="Alpha Male - Drive, Stamina, Energy"
+                                width={150}
+                                height={150}
+                                priority
+                                className="h-[90px] w-[90px] object-contain"
+                            />
+                        </Link>
                     </div>
 
                     <h1 className="font-heading text-4xl sm:text-5xl">
@@ -246,7 +247,7 @@ export default function CancellationPolicyPage() {
                 </footer> */}
 
             </div>
-            <FooterPage />
+            {/* <FooterPage /> replaced by FooterV2 in app/layout.tsx */}
         </main>
     );
 }

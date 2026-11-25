@@ -30,7 +30,29 @@ export interface Product {
         offerPrice: number;
         title?: string;
         description?: string;
+        // Short label on the pack option, e.g. "Popular".
+        badge?: string;
     }[];
+
+    // Prescription-only: the order gets a short consultation call.
+    requiresPrescription?: boolean;
+
+    // Units in one pack, e.g. { units: 10, unitLabel: "strips" }.
+    packSizing?: {
+        units: number;
+        unitLabel: string;
+        alternatives?: string[];
+    } | null;
+
+    // "Choose strength": this product + its other strengths (GET /product/info/:id).
+    // Empty when there is no other strength.
+    strengthOptions?: ProductStrengthOption[];
+
+    // Tick-list points under the short description.
+    quickPoints?: string[];
+
+    // Manufacturing licence number for the trust bar (null = hidden).
+    licenceNumber?: string | null;
 
     // Percent off for quantities above the largest combo tier (0 = off).
     bulkDiscountPercent?: number;
@@ -106,6 +128,50 @@ export interface Product {
         )[];
     } | null;
 
+    // "Product information" table + pack image (null = section hidden).
+    productInformation?: {
+        image?: string;
+        imageCaption?: string;
+        rows: { label: string; value: string }[];
+    } | null;
+
+    // "Read before use" safety box (null = section hidden).
+    safetyInfo?: {
+        title?: string;
+        points: string[];
+    } | null;
+
+    // "Why choose" label + centre badge text (null = name/strength defaults).
+    highlightsBadge?: {
+        eyebrow?: string;
+        name?: string;
+        strength?: string;
+    } | null;
+
+    // Heading above the story banners (null = none).
+    storyHeader?: {
+        eyebrow: string;
+        title: string;
+        subtitle: string;
+    } | null;
+
+    // Product-page story banners, in order. layout: feature | steps | split | hero;
+    // theme: light | pale | navy.
+    storyBanners?: {
+        layout: string;
+        theme: string;
+        number: string;
+        eyebrow: string;
+        title: string;
+        subtitle: string;
+        body: string;
+        image: string;
+        imageAlt: string;
+        imageBadge: string;
+        items: { title: string; text: string; image: string }[];
+        tags: string[];
+    }[];
+
     ratings?: ProductRatings;
 
     // Returned by GET /product/info/:id.
@@ -117,6 +183,18 @@ export interface Product {
 
     createdAt: string;
     updatedAt: string;
+}
+
+export interface ProductStrengthOption {
+    _id: string;
+    name: string;
+    slug?: string;
+    // e.g. "25 mg"
+    label: string;
+    price: number;
+    inStock: boolean;
+    // true for the product being viewed.
+    current: boolean;
 }
 
 export interface ProductUpsell {

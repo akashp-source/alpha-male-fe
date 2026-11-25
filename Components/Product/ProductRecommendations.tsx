@@ -133,7 +133,7 @@ export default function ProductRecommendations({ product }: { product: Product }
     if (!frequentlyBoughtProducts.length && !youMayAlsoLike.length) return null;
 
     return (
-        <section className="pdp-section w-full bg-pale-gray text-brand-navy">
+        <section className="pdp-section w-full  text-brand-navy">
             <div className="pdp-container space-y-10 sm:space-y-12">
                 {frequentlyBoughtProducts.length > 0 && (
                     <div className="overflow-hidden rounded-2xl border border-brand-navy bg-transparent p-5 text-brand-navy shadow-[0_12px_32px_rgba(33,27,23,0.12)] sm:p-7 lg:p-9">

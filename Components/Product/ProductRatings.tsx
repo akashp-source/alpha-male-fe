@@ -26,9 +26,9 @@ function Stars({ value, size = 16 }: { value: number; size?: number }) {
 
                 return (
                     <span key={star} className="relative inline-flex" style={{ width: size, height: size }}>
-                        <Star size={size} className="absolute inset-0 text-[#e3d9cc]" fill="currentColor" strokeWidth={0} />
+                        <Star size={size} className="absolute inset-0 text-olympus" fill="currentColor" strokeWidth={0} />
                         <span className="absolute inset-0 overflow-hidden" style={{ width: `${fill * 100}%` }}>
-                            <Star size={size} className="text-accent-amber-dark" fill="currentColor" strokeWidth={0} />
+                            <Star size={size} className="text-brand-navy" fill="currentColor" strokeWidth={0} />
                         </span>
                     </span>
                 );
@@ -95,7 +95,7 @@ export default function ProductRatings({
     }
 
     return (
-        <section className="pdp-section w-full bg-pale-gray">
+        <section id="reviews" className="pdp-section w-full scroll-mt-24 bg-pale-gray">
             <div className="pdp-container">
                 <div className="mx-auto max-w-5xl">
                     <header className="mb-8 text-center sm:mb-10">
@@ -133,7 +133,7 @@ export default function ProductRatings({
                                             <span className="w-6 shrink-0 text-left">{star}★</span>
                                             <div className="h-2 flex-1 overflow-hidden rounded-full bg-pale-gray">
                                                 <div
-                                                    className="h-full rounded-full bg-accent-amber-dark"
+                                                    className="h-full rounded-full bg-brand-navy"
                                                     style={{ width: `${percent}%` }}
                                                 />
                                             </div>

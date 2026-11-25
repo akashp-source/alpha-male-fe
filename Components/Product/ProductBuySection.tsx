@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { Product } from "@/types/product";
 import { addToCart } from "@/lib/cart";
 import {
@@ -15,7 +16,10 @@ import {
     type PackPlan,
     type PackSuggestions,
 } from "@/lib/packSuggestions";
+import { ONLINE_PAYMENT_DISCOUNT_PERCENT } from "@/lib/offers";
+import { WHATSAPP_LINK } from "@/lib/contact";
 import ProductGallery from "./ProductGallery";
+import DeliveryCheck from "./DeliveryCheck";
 import { PackSuggestionsBox, PackUpgradeDialog } from "./PackSuggestions";
 import RichDescription from "./RichDescription";
 import {
@@ -25,9 +29,10 @@ import {
     ShoppingBag,
     Zap,
     Check,
-    ShieldCheck,
     Package,
     ChevronRight,
+    Phone,
+    Star,
 } from "lucide-react";
 
 interface ProductBuySectionProps {
@@ -43,6 +48,19 @@ interface ProductBuySectionProps {
         totalPrice: number
     ) => void;
 }
+
+/** "strips" -> "strip" for "₹70 per strip". */
+const singular = (label: string) =>
+    /[^s]s$/i.test(label) ? label.slice(0, -1) : label;
+
+/** One row in "Choose pack": the single pack, then each combo tier. */
+type PackOption = {
+    quantity: number;
+    price: number;
+    title?: string;
+    description?: string;
+    badge?: string;
+};
 
 export default function ProductBuySection({
     product,
@@ -75,17 +93,9 @@ export default function ProductBuySection({
 
     const pricing = calculateComboPricing(product, quantity);
 
-    const activeCombo =
-        pricing.appliedOffer?.type === "COMBO"
-            ? product.comboOffers?.find(
-                (offer) => offer.quantity === quantity
-            ) ?? null
-            : null;
-
     const bulkPercent = getBulkDiscountPercent(product);
     const bulkMinQuantity = getBulkDiscountMinQuantity(product);
     const bulkActive = pricing.appliedOffer?.type === "BULK_PERCENT";
-    const hasOffers = product.comboOffers?.length > 0 || bulkPercent > 0;
 
     const totalPrice = pricing.total;
 
@@ -103,12 +113,13 @@ export default function ProductBuySection({
     const addOnHasMrp = Boolean(
         addOn?.compareAtPrice && addOn.compareAtPrice > addOn.price
     );
-    // What the summary shows: main product (+ add-on when ticked).
+    // What the price box shows: main product (+ add-on when ticked).
     const displayTotal = totalPrice + (addOnActive && addOn ? addOn.price : 0);
-    const displayItems = quantity + (addOnActive ? 1 : 0);
-    const addOnSavings =
-        addOnActive && addOn && addOnHasMrp && addOn.compareAtPrice
-            ? addOn.compareAtPrice - addOn.price
+    const addOnMrp =
+        addOnActive && addOn
+            ? addOnHasMrp && addOn.compareAtPrice
+                ? addOn.compareAtPrice
+                : addOn.price
             : 0;
 
     // Savings are measured against the 1-qty strike-through price (MRP)
@@ -119,21 +130,48 @@ export default function ProductBuySection({
             : product.price;
 
     const originalPrice = unitMrp * quantity;
+    const displayMrp = originalPrice + addOnMrp;
+    const displaySavings = Math.max(0, displayMrp - displayTotal);
+    const displayPercentOff =
+        displayMrp > 0 ? Math.round((displaySavings / displayMrp) * 100) : 0;
 
-    const savings = Math.max(0, originalPrice - totalPrice);
-    const displaySavings = savings + addOnSavings;
+    // Prepaid price, rounded to the paisa the way checkout does.
+    const onlineDiscount =
+        Math.round(displayTotal * ONLINE_PAYMENT_DISCOUNT_PERCENT) / 100;
+    const onlineTotal = Math.max(0, displayTotal - onlineDiscount);
 
-    const discountPercentage =
-        product.compareAtPrice &&
-            product.compareAtPrice > product.price
-            ? Math.round(
-                ((product.compareAtPrice - product.price) /
-                    product.compareAtPrice) *
-                100
-            )
+    // Units per pack (e.g. 10 strips), from admin "Pack sizes".
+    const packUnits =
+        product.packSizing && Number(product.packSizing.units) > 0
+            ? Number(product.packSizing.units)
             : 0;
+    const unitLabel = product.packSizing?.unitLabel?.trim() || "";
+    const perUnitText = (price: number, packs: number) =>
+        packUnits && unitLabel
+            ? `${formatPrice(Math.round(price / (packs * packUnits)))} per ${singular(unitLabel)}`
+            : "";
+    const galleryBadge =
+        packUnits && unitLabel ? `Pack of ${packUnits} ${unitLabel}` : undefined;
 
     const outOfStock = product.stock <= 0;
+
+    // "Choose pack": the single pack first, then the combo tiers.
+    const packOptions: PackOption[] = [
+        { quantity: 1, price: product.price },
+        ...(product.comboOffers ?? []).map((offer) => ({
+            quantity: offer.quantity,
+            price: offer.offerPrice,
+            title: offer.title,
+            description: offer.description,
+            badge: offer.badge,
+        })),
+    ];
+
+    // "Choose strength": shown when the product links other strengths.
+    const strengthOptions = product.strengthOptions ?? [];
+
+    const rating = product.ratings?.summary;
+    const quickPoints = (product.quickPoints ?? []).filter((point) => point.trim());
 
     // Load suggestions shortly after the quantity settles.
     useEffect(() => {
@@ -159,8 +197,9 @@ export default function ProductBuySection({
         packState && packState.quantity === quantity ? packState.suggestions : null;
     const selectionLabel = `${quantity} × ${product.name}`;
 
-    const formatPrice = (price: number) =>
-        `₹${price.toLocaleString("en-IN")}`;
+    function formatPrice(price: number) {
+        return `₹${price.toLocaleString("en-IN", { maximumFractionDigits: 2 })}`;
+    }
 
     // -----------------------------------
     // Add to cart / Buy now
@@ -291,24 +330,8 @@ export default function ProductBuySection({
         );
     };
 
-    // -----------------------------------
-    // Combo selection
-    // Click selected combo again to reset
-    // -----------------------------------
-
-    const selectCombo = (offerQuantity: number) => {
-        if (quantity === offerQuantity) {
-            setQuantity(1);
-            return;
-        }
-
-        if (offerQuantity <= product.stock) {
-            setQuantity(offerQuantity);
-        }
-    };
-
     // Radio-group keyboard support: arrow keys move to and select the
-    // previous/next enabled offer.
+    // previous/next enabled option.
     const handleOfferKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         const forward = event.key === "ArrowRight" || event.key === "ArrowDown";
         const backward = event.key === "ArrowLeft" || event.key === "ArrowUp";
@@ -335,283 +358,249 @@ export default function ProductBuySection({
         }
     };
 
-    // Roving tabindex: the selected offer (or the first enabled one when
-    // nothing is selected) is the single tab stop in the group.
-    const firstEnabledComboIndex = (product.comboOffers ?? []).findIndex(
-        (offer) => offer.quantity <= product.stock
-    );
-    const anyOfferSelected = activeCombo !== null || bulkActive;
+    // Roving tabindex: the selected option (or the first one when nothing
+    // is selected) is the single tab stop in the group.
+    const anyPackSelected =
+        packOptions.some((option) => option.quantity === quantity) || bulkActive;
+
+    // Trust bar under the buy section (licence number from admin, when set).
+    // Replaced on the page by the "Our standard" section (Components/OurStandard.tsx);
+    // kept for reference with the commented-out markup below.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const trustItems = [
+        {
+            title: "WHO-GMP facility",
+            text: product.licenceNumber
+                ? `Mfg. Lic. No. ${product.licenceNumber}`
+                : "Made in a WHO-GMP licensed facility",
+        },
+        { title: "Plain packaging", text: "Nothing on the box says what's inside" },
+        { title: "Private billing", text: "Neutral name on bank & UPI statements" },
+        { title: "COD or prepaid", text: `Extra ${ONLINE_PAYMENT_DISCOUNT_PERCENT}% off when you pay online` },
+    ];
+
+    const sectionLabel = "font-body text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-navy";
 
     return (
-        <section className="w-full bg-pale-gray text-brand-navy">
-            <div className="pdp-container py-4 sm:py-5 lg:py-6">
+        <section className="w-full bg-white text-brand-navy">
+            <div className="pdp-container py-4 sm:py-5 lg:py-4">
 
                 {/* Breadcrumb */}
-                <nav className="mb-4 flex min-w-0 flex-wrap items-center gap-2 font-body text-xs text-brand-navy-muted sm:mb-5 sm:text-sm">
-                    <a
+                <nav className="mb-3 flex min-w-0 flex-wrap items-center gap-2 font-body text-xs text-brand-navy-muted sm:mb-4 sm:text-sm">
+                    <Link
                         href="/"
-                        className="transition hover:text-success-green"
+                        className="transition hover:text-brand-navy"
                     >
                         Home
-                    </a>
+                    </Link>
 
                     <ChevronRight size={13} />
 
-                    <a
+                    <Link
                         href="/products"
-                        className="transition hover:text-success-green"
+                        className="transition hover:text-brand-navy"
                     >
                         Shop
-                    </a>
+                    </Link>
 
                     <ChevronRight size={13} />
 
-                    <span className="min-w-0 break-words font-medium uppercase text-brand-navy">
+                    <span className="min-w-0 break-words font-medium text-brand-navy">
                         {product.name}
                     </span>
                 </nav>
 
                 {/* Main Product Layout */}
-                <div className="grid min-w-0 grid-cols-1 items-start gap-4 md:gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+                <div className="grid min-w-0 grid-cols-1 items-start gap-4 md:gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-8">
 
                     {/* LEFT: Product Images */}
                     <div className="w-full min-w-0 lg:sticky lg:top-[92px]">
                         {/* Swipe on phone; click + ← → on desktop */}
-                        <ProductGallery images={product.images ?? []} name={product.name} />
+                        <ProductGallery
+                            images={product.images ?? []}
+                            name={product.name}
+                            badge={galleryBadge}
+                        />
                     </div>
 
                     {/* RIGHT: Product Details */}
                     <div className="flex min-w-0 flex-col">
 
                         {/* Category */}
-                        <p className="order-1 mb-1 font-body text-[10px] font-bold uppercase tracking-[0.25em] text-success-green sm:text-xs">
+                        <p className="mb-1 font-body text-[10px] font-semibold uppercase tracking-[0.25em] text-success-green sm:text-xs">
                             {product.category}
                         </p>
 
                         {/* Product Name */}
-                        <h1 className="order-1 break-words font-heading text-[25px] font-semibold uppercase leading-[1.2] tracking-wide sm:text-3xl lg:text-[34px]">
+                        <h1 className="break-words font-heading text-[25px] font-semibold uppercase leading-[1.2] tracking-wide sm:text-3xl lg:text-[30px]">
                             {product.name}
                         </h1>
 
                         {/* Description: bullet lines ("- ", "• ", "* ") render as points */}
                         <RichDescription
                             text={product.description}
-                            className="order-8 mt-3 font-body text-xs leading-6 text-brand-navy-muted sm:text-sm md:order-2"
+                            className="mt-2 font-body text-xs leading-6 text-brand-navy-muted sm:text-sm"
                         />
 
-                        {/* Product Price */}
-                        <div className="order-2 mt-1 flex flex-wrap items-center gap-2.5 sm:mt-2 lg:mt-1">
-                            <span className="font-body text-[27px] font-bold tracking-tight sm:text-3xl">
-                                {formatPrice(product.price)}
-                            </span>
-
-                            {product.compareAtPrice &&
-                                product.compareAtPrice > product.price && (
-                                    <>
-                                        <span className="font-body text-sm text-brand-navy-muted line-through sm:text-base">
-                                            {formatPrice(
-                                                product.compareAtPrice
-                                            )}
-                                        </span>
-
-                                        <span className="rounded-md bg-pale-gray px-2.5 py-1 font-body text-[10px] font-bold text-success-green sm:text-xs">
-                                            {discountPercentage}% OFF
-                                        </span>
-                                    </>
-                                )}
-                        </div>
-
-                        <p className="order-2 mt-0.5 font-body text-[10px] text-[#9a8e84] sm:text-xs">
-                            Inclusive of all taxes
-                        </p>
-
-                        {/* Quantity Selector */}
-                        <div className="order-3 mt-2 flex flex-wrap items-center gap-3 lg:mt-2">
-                            <div className="flex h-11 items-center rounded-lg border border-[#e3d9ce] bg-white sm:h-12">
-
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        updateQuantity(quantity - 1)
-                                    }
-                                    disabled={
-                                        quantity <= 1 || outOfStock
-                                    }
-                                    aria-label="Decrease quantity"
-                                    className="flex h-full w-10 items-center justify-center disabled:opacity-30"
-                                >
-                                    <Minus size={14} />
-                                </button>
-
-                                <span className="min-w-7 text-center font-body text-sm font-medium">
-                                    {quantity}
-                                </span>
-
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        updateQuantity(quantity + 1)
-                                    }
-                                    disabled={
-                                        quantity >= product.stock
-                                    }
-                                    aria-label="Increase quantity"
-                                    className="flex h-full w-10 items-center justify-center disabled:opacity-30"
-                                >
-                                    <Plus size={14} />
-                                </button>
-                            </div>
-
-                            <span
-                                className={`font-body text-xs ${outOfStock
-                                    ? "text-red-600"
-                                    : "text-brand-navy-muted"
-                                    }`}
+                        {/* Rating */}
+                        {rating && rating.count > 0 && (
+                            <a
+                                href="#reviews"
+                                className="mt-2 flex w-fit items-center gap-1.5 font-body text-xs text-brand-navy-muted transition hover:text-brand-navy"
                             >
-                                {outOfStock
-                                    ? "Out of stock"
-                                    : `${product.stock} available`}
-                            </span>
-                        </div>
+                                <span className="flex items-center gap-0.5" aria-hidden="true">
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                        <Star
+                                            key={star}
+                                            size={13}
+                                            strokeWidth={0}
+                                            fill="currentColor"
+                                            className={star <= Math.round(rating.average) ? "text-brand-navy" : "text-olympus"}
+                                        />
+                                    ))}
+                                </span>
+                                <span className="font-semibold text-brand-navy">
+                                    {rating.average.toFixed(1)}
+                                </span>
+                                <span>
+                                    · ({rating.count}) verified {rating.count === 1 ? "review" : "reviews"}
+                                </span>
+                            </a>
+                        )}
 
-                        {/* Combo Offers */}
-                        {hasOffers && (
-                            <div className="order-4 mt-2 sm:mt-3 lg:mt-2">
+                        {/* Quick points */}
+                        {quickPoints.length > 0 && (
+                            <ul className="mt-2 space-y-1">
+                                {quickPoints.map((point, index) => (
+                                    <li key={index} className="flex items-start gap-2 font-body text-xs text-brand-navy sm:text-sm">
+                                        <Check size={15} strokeWidth={2.5} className="mt-0.5 shrink-0 text-success-green" aria-hidden="true" />
+                                        {point}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
 
-                                <div className="mb-2 flex items-center justify-between gap-2">
-                                    <div>
-                                        <h2
-                                            id="combo-offers-heading"
-                                            className="font-heading text-base font-semibold sm:text-lg"
+                        {/* Choose strength */}
+                        {strengthOptions.length > 1 && (
+                            <div className="mt-4">
+                                <p className={sectionLabel}>Choose strength</p>
+
+                                <div className="mt-2 grid grid-cols-2 gap-2">
+                                    {strengthOptions.map((option) => {
+                                        const body = (
+                                            <>
+                                                <span className="block font-heading text-sm font-semibold uppercase tracking-wide">
+                                                    {option.name}
+                                                </span>
+                                                <span className={`mt-0.5 block font-body text-xs ${option.current ? "text-olympus" : "text-brand-navy-muted"}`}>
+                                                    {option.label ? `${option.label} · ` : ""}from {formatPrice(option.price)}
+                                                    {!option.inStock && " · Out of stock"}
+                                                </span>
+                                            </>
+                                        );
+
+                                        return option.current ? (
+                                            <div
+                                                key={option._id}
+                                                aria-current="true"
+                                                className="rounded-lg border border-brand-navy bg-brand-navy px-3 py-2 text-white"
+                                            >
+                                                {body}
+                                            </div>
+                                        ) : (
+                                            <Link
+                                                key={option._id}
+                                                href={`/products/${option.slug || option._id}`}
+                                                className="rounded-lg border border-olympus bg-white px-3 py-2 text-brand-navy transition hover:border-brand-navy"
+                                            >
+                                                {body}
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+
+                                <p className="mt-2 font-body text-xs text-brand-navy-muted">
+                                    Not sure which strength?{" "}
+                                    <a
+                                        href={WHATSAPP_LINK}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-semibold text-brand-navy underline underline-offset-2"
+                                    >
+                                        Ask our team on WhatsApp
+                                    </a>
+                                    {" "}— free and private
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Choose pack */}
+                        <div className="mt-4">
+                            <p id="choose-pack-heading" className={sectionLabel}>Choose pack</p>
+
+                            <div
+                                role="radiogroup"
+                                aria-labelledby="choose-pack-heading"
+                                onKeyDown={handleOfferKeyDown}
+                                className="mt-2 space-y-2"
+                            >
+                                {packOptions.map((option, index) => {
+                                    const isSelected = quantity === option.quantity;
+                                    const regularPrice = unitMrp * option.quantity;
+                                    const optionSavings = Math.max(0, regularPrice - option.price);
+                                    const exceedsStock = option.quantity > product.stock;
+                                    const packsText = `${option.quantity} ${option.quantity === 1 ? "pack" : "packs"}`;
+                                    const unitsText = packUnits && unitLabel
+                                        ? ` · ${option.quantity * packUnits} ${unitLabel}`
+                                        : "";
+                                    const subText =
+                                        perUnitText(option.price, option.quantity) ||
+                                        option.description?.trim() ||
+                                        "";
+
+                                    return (
+                                        <button
+                                            type="button"
+                                            key={option.quantity}
+                                            role="radio"
+                                            aria-checked={isSelected}
+                                            tabIndex={isSelected || (!anyPackSelected && index === 0) ? 0 : -1}
+                                            disabled={exceedsStock}
+                                            onClick={() => setQuantity(option.quantity)}
+                                            className={`flex w-full min-w-0 items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left transition sm:px-4 ${isSelected
+                                                ? "border-brand-navy bg-white ring-1 ring-brand-navy"
+                                                : "border-olympus bg-white hover:border-brand-navy"
+                                                } disabled:cursor-not-allowed disabled:opacity-40`}
                                         >
-                                            Special Combo Offers
-                                        </h2>
-
-                                        <p className="mt-1 font-body text-xs text-[#94877d] sm:text-sm">
-                                            Buy more and save more
-                                        </p>
-                                    </div>
-
-                                    <span className="shrink-0 rounded-full bg-pale-gray px-3 py-1 font-body text-xs font-bold uppercase tracking-wider text-success-green">
-                                        Best Deals
-                                    </span>
-                                </div>
-
-                                <div
-                                    role="radiogroup"
-                                    aria-labelledby="combo-offers-heading"
-                                    onKeyDown={handleOfferKeyDown}
-                                >
-                                <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
-
-                                    {(product.comboOffers ?? []).map(
-                                        (offer, index) => {
-                                            const isSelected =
-                                                quantity === offer.quantity;
-
-                                            const regularPrice =
-                                                unitMrp *
-                                                offer.quantity;
-
-                                            const offerSavings =
-                                                Math.max(
-                                                    0,
-                                                    regularPrice -
-                                                    offer.offerPrice
-                                                );
-
-                                            const offerSavingsPercent =
-                                                regularPrice > 0
-                                                    ? Math.round(
-                                                        (offerSavings /
-                                                            regularPrice) *
-                                                        100
-                                                    )
-                                                    : 0;
-
-                                            const exceedsStock =
-                                                offer.quantity >
-                                                product.stock;
-
-                                            return (
-                                                <button
-                                                    type="button"
-                                                    key={index}
-                                                    role="radio"
-                                                    aria-checked={isSelected}
-                                                    tabIndex={
-                                                        isSelected ||
-                                                            (!anyOfferSelected &&
-                                                                index === firstEnabledComboIndex)
-                                                            ? 0
-                                                            : -1
-                                                    }
-                                                    disabled={exceedsStock}
-                                                    onClick={() =>
-                                                        selectCombo(
-                                                            offer.quantity
-                                                        )
-                                                    }
-                                                    className={`relative min-w-0 rounded-xl border p-2 text-left transition-all sm:p-2.5 ${isSelected
-                                                        ? "border-success-green bg-[#edf5ef] ring-1 ring-success-green"
-                                                        : "border-[#e5dcd2] bg-white hover:border-success-green"
-                                                        } disabled:cursor-not-allowed disabled:opacity-40`}
-                                                >
-                                                    {isSelected && (
-                                                        <span
-                                                            aria-hidden="true"
-                                                            className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-success-green text-white sm:right-3 sm:top-3"
-                                                        >
-                                                            <Check size={12} strokeWidth={3} />
+                                            <span className="min-w-0">
+                                                <span className="flex flex-wrap items-center gap-2 font-body text-sm font-semibold">
+                                                    {option.title?.trim() || `${packsText}${unitsText}`}
+                                                    {option.badge && (
+                                                        <span className="rounded-full bg-brand-navy px-2 py-0.5 font-body text-[10px] font-semibold text-white">
+                                                            {option.badge}
                                                         </span>
                                                     )}
+                                                </span>
+                                                {subText && (
+                                                    <span className="mt-0.5 block font-body text-xs text-brand-navy-muted">
+                                                        {subText}
+                                                    </span>
+                                                )}
+                                            </span>
 
-                                                    <p className="break-words pr-6 font-body text-xs font-bold leading-snug sm:text-sm">
-                                                        {offer.title ||
-                                                            `Buy ${offer.quantity} Packs`}
-                                                    </p>
-
-                                                    {offer.description && (
-                                                        <p className="mt-1 break-words font-body text-xs leading-4 text-brand-navy-muted">
-                                                            {offer.description}
-                                                        </p>
-                                                    )}
-
-                                                    <div className="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
-                                                        <span className="font-body text-sm font-bold text-success-green sm:text-lg">
-                                                            {formatPrice(
-                                                                offer.offerPrice
-                                                            )}
-                                                        </span>
-
-                                                        <span className="font-body text-xs text-brand-navy-muted line-through">
-                                                            {formatPrice(
-                                                                regularPrice
-                                                            )}
-                                                        </span>
-                                                    </div>
-
-                                                    {offerSavings > 0 && (
-                                                        <p className="mt-1 font-body text-xs font-semibold text-success-green">
-                                                            Save{" "}
-                                                            {formatPrice(
-                                                                offerSavings
-                                                            )}
-                                                            {offerSavingsPercent > 0 &&
-                                                                ` (${offerSavingsPercent}% off)`}
-                                                        </p>
-                                                    )}
-
-                                                    {isSelected && (
-                                                        <p className="mt-1 font-body text-xs font-semibold text-success-green">
-                                                            Selected
-                                                        </p>
-                                                    )}
-                                                </button>
-                                            );
-                                        }
-                                    )}
-                                </div>
+                                            <span className="shrink-0 text-right">
+                                                <span className="block font-body text-sm font-bold">
+                                                    {formatPrice(option.price)}
+                                                </span>
+                                                {optionSavings > 0 && (
+                                                    <span className="block font-body text-xs font-semibold text-success-green">
+                                                        Save {formatPrice(optionSavings)}
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </button>
+                                    );
+                                })}
 
                                 {/* Bulk percent off above the largest combo */}
                                 {bulkPercent > 0 && (
@@ -619,91 +608,88 @@ export default function ProductBuySection({
                                         type="button"
                                         role="radio"
                                         aria-checked={bulkActive}
-                                        tabIndex={
-                                            bulkActive ||
-                                                (!anyOfferSelected &&
-                                                    firstEnabledComboIndex === -1)
-                                                ? 0
-                                                : -1
-                                        }
+                                        tabIndex={bulkActive ? 0 : -1}
                                         disabled={bulkMinQuantity > product.stock}
-                                        onClick={() =>
-                                            bulkActive
-                                                ? setQuantity(1)
-                                                : setQuantity(bulkMinQuantity)
-                                        }
-                                        className={`relative mt-2 w-full min-w-0 rounded-xl border p-2 text-left transition-all sm:p-2.5 ${bulkActive
-                                            ? "border-success-green bg-[#edf5ef] ring-1 ring-success-green"
-                                            : "border-[#e5dcd2] bg-white hover:border-success-green"
+                                        onClick={() => setQuantity(bulkMinQuantity)}
+                                        className={`flex w-full min-w-0 items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left transition sm:px-4 ${bulkActive
+                                            ? "border-brand-navy bg-white ring-1 ring-brand-navy"
+                                            : "border-olympus bg-white hover:border-brand-navy"
                                             } disabled:cursor-not-allowed disabled:opacity-40`}
                                     >
-                                        {bulkActive && (
-                                            <span
-                                                aria-hidden="true"
-                                                className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-success-green text-white sm:right-3 sm:top-3"
-                                            >
-                                                <Check size={12} strokeWidth={3} />
+                                        <span className="min-w-0">
+                                            <span className="block font-body text-sm font-semibold">
+                                                {bulkMinQuantity}+ packs
                                             </span>
-                                        )}
-
-                                        <p className="break-words pr-6 font-body text-xs font-bold leading-snug sm:text-sm">
-                                            Buy {bulkMinQuantity}+ packs
-                                        </p>
-
-                                        <p className="mt-1 font-body text-sm font-bold text-success-green sm:text-base">
-                                            {bulkPercent}% OFF
-                                            <span className="ml-1 font-body text-xs font-semibold text-brand-navy-muted">
-                                                on every pack
+                                            <span className="mt-0.5 block font-body text-xs text-brand-navy-muted">
+                                                {bulkActive ? `Applied to ${quantity} packs` : "On every pack"}
                                             </span>
-                                        </p>
-
-                                        {bulkActive && (
-                                            <p className="mt-1 font-body text-xs font-semibold text-success-green">
-                                                Applied to {quantity} packs
-                                            </p>
-                                        )}
+                                        </span>
+                                        <span className="shrink-0 font-body text-sm font-bold text-success-green">
+                                            {bulkPercent}% off
+                                        </span>
                                     </button>
                                 )}
-                                </div>
+                            </div>
 
-                                {/* Remove Combo */}
-                                {(activeCombo || bulkActive) && (
+                            {/* Any other quantity */}
+                            <div className="mt-3 flex flex-wrap items-center gap-3">
+                                <span className="font-body text-xs text-brand-navy-muted">Quantity</span>
+                                <div className="flex h-9 items-center rounded-lg border border-olympus bg-white">
                                     <button
                                         type="button"
-                                        onClick={() => setQuantity(1)}
-                                        className="mt-2 font-body text-xs font-semibold text-success-green underline underline-offset-4"
+                                        onClick={() => updateQuantity(quantity - 1)}
+                                        disabled={quantity <= 1 || outOfStock}
+                                        aria-label="Decrease quantity"
+                                        className="flex h-full w-9 items-center justify-center disabled:opacity-30"
                                     >
-                                        Remove combo selection
+                                        <Minus size={13} />
                                     </button>
+                                    <span className="min-w-7 text-center font-body text-sm font-medium">
+                                        {quantity}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        onClick={() => updateQuantity(quantity + 1)}
+                                        disabled={quantity >= product.stock}
+                                        aria-label="Increase quantity"
+                                        className="flex h-full w-9 items-center justify-center disabled:opacity-30"
+                                    >
+                                        <Plus size={13} />
+                                    </button>
+                                </div>
+                                {outOfStock && (
+                                    <span className="font-body text-xs text-red-600">Out of stock</span>
                                 )}
                             </div>
-                        )}
+                        </div>
 
-                        {/* Total Price Summary */}
-                        <div className="order-5 mt-2 flex items-center justify-between gap-3 rounded-xl border border-[#eee5dc] bg-white p-2.5 sm:p-3">
-
-                            <div>
-                                <p className="font-body text-xs text-brand-navy-muted">
-                                    Total amount ({displayItems}{" "}
-                                    {displayItems === 1 ? "item" : "items"})
-                                </p>
-
-                                <p className="mt-1 font-body text-xl font-bold sm:text-2xl" aria-live="polite">
+                        {/* Price */}
+                        <div className="mt-3 rounded-lg border border-olympus bg-white p-3">
+                            <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                                <span className="font-body text-[26px] font-bold tracking-tight" aria-live="polite">
                                     {formatPrice(displayTotal)}
-                                </p>
+                                </span>
+                                {displaySavings > 0 && (
+                                    <>
+                                        <s className="font-body text-sm text-brand-navy-muted">
+                                            <span className="sr-only">MRP </span>
+                                            {formatPrice(displayMrp)}
+                                        </s>
+                                        <span className="font-body text-sm font-semibold text-success-green">
+                                            {displayPercentOff}% off
+                                        </span>
+                                    </>
+                                )}
                             </div>
 
-                            {displaySavings > 0 && (
-                                <div className="text-right">
-                                    <p className="font-body text-xs text-brand-navy-muted">
-                                        You save
-                                    </p>
+                            <p className="mt-1 font-body text-xs text-brand-navy-muted">
+                                MRP inclusive of all taxes
+                                {perUnitText(totalPrice, quantity) && ` · ${perUnitText(totalPrice, quantity)}`}
+                            </p>
 
-                                    <p className="mt-1 font-body text-xs font-bold text-success-green sm:text-sm">
-                                        {formatPrice(displaySavings)}
-                                    </p>
-                                </div>
-                            )}
+                            <p className="mt-1 font-body text-xs font-semibold text-success-green">
+                                Pay online: {formatPrice(onlineTotal)} after extra {ONLINE_PAYMENT_DISCOUNT_PERCENT}% off
+                            </p>
                         </div>
 
                         {/* Pack sizes: cheaper mix / better-value pack for this quantity */}
@@ -720,9 +706,9 @@ export default function ProductBuySection({
                         {/* Add-on (upsell): tick to add it to the cart with this product */}
                         {addOn && !outOfStock && (
                             <label
-                                className={`order-5 mt-2 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed p-3 transition sm:gap-4 sm:p-3.5 ${addOnActive
-                                    ? "border-brand-navy bg-pale-gray"
-                                    : "border-[#d9cfc4] bg-white hover:border-brand-navy/50"
+                                className={`mt-2 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed p-3 transition sm:gap-4 sm:p-3.5 ${addOnActive
+                                    ? "border-brand-navy bg-white"
+                                    : "border-olympus bg-white hover:border-brand-navy/50"
                                     }`}
                             >
                                 <input
@@ -736,7 +722,7 @@ export default function ProductBuySection({
                                     className="h-5 w-5 shrink-0 cursor-pointer rounded accent-brand-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-2"
                                 />
 
-                                <span className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#eee8de]">
+                                <span className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-pale-gray">
                                     {addOn.image ? (
                                         // eslint-disable-next-line @next/next/no-img-element
                                         <img
@@ -775,13 +761,13 @@ export default function ProductBuySection({
                         )}
 
                         {/* Add to Cart / Buy Now */}
-                        <div className="order-6 mt-1 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        <div className="mt-3 grid grid-cols-2 gap-2 sm:gap-3">
 
                             <button
                                 type="button"
                                 disabled={outOfStock || pending !== null || planPending !== null}
                                 onClick={handleAddToCart}
-                                className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-brand-navy px-4 font-body text-sm font-semibold text-white transition hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-11 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-white px-3 font-body text-sm font-semibold text-brand-navy transition hover:bg-pale-gray disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {pending === "cart" ? (
                                     <Loader2 size={16} className="animate-spin" />
@@ -795,7 +781,7 @@ export default function ProductBuySection({
                                 type="button"
                                 disabled={outOfStock || pending !== null}
                                 onClick={handleBuyNow}
-                                className="flex h-12 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-transparent px-4 font-body text-sm font-semibold text-brand-navy transition hover:bg-pale-gray disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-11 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-brand-navy px-3 font-body text-sm font-semibold text-white transition hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {pending === "buy" ? (
                                     <Loader2 size={16} className="animate-spin" />
@@ -806,39 +792,58 @@ export default function ProductBuySection({
                             </button>
 
                             {cartError && (
-                                <p role="alert" className="font-body text-xs text-red-600 sm:col-span-2">
+                                <p role="alert" className="col-span-2 font-body text-xs text-red-600">
                                     {cartError}
                                 </p>
                             )}
 
                             {addOnNotice && (
-                                <p role="status" className="font-body text-xs text-[#8a4b08] sm:col-span-2">
+                                <p role="status" className="col-span-2 font-body text-xs text-[#8a4b08]">
                                     {addOnNotice}
                                 </p>
                             )}
                         </div>
 
-                        {/* Trust Features */}
-                        <div className="order-7 mt-3 grid grid-cols-2 gap-2 border-t border-[#e8ded4] pt-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-3 sm:pt-4">
+                        {/* Check delivery date */}
+                        <DeliveryCheck />
 
-                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-brand-navy-muted sm:flex-row">
-                                <Package size={14} className="shrink-0" />
-                                Plain packaging
+                        {/* Prescription products: consultation call before dispatch */}
+                        {product.requiresPrescription && (
+                            <div className="mt-3 flex items-start gap-3 rounded-lg border border-olympus bg-white p-3">
+                                <Phone size={16} className="mt-0.5 shrink-0 text-brand-navy" aria-hidden="true" />
+                                <p className="font-body text-xs leading-5 text-brand-navy-muted">
+                                    <span className="font-semibold text-brand-navy">
+                                        Every order gets a short, private call before dispatch.
+                                    </span>{" "}
+                                    Our team confirms your order and asks a few health questions (age, heart
+                                    health, current medicines) so the product is safe for you.
+                                </p>
                             </div>
-
-                            <div className="flex min-w-0 flex-col items-center gap-1 text-center font-body text-xs leading-tight text-brand-navy-muted sm:flex-row">
-                                <ShieldCheck size={14} className="shrink-0" />
-                                Private billing
-                            </div>
-                        </div>
+                        )}
 
                         {/* SKU */}
-                        <p className="order-9 mt-3 font-body text-[10px] text-[#a1958b] sm:text-xs">
+                        <p className="mt-3 font-body text-[10px] text-brand-navy-muted sm:text-xs">
                             SKU: {product.sku}
                         </p>
                     </div>
                 </div>
             </div>
+
+            {/* Trust bar (old design, replaced by <OurStandard /> in ProductPageView)
+            <div className="w-full bg-brand-navy">
+                <ul className="pdp-container grid grid-cols-2 gap-x-4 gap-y-4 py-5 sm:grid-cols-4 sm:py-6">
+                    {trustItems.map((item) => (
+                        <li key={item.title} className="min-w-0">
+                            <p className="font-body text-xs font-semibold text-white sm:text-sm">
+                                {item.title}
+                            </p>
+                            <p className="mt-1 font-body text-[11px] leading-4 text-palladium sm:text-xs">
+                                {item.text}
+                            </p>
+                        </li>
+                    ))}
+                </ul>
+            </div> */}
 
             {upgradeOpen && packSuggestions?.bestValue && (
                 <PackUpgradeDialog

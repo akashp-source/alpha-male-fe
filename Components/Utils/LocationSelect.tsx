@@ -3,7 +3,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Select, { StylesConfig } from "react-select";
-import { State, City } from "country-state-city";
+// India-only data (~50 KB) instead of the full country-state-city package.
+import { INDIA_CITIES, INDIA_STATES } from "@/lib/india-locations";
+
+const citiesOf = (isoCode: string) => (INDIA_CITIES[isoCode] ?? []).map((name) => ({ name }));
 
 interface Props {
     initialState?: string;
@@ -125,10 +128,7 @@ export default function LocationSelect({
     initialCity = "",
     onChange,
 }: Props) {
-    const states = useMemo(
-        () => State.getStatesOfCountry("IN"),
-        []
-    );
+    const states = INDIA_STATES;
 
     const [selectedState, setSelectedState] =
         useState<Option | null>(null);
@@ -148,10 +148,7 @@ export default function LocationSelect({
     const cityOptions: Option[] = useMemo(() => {
         if (!selectedState) return [];
 
-        return City.getCitiesOfState(
-            "IN",
-            selectedState.value
-        ).map((city) => ({
+        return citiesOf(selectedState.value).map((city) => ({
             value: city.name,
             label: city.name,
         }));
@@ -175,10 +172,7 @@ export default function LocationSelect({
             label: state.name,
         });
 
-        const cities = City.getCitiesOfState(
-            "IN",
-            state.isoCode
-        );
+        const cities = citiesOf(state.isoCode);
 
         const city = cities.find(
             (item) =>

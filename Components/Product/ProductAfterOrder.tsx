@@ -1,0 +1,67 @@
+import { ONLINE_PAYMENT_DISCOUNT_PERCENT } from "@/lib/offers";
+
+interface ProductAfterOrderProps {
+    /** Prescription products get the "A private call" step. */
+    requiresPrescription?: boolean;
+}
+
+interface Step {
+    title: string;
+    text: string;
+}
+
+/** "What happens after you order": fixed copy; the call step is prescription-only. */
+export default function ProductAfterOrder({ requiresPrescription = false }: ProductAfterOrderProps) {
+    const steps: Step[] = [
+        {
+            title: "You order",
+            text: `Pay online for ${ONLINE_PAYMENT_DISCOUNT_PERCENT}% off, or choose Cash on Delivery.`,
+        },
+        ...(requiresPrescription
+            ? [{
+                title: "A private call",
+                text: "Two minutes to confirm your order and check it's safe for you.",
+            }]
+            : []),
+        {
+            title: "Packed plain",
+            text: "Sealed, unbranded parcel. Tracking on SMS and WhatsApp.",
+        },
+        {
+            title: "At your door",
+            text: "In 2-5 working days across India.",
+        },
+    ];
+
+    return (
+        <section className="pdp-section w-full bg-white text-brand-navy">
+            <div className="pdp-container">
+                <p className="mb-3 font-body text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-navy">
+                    No surprises
+                </p>
+                <h2 className="font-heading text-3xl leading-tight text-brand-navy sm:text-4xl">
+                    What happens after you order
+                </h2>
+
+                <ol className={`mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 ${steps.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
+                    {steps.map((step, index) => (
+                        <li
+                            key={step.title}
+                            className="rounded-2xl border border-transparent bg-brand-navy p-5 text-white shadow-sm transition duration-300 hover:border-palladium/40 hover:shadow-xl motion-safe:hover:scale-105"
+                        >
+                            <p className="font-body text-[10px] font-semibold uppercase tracking-[0.2em] text-palladium">
+                                Step {String(index + 1).padStart(2, "0")}
+                            </p>
+                            <h3 className="mt-2 font-body text-sm uppercase tracking-[0.06em] text-white">
+                                {step.title}
+                            </h3>
+                            <p className="mt-2 font-body text-sm leading-relaxed text-olympus">
+                                {step.text}
+                            </p>
+                        </li>
+                    ))}
+                </ol>
+            </div>
+        </section>
+    );
+}

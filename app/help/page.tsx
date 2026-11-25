@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import Navbar from "@/Components/Home/NavBar";
 import HelpCenter from "@/Components/Help/HelpCenter";
-import FooterPage from "@/Components/Footer";
+// import FooterPage from "@/Components/Footer"; (replaced by FooterV2 in app/layout.tsx)
 
 export const metadata: Metadata = {
     title: "Help & Support",
@@ -16,7 +16,7 @@ export default function HelpPage() {
         <>
             <Navbar />
             <HelpCenter />
-            <FooterPage />
+            {/* <FooterPage /> replaced by FooterV2 in app/layout.tsx */}
         </>
     );
 }

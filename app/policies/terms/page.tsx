@@ -1,7 +1,7 @@
 
 import type { Metadata } from "next";
 
-import FooterPage from "@/Components/Footer";
+// import FooterPage from "@/Components/Footer"; (replaced by FooterV2 in app/layout.tsx)
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -105,15 +105,16 @@ export default function TermsAndConditionsPage() {
                 {/* Header */}
                 <header className="mb-12 text-center sm:mb-16">
                     <div className="mb-4 flex justify-center">
-                        <Image
-                            src="/images/logo.png"
-                            alt="Alpha Male - Drive, Stamina, Energy"
-                            width={150}
-                            height={150}
-                            priority
-                            unoptimized
-                            className="h-[90px] w-[90px] object-contain"
-                        />
+                        <Link href="/home" aria-label="Alpha Male home">
+                            <Image
+                                src="/images/logo.png"
+                                alt="Alpha Male - Drive, Stamina, Energy"
+                                width={150}
+                                height={150}
+                                priority
+                                className="h-[90px] w-[90px] object-contain"
+                            />
+                        </Link>
                     </div>
 
                     <h1 className="font-heading text-3xl uppercase tracking-[0.12em] text-olympus sm:text-5xl">
@@ -458,7 +459,7 @@ export default function TermsAndConditionsPage() {
                 </div>
 
                 {/* Footer */}
-                <FooterPage />
+                {/* <FooterPage /> replaced by FooterV2 in app/layout.tsx */}
 
             </div>
         </main>

@@ -1,0 +1,136 @@
+import Link from "next/link";
+import { MessageCircle } from "lucide-react";
+
+import { WHATSAPP_LINK } from "@/lib/contact";
+
+const SUPPORT_EMAIL = "info@alphamale.co.in";
+const SUPPORT_HOURS = "10 am – 6 pm, Mon – Sat";
+
+const SHOP_LINKS = [
+    { label: "Alpha Bold · 25 mg", href: "/products/alpha-male-bold-s-25mg" },
+    { label: "Alpha Boss · 50 mg", href: "/products/alpha-male-boss-s-50mg" },
+    { label: "All products", href: "/shop" },
+];
+
+const POLICY_LINKS = [
+    { label: "Privacy", href: "/policies/privacy" },
+    { label: "Shipping", href: "/policies/shipping" },
+    { label: "Returns & refunds", href: "/policies/returns" },
+    { label: "Cancellation", href: "/policies/cancellation" },
+    { label: "Terms", href: "/policies/terms" },
+    { label: "IT policy", href: "/policies/it-policy" },
+];
+
+const PAYMENT_METHODS = ["UPI", "Cards", "Net banking", "COD"];
+
+const columnLabel = "mb-4 font-body text-[10px] font-semibold uppercase tracking-[0.22em] text-palladium";
+const linkClass = "font-body text-sm text-olympus transition hover:text-white";
+
+/** Site footer: contact band on top, link columns and legal line below. */
+export default function FooterV2() {
+    const year = new Date().getFullYear();
+
+    return (
+        <footer className="w-full text-olympus">
+
+            {/* Contact band */}
+            <div className="border-b border-white/10 bg-brand-navy">
+                <div className="pdp-container flex flex-col gap-6 py-12 sm:py-14 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                        <h2 className="font-heading text-3xl leading-tight text-white sm:text-4xl">
+                            Questions are normal.
+                        </h2>
+                        <p className="mt-3 font-body text-sm text-olympus sm:text-base">
+                            Talk to our team privately · {SUPPORT_HOURS}
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col gap-3 sm:flex-row">
+                        <a
+                            href={WHATSAPP_LINK}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-white px-6 font-body text-xs font-semibold uppercase tracking-[0.16em] text-brand-navy transition hover:bg-olympus"
+                        >
+                            <MessageCircle size={16} aria-hidden="true" />
+                            WhatsApp us
+                        </a>
+                        <a
+                            href={`mailto:${SUPPORT_EMAIL}`}
+                            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/40 px-6 font-body text-xs font-semibold uppercase tracking-[0.16em] text-white transition hover:bg-white hover:text-brand-navy"
+                        >
+                            {SUPPORT_EMAIL}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {/* Link columns (sits on the dark page background) */}
+            <div className="pdp-container py-12">
+                <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+                    <div>
+                        <p className="font-heading text-lg font-semibold uppercase tracking-[0.18em] text-white">
+                            Alpha Male
+                        </p>
+                        <p className="mt-4 max-w-[260px] font-body text-sm leading-relaxed text-olympus">
+                            India&apos;s premium, science-backed men&apos;s wellness brand.
+                        </p>
+                    </div>
+
+                    <nav aria-label="Shop">
+                        <p className={columnLabel}>Shop</p>
+                        <ul className="space-y-2.5">
+                            {SHOP_LINKS.map((link) => (
+                                <li key={link.href}>
+                                    <Link href={link.href} className={linkClass}>{link.label}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+
+                    <nav aria-label="Policies">
+                        <p className={columnLabel}>Policies</p>
+                        <ul className="space-y-2.5">
+                            {POLICY_LINKS.map((link) => (
+                                <li key={link.href}>
+                                    <Link href={link.href} className={linkClass}>{link.label}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+
+                    <div>
+                        <p className={columnLabel}>Grievance officer</p>
+                        <a href={`mailto:${SUPPORT_EMAIL}`} className={linkClass}>
+                            {SUPPORT_EMAIL}
+                        </a>
+                        <p className="mt-1">
+                            <Link href="/policies/it-policy" className="font-body text-xs text-palladium underline underline-offset-4 transition hover:text-white">
+                                Full details
+                            </Link>
+                        </p>
+
+                        <p className={`${columnLabel} mt-7`}>We accept</p>
+                        <ul className="flex flex-wrap gap-2">
+                            {PAYMENT_METHODS.map((method) => (
+                                <li
+                                    key={method}
+                                    className="rounded-md border border-white/20 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.08em] text-olympus"
+                                >
+                                    {method}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Legal line */}
+                <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 font-body text-xs text-palladium sm:flex-row sm:items-center sm:justify-between">
+                    <p>© {year} Alpha Male. All rights reserved.</p>
+                    <p>For adults 18+ only.</p>
+                </div>
+            </div>
+
+        </footer>
+    );
+}

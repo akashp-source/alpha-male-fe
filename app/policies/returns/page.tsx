@@ -1,7 +1,7 @@
 
 import type { Metadata } from "next";
 
-import FooterPage from "@/Components/Footer";
+// import FooterPage from "@/Components/Footer"; (replaced by FooterV2 in app/layout.tsx)
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -230,15 +230,16 @@ export default function ReturnRefundPolicyPage() {
                 {/* Header */}
                 <header className="mb-10 border-b border-[#354158] pb-8">
                     <div className="mb-4 flex justify-center">
-                        <Image
-                            src="/images/logo.png"
-                            alt="Alpha Male - Drive, Stamina, Energy"
-                            width={150}
-                            height={150}
-                            priority
-                            unoptimized
-                            className="h-[90px] w-[90px] object-contain"
-                        />
+                        <Link href="/home" aria-label="Alpha Male home">
+                            <Image
+                                src="/images/logo.png"
+                                alt="Alpha Male - Drive, Stamina, Energy"
+                                width={150}
+                                height={150}
+                                priority
+                                className="h-[90px] w-[90px] object-contain"
+                            />
+                        </Link>
                     </div>
                     <h1 className="font-heading text-4xl sm:text-5xl">
                         Return & Refund Policy
@@ -286,7 +287,7 @@ export default function ReturnRefundPolicyPage() {
                     <ContactDetails />
                 </Section>
 
-                <FooterPage />
+                {/* <FooterPage /> replaced by FooterV2 in app/layout.tsx */}
                 {/* Footer */}
                 {/* <footer className="mt-12 border-t border-[#354158] pt-8 text-center">
                     <p className="font-serif text-sm uppercase tracking-[0.35em] text-olympus">
