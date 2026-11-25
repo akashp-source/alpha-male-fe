@@ -14,7 +14,7 @@ const STANDARDS: { label: string; image: string }[] = [
     { label: "WHO-GMP certified facility", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/991a4707-d50a-4a10-8506-d2ac6411d584.webp" /* TODO: image URL */ },
     { label: "Own licensed manufacturing", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/528e33bd-b081-4ca7-9271-f9e301e12553.webp" /* TODO: image URL */ },
     { label: "Every batch tested before release", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/660f4f1b-3df3-4ff1-b95e-209160492cee.webp" /* TODO: image URL */ },
-    { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/60736594-68bc-4a18-accf-98ac507698ec.webp" /* TODO: image URL */ },
+    { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/db690718-c067-4673-b6e5-07633898ea94.webp" /* TODO: image URL */ },
     { label: "Plain, sealed parcel", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/b5696aa5-8c08-46e7-83d8-bcc7071d8785.webp" /* TODO: image URL */ },
     { label: "Secure payments · COD available", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/a2890c2e-3020-4280-9564-a25368a0400c.webp" /* TODO: image URL */ },
 ];
