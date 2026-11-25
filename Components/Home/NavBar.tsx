@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import CartDrawer from "../Cart/CartDrawer";
+import NavbarSearch from "./NavbarSearch";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
@@ -33,6 +34,7 @@ export default function Navbar() {
     const [cartCount, setCartCount] = useState(0);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [hiddenWhileScrolling, setHiddenWhileScrolling] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
     const scrollStopTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // Hide the navbar while the page is scrolling; bring it back 2s after scrolling stops.
@@ -63,8 +65,8 @@ export default function Navbar() {
         };
     }, []);
 
-    // Never hide while the mobile menu or cart drawer is open.
-    const navbarHidden = hiddenWhileScrolling && !mobileMenuOpen && !isCartOpen;
+    // Never hide while the mobile menu, cart drawer or search is open.
+    const navbarHidden = hiddenWhileScrolling && !mobileMenuOpen && !isCartOpen && !searchOpen;
 
     // Check authentication
     const checkAuth = useCallback(() => {
@@ -219,6 +221,15 @@ export default function Navbar() {
 
                 {/* Right Actions */}
                 <div className="col-start-2 flex shrink-0 items-center justify-self-end gap-1.5 sm:gap-2 md:gap-3 lg:col-start-3">
+
+                    {/* Search (panel opens under the navbar) */}
+                    <NavbarSearch
+                        open={searchOpen}
+                        onOpenChange={(open) => {
+                            setSearchOpen(open);
+                            if (open) setMobileMenuOpen(false);
+                        }}
+                    />
 
                     {/* Account */}
                     {isLoggedIn ? (

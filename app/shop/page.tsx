@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import ShopProducts from "@/Components/Shop/ShopProducts";
 import Navbar from "@/Components/Home/NavBar";
 
@@ -45,7 +46,18 @@ export default function ShopPage() {
     return (
         <>
             <Navbar />
-            <ShopProducts onAddToCart={handleAddToCart} />
+            {/* useSearchParams needs a Suspense boundary */}
+            <Suspense fallback={null}>
+                <ShopWithSearch onAddToCart={handleAddToCart} />
+            </Suspense>
         </>
     );
+}
+
+// Reads ?search= (navbar search). The key remounts the list when the search
+// changes, so a new navbar search on /shop starts fresh at page 1.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function ShopWithSearch({ onAddToCart }: { onAddToCart: (product: any) => void }) {
+    const search = (useSearchParams().get("search") ?? "").trim().slice(0, 100);
+    return <ShopProducts key={search} initialSearch={search} onAddToCart={onAddToCart} />;
 }
