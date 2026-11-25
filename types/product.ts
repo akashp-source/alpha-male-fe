@@ -70,6 +70,8 @@ export interface Product {
     faqs: {
         question: string;
         answer: string;
+        // Tab on the product page, e.g. "General", "Product", "Usage".
+        category?: string;
     }[];
 
     frequentlyBoughtTogether: {

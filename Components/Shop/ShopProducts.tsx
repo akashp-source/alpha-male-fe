@@ -1,14 +1,17 @@
 
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { canOptimizeImage } from "@/lib/image-hosts";
 import Link from "next/link";
-import { Search, ShoppingCart, SlidersHorizontal, X } from "lucide-react";
+import { Loader2, Search, ShoppingCart, SlidersHorizontal, X } from "lucide-react";
 import AddToCartButton from "../Cart/AddToCartButton";
 import { categoryLabel, useStoreCategories } from "@/lib/categories";
 import { productHref } from "@/lib/productUrl";
+import ProductSuggestionList from "@/Components/Search/ProductSuggestionList";
+import { useProductSuggestions } from "@/Components/Search/useProductSuggestions";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
@@ -34,6 +37,8 @@ type Product = {
 
 type Props = {
     onAddToCart?: (product: Product) => void;
+    /** Search from the URL (/shop?search=...), e.g. from the navbar search. */
+    initialSearch?: string;
 };
 
 const priceOptions = [
@@ -46,7 +51,7 @@ const priceOptions = [
 const money = (value: number) =>
     `₹${value.toLocaleString("en-IN")}`;
 
-export default function ShopProducts({ onAddToCart }: Props) {
+export default function ShopProducts({ onAddToCart, initialSearch = "" }: Props) {
     // Category filter options come from the backend (GET /categories).
     const storeCategories = useStoreCategories();
     const categories = useMemo(
@@ -57,7 +62,23 @@ export default function ShopProducts({ onAddToCart }: Props) {
     const [total, setTotal] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
 
-    const [search, setSearch] = useState("");
+    // `search` filters the list; `searchDraft` is what's typed in the box.
+    // Typing shows matching products under the box; Enter / "Search" applies it.
+    const [search, setSearch] = useState(initialSearch);
+    const [searchDraft, setSearchDraft] = useState(initialSearch);
+    const [suggestOpen, setSuggestOpen] = useState(false);
+    const searchBoxRef = useRef<HTMLDivElement>(null);
+    const suggestListId = useId();
+    const router = useRouter();
+    const {
+        term: draftTerm,
+        suggestions,
+        ready: suggestionsReady,
+        loading: suggestionsLoading,
+    } = useProductSuggestions(searchDraft, suggestOpen);
+    const [highlight, setHighlight] = useState({ index: -1, term: "" });
+    const activeSuggestion = highlight.term === draftTerm ? highlight.index : -1;
+    const setActiveSuggestion = (index: number) => setHighlight({ index, term: draftTerm });
     const [category, setCategory] = useState("");
     const [priceRange, setPriceRange] = useState("all");
     const [inStock, setInStock] = useState(false);
@@ -160,8 +181,31 @@ export default function ShopProducts({ onAddToCart }: Props) {
         return result;
     }, [products, saleOnly, comboOnly, sortBy]);
 
+    // Apply the typed search to the product list.
+    const applySearch = () => {
+        setSearch(searchDraft.trim());
+        setPage(1);
+        setSuggestOpen(false);
+    };
+
+    // Close the suggestions on a click outside the search box or Escape.
+    useEffect(() => {
+        if (!suggestOpen) return;
+        const onDown = (event: MouseEvent) => {
+            if (!searchBoxRef.current?.contains(event.target as Node)) setSuggestOpen(false);
+        };
+        const onKey = (event: KeyboardEvent) => event.key === "Escape" && setSuggestOpen(false);
+        document.addEventListener("mousedown", onDown);
+        document.addEventListener("keydown", onKey);
+        return () => {
+            document.removeEventListener("mousedown", onDown);
+            document.removeEventListener("keydown", onKey);
+        };
+    }, [suggestOpen]);
+
     const clearFilters = () => {
         setSearch("");
+        setSearchDraft("");
         setCategory("");
         setPriceRange("all");
         setInStock(false);
@@ -329,30 +373,81 @@ export default function ShopProducts({ onAddToCart }: Props) {
                         </p>
                     </div>
 
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            setPage(1);
-                        }}
-                        className="flex w-full max-w-md items-center rounded-full bg-white p-1.5 text-brand-navy focus-within:ring-2 focus-within:ring-[#e9b949] focus-within:ring-offset-2 focus-within:ring-offset-brand-navy"
-                    >
-                        <Search size={18} className="ml-3 shrink-0 text-slate-500" />
-
-                        <input
-                            value={search}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                                setPage(1);
+                    <div ref={searchBoxRef} className="relative w-full max-w-md">
+                        <form
+                            role="search"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                const picked = activeSuggestion >= 0 ? suggestions[activeSuggestion] : undefined;
+                                if (picked) {
+                                    setSuggestOpen(false);
+                                    router.push(productHref(picked));
+                                } else {
+                                    applySearch();
+                                }
                             }}
-                            placeholder="Search products..."
-                            aria-label="Search products"
-                            className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none"
-                        />
+                            className="flex w-full items-center rounded-full bg-white p-1.5 text-brand-navy focus-within:ring-2 focus-within:ring-[#e9b949] focus-within:ring-offset-2 focus-within:ring-offset-brand-navy"
+                        >
+                            <Search size={18} className="ml-3 shrink-0 text-slate-500" />
 
-                        <button className="rounded-full bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#14284d]">
-                            Search
-                        </button>
-                    </form>
+                            <input
+                                type="search"
+                                value={searchDraft}
+                                maxLength={100}
+                                onChange={(e) => {
+                                    setSearchDraft(e.target.value);
+                                    setSuggestOpen(true);
+                                    // Emptying the box shows all products again.
+                                    if (!e.target.value.trim() && search) {
+                                        setSearch("");
+                                        setPage(1);
+                                    }
+                                }}
+                                onFocus={() => searchDraft.trim() && setSuggestOpen(true)}
+                                onKeyDown={(e) => {
+                                    if (!suggestOpen || !suggestions.length) return;
+                                    if (e.key === "ArrowDown") {
+                                        e.preventDefault();
+                                        setActiveSuggestion((activeSuggestion + 1) % suggestions.length);
+                                    } else if (e.key === "ArrowUp") {
+                                        e.preventDefault();
+                                        setActiveSuggestion(activeSuggestion <= 0 ? suggestions.length - 1 : activeSuggestion - 1);
+                                    }
+                                }}
+                                placeholder="Search products..."
+                                aria-label="Search products"
+                                aria-autocomplete="list"
+                                aria-controls={suggestListId}
+                                aria-activedescendant={activeSuggestion >= 0 ? `${suggestListId}-${activeSuggestion}` : undefined}
+                                className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none"
+                            />
+
+                            {suggestOpen && suggestionsLoading && (
+                                <Loader2 size={16} className="mr-2 shrink-0 animate-spin text-slate-500" aria-hidden="true" />
+                            )}
+
+                            <button className="rounded-full bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#14284d]">
+                                Search
+                            </button>
+                        </form>
+
+                        {/* Matching products while typing */}
+                        {suggestOpen && draftTerm && (
+                            <div className="absolute inset-x-0 top-full z-30 mt-2 rounded-2xl border border-olympus bg-white p-2 text-brand-navy shadow-xl">
+                                <ProductSuggestionList
+                                    listId={suggestListId}
+                                    term={draftTerm}
+                                    suggestions={suggestions}
+                                    ready={suggestionsReady}
+                                    loading={suggestionsLoading}
+                                    active={activeSuggestion}
+                                    onActiveChange={setActiveSuggestion}
+                                    onPick={() => setSuggestOpen(false)}
+                                    onSeeAll={applySearch}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </section>
 

@@ -1,9 +1,12 @@
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 
 import { WHATSAPP_LINK } from "@/lib/contact";
 
 const SUPPORT_EMAIL = "info@alphamale.co.in";
+// Same support number as the Help page and IT policy.
+const SUPPORT_PHONE = "+91 90009 37222";
+const SUPPORT_PHONE_LINK = "+919000937222";
 const SUPPORT_HOURS = "10 am – 6 pm, Mon – Sat";
 
 const SHOP_LINKS = [
@@ -45,7 +48,7 @@ export default function FooterV2() {
                         </p>
                     </div>
 
-                    <div className="flex flex-col gap-3 sm:flex-row">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-nowrap">
                         <a
                             href={WHATSAPP_LINK}
                             target="_blank"
@@ -54,6 +57,16 @@ export default function FooterV2() {
                         >
                             <MessageCircle size={16} aria-hidden="true" />
                             WhatsApp us
+                        </a>
+                        {/* Call: "Call us" button on phones/tablets, the number itself on desktop */}
+                        <a
+                            href={`tel:${SUPPORT_PHONE_LINK}`}
+                            aria-label={`Call us on ${SUPPORT_PHONE}`}
+                            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 px-6 font-body text-xs font-semibold uppercase tracking-[0.16em] text-white transition hover:bg-white hover:text-brand-navy"
+                        >
+                            <Phone size={16} aria-hidden="true" />
+                            <span className="lg:hidden">Call us</span>
+                            <span className="hidden tracking-[0.08em] lg:inline">{SUPPORT_PHONE}</span>
                         </a>
                         <a
                             href={`mailto:${SUPPORT_EMAIL}`}
