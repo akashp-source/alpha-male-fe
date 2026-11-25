@@ -7,46 +7,57 @@ import BestSellers from "./BestSellers";
 import FeaturedProducts from "./FeaturedProducts";
 import FAQ from "../Faqs";
 import TrustSection from "./TrustSection";
-import FooterPage from "../Footer";
+// import FooterPage from "../Footer"; (replaced by FooterV2 in app/layout.tsx)
 import ImageComparison from "./ImageComparison";
 import BrandValues from "./BrandValues";
+import DeliveryBanner from "../DeliveryBanner";
+import OurStandard from "../OurStandard";
+import { productFetchOptions } from "@/lib/product-cache";
+import { toFeaturedProducts, type FeaturedProduct } from "@/lib/featured-products";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
 
-async function getProducts(): Promise<Product[]> {
+// First page of "All products" only: the section pages and filters itself
+// in the browser, so loading every product here was wasted work.
+// Must match AllProductsSection's PAGE_SIZE.
+const ALL_PRODUCTS_PAGE_SIZE = 12;
+
+async function getProducts(): Promise<{ products: Product[]; total: number }> {
     try {
-        const products: Product[] = [];
-        let page = 1;
-        let totalPages = 1;
+        const response = await fetch(
+            `${API_URL}/product?page=1&limit=${ALL_PRODUCTS_PAGE_SIZE}`,
+            productFetchOptions,
+        );
 
-        do {
-            const response = await fetch(
-                `${API_URL}/product?page=${page}&limit=100`,
-                { cache: "no-store" }
-            );
+        if (!response.ok) throw new Error("Failed to fetch products");
 
-            if (!response.ok) throw new Error("Failed to fetch products");
-
-            const data = await response.json();
-            products.push(...(data.products || []));
-            totalPages = data.pagination?.totalPages || 1;
-            page += 1;
-        } while (page <= totalPages);
-
-        return products;
+        const data = await response.json();
+        const products: Product[] = data.products || [];
+        return { products, total: data.pagination?.total ?? products.length };
     } catch (error) {
         console.error("Product fetching error:", error);
-        return [];
+        return { products: [], total: 0 };
+    }
+}
+
+// Featured slider, fetched here so it renders with the page (null = let the
+// slider fetch in the browser as before).
+async function getFeaturedProducts(): Promise<FeaturedProduct[] | null> {
+    try {
+        const response = await fetch(`${API_URL}/product/hero`, productFetchOptions);
+        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+        return toFeaturedProducts(await response.json());
+    } catch (error) {
+        console.error("Featured products error:", error);
+        return null;
     }
 }
 
 // Best sellers strip; an error just hides the section.
 async function getBestSellers(): Promise<Product[]> {
     try {
-        const response = await fetch(`${API_URL}/product/best-sellers`, {
-            cache: "no-store",
-        });
+        const response = await fetch(`${API_URL}/product/best-sellers`, productFetchOptions);
         if (!response.ok) throw new Error("Failed to fetch best sellers");
         const data = await response.json();
         return Array.isArray(data.products) ? data.products : [];
@@ -82,10 +93,11 @@ async function getHomeComparisons(): Promise<HomeComparison[]> {
 }
 
 export default async function HomePage() {
-    const [products, bestSellers, comparisons] = await Promise.all([
+    const [{ products, total }, bestSellers, comparisons, featured] = await Promise.all([
         getProducts(),
         getBestSellers(),
         getHomeComparisons(),
+        getFeaturedProducts(),
     ]);
 
     return (
@@ -93,12 +105,14 @@ export default async function HomePage() {
             <Navbar />
             <HeroBanner />
             <BestSellers products={bestSellers} />
-            <AllProductsSection products={products} />
+            <AllProductsSection products={products} total={total} />
             <h2 className="font-heading font-semibold text-center text-4xl p-5">
                 Our Featured Products
             </h2>
-            <FeaturedProducts />
+            <FeaturedProducts initialProducts={featured} />
             <TrustSection />
+            {/* "Our standard" badges, sliding */}
+            <OurStandard marquee />
             {comparisons.map((comparison) => (
                 <ImageComparison
                     key={comparison._id}
@@ -113,8 +127,12 @@ export default async function HomePage() {
                 />
             ))}
             <BrandValues />
+            {/* Discreet delivery banner (sliding packaging photos) */}
+            <DeliveryBanner showShopButton />
+            {/* White gap so the navy banner doesn't run into the dark FAQ */}
+            <div aria-hidden="true" className="h-12 w-full bg-white sm:h-16" />
             <FAQ />
-            <FooterPage />
+            {/* <FooterPage /> replaced by FooterV2 in app/layout.tsx */}
         </>
     );
 }

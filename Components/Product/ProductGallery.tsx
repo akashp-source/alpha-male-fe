@@ -6,6 +6,8 @@ import { ChevronLeft, ChevronRight, Package } from "lucide-react";
 interface ProductGalleryProps {
     images: string[];
     name: string;
+    // Small label over the main image, e.g. "Pack of 10 strips".
+    badge?: string;
 }
 
 const prefersReducedMotion = () =>
@@ -18,7 +20,7 @@ const prefersReducedMotion = () =>
  * - Desktop: click an image or thumbnail, then use ← / → to change image;
  *   prev/next buttons show on hover.
  */
-export default function ProductGallery({ images, name }: ProductGalleryProps) {
+export default function ProductGallery({ images, name, badge }: ProductGalleryProps) {
     const list = images.filter(Boolean);
     const [active, setActive] = useState(0);
     const galleryRef = useRef<HTMLDivElement>(null);
@@ -87,7 +89,7 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
 
     if (!count) {
         return (
-            <div className="flex aspect-square w-full items-center justify-center rounded-2xl sm:rounded-[20px] lg:max-h-[560px]">
+            <div className="flex aspect-square w-full items-center justify-center rounded-2xl sm:rounded-[20px] lg:max-h-[460px]">
                 <Package size={70} className="text-white/30" />
             </div>
         );
@@ -107,11 +109,16 @@ export default function ProductGallery({ images, name }: ProductGalleryProps) {
         >
             {/* Main images: swipeable track */}
             <div className="relative">
+                {badge && (
+                    <span className="pointer-events-none absolute left-3 top-3 z-10 rounded-full bg-white px-3 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.12em] text-brand-navy shadow-sm sm:text-xs">
+                        {badge}
+                    </span>
+                )}
                 <div
                     ref={trackRef}
                     onScroll={onScroll}
                     onClick={() => galleryRef.current?.focus({ preventScroll: true })}
-                    className="no-scrollbar flex aspect-square w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-2xl sm:rounded-[20px] lg:max-h-[560px]"
+                    className="no-scrollbar flex aspect-square w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-2xl sm:rounded-[20px] lg:max-h-[460px]"
                 >
                     {list.map((image, index) => (
                         <div

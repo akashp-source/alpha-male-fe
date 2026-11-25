@@ -1,7 +1,7 @@
 
 import type { Metadata } from "next";
 
-import FooterPage from "@/Components/Footer";
+// import FooterPage from "@/Components/Footer"; (replaced by FooterV2 in app/layout.tsx)
 import Image from "next/image";
 import Link from "next/link";
 
@@ -41,15 +41,16 @@ export default function ITPolicyPage() {
 
                 <header className="mb-10 border-b border-[#354158] pb-8">
                     <div className="mb-4 flex justify-center">
-                        <Image
-                            src="/images/logo.png"
-                            alt="Alpha Male - Drive, Stamina, Energy"
-                            width={150}
-                            height={150}
-                            priority
-                            unoptimized
-                            className="h-[90px] w-[90px] object-contain"
-                        />
+                        <Link href="/home" aria-label="Alpha Male home">
+                            <Image
+                                src="/images/logo.png"
+                                alt="Alpha Male - Drive, Stamina, Energy"
+                                width={150}
+                                height={150}
+                                priority
+                                className="h-[90px] w-[90px] object-contain"
+                            />
+                        </Link>
                     </div>
                     <h1 className="font-heading text-4xl sm:text-5xl">IT Policy</h1>
                     <p className="mt-4 text-sm text-[#929BAE]">
@@ -238,7 +239,7 @@ export default function ITPolicyPage() {
                         this page.
                     </p>
                 </Section>
-                <FooterPage />
+                {/* <FooterPage /> replaced by FooterV2 in app/layout.tsx */}
                 {/* <footer className="mt-12 border-t border-[#354158] pt-6 text-center text-xs text-[#929BAE]">
                     <p>ALPHA MALE</p>
                     <p className="mt-2">alphamale.co.in · info@alphamale.co.in</p>

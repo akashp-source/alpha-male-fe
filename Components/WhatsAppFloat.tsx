@@ -29,8 +29,8 @@ export default function WhatsAppFloat() {
                 alt="WhatsApp"
                 width={128}
                 height={128}
-                priority
-                unoptimized
+                // Resized/converted by next/image (was the full 1.2 MB PNG on every page).
+                sizes="52px"
                 className="
           h-full w-full
           object-contain

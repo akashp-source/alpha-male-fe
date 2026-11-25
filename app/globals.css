@@ -182,3 +182,43 @@ input {
   .bestseller-marquee [data-duplicate] { display: none; }
   .bestseller-marquee-wrap { overflow-x: auto; mask-image: none; }
 }
+
+/* "Why choose" highlights (ProductHighlightsV4): connector lines into the
+   centre badge. Base line = flowing dashes; pulse = short light streak
+   travelling card -> centre (pathLength is 100 on each path). */
+.highlight-line-flow {
+  stroke-dasharray: 2 3;
+  animation: highlight-line-flow 1.6s linear infinite;
+}
+
+.highlight-line-pulse {
+  stroke-dasharray: 12 88;
+  stroke-dashoffset: 100;
+  opacity: 0;
+  animation: highlight-line-pulse 3s ease-in-out infinite;
+}
+
+.highlight-ring-spin {
+  animation: highlight-ring-spin 40s linear infinite;
+}
+
+@keyframes highlight-line-flow {
+  to { stroke-dashoffset: -5; }
+}
+
+@keyframes highlight-line-pulse {
+  0% { stroke-dashoffset: 100; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes highlight-ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .highlight-line-flow,
+  .highlight-ring-spin { animation: none; }
+  .highlight-line-pulse { display: none; }
+}

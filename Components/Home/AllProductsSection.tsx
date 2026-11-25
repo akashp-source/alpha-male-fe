@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import Image from "next/image";
+import { canOptimizeImage } from "@/lib/image-hosts";
 import Link from "next/link";
 import { ArrowRight, Search, ShoppingBag, SlidersHorizontal, X } from "lucide-react";
 import type { Product } from "@/types/product";
@@ -10,20 +11,23 @@ import AddToCartButton from "@/Components/Cart/AddToCartButton";
 import { categoryLabel, useStoreCategories } from "@/lib/categories";
 import { productHref } from "@/lib/productUrl";
 
-type Props = { products: Product[] };
+// products/total: first page from the server (default filters).
+type Props = { products: Product[]; total?: number };
 type PriceFilter = "all" | "under500" | "500-1000" | "over1000";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
 const PAGE_SIZE = 12;
 
 const money = (amount: number) => `₹${amount.toLocaleString("en-IN")}`;
 
-export default function AllProductsSection({ products }: Props) {
+export default function AllProductsSection({ products, total: initialTotal }: Props) {
     // Category filter options come from the backend (GET /categories).
     const categories = useStoreCategories();
     const categoryName = (slug: string) =>
         categoryLabel(categories.find((item) => item.slug === slug)?.name ?? slug.replaceAll("-", " "));
     const [apiProducts, setApiProducts] = useState(products);
-    const [total, setTotal] = useState(products.length);
+    const [total, setTotal] = useState(initialTotal ?? products.length);
+    // The server already sent page 1 with no filters; skip fetching it again on load.
+    const skipInitialFetch = useRef(initialTotal !== undefined);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -38,6 +42,10 @@ export default function AllProductsSection({ products }: Props) {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
     useEffect(() => {
+        if (skipInitialFetch.current) {
+            skipInitialFetch.current = false;
+            return;
+        }
         const controller = new AbortController();
         const params = new URLSearchParams({ page: String(page), limit: String(PAGE_SIZE) });
         if (search.trim()) params.set("search", search.trim());
@@ -194,7 +202,7 @@ export default function AllProductsSection({ products }: Props) {
                             {visibleProducts.map((product) => {
                                 return <article key={product._id} className="min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-lg sm:rounded-[22px]">
                                     <div className="relative flex aspect-square items-center justify-center bg-pale-gray p-2 sm:p-5">
-                                        {product.images?.[0] ? <Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1280px) 45vw, 30vw" className="object-contain p-2 sm:p-5" unoptimized /> : <ShoppingBag className="h-9 w-9 text-slate-400 sm:h-12 sm:w-12" />}
+                                        {product.images?.[0] ? <Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1280px) 45vw, 30vw" className="object-contain p-2 sm:p-5" unoptimized={!canOptimizeImage(product.images[0])} /> : <ShoppingBag className="h-9 w-9 text-slate-400 sm:h-12 sm:w-12" />}
                                         {product.comboOffers?.length > 0 && <span className="absolute right-2 top-2 rounded-full bg-white px-2 py-1 text-[9px] font-semibold sm:right-4 sm:top-4 sm:px-3 sm:py-1.5 sm:text-xs">Combo</span>}
                                     </div>
                                     <div className="p-2.5 sm:p-5">

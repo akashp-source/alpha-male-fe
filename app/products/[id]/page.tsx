@@ -7,6 +7,7 @@ import type { Product } from "@/types/product";
 import Navbar from "@/Components/Home/NavBar";
 import ProductPageView from "@/Components/Product/ProductPageView";
 import { productHref } from "@/lib/productUrl";
+import { productFetchOptions } from "@/lib/product-cache";
 
 const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
@@ -18,9 +19,11 @@ async function getProduct(idOrSlug: string) {
     try {
         const response = await fetch(
             `${API_URL}/product/info/${encodeURIComponent(idOrSlug)}`,
+            // Cached and shared; cleared by /api/revalidate when admin changes a
+            // product (see lib/product-cache.ts).
             {
                 method: "GET",
-                cache: "no-store",
+                ...productFetchOptions,
             }
         );
 

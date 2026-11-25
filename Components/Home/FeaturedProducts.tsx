@@ -10,30 +10,16 @@ import {
     Play,
 } from "lucide-react";
 import { productHref } from "@/lib/productUrl";
-
-interface FeaturedProduct {
-    slug?: string;
-    _id: string;
-    name: string;
-    description: string;
-    images: string[];
-    bannerImages: string[];
-    price: number;
-    compareAtPrice?: number | null;
-    taglines?: {
-        title: string;
-        description: string;
-        image?: string;
-    }[];
-}
+import { toFeaturedProducts, type FeaturedProduct } from "@/lib/featured-products";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
 const controlClass = "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 bg-black/25 text-white backdrop-blur-sm transition hover:bg-white hover:text-brand-navy disabled:cursor-not-allowed disabled:opacity-50 md:h-12 md:w-12";
 
-export default function FeaturedProducts() {
-    const [products, setProducts] = useState<FeaturedProduct[]>([]);
+/** initialProducts: fetched on the server with the page; null/undefined = fetch here. */
+export default function FeaturedProducts({ initialProducts }: { initialProducts?: FeaturedProduct[] | null }) {
+    const [products, setProducts] = useState<FeaturedProduct[]>(initialProducts ?? []);
     const [activeIndex, setActiveIndex] = useState(0);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(!initialProducts);
     const [error, setError] = useState("");
     const [isHovered, setIsHovered] = useState(false);
     const [hasFocus, setHasFocus] = useState(false);
@@ -42,17 +28,15 @@ export default function FeaturedProducts() {
     const [motionPreferenceReady, setMotionPreferenceReady] = useState(false);
 
     useEffect(() => {
+        // Already rendered with the page.
+        if (initialProducts) return;
+
         const fetchFeaturedProducts = async () => {
             try {
                 setLoading(true);
                 const response = await fetch(`${API_URL}/product/hero`, { cache: "no-store" });
                 if (!response.ok) throw new Error(`API Error: ${response.status}`);
-                const data = await response.json();
-                const rawProducts = Array.isArray(data) ? data : data.products ?? data.data ?? [];
-                const validProducts = (rawProducts.flat(Infinity) as FeaturedProduct[]).filter(
-                    (product) => product && typeof product === "object" && product._id && product.bannerImages?.[0]
-                );
-                setProducts(validProducts);
+                setProducts(toFeaturedProducts(await response.json()));
             } catch (fetchError) {
                 console.error("Featured products error:", fetchError);
                 setError("Unable to load featured products.");
@@ -62,7 +46,7 @@ export default function FeaturedProducts() {
         };
 
         fetchFeaturedProducts();
-    }, []);
+    }, [initialProducts]);
 
     useEffect(() => {
         const query = window.matchMedia("(prefers-reduced-motion: reduce)");

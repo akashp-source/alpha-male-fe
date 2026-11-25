@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 
 import Navbar from "@/Components/Home/NavBar";
-import FooterPage from "@/Components/Footer";
+// import FooterPage from "@/Components/Footer"; (replaced by FooterV2 in app/layout.tsx)
 import CampaignView from "@/Components/Campaign/CampaignView";
 import { normalizeCampaign } from "@/Components/Campaign/config";
 import { getPublicCampaign } from "@/lib/campaign-server";
@@ -77,7 +77,7 @@ export default async function CampaignPage({ params }: Props) {
                     initialDevice={initialDevice}
                 />
             </main>
-            <FooterPage />
+            {/* <FooterPage /> replaced by FooterV2 in app/layout.tsx */}
         </>
     );
 }

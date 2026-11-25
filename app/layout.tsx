@@ -6,16 +6,17 @@ import { Suspense } from "react";
 import ClarityAnalytics from "@/Components/Clarity";
 import AttributionCapture from "@/Components/AttributionCapture";
 import WhatsAppFloat from "@/Components/WhatsAppFloat";
+import FooterV2 from "@/Components/FooterV2";
 import GoogleTagManager from "@/Components/GoogleTagManager";
+// Cinzel and Montserrat are variable fonts: one file per font covers every
+// weight (listing weights downloaded a separate file for each one).
 const cinzel = Cinzel({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-cinzel",
 });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-montserrat",
 });
 
@@ -56,6 +57,8 @@ export default function RootLayout({
         </Suspense>
         <GoogleTagManager />
         {children}
+        {/* Site footer on every page */}
+        <FooterV2 />
         <WhatsAppFloat />
       </body>
     </html>

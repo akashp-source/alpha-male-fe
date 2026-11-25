@@ -45,7 +45,7 @@ These colours are **not** in the guidelines. They exist in the current site and 
 |---|---|---|
 | `accent-gold` | `#D6B47E` | Featured products, trust section |
 | `accent-amber` | `#F0C65B` | Best-seller badge |
-| `accent-amber-dark` | `#D79B2B` | Rating stars, product comparison |
+| `accent-amber-dark` | `#D79B2B` | Product comparison, campaign-page review stars (product-page stars use `brand-navy`) |
 | `success-green` | `#176348` | Discounts/savings, success states, checkout, account pages |
 | `accent-green-deep` | `#103E3A` | Product claims |
 | `accent-green-moss` | `#315B3E` | Product ratings |

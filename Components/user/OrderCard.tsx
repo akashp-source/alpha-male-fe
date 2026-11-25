@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { canOptimizeImage } from "@/lib/image-hosts";
 import {
     ChevronDown,
     ChevronUp,
@@ -514,7 +515,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                                         fill
                                         sizes="62px"
                                         className="object-contain p-1"
-                                        unoptimized
+                                        unoptimized={!canOptimizeImage(item.image)}
                                     />
                                 ) : (
                                     <Package size={23} className="text-[#9aa5b5]" />
