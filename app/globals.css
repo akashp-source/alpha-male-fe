@@ -225,6 +225,8 @@ input {
 
 /* Floating WhatsApp button (Components/WhatsAppFloat.tsx): hidden while the
    cart drawer is open (CartDrawer sets data-cart-open on <html>). */
-html[data-cart-open] .whatsapp-float {
+html[data-cart-open] .whatsapp-float,
+/* ...and while product images are full screen (ProductImageLightbox). */
+html[data-lightbox-open] .whatsapp-float {
   display: none;
 }
