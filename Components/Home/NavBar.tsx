@@ -186,8 +186,23 @@ export default function Navbar() {
                         className="h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11 md:h-14 md:w-14"
                     />
 
-                    <span className="truncate font-heading text-[13px] font-semibold tracking-[0.05em] text-brand-navy sm:text-base sm:tracking-[0.08em] md:text-[27px]">
-                        ALPHA MALE
+                    {/* Wordmark + tagline (DRIVE • STAMINA • ENERGY), centred under it like the logo artwork */}
+                    {/* The name sets the width; the tagline (w-0 + min-w-full) is
+                        stretched to exactly that width and can never be wider. */}
+                    <span className="inline-flex min-w-0 flex-col leading-none">
+                        <span className="truncate font-heading text-[13px] font-semibold leading-none tracking-[0.05em] text-brand-navy sm:text-base sm:tracking-[0.08em] md:text-[27px]">
+                            ALPHA MALE
+                        </span>
+                        {/* Hidden on the smallest phones, where it would be too small to read */}
+                        {/* Centred under the name with even gaps around the dots (like the
+                            logo artwork); still capped to the name's width. */}
+                        <span className="mt-1 hidden w-0 min-w-full items-center justify-center gap-[0.9em] whitespace-nowrap font-body text-[5.5px] font-semibold uppercase leading-none tracking-[0.12em] text-brand-navy sm:flex md:mt-1.5 md:text-[9px]">
+                            <span>Drive</span>
+                            <span aria-hidden="true">•</span>
+                            <span>Stamina</span>
+                            <span aria-hidden="true">•</span>
+                            <span>Energy</span>
+                        </span>
                     </span>
                 </Link>
 

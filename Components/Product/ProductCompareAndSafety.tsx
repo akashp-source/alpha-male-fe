@@ -89,7 +89,8 @@ export default function ProductCompareAndSafety({ comparison, safetyInfo }: Prod
 
                 {/* Read before use */}
                 {showSafety && (
-                    <aside className="rounded-2xl border border-medium-gray p-6 sm:p-7">
+                    // On its own (no comparison table) the box is centred at a readable width.
+                    <aside className={`rounded-2xl border border-medium-gray p-6 sm:p-7 ${showTable ? "" : "mx-auto w-full max-w-3xl"}`}>
                         <p className="mb-3 font-body text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-navy">
                             Read before use
                         </p>

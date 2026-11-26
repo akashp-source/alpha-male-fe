@@ -7,7 +7,7 @@ const SUPPORT_EMAIL = "info@alphamale.co.in";
 // Same support number as the Help page and IT policy.
 const SUPPORT_PHONE = "+91 90009 37222";
 const SUPPORT_PHONE_LINK = "+919000937222";
-const SUPPORT_HOURS = "10 am – 6 pm, Mon – Sat";
+const SUPPORT_HOURS = "10 am - 6 pm, Mon - Sat";
 
 const SHOP_LINKS = [
     { label: "Alpha Bold · 25 mg", href: "/products/alpha-male-bold-s-25mg" },

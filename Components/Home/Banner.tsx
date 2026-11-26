@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-// Text-free product line-up (1453 × 897). Shown whole — never cropped or
-// covered — on every screen size; the text sits beside it (desktop) or
+// Text-free product line-up (1453 × 897). Shown whole - never cropped or
+// covered - on every screen size; the text sits beside it (desktop) or
 // below it (mobile) on a navy that matches the photo's own background.
 const BANNER = { src: "/images/banner/alpha-male-banner2.webp", width: 1453, height: 897 };
 

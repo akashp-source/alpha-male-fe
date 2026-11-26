@@ -11,12 +11,12 @@ import { canOptimizeImage } from "@/lib/image-hosts";
  * the circle shows an empty ring as a placeholder.
  */
 const STANDARDS: { label: string; image: string }[] = [
-    { label: "WHO-GMP certified facility", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/991a4707-d50a-4a10-8506-d2ac6411d584.webp" /* TODO: image URL */ },
+    { label: "WHO-GMP certified facility", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/f57e0f71-f4f6-4df7-aaac-a303affe6f85.webp" /* TODO: image URL */ },
     { label: "Own licensed manufacturing", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/528e33bd-b081-4ca7-9271-f9e301e12553.webp" /* TODO: image URL */ },
     { label: "Every batch tested before release", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/660f4f1b-3df3-4ff1-b95e-209160492cee.webp" /* TODO: image URL */ },
     { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/db690718-c067-4673-b6e5-07633898ea94.webp" /* TODO: image URL */ },
     { label: "Plain, sealed parcel", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/b5696aa5-8c08-46e7-83d8-bcc7071d8785.webp" /* TODO: image URL */ },
-    { label: "Secure payments · COD available", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/a2890c2e-3020-4280-9564-a25368a0400c.webp" /* TODO: image URL */ },
+    { label: "Secure payments · COD available", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/1fc835c0-48be-49ee-a16d-5b339b97359a.webp" /* TODO: image URL */ },
 ];
 
 // Marquee: each copy holds the badges this many times (wider than any screen).
@@ -65,7 +65,7 @@ export default function OurStandard({ marquee = false }: OurStandardProps) {
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl font-body text-sm leading-relaxed text-brand-navy-muted sm:text-base">
                     Every strip is made in our own licensed facility that follows WHO Good Manufacturing
-                    Practice — from raw material checks to batch release.
+                    Practice - from raw material checks to batch release.
                 </p>
             </div>
 

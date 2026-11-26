@@ -268,7 +268,7 @@ export default function HelpCenter() {
                                 <span aria-hidden="true" className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-navy text-white"><Headphones size={20} /></span>
                                 <div>
                                     <h3 className="text-base font-semibold text-brand-navy">Talk to us</h3>
-                                    <p className="text-xs text-brand-navy-muted">Mon–Sat, 10 am – 6 pm IST</p>
+                                    <p className="text-xs text-brand-navy-muted">Mon-Sat, 10 am - 6 pm IST</p>
                                 </div>
                             </div>
                             <div className="space-y-2.5">

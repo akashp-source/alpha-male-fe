@@ -22,6 +22,7 @@ import {
     CheckCircle2,
 } from "lucide-react";
 import AccountSidebar from "@/Components/user/AccountSidebar";
+import { ONLINE_PAYMENT_DISCOUNT_PERCENT } from "@/lib/offers";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
 const SUPPORT_EMAIL = "info@alphamale.co.in";
@@ -63,7 +64,7 @@ const faqs: FAQ[] = [
     { topic: "Orders", question: "Can I cancel my order?", answer: "If your order has not shipped, contact our team as soon as possible. Once it has shipped, cancellation may no longer be available.", },
     { topic: "Delivery", question: "Is the packaging discreet?", answer: "Yes. Orders are shipped in plain packaging with private billing, so the product details are not visible on the outside.", },
     { topic: "Delivery", question: "Do you deliver to my pincode?", answer: "Pincode serviceability is confirmed at checkout. If your address is not serviceable, try another delivery address or contact our team.", },
-    { topic: "Payments", question: "How does the 12% online payment offer work?", answer: "Eligible prepaid orders receive the online payment offer at checkout. The final discount is shown in your order summary before you place the order.", },
+    { topic: "Payments", question: `How does the ${ONLINE_PAYMENT_DISCOUNT_PERCENT}% online payment offer work?`, answer: "Eligible prepaid orders receive the online payment offer at checkout. The final discount is shown in your order summary before you place the order.", },
     { topic: "Payments", question: "Is cash on delivery available?", answer: "Cash on delivery may be available for eligible locations and orders. You’ll see it as a payment option at checkout when available.", },
     { topic: "Payments", question: "When will I get my refund?", answer: "After a return or cancellation is approved, the refund is initiated to the original payment method. Processing time depends on your bank or payment provider.", },
     { topic: "Returns", question: "How do I return an item?", answer: "Please review our Returns policy, then contact support with your order number and reason. Our team will guide you through the next steps.", },
@@ -248,7 +249,7 @@ export default function SupportPage() {
 
                             <div className="space-y-4">
                                 <section className="rounded-[22px] border border-[#e1e6ee] bg-white p-5 sm:p-6">
-                                    <div className="mb-4 flex items-center gap-3"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-navy text-white"><Headphones size={20} /></span><div><h2 className="text-base font-semibold text-brand-navy">Talk to us</h2><p className="text-xs text-[#718096]">Mon–Sat, 10 am – 6 pm IST</p></div></div>
+                                    <div className="mb-4 flex items-center gap-3"><span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-navy text-white"><Headphones size={20} /></span><div><h2 className="text-base font-semibold text-brand-navy">Talk to us</h2><p className="text-xs text-[#718096]">Mon-Sat, 10 am - 6 pm IST</p></div></div>
                                     <div className="space-y-2.5">
                                         <a href={`https://wa.me/${SUPPORT_PHONE_LINK.slice(1)}`} target="_blank" rel="noreferrer" className="flex min-h-[72px] items-center gap-3 rounded-2xl bg-[#e8f5ef] p-3 transition hover:bg-[#ddf0e7]"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#19985d] text-white"><MessageCircle size={19} /></span><span className="min-w-0 flex-1"><span className="block text-sm font-bold text-brand-navy">Chat on WhatsApp</span><span className="block break-words text-xs text-brand-navy-muted">Usually the fastest way · {SUPPORT_PHONE}</span></span><span className="text-brand-navy">›</span></a>
                                         <a href={`mailto:${SUPPORT_EMAIL}`} className="flex min-h-[65px] items-center gap-3 rounded-2xl border border-[#e1e6ee] p-3 transition hover:bg-[#f8f9fb]"><Mail size={20} className="ml-1 shrink-0 text-brand-navy" /><span className="min-w-0 flex-1"><span className="block text-sm font-bold text-brand-navy">Email us</span><span className="block break-all text-xs text-[#718096]">{SUPPORT_EMAIL}</span></span><span>›</span></a>

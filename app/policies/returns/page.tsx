@@ -128,8 +128,8 @@ const sections = [
                         </thead>
                         <tbody className="text-palladium">
                             {[
-                                ["UPI, card, net banking or wallet", "Your original payment method", "5–7 business days"],
-                                ["Cash on Delivery", "Your bank account or UPI ID, which you share through our secure support link", "5–7 business days"],
+                                ["UPI, card, net banking or wallet", "Your original payment method", "5-7 business days"],
+                                ["Cash on Delivery", "Your bank account or UPI ID, which you share through our secure support link", "5-7 business days"],
                                 ["Alpha Male store credit (if you choose it)", "Your Alpha Male account", "Within 24 hours"],
                             ].map((row) => (
                                 <tr key={row[0]} className="border-b border-[#28344A] last:border-0">
@@ -265,7 +265,7 @@ export default function ReturnRefundPolicyPage() {
                             ["Can I return a sealed product if I change my mind?", "Yes, within 7 days of delivery"],
                             ["What if my order arrives damaged or wrong?", "Tell us within 48 hours. We’ll replace it or refund you in full"],
                             ["Do I pay for the return?", "Not for damaged, wrong or expired items. For change-of-mind returns, the shipping fee is deducted from your refund"],
-                            ["How soon is my refund?", "5–7 business days after your return is approved"],
+                            ["How soon is my refund?", "5-7 business days after your return is approved"],
                         ].map(([question, answer]) => (
                             <div key={question} className="grid gap-1 border-b border-[#354158] pb-3 last:border-0 sm:grid-cols-2">
                                 <p className="text-olympus">{question}</p>

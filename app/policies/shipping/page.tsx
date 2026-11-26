@@ -21,7 +21,7 @@ const sections = [
         title: "2. Order Processing",
         content: (
             <ul>
-                <li>Orders are processed and handed to our courier partner within 24–48 hours of confirmation.</li>
+                <li>Orders are processed and handed to our courier partner within 24-48 hours of confirmation.</li>
                 <li>Orders placed after 5:00 PM IST, or on Sundays and public holidays, are processed from the next working day.</li>
                 <li>If a product needs a valid prescription or a verification step, we dispatch it once that step is complete.</li>
                 <li>During sales and festive periods, processing may take up to an extra 24 hours. We will let you know if your order is affected.</li>
@@ -43,15 +43,15 @@ const sections = [
                         <tbody className="text-palladium">
                             <tr className="border-b border-[#28344A]">
                                 <td className="py-3 pr-4">Metro cities (Hyderabad, Bengaluru, Mumbai, Delhi NCR, Chennai, Kolkata, Pune)</td>
-                                <td className="py-3">2–4 business days</td>
+                                <td className="py-3">2-4 business days</td>
                             </tr>
                             <tr className="border-b border-[#28344A]">
                                 <td className="py-3 pr-4">Tier 2 and Tier 3 cities</td>
-                                <td className="py-3">3–6 business days</td>
+                                <td className="py-3">3-6 business days</td>
                             </tr>
                             <tr>
                                 <td className="py-3 pr-4">Remote areas, North-East states, Jammu & Kashmir, Andaman & Nicobar, Lakshadweep</td>
-                                <td className="py-3">6–10 business days</td>
+                                <td className="py-3">6-10 business days</td>
                             </tr>
                         </tbody>
                     </table>
@@ -280,8 +280,8 @@ export default function ShippingPolicyPage() {
                     <h2 className="mb-5 font-heading text-2xl">At a Glance</h2>
                     <div className="space-y-4 text-sm">
                         {[
-                            ["When will my order leave?", "Within 24–48 hours of confirmation"],
-                            ["How long does delivery take?", "2–4 business days in metro cities, 3–6 in other cities, and up to 10 in remote areas"],
+                            ["When will my order leave?", "Within 24-48 hours of confirmation"],
+                            ["How long does delivery take?", "2-4 business days in metro cities, 3-6 in other cities, and up to 10 in remote areas"],
                             ["Will anyone know what’s inside?", "No. Plain, sealed packaging, with no product names on the label"],
                             ["How do I track it?", "A tracking link by SMS, WhatsApp and email as soon as it ships"],
                             ["Is express delivery available?", "Yes, in selected cities. Ask us before ordering"],

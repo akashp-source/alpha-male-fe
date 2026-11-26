@@ -138,7 +138,7 @@ function SplitBanner({ banner }: { banner: StoryBanner }) {
                                 <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-current opacity-60" />
                                 <span>
                                     {item.title && <strong className="font-semibold">{item.title}</strong>}
-                                    {item.title && item.text && " — "}
+                                    {item.title && item.text && " - "}
                                     {item.text && <span className={theme.muted}>{item.text}</span>}
                                 </span>
                             </li>

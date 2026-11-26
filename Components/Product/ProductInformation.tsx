@@ -11,7 +11,7 @@ interface ProductInformationProps {
  * SKU and licence number come from their own product fields and are added
  * at the end unless the admin already typed a row with that label.
  */
-export default function ProductInformation({ information, sku, licenceNumber }: ProductInformationProps) {
+export default function ProductInformation({ information, licenceNumber }: ProductInformationProps) {
     const rows = (information?.rows ?? []).filter((row) => row.label?.trim() && row.value?.trim());
     if (!rows.length) return null;
 
@@ -19,7 +19,7 @@ export default function ProductInformation({ information, sku, licenceNumber }: 
     const allRows = [
         ...rows,
         ...(licenceNumber?.trim() && !hasRow(/licen[cs]e/i) ? [{ label: "Mfg. licence", value: licenceNumber.trim() }] : []),
-        ...(sku?.trim() && !hasRow(/^sku$/i) ? [{ label: "SKU", value: sku.trim() }] : []),
+        // ...(sku?.trim() && !hasRow(/^sku$/i) ? [{ label: "SKU", value: sku.trim() }] : []),
     ];
 
     const image = information?.image?.trim();

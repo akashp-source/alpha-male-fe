@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { canOptimizeImage } from "@/lib/image-hosts";
+
+/**
+ * Photos that slide in the banner. TO ADD MORE: add another { src, alt }
+ * line below (any number works; dots are added automatically).
+ * Best: 16:9 WebP (e.g. 1600×900), under ~200 KB, uploaded through the admin
+ * Image library; paste its S3 link as `src`. `alt` describes the photo for
+ * screen readers.
+ */
 const SLIDES = [
     {
         src: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/alpha-male-delivery-tape.webp",
@@ -23,8 +32,8 @@ interface DeliveryBannerProps {
 }
 
 /**
- * "Discreet delivery" banner: text on the left (on top on phones) with the
- * packaging photos cross-fading behind/below it, advancing every 5 seconds.
+ * "Discreet delivery" banner: text on the left, photos sliding on the right
+ * (desktop); text above the photos on phones. Advances every 5 seconds.
  */
 export default function DeliveryBanner({ showShopButton = false }: DeliveryBannerProps) {
     const [active, setActive] = useState(0);
@@ -32,6 +41,7 @@ export default function DeliveryBanner({ showShopButton = false }: DeliveryBanne
     // Always auto-advances. Depending on `active` restarts the timer, so a
     // dot click gets a full 5 seconds before the next slide.
     useEffect(() => {
+        if (SLIDES.length < 2) return;
         const timer = window.setTimeout(() => setActive((i) => (i + 1) % SLIDES.length), SLIDE_MS);
         return () => window.clearTimeout(timer);
     }, [active]);
@@ -40,32 +50,12 @@ export default function DeliveryBanner({ showShopButton = false }: DeliveryBanne
         <section
             aria-roledescription="carousel"
             aria-label="Discreet delivery"
-            className="relative w-full overflow-hidden bg-brand-navy text-white"
+            className="relative w-full overflow-hidden bg-brand-navy py-12 text-white sm:py-16 lg:py-0"
         >
-            <div className="relative flex flex-col lg:block lg:min-h-[520px]">
+            <div className="pdp-container grid grid-cols-1 items-center gap-8 lg:min-h-[460px] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
 
-                {/* Photos: full-bleed behind the text on desktop, below it on phones */}
-                <div className="relative order-2 aspect-[16/9] w-full lg:absolute lg:inset-0 lg:aspect-auto">
-                    {SLIDES.map((slide, index) => (
-                        <Image
-                            key={slide.src}
-                            src={slide.src}
-                            alt={slide.alt}
-                            fill
-                            sizes="100vw"
-                            aria-hidden={index !== active}
-                            className={`object-cover object-center transition-[opacity,transform] duration-[1200ms] ease-in-out lg:object-right ${index === active ? "scale-100 opacity-100" : "opacity-0 motion-safe:scale-105"}`}
-                        />
-                    ))}
-
-                    {/* Desktop: navy fade on the left so the text stays readable */}
-                    <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-brand-navy via-brand-navy/80 to-transparent lg:block" />
-                    {/* Phone: soft fade from the text block into the photo */}
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-brand-navy to-transparent lg:hidden" />
-                </div>
-
-                {/* Text */}
-                <div className="pdp-container relative z-10 order-1 flex flex-col items-center py-10 text-center lg:min-h-[520px] lg:items-start lg:justify-center lg:py-16 lg:text-left">
+                {/* Text (left on desktop, top on phones) */}
+                <div className="relative z-10 flex flex-col items-center text-center lg:items-start lg:justify-center lg:py-16 lg:text-left">
                     <Image
                         src="/images/logo.png"
                         alt="Alpha Male"
@@ -96,18 +86,39 @@ export default function DeliveryBanner({ showShopButton = false }: DeliveryBanne
                     )}
 
                     {/* Slide dots */}
-                    <div className="mt-8 flex gap-2" role="group" aria-label="Choose photo">
-                        {SLIDES.map((slide, index) => (
-                            <button
-                                key={slide.src}
-                                type="button"
-                                onClick={() => setActive(index)}
-                                aria-label={`Show photo ${index + 1} of ${SLIDES.length}`}
-                                aria-current={index === active}
-                                className={`h-2 rounded-full transition-all duration-300 ${index === active ? "w-6 bg-white" : "w-2 bg-white/40 hover:bg-white/70"}`}
-                            />
-                        ))}
-                    </div>
+                    {SLIDES.length > 1 && (
+                        <div className="mt-8 flex gap-2" role="group" aria-label="Choose photo">
+                            {SLIDES.map((slide, index) => (
+                                <button
+                                    key={slide.src}
+                                    type="button"
+                                    onClick={() => setActive(index)}
+                                    aria-label={`Show photo ${index + 1} of ${SLIDES.length}`}
+                                    aria-current={index === active}
+                                    className={`h-2 rounded-full transition-all duration-300 ${index === active ? "w-6 bg-white" : "w-2 bg-white/40 hover:bg-white/70"}`}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                {/* Photos. Phones: 16:9 below the text, fading in/out top and
+                    bottom. Desktop: fills the right side of the banner, full
+                    height and right up to the screen edge; only its left edge
+                    fades into the navy behind the text. */}
+                <div className="relative aspect-[16/9] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_85%,transparent)] lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-[56%] lg:[mask-image:linear-gradient(to_right,transparent,black_22%)]">
+                    {SLIDES.map((slide, index) => (
+                        <Image
+                            key={slide.src}
+                            src={slide.src}
+                            alt={slide.alt}
+                            fill
+                            sizes="(min-width: 1024px) 56vw, 100vw"
+                            unoptimized={!canOptimizeImage(slide.src)}
+                            aria-hidden={index !== active}
+                            className={`object-cover transition-[opacity,transform] duration-[1200ms] ease-in-out ${index === active ? "scale-100 opacity-100" : "opacity-0 motion-safe:scale-105"}`}
+                        />
+                    ))}
                 </div>
 
             </div>
