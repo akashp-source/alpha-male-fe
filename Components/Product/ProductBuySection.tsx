@@ -17,7 +17,7 @@ import {
     type PackSuggestions,
 } from "@/lib/packSuggestions";
 import { ONLINE_PAYMENT_DISCOUNT_PERCENT } from "@/lib/offers";
-import { WHATSAPP_LINK } from "@/lib/contact";
+// import { WHATSAPP_LINK } from "@/lib/contact"; (used by the removed strength note)
 import ProductGallery from "./ProductGallery";
 
 // "Choose strength" order, remembered for one navigation: clicking another
@@ -38,7 +38,7 @@ function readStrengthOrder(productId: string, optionIds: string[]): string[] | n
         return null;
     }
 }
-import DeliveryCheck from "./DeliveryCheck";
+// import DeliveryCheck from "./DeliveryCheck";
 import { PackSuggestionsBox, PackUpgradeDialog } from "./PackSuggestions";
 import RichDescription from "./RichDescription";
 import {
@@ -50,7 +50,7 @@ import {
     Check,
     Package,
     ChevronRight,
-    Phone,
+    // Phone, (used by the removed consultation-call note)
     Star,
 } from "lucide-react";
 
@@ -601,6 +601,7 @@ export default function ProductBuySection({
                                     })}
                                 </div>
 
+                                {/* "Not sure which strength?" WhatsApp note - removed for now
                                 <p className="mt-2 font-body text-xs text-brand-navy-muted">
                                     Not sure which strength?{" "}
                                     <a
@@ -613,6 +614,7 @@ export default function ProductBuySection({
                                     </a>
                                     {" "}- free and private
                                 </p>
+                                */}
                             </div>
                         )}
 
@@ -891,10 +893,11 @@ export default function ProductBuySection({
                             )}
                         </div>
 
-                        {/* Check delivery date */}
-                        <DeliveryCheck />
+                        {/* Check delivery date (pincode) - removed for now */}
+                        {/* <DeliveryCheck /> */}
 
-                        {/* Prescription products: consultation call before dispatch */}
+                        {/* Prescription consultation-call note - removed for now
+                        {/ * Prescription products: consultation call before dispatch * /}
                         {product.requiresPrescription && (
                             <div className="mt-3 flex items-start gap-3 rounded-lg border border-olympus bg-white p-3">
                                 <Phone size={16} className="mt-0.5 shrink-0 text-brand-navy" aria-hidden="true" />
@@ -908,10 +911,13 @@ export default function ProductBuySection({
                             </div>
                         )}
 
-                        {/* SKU */}
+                        */}
+
+                        {/* SKU - removed for now
                         <p className="mt-3 font-body text-[10px] text-brand-navy-muted sm:text-xs">
                             SKU: {product.sku}
                         </p>
+                        */}
                     </div>
                 </div>
             </div>

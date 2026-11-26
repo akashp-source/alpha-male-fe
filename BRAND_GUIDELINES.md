@@ -9,7 +9,7 @@ Source: the official *Alpha Male Brand Guidelines* PDF (kept outside this repo).
 ## 1. Logo
 
 - The logo is a white/silver lion head inside a dark-navy "A"-shaped triangle, with the **ALPHA MALE** wordmark underneath and the tagline **DRIVE • STAMINA • ENERGY**.
-- Always use the supplied artwork (`public/images/logo.png`, `public/images/logo2.webp`). Never redraw, rebuild or recolour it in code.
+- Always use the supplied artwork (`https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/7dea7f70-17ce-4059-ae58-1e7da21d2220.webp`, `public/images/logo2.webp`). Never redraw, rebuild or recolour it in code.
 - Keep its proportions: triangle **86.95 mm wide × 64.58 mm high**, wordmark **51.22 mm wide**. Never stretch, squash or crop it.
 - Standard square export sizes: **500×500**, **300×300** and **150×150 px**. Use the nearest size for the slot; don't upscale a smaller one.
 

@@ -107,7 +107,7 @@ export default function TermsAndConditionsPage() {
                     <div className="mb-4 flex justify-center">
                         <Link href="/home" aria-label="Alpha Male home">
                             <Image
-                                src="/images/logo.png"
+                                src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/7dea7f70-17ce-4059-ae58-1e7da21d2220.webp"
                                 alt="Alpha Male - Drive, Stamina, Energy"
                                 width={150}
                                 height={150}

@@ -4,25 +4,25 @@ import Link from "next/link";
 const values = [
     {
         number: "01",
-        image: "/images/icons/formula.png",
+        image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/93033c71-7232-4ac3-833d-32fb3a45bc4c.webp",
         title: "Thoughtfully formulated",
         description: "Every product is built around carefully selected ingredients and clear, honest usage guidance.",
     },
     {
         number: "02",
-        image: "/images/icons/privacy.png",
+        image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/c835f2ee-686a-4d94-bd76-b06fcf608f8e.webp",
         title: "Privacy by default",
         description: "Plain packaging, private billing and tracking that never shows what’s inside. Order without a second thought.",
     },
     {
         number: "03",
-        image: "/images/icons/madeforreallife.png",
+        image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/d4a87191-493b-4e2a-bd33-cfa381b6ea58.webp",
         title: "Made for real life",
         description: "Fast-dissolving strips, no water needed and compact packs that slip into a pocket.",
     },
     {
         number: "04",
-        image: "/images/icons/straightanswer.png",
+        image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/69c4f08d-ca46-4f8e-8f49-2f72bf00e3de.webp",
         title: "Straight answers",
         description: "Clear information on what each product does and how to use it, so you can decide with confidence.",
     },
@@ -69,7 +69,7 @@ export default function BrandValues() {
                     <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-brand-navy shadow-[0_6px_20px_rgba(33,46,73,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(33,46,73,0.18)] lg:flex-row">
                         <div className="relative h-44 shrink-0 overflow-hidden bg-[linear-gradient(180deg,#f3e2d6_0%,#ecdcd1_100%)] sm:h-48 lg:h-auto lg:w-[42%]">
                             <Image
-                                src="/images/utils/info-products.png"
+                                src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/964a0a2c-57c8-4d12-9c51-25644f5f9f0a.webp"
                                 alt="Alpha Male condoms, delay spray and oral strips"
                                 fill
                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 15vw"

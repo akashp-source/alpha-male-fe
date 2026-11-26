@@ -27,7 +27,7 @@ export default function WhatsAppFloat() {
       "
         >
             <Image
-                src="/images/icons/wp.png"
+                src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/b72bac62-974d-49df-94f4-fa4e41ec070f.webp"
                 alt="WhatsApp"
                 width={128}
                 height={128}

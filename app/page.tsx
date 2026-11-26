@@ -203,21 +203,21 @@ export default function Home() {
 
   const products = [
     {
-      image: "/images/strip.png",
+      image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/df190abd-2618-4bb2-a073-b2a0481dd94f.webp",
       title: "ORAL STRIPS",
       description:
         "BUILT FOR PERFORMANCE. MADE TO LAST.\n\nAlpha Bold, Alpha Boss, Alpha Legend and Alpha Icon - discreet dissolving strips for peak performance and lasting confidence, when it matters most.\n\n No water needed.",
       tag: "COMING SOON",
     },
     {
-      image: "/images/intimacy-care.png",
+      image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/f161cfa2-02a2-4e04-bb45-672256e549ed.webp",
       title: "INTIMACY CARE",
       description:
         "More than intimacy.\n\n Bare Ultra thin Condoms, Long-play confidence, daily energy and science-backed lubricants.",
       tag: "COMING SOON",
     },
     {
-      image: "/images/daily-wellness2.png",
+      image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/a2723487-6f9f-45fb-b762-5598d9065b62.webp",
       title: "DAILY WELLNESS",
       description:
         " Shilajit & caffeine - everyday support for energy and focus.",
@@ -257,7 +257,7 @@ export default function Home() {
         <div className="flex items-start justify-center p-2 md:justify-start">
           <div className="w-[220px] sm:w-[280px]">
             <Image
-              src="/images/logo-cropped.png"
+              src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/1c2036f3-31c7-4a41-9fc7-7470ae79f4ca.webp"
               alt="Alpha Male - Drive, Stamina, Energy"
               width={800}
               height={800}
@@ -384,7 +384,7 @@ export default function Home() {
             </span>
 
             <Image
-              src="/images/down.png"
+              src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/711aaaa1-acf7-4c49-8139-82f2f6fdd5cb.webp"
               alt="Scroll down"
               width={64}
               height={64}
@@ -402,7 +402,7 @@ export default function Home() {
             </span>
 
             <Image
-              src="/images/down.png"
+              src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/711aaaa1-acf7-4c49-8139-82f2f6fdd5cb.webp"
               alt="Scroll down"
               width={64}
               height={64}
@@ -424,7 +424,7 @@ export default function Home() {
         {/* Certification Seal */}
         <div className="flex justify-center sm:justify-start">
           <Image
-            src="/images/whogmp.png"
+            src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/f57e0f71-f4f6-4df7-aaac-a303affe6f85.webp"
             alt="WHO-GMP"
             width={140}
             height={140}
