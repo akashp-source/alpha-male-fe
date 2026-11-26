@@ -47,7 +47,8 @@ export default function ProductPageView({ product }: { product: any }) {
             <ProductRecommendationsV2 product={product} />
 
             {/* "Our standard" badges (replaces the navy trust bar) */}
-            <OurStandard />
+            {/* <OurStandard /> */}
+            <OurStandard marquee />
 
             {/* Story banners (stacked; renders only if set in admin) */}
             <ProductStoryBanners header={product.storyHeader} banners={product.storyBanners} />
@@ -136,10 +137,10 @@ export default function ProductPageView({ product }: { product: any }) {
                 productName={product.name}
             /> */}
             {/* Long-form description (renders only if set in DB) */}
-            <ProductDetailedDescriptionV2
+            {/* <ProductDetailedDescriptionV2
                 detailedDescription={product.detailedDescription}
                 productName={product.name}
-            />
+            /> */}
 
             {/* Ratings and reviews (old design, replaced by ProductRatingsV2)
             <ProductRatings

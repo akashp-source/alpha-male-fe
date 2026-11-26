@@ -4,7 +4,7 @@ import { canOptimizeImage } from "@/lib/image-hosts";
 
 /**
  * "Our standard" badges: navy circles with an icon/photo and a label.
- * Product page: a centred row. Homepage: `marquee` slides the badges.
+ * Homepage and product page: `marquee` slides the badges. Without it: a centred row.
  *
  * TODO: add the image URLs below (S3 links from the admin Image library,
  * ideally square WebP, about 300×300 px and under 50 KB). Until a URL is set,
@@ -17,6 +17,9 @@ const STANDARDS: { label: string; image: string }[] = [
     { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/db690718-c067-4673-b6e5-07633898ea94.webp" /* TODO: image URL */ },
     { label: "Plain, sealed parcel", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/b5696aa5-8c08-46e7-83d8-bcc7071d8785.webp" /* TODO: image URL */ },
     { label: "Secure payments · COD available", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/1fc835c0-48be-49ee-a16d-5b339b97359a.webp" /* TODO: image URL */ },
+    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/01147f6d-5cd9-41a2-8854-11d8ad466af8.webp" /* TODO: image URL */ },
+    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/17e15f0a-8b88-4aaf-9a54-f2e708f9a14b.webp" /* TODO: image URL */ },
+    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/0908090a-6e7f-4567-a9d1-0ace507e5449.webp" /* TODO: image URL */ },
 ];
 
 // Marquee: each copy holds the badges this many times (wider than any screen).
