@@ -28,7 +28,7 @@ const values = [
     },
     {
         number: "05",
-        image: "/images/icons/support",
+        image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/dc7ff08e-3703-421e-bbe0-9330e1701b09.webp",
         title: "Support, minus the judgement",
         description: "Questions are normal. Reach our team on WhatsApp or email, and every conversation stays private.",
     },

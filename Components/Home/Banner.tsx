@@ -27,9 +27,18 @@ export default function HeroBanner() {
 
                 {/* Text: below the image on mobile, left column on desktop */}
                 <div className="order-2 px-6 pb-10 pt-2 sm:px-10 sm:pb-12 lg:order-1 lg:px-0 lg:py-0">
-                    <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.24em] text-olympus sm:mb-4 sm:text-sm sm:tracking-[0.3em]">
+                    {/* <p className="mb-3 font-body text-xs font-semibold uppercase tracking-[0.24em] text-olympus sm:mb-4 sm:text-sm sm:tracking-[0.3em]">
                         Drive · Stamina · Energy
-                    </p>
+                    </p> */}
+                    <Image
+                        src="/images/logo-cropped.png"
+                        alt="Alpha Male"
+                        width={140}
+                        height={140}
+                        priority
+                        sizes="(min-width: 1024px) 128px, 96px"
+                        className="mb-4 h-24 w-24 object-contain sm:mb-5 lg:h-32 lg:w-32"
+                    />
                     <h1 className="font-heading text-[34px] font-semibold uppercase leading-[1.08] tracking-wide text-white sm:text-5xl lg:text-[52px] xl:text-[58px]">
                         Performance Strips
                     </h1>

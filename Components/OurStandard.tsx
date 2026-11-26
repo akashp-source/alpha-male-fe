@@ -4,7 +4,7 @@ import { canOptimizeImage } from "@/lib/image-hosts";
 
 /**
  * "Our standard" badges: navy circles with an icon/photo and a label.
- * Product page: a centred row. Homepage: `marquee` slides the badges.
+ * Homepage and product page: `marquee` slides the badges. Without it: a centred row.
  *
  * TODO: add the image URLs below (S3 links from the admin Image library,
  * ideally square WebP, about 300×300 px and under 50 KB). Until a URL is set,
@@ -14,9 +14,12 @@ const STANDARDS: { label: string; image: string }[] = [
     { label: "WHO-GMP certified facility", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/f57e0f71-f4f6-4df7-aaac-a303affe6f85.webp" /* TODO: image URL */ },
     { label: "Own licensed manufacturing", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/528e33bd-b081-4ca7-9271-f9e301e12553.webp" /* TODO: image URL */ },
     { label: "Every batch tested before release", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/660f4f1b-3df3-4ff1-b95e-209160492cee.webp" /* TODO: image URL */ },
-    { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/db690718-c067-4673-b6e5-07633898ea94.webp" /* TODO: image URL */ },
+    { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/0167e65b-38f6-42cf-bf73-dfa623f24bdb.webp" /* TODO: image URL */ },
     { label: "Plain, sealed parcel", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/b5696aa5-8c08-46e7-83d8-bcc7071d8785.webp" /* TODO: image URL */ },
     { label: "Secure payments · COD available", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/1fc835c0-48be-49ee-a16d-5b339b97359a.webp" /* TODO: image URL */ },
+    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/01147f6d-5cd9-41a2-8854-11d8ad466af8.webp" /* TODO: image URL */ },
+    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/17e15f0a-8b88-4aaf-9a54-f2e708f9a14b.webp" /* TODO: image URL */ },
+    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/0908090a-6e7f-4567-a9d1-0ace507e5449.webp" /* TODO: image URL */ },
 ];
 
 // Marquee: each copy holds the badges this many times (wider than any screen).
@@ -85,14 +88,14 @@ export default function OurStandard({ marquee = false }: OurStandardProps) {
                             {Array.from({ length: MARQUEE_REPEAT }, (_, round) =>
                                 STANDARDS.map((item) => (
                                     // Only the first round is read out by screen readers.
-                                    <Badge key={`${round}-${item.label}`} {...item} hidden={round > 0} />
+                                    <Badge key={`${round}-${item.image}`} {...item} hidden={round > 0} />
                                 )),
                             )}
                         </ul>
                         <ul data-duplicate aria-hidden="true" className="flex gap-6 pr-6 sm:gap-10 sm:pr-10">
                             {Array.from({ length: MARQUEE_REPEAT }, (_, round) =>
                                 STANDARDS.map((item) => (
-                                    <Badge key={`copy-${round}-${item.label}`} {...item} />
+                                    <Badge key={`copy-${round}-${item.image}`} {...item} />
                                 )),
                             )}
                         </ul>
@@ -101,7 +104,7 @@ export default function OurStandard({ marquee = false }: OurStandardProps) {
             ) : (
                 <ul className="pdp-container mt-10 flex flex-wrap justify-center gap-x-4 gap-y-8 sm:gap-x-6 lg:flex-nowrap lg:justify-between">
                     {STANDARDS.map((item) => (
-                        <Badge key={item.label} {...item} />
+                        <Badge key={item.image} {...item} />
                     ))}
                 </ul>
             )}

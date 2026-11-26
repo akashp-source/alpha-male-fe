@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { Product } from "@/types/product";
@@ -41,6 +41,8 @@ function readStrengthOrder(productId: string, optionIds: string[]): string[] | n
 // import DeliveryCheck from "./DeliveryCheck";
 import { PackSuggestionsBox, PackUpgradeDialog } from "./PackSuggestions";
 import RichDescription from "./RichDescription";
+import FrequentlyBoughtAddOns, { fbtItemMrp, frequentlyBoughtAddOns } from "./FrequentlyBoughtAddOns";
+import { useStoreCategories } from "@/lib/categories";
 import {
     Loader2,
     Minus,
@@ -81,18 +83,65 @@ type PackOption = {
     badge?: string;
 };
 
+/** Compact "- qty +" for the sticky buy buttons (same quantity as the main selector). */
+function StickyQuantityStepper({
+    quantity,
+    max,
+    disabled,
+    onChange,
+}: {
+    quantity: number;
+    max: number;
+    disabled: boolean;
+    onChange: (value: number) => void;
+}) {
+    return (
+        <div className="flex h-11 shrink-0 items-center rounded-lg border-2 border-olympus bg-white text-brand-navy">
+            <button
+                type="button"
+                onClick={() => onChange(quantity - 1)}
+                disabled={disabled || quantity <= 1}
+                aria-label="Decrease quantity"
+                className="flex h-full w-8 items-center justify-center disabled:opacity-30 sm:w-9"
+            >
+                <Minus size={13} />
+            </button>
+            <span aria-live="polite" aria-label={`Quantity ${quantity}`} className="min-w-6 text-center font-body text-sm font-semibold">
+                {quantity}
+            </span>
+            <button
+                type="button"
+                onClick={() => onChange(quantity + 1)}
+                disabled={disabled || quantity >= max}
+                aria-label="Increase quantity"
+                className="flex h-full w-8 items-center justify-center disabled:opacity-30 sm:w-9"
+            >
+                <Plus size={13} />
+            </button>
+        </div>
+    );
+}
+
 export default function ProductBuySection({
     product,
     onAddToCart,
     onBuyNow,
 }: ProductBuySectionProps) {
     const router = useRouter();
+    // Category name set in admin (Products > Category > Rename). Products store
+    // the slug ("oral-strip"); fall back to it, dashes as spaces, until loaded.
+    const storeCategories = useStoreCategories();
+    const categoryName =
+        storeCategories.find((item) => item.slug === String(product.category ?? "").toLowerCase())?.name ??
+        String(product.category ?? "").replace(/-/g, " ");
     const [quantity, setQuantity] = useState(1);
     const [pending, setPending] = useState<"cart" | "buy" | null>(null);
     const [cartError, setCartError] = useState("");
     // Add-on tick-box next to the buy buttons (set up in admin).
     const [addOnSelected, setAddOnSelected] = useState(false);
     const [addOnNotice, setAddOnNotice] = useState("");
+    // "Frequently bought together" tick boxes by the buy buttons (unticked to start).
+    const [fbtSelectedIds, setFbtSelectedIds] = useState<string[]>([]);
     // Pack-size suggestions (cheaper mix / better-value pack) for the
     // current quantity, set up in admin under "Pack sizes".
     const [packState, setPackState] = useState<{
@@ -132,14 +181,23 @@ export default function ProductBuySection({
     const addOnHasMrp = Boolean(
         addOn?.compareAtPrice && addOn.compareAtPrice > addOn.price
     );
-    // What the price box shows: main product (+ add-on when ticked).
-    const displayTotal = totalPrice + (addOnActive && addOn ? addOn.price : 0);
+    // Frequently bought together (from past orders), minus the admin add-on.
+    const fbtItems = useMemo(
+        () => frequentlyBoughtAddOns(product, addOn ? [addOn._id] : []),
+        [product, addOn],
+    );
+    const fbtSelected = fbtItems.filter((item) => fbtSelectedIds.includes(item._id));
+    const fbtTotal = fbtSelected.reduce((sum, item) => sum + item.price, 0);
+    const fbtMrp = fbtSelected.reduce((sum, item) => sum + fbtItemMrp(item), 0);
+
+    // What the price box shows: main product (+ add-on and FBT items when ticked).
+    const displayTotal = totalPrice + (addOnActive && addOn ? addOn.price : 0) + fbtTotal;
     const addOnMrp =
-        addOnActive && addOn
+        (addOnActive && addOn
             ? addOnHasMrp && addOn.compareAtPrice
                 ? addOn.compareAtPrice
                 : addOn.price
-            : 0;
+            : 0) + fbtMrp;
 
     // Savings are measured against the 1-qty strike-through price (MRP)
     // when there is one, so combos show the full discount off MRP.
@@ -267,6 +325,30 @@ export default function ProductBuySection({
         return () => observer.disconnect();
     }, []);
 
+    // The main "Quantity" selector: while it's off screen (e.g. the buttons are
+    // stuck to the bottom of the screen above it), the stuck buttons get their
+    // own quantity selector; once it's on screen that one is hidden again.
+    const quantityRowRef = useRef<HTMLDivElement>(null);
+    const [quantityRowVisible, setQuantityRowVisible] = useState(true);
+
+    useEffect(() => {
+        const target = quantityRowRef.current;
+        if (!target) {
+            // No main selector on this product: always show the one by the buttons.
+            setQuantityRowVisible(false);
+            return;
+        }
+        if (typeof IntersectionObserver === "undefined") return;
+        // Counts as visible only when fully shown above the stuck buttons
+        // (~80px at the bottom of the screen), not hidden behind them.
+        const observer = new IntersectionObserver(
+            ([entry]) => setQuantityRowVisible(entry.isIntersecting && entry.intersectionRatio >= 0.99),
+            { rootMargin: "0px 0px -84px 0px", threshold: [0, 0.99, 1] },
+        );
+        observer.observe(target);
+        return () => observer.disconnect();
+    }, []);
+
     // Lift the floating WhatsApp button above the buy buttons on this page:
     // they're pinned to the bottom of the screen in both stages (real buttons
     // stuck in their column, then the full bar), so it would cover them.
@@ -294,13 +376,24 @@ export default function ProductBuySection({
      * sold out) is reported without undoing the main item.
      */
     const addSelectedAddOn = async () => {
-        if (!addOnActive || !addOn) return;
-        try {
-            await addToCart(addOn._id, 1);
-        } catch (error) {
-            const reason = error instanceof Error ? error.message : "";
+        // Admin add-on first, then the ticked frequently-bought-together items.
+        const extras = [
+            ...(addOnActive && addOn ? [{ _id: addOn._id, name: addOn.name }] : []),
+            ...fbtSelected,
+        ];
+        const failed: string[] = [];
+        let reason = "";
+        for (const item of extras) {
+            try {
+                await addToCart(item._id, 1);
+            } catch (error) {
+                failed.push(item.name);
+                if (!reason && error instanceof Error) reason = error.message;
+            }
+        }
+        if (failed.length) {
             setAddOnNotice(
-                `${product.name} was added, but ${addOn.name} couldn't be added${reason ? `: ${reason}` : "."}`
+                `${product.name} was added, but ${failed.join(", ")} couldn't be added${reason ? `: ${reason}` : "."}`
             );
         }
     };
@@ -495,7 +588,7 @@ export default function ProductBuySection({
                 <div className="grid min-w-0 grid-cols-1 items-start gap-4 md:gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-8">
 
                     {/* LEFT: Product Images */}
-                    <div className="w-full min-w-0 lg:sticky lg:top-[92px]">
+                    <div className="w-full min-w-0 lg:sticky lg:top-[76px]">
                         {/* Swipe on phone; click + ← → on desktop */}
                         <ProductGallery
                             images={product.images ?? []}
@@ -509,7 +602,8 @@ export default function ProductBuySection({
 
                         {/* Category */}
                         <p className="mb-1 font-body text-[10px] font-semibold uppercase tracking-[0.25em] text-success-green sm:text-xs">
-                            {product.category}
+                            {/* {product.category} */}
+                            {categoryName}
                         </p>
 
                         {/* Product Name */}
@@ -716,7 +810,7 @@ export default function ProductBuySection({
                             </div>
 
                             {/* Any other quantity */}
-                            <div className="mt-3 flex flex-wrap items-center gap-3">
+                            <div ref={quantityRowRef} className="mt-3 flex flex-wrap items-center gap-3">
                                 <span className="font-body text-xs text-brand-navy-muted">Quantity</span>
                                 <div className="flex h-9 items-center rounded-lg border border-olympus bg-white">
                                     <button
@@ -844,24 +938,48 @@ export default function ProductBuySection({
                             </label>
                         )}
 
+                        {/* Frequently bought together: tick to add with this product */}
+                        {!outOfStock && (
+                            <FrequentlyBoughtAddOns
+                                items={fbtItems}
+                                selectedIds={fbtSelectedIds}
+                                disabled={pending !== null}
+                                onToggle={(id, checked) => {
+                                    setFbtSelectedIds((current) =>
+                                        checked ? [...current, id] : current.filter((item) => item !== id),
+                                    );
+                                    setAddOnNotice("");
+                                }}
+                            />
+                        )}
+
                         {/* Add to Cart / Buy Now (watched by the sticky buy bar) */}
                         {/* Sticks to the bottom of the screen within this column until
                             reached; white background so the content behind is hidden. */}
                         <div
                             ref={buyButtonsRef}
-                            className="sticky bottom-0 z-20 -mx-1 mt-3 grid grid-cols-2 gap-2 bg-white px-1 py-3 pb-[max(12px,env(safe-area-inset-bottom))] shadow-[0_-10px_16px_-12px_rgba(33,46,73,0.25)] sm:gap-3"
+                            className={`sticky bottom-0 z-20 -mx-1 mt-3 grid ${quantityRowVisible ? "grid-cols-2" : "grid-cols-[auto_minmax(0,1fr)_minmax(0,1fr)]"} gap-2 bg-white px-1 py-3 pb-[max(12px,env(safe-area-inset-bottom))] shadow-[0_-10px_16px_-12px_rgba(33,46,73,0.25)] sm:gap-3`}
                         >
+                            {/* Quantity: only while the main selector is off screen */}
+                            {!quantityRowVisible && (
+                                <StickyQuantityStepper
+                                    quantity={quantity}
+                                    max={product.stock}
+                                    disabled={outOfStock || pending !== null}
+                                    onChange={updateQuantity}
+                                />
+                            )}
 
                             <button
                                 type="button"
                                 disabled={outOfStock || pending !== null || planPending !== null}
                                 onClick={handleAddToCart}
-                                className="flex h-11 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-white px-3 font-body text-sm font-semibold text-brand-navy transition hover:bg-pale-gray disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg border-2 border-brand-navy bg-white px-2 font-body text-sm font-semibold text-brand-navy transition sm:px-3 hover:bg-pale-gray disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {pending === "cart" ? (
                                     <Loader2 size={16} className="animate-spin" />
                                 ) : (
-                                    <ShoppingBag size={16} />
+                                    <ShoppingBag size={16} className="max-sm:hidden" />
                                 )}
                                 {pending === "cart" ? "Adding..." : "Add to cart"}
                             </button>
@@ -870,24 +988,24 @@ export default function ProductBuySection({
                                 type="button"
                                 disabled={outOfStock || pending !== null}
                                 onClick={handleBuyNow}
-                                className="flex h-11 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-brand-navy px-3 font-body text-sm font-semibold text-white transition hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg border-2 border-brand-navy bg-brand-navy px-2 font-body text-sm font-semibold text-white transition sm:px-3 hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 {pending === "buy" ? (
                                     <Loader2 size={16} className="animate-spin" />
                                 ) : (
-                                    <Zap size={16} />
+                                    <Zap size={16} className="max-sm:hidden" />
                                 )}
                                 {pending === "buy" ? "Please wait..." : "Buy now"}
                             </button>
 
                             {cartError && (
-                                <p role="alert" className="col-span-2 font-body text-xs text-red-600">
+                                <p role="alert" className="col-span-full font-body text-xs text-red-600">
                                     {cartError}
                                 </p>
                             )}
 
                             {addOnNotice && (
-                                <p role="status" className="col-span-2 font-body text-xs text-[#8a4b08]">
+                                <p role="status" className="col-span-full font-body text-xs text-[#8a4b08]">
                                     {addOnNotice}
                                 </p>
                             )}
@@ -955,23 +1073,29 @@ export default function ProductBuySection({
                         </p>
                     </div>
 
-                    <div className="grid flex-1 grid-cols-2 gap-2 sm:max-w-md sm:flex-none sm:basis-[26rem]">
+                    <StickyQuantityStepper
+                        quantity={quantity}
+                        max={product.stock}
+                        disabled={outOfStock || pending !== null}
+                        onChange={updateQuantity}
+                    />
+                    <div className="grid min-w-0 flex-1 grid-cols-2 gap-2 sm:max-w-md sm:flex-none sm:basis-[26rem]">
                         <button
                             type="button"
                             disabled={outOfStock || pending !== null || planPending !== null}
                             onClick={handleAddToCart}
-                            className="flex h-11 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-white px-3 font-body text-sm font-semibold text-brand-navy transition hover:bg-pale-gray disabled:cursor-not-allowed disabled:opacity-50"
+                            className="flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg border-2 border-brand-navy bg-white px-2 font-body text-sm font-semibold text-brand-navy transition sm:px-3 hover:bg-pale-gray disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            {pending === "cart" ? <Loader2 size={16} className="animate-spin" /> : <ShoppingBag size={16} />}
+                            {pending === "cart" ? <Loader2 size={16} className="animate-spin" /> : <ShoppingBag size={16} className="max-sm:hidden" />}
                             {pending === "cart" ? "Adding..." : outOfStock ? "Out of stock" : "Add to cart"}
                         </button>
                         <button
                             type="button"
                             disabled={outOfStock || pending !== null}
                             onClick={handleBuyNow}
-                            className="flex h-11 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-brand-navy px-3 font-body text-sm font-semibold text-white transition hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
+                            className="flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg border-2 border-brand-navy bg-brand-navy px-2 font-body text-sm font-semibold text-white transition sm:px-3 hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            {pending === "buy" ? <Loader2 size={16} className="animate-spin" /> : <Zap size={16} />}
+                            {pending === "buy" ? <Loader2 size={16} className="animate-spin" /> : <Zap size={16} className="max-sm:hidden" />}
                             {pending === "buy" ? "Please wait..." : "Buy now"}
                         </button>
                     </div>

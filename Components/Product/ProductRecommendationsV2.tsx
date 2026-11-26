@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Check, Loader2, Plus, ShoppingCart } from "lucide-react";
+import { /* Check, */ Loader2, /* Plus, */ ShoppingCart } from "lucide-react";
 import type { Product } from "@/types/product";
 import { addToCart } from "@/lib/cart";
 
@@ -54,8 +54,9 @@ export default function ProductRecommendationsV2({ product }: { product: Product
     );
 
     // Every bundle item starts selected; track the ones the user unticks.
-    const [deselectedIds, setDeselectedIds] = useState<string[]>([]);
-    const [addingBundle, setAddingBundle] = useState(false);
+    // Old "Frequently bought together" section (commented out below).
+    // const [deselectedIds, setDeselectedIds] = useState<string[]>([]);
+    // const [addingBundle, setAddingBundle] = useState(false);
     const [addingProductId, setAddingProductId] = useState<string | null>(null);
     const [message, setMessage] = useState("");
 
@@ -82,6 +83,7 @@ export default function ProductRecommendationsV2({ product }: { product: Product
         return Array.from(unique.values());
     }, [frequentlyBoughtProducts, product._id, youMayAlsoLikeEntries]);
 
+    /* Old "Frequently bought together" section (replaced by FrequentlyBoughtAddOns)
     const bundleProducts = useMemo(
         () => [
             {
@@ -123,6 +125,7 @@ export default function ProductRecommendationsV2({ product }: { product: Product
             setAddingBundle(false);
         }
     };
+    */
 
     const addRecommended = async (item: RecommendedProduct) => {
         if (addingProductId) return;
@@ -138,21 +141,23 @@ export default function ProductRecommendationsV2({ product }: { product: Product
         }
     };
 
-    if (!frequentlyBoughtProducts.length && !youMayAlsoLike.length) return null;
+    // if (!frequentlyBoughtProducts.length && !youMayAlsoLike.length) return null;
+    if (!youMayAlsoLike.length) return null;
 
     return (
         <section className="pdp-section w-full bg-white text-brand-navy">
             <div className="pdp-container space-y-14 sm:space-y-16">
 
-                {/* Frequently bought together */}
-                {frequentlyBoughtProducts.length > 0 && (
+                {/* Frequently bought together: old section, replaced by the tick boxes
+                    by the buy buttons (FrequentlyBoughtAddOns in ProductBuySection).
+                                {frequentlyBoughtProducts.length > 0 && (
                     <div>
                         <p className={eyebrow}>Complete the routine</p>
                         <h2 className={heading}>Frequently bought together</h2>
                         <p className="mt-2 font-body text-sm text-brand-navy-muted">Picked to go well with {product.name}.</p>
 
                         <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1fr)_240px] lg:items-center">
-                            {/* Items, joined by "+" */}
+                            {/ * Items, joined by "+" * /}
                             <ul className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-stretch">
                                 {bundleProducts.map((item, index) => {
                                     const current = item._id === product._id;
@@ -174,7 +179,7 @@ export default function ProductRecommendationsV2({ product }: { product: Product
                                                     onChange={() => toggleBundleProduct(item._id)}
                                                     className="peer sr-only"
                                                 />
-                                                {/* Custom tick, top-right */}
+                                                {/ * Custom tick, top-right * /}
                                                 <span
                                                     aria-hidden="true"
                                                     className={`absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-md border transition peer-focus-visible:ring-2 peer-focus-visible:ring-brand-navy ${selected ? "border-brand-navy bg-brand-navy text-white" : "border-medium-gray bg-white"}`}
@@ -198,7 +203,7 @@ export default function ProductRecommendationsV2({ product }: { product: Product
                                 })}
                             </ul>
 
-                            {/* Total */}
+                            {/ * Total * /}
                             <div className="flex flex-col justify-center self-start rounded-xl bg-brand-navy p-5 text-white shadow-[0_10px_24px_rgba(33,46,73,0.22)]">
                                 <p className="font-body text-[10px] font-semibold uppercase tracking-[0.2em] text-palladium">
                                     Total for {selectedProducts.length} {selectedProducts.length === 1 ? "item" : "items"}
@@ -217,6 +222,7 @@ export default function ProductRecommendationsV2({ product }: { product: Product
                         </div>
                     </div>
                 )}
+                */}
 
                 {/* You may also like */}
                 {youMayAlsoLike.length > 0 && (
