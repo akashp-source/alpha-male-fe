@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import { ONLINE_PAYMENT_DISCOUNT_PERCENT, onlinePaymentDiscount } from "@/lib/offers";
 import {
     Minus,
     Plus,
@@ -244,6 +245,17 @@ export default function CartDrawer({
             document.body.style.overflow = previousOverflow;
         };
     }, [isOpen, onClose]);
+
+    // Mark the page while the cart is open, so the floating WhatsApp button
+    // (WhatsAppFloat) hides instead of sitting on top of the drawer.
+    useEffect(() => {
+        if (!isOpen) return;
+        const root = document.documentElement;
+        root.setAttribute("data-cart-open", "true");
+        return () => {
+            root.removeAttribute("data-cart-open");
+        };
+    }, [isOpen]);
 
     // ------------------------------------------
     // UPDATE QUANTITY
@@ -923,8 +935,16 @@ export default function CartDrawer({
                             </p>
                         )}
 
+                        {/* Online payment offer (applied at checkout when paying online) */}
+                        {onlinePaymentDiscount(subtotal) > 0 && (
+                            <p className="mb-1 text-right text-xs font-semibold text-success-green">
+                                Pay online: {formatPrice(Math.round((subtotal - onlinePaymentDiscount(subtotal)) * 100) / 100)}{" "}
+                                <span className="font-normal">(save {formatPrice(onlinePaymentDiscount(subtotal))}, {ONLINE_PAYMENT_DISCOUNT_PERCENT}% off)</span>
+                            </p>
+                        )}
+
                         <p className="mb-4 text-[10px] leading-4 text-brand-navy-muted">
-                            Shipping and discounts are calculated at checkout.
+                            Extra {ONLINE_PAYMENT_DISCOUNT_PERCENT}% off is applied at checkout when you pay online. Shipping is calculated at checkout.
                         </p>
 
                         <button

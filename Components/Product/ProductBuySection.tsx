@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useCallback, useEffect, useState, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { Product } from "@/types/product";
@@ -19,6 +19,25 @@ import {
 import { ONLINE_PAYMENT_DISCOUNT_PERCENT } from "@/lib/offers";
 import { WHATSAPP_LINK } from "@/lib/contact";
 import ProductGallery from "./ProductGallery";
+
+// "Choose strength" order, remembered for one navigation: clicking another
+// strength stores the boxes' current order, so the next page keeps it (feels
+// like switching a tab). Opening a product directly puts it first.
+const STRENGTH_ORDER_KEY = "am:strength-order";
+
+function readStrengthOrder(productId: string, optionIds: string[]): string[] | null {
+    if (typeof window === "undefined") return null;
+    try {
+        const saved = JSON.parse(sessionStorage.getItem(STRENGTH_ORDER_KEY) || "null");
+        // Only for the product that was clicked, and only if it's the same set of strengths.
+        if (saved?.target !== productId || !Array.isArray(saved.ids)) return null;
+        const ids: string[] = saved.ids;
+        const sameSet = ids.length === optionIds.length && optionIds.every((id) => ids.includes(id));
+        return sameSet ? ids : null;
+    } catch {
+        return null;
+    }
+}
 import DeliveryCheck from "./DeliveryCheck";
 import { PackSuggestionsBox, PackUpgradeDialog } from "./PackSuggestions";
 import RichDescription from "./RichDescription";
@@ -168,7 +187,36 @@ export default function ProductBuySection({
     ];
 
     // "Choose strength": shown when the product links other strengths.
-    const strengthOptions = product.strengthOptions ?? [];
+    // Opened directly: this product first (the API's order). Reached by
+    // clicking another strength: the previous page's order, so the boxes stay
+    // where they were and only the highlight moves.
+    const apiStrengthOptions = product.strengthOptions ?? [];
+    const [rememberedOrder] = useState(() =>
+        readStrengthOrder(product._id, apiStrengthOptions.map((option) => option._id)),
+    );
+    const strengthOptions = rememberedOrder
+        ? [...apiStrengthOptions].sort((a, b) => rememberedOrder.indexOf(a._id) - rememberedOrder.indexOf(b._id))
+        : apiStrengthOptions;
+
+    // The remembered order is used once.
+    useEffect(() => {
+        try {
+            sessionStorage.removeItem(STRENGTH_ORDER_KEY);
+        } catch {
+            // Storage unavailable (private mode): ordering just falls back.
+        }
+    }, []);
+
+    const rememberStrengthOrder = (targetId: string) => {
+        try {
+            sessionStorage.setItem(
+                STRENGTH_ORDER_KEY,
+                JSON.stringify({ target: targetId, ids: strengthOptions.map((option) => option._id) }),
+            );
+        } catch {
+            // Storage unavailable: the next page shows its own product first.
+        }
+    };
 
     const rating = product.ratings?.summary;
     const quickPoints = (product.quickPoints ?? []).filter((point) => point.trim());
@@ -196,6 +244,39 @@ export default function ProductBuySection({
     const packSuggestions =
         packState && packState.quantity === quantity ? packState.suggestions : null;
     const selectionLabel = `${quantity} × ${product.name}`;
+
+    // -----------------------------------
+    // Buy buttons, two stages:
+    //  1. Not reached yet: the real Add to cart / Buy now buttons stick to the
+    //     bottom of the screen inside the right-hand column (CSS sticky).
+    //  2. Scrolled past them: a full-width bar with the same two buttons is
+    //     pinned to the bottom of the screen. Scrolling back up hides it.
+    // -----------------------------------
+    const buyButtonsRef = useRef<HTMLDivElement>(null);
+    const [showStickyBar, setShowStickyBar] = useState(false);
+
+    useEffect(() => {
+        const target = buyButtonsRef.current;
+        if (!target || typeof IntersectionObserver === "undefined") return;
+        const observer = new IntersectionObserver(([entry]) => {
+            // Only once the buttons are ABOVE the screen (scrolled past); before
+            // that they're on screen, stuck to the bottom of their column.
+            setShowStickyBar(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+        });
+        observer.observe(target);
+        return () => observer.disconnect();
+    }, []);
+
+    // Lift the floating WhatsApp button above the buy buttons on this page:
+    // they're pinned to the bottom of the screen in both stages (real buttons
+    // stuck in their column, then the full bar), so it would cover them.
+    useEffect(() => {
+        const root = document.documentElement;
+        root.style.setProperty("--pdp-bar-offset", "76px");
+        return () => {
+            root.style.removeProperty("--pdp-bar-offset");
+        };
+    }, []);
 
     function formatPrice(price: number) {
         return `₹${price.toLocaleString("en-IN", { maximumFractionDigits: 2 })}`;
@@ -489,10 +570,10 @@ export default function ProductBuySection({
                                     {strengthOptions.map((option) => {
                                         const body = (
                                             <>
-                                                <span className="block font-heading text-sm font-semibold uppercase tracking-wide">
+                                                <span className="block font-heading text-sm font-semibold uppercase tracking-wide max-sm:text-[11px] max-sm:leading-snug max-sm:tracking-normal">
                                                     {option.name}
                                                 </span>
-                                                <span className={`mt-0.5 block font-body text-xs ${option.current ? "text-olympus" : "text-brand-navy-muted"}`}>
+                                                <span className={`mt-0.5 block font-body text-xs max-sm:text-[10px] ${option.current ? "text-olympus" : "text-brand-navy-muted"}`}>
                                                     {option.label ? `${option.label} · ` : ""}from {formatPrice(option.price)}
                                                     {!option.inStock && " · Out of stock"}
                                                 </span>
@@ -503,7 +584,7 @@ export default function ProductBuySection({
                                             <div
                                                 key={option._id}
                                                 aria-current="true"
-                                                className="rounded-lg border border-brand-navy bg-brand-navy px-3 py-2 text-white"
+                                                className="rounded-lg border border-brand-navy bg-brand-navy px-3 py-2 text-white max-sm:px-2.5 max-sm:py-1.5"
                                             >
                                                 {body}
                                             </div>
@@ -511,7 +592,8 @@ export default function ProductBuySection({
                                             <Link
                                                 key={option._id}
                                                 href={`/products/${option.slug || option._id}`}
-                                                className="rounded-lg border border-olympus bg-white px-3 py-2 text-brand-navy transition hover:border-brand-navy"
+                                                onClick={() => rememberStrengthOrder(option._id)}
+                                                className="rounded-lg border border-olympus bg-white px-3 py-2 text-brand-navy transition hover:border-brand-navy max-sm:px-2.5 max-sm:py-1.5"
                                             >
                                                 {body}
                                             </Link>
@@ -529,7 +611,7 @@ export default function ProductBuySection({
                                     >
                                         Ask our team on WhatsApp
                                     </a>
-                                    {" "}— free and private
+                                    {" "}- free and private
                                 </p>
                             </div>
                         )}
@@ -760,8 +842,13 @@ export default function ProductBuySection({
                             </label>
                         )}
 
-                        {/* Add to Cart / Buy Now */}
-                        <div className="mt-3 grid grid-cols-2 gap-2 sm:gap-3">
+                        {/* Add to Cart / Buy Now (watched by the sticky buy bar) */}
+                        {/* Sticks to the bottom of the screen within this column until
+                            reached; white background so the content behind is hidden. */}
+                        <div
+                            ref={buyButtonsRef}
+                            className="sticky bottom-0 z-20 -mx-1 mt-3 grid grid-cols-2 gap-2 bg-white px-1 py-3 pb-[max(12px,env(safe-area-inset-bottom))] shadow-[0_-10px_16px_-12px_rgba(33,46,73,0.25)] sm:gap-3"
+                        >
 
                             <button
                                 type="button"
@@ -844,6 +931,49 @@ export default function ProductBuySection({
                     ))}
                 </ul>
             </div> */}
+
+            {/* Sticky buy bar (same handlers and states as the buttons above) */}
+            <div
+                aria-hidden={!showStickyBar}
+                inert={!showStickyBar}
+                className={`fixed inset-x-0 bottom-0 z-40 border-t border-olympus bg-white/95 shadow-[0_-8px_24px_rgba(33,46,73,0.12)] backdrop-blur transition-transform duration-300 ${showStickyBar ? "translate-y-0" : "translate-y-full"}`}
+            >
+                <div className="pdp-container flex items-center gap-3 py-3 pb-[max(12px,env(safe-area-inset-bottom))]">
+                    {/* Product and price (hidden on small phones to keep the buttons wide) */}
+                    <div className="hidden min-w-0 flex-1 sm:block">
+                        <p className="truncate font-body text-sm font-semibold text-brand-navy">{product.name}</p>
+                        <p className="font-body text-xs text-brand-navy-muted">
+                            {quantity > 1 ? `${quantity} packs · ` : ""}
+                            <span className="font-semibold text-brand-navy">{formatPrice(displayTotal)}</span>
+                            {onlineDiscount > 0 && ` · ${formatPrice(onlineTotal)} if you pay online`}
+                        </p>
+                    </div>
+
+                    <div className="grid flex-1 grid-cols-2 gap-2 sm:max-w-md sm:flex-none sm:basis-[26rem]">
+                        <button
+                            type="button"
+                            disabled={outOfStock || pending !== null || planPending !== null}
+                            onClick={handleAddToCart}
+                            className="flex h-11 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-white px-3 font-body text-sm font-semibold text-brand-navy transition hover:bg-pale-gray disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            {pending === "cart" ? <Loader2 size={16} className="animate-spin" /> : <ShoppingBag size={16} />}
+                            {pending === "cart" ? "Adding..." : outOfStock ? "Out of stock" : "Add to cart"}
+                        </button>
+                        <button
+                            type="button"
+                            disabled={outOfStock || pending !== null}
+                            onClick={handleBuyNow}
+                            className="flex h-11 items-center justify-center gap-2 rounded-lg border-2 border-brand-navy bg-brand-navy px-3 font-body text-sm font-semibold text-white transition hover:border-[#14284d] hover:bg-[#14284d] disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            {pending === "buy" ? <Loader2 size={16} className="animate-spin" /> : <Zap size={16} />}
+                            {pending === "buy" ? "Please wait..." : "Buy now"}
+                        </button>
+                    </div>
+                </div>
+                {cartError && showStickyBar && (
+                    <p role="alert" className="pdp-container pb-2 font-body text-xs text-red-600">{cartError}</p>
+                )}
+            </div>
 
             {upgradeOpen && packSuggestions?.bestValue && (
                 <PackUpgradeDialog

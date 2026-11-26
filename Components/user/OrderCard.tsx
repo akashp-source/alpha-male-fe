@@ -65,7 +65,7 @@ const money = (value: number) =>
 function formatDate(value: string) {
     const date = new Date(value);
 
-    if (Number.isNaN(date.getTime())) return "—";
+    if (Number.isNaN(date.getTime())) return "-";
 
     return date.toLocaleDateString("en-IN", {
         day: "numeric",
@@ -427,7 +427,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                         </div>
                         {canRetryPayment && !retryPaymentError && (
                             <p className="mt-1 text-[10px] leading-4 text-[#718096]">
-                                Complete within {retryMinutesLeft} min — items are reserved for you
+                                Complete within {retryMinutesLeft} min - items are reserved for you
                             </p>
                         )}
                         {retryPaymentError && <p role="alert" className="mt-1 max-w-48 text-[10px] leading-4 text-red-600">{retryPaymentError}</p>}
@@ -455,7 +455,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                         <div className="text-xs leading-5 text-[#4a5568]">
                             <p className="font-bold text-brand-navy">
                                 {order.status === "CANCELLATION_REQUESTED"
-                                    ? "Cancellation requested — our team is reviewing it"
+                                    ? "Cancellation requested - our team is reviewing it"
                                     : order.cancellation.source === "CUSTOMER"
                                         ? `Cancelled by you${order.cancelledAt ? ` on ${formatDate(order.cancelledAt)}` : ""}`
                                         : `Cancelled${order.cancelledAt ? ` on ${formatDate(order.cancelledAt)}` : ""}`}
@@ -577,7 +577,7 @@ export default function OrderCard({ order, onOrderUpdated }: Props) {
                         Invoice
                     </button>
 
-                    {/* Cancel order button — temporarily disabled. Uncomment to re-enable.
+                    {/* Cancel order button - temporarily disabled. Uncomment to re-enable.
                     {order.canCancel && (
                         <button
                             type="button"

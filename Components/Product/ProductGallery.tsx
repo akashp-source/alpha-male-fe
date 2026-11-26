@@ -132,7 +132,7 @@ export default function ProductGallery({ images, name, badge }: ProductGalleryPr
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src={image}
-                                alt={index === 0 ? name : `${name} — image ${index + 1}`}
+                                alt={index === 0 ? name : `${name} - image ${index + 1}`}
                                 loading={index === 0 ? "eager" : "lazy"}
                                 draggable={false}
                                 className="h-full w-full select-none object-contain"

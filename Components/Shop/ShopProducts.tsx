@@ -44,7 +44,7 @@ type Props = {
 const priceOptions = [
     { label: "Any price", value: "all" },
     { label: "Under ₹500", value: "under500" },
-    { label: "₹500 – ₹1,000", value: "500-1000" },
+    { label: "₹500 - ₹1,000", value: "500-1000" },
     { label: "Over ₹1,000", value: "over1000" },
 ];
 

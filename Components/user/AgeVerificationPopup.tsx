@@ -66,7 +66,7 @@ export default function AgeVerificationPopup() {
                 <div className="flex justify-center border-b border-white/10 px-6 py-5">
                     <Image
                         src="/images/logo-cropped.png"
-                        alt="Alpha Male — Drive, Stamina, Energy"
+                        alt="Alpha Male - Drive, Stamina, Energy"
                         width={90}
                         height={90}
                         priority

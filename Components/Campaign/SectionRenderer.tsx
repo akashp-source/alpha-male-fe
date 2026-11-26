@@ -1012,7 +1012,7 @@ function ComparisonTable(props: RenderProps) {
         const v = value.trim().toLowerCase();
         if (["yes", "y", "true", "✓"].includes(v))
             return <span style={{ color: PALETTE.green, display: "inline-flex" }}><CheckIcon size={20} /></span>;
-        if (["no", "n", "false", "✗", "x", "-"].includes(v)) return <span style={{ opacity: 0.4 }}>—</span>;
+        if (["no", "n", "false", "✗", "x", "-"].includes(v)) return <span style={{ opacity: 0.4 }}>-</span>;
         return value;
     };
 

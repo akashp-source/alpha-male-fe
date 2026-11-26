@@ -24,6 +24,7 @@ import {
     UserRound,
 } from "lucide-react";
 import LocationSelect from "@/Components/Utils/LocationSelect";
+import { ONLINE_PAYMENT_DISCOUNT_PERCENT, onlinePaymentDiscount } from "@/lib/offers";
 import { getStoredAttribution } from "@/lib/campaign";
 
 
@@ -207,7 +208,26 @@ export default function CheckoutPage() {
     );
 
     const shippingCharge = 0;
-    const total = subtotal + shippingCharge;
+
+    // -----------------------------------
+    // Coupon (logged-in customers). Checked with POST /coupons/validate
+    // against this cart; the backend checks it again when placing the order.
+    // -----------------------------------
+    const [couponInput, setCouponInput] = useState("");
+    const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number; forSubtotal: number } | null>(null);
+    const [couponError, setCouponError] = useState("");
+    const [couponLoading, setCouponLoading] = useState(false);
+
+    // Only counts while it was worked out for the current cart subtotal.
+    const couponDiscount =
+        appliedCoupon && Math.abs(appliedCoupon.forSubtotal - subtotal) < 0.005 ? appliedCoupon.discount : 0;
+
+    // Order of discounts (same as the backend): coupon first, then 12% off
+    // the rest when paying online. The total shown is what's charged.
+    const afterCoupon = Math.max(0, Math.round((subtotal - couponDiscount) * 100) / 100);
+    const prepaidDiscount = onlinePaymentDiscount(afterCoupon);
+    const appliedPrepaidDiscount = paymentMethod === "ONLINE" ? prepaidDiscount : 0;
+    const total = Math.round((afterCoupon - appliedPrepaidDiscount + shippingCharge) * 100) / 100;
 
     const authHeaders = useCallback(() => {
         const currentToken = getToken();
@@ -220,6 +240,76 @@ export default function CheckoutPage() {
                 : {}),
         };
     }, []);
+
+    const validateCouponCode = useCallback(
+        async (code: string, amount: number) => {
+            const response = await fetch(`${API_URL}/coupons/validate`, {
+                method: "POST",
+                headers: authHeaders(),
+                body: JSON.stringify({
+                    code,
+                    orderAmount: amount,
+                    items: items.map((item) => ({ productId: item.productId._id, quantity: item.quantity })),
+                }),
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(
+                    Array.isArray(data?.message)
+                        ? data.message.join(", ")
+                        : data?.message || "This coupon can't be used.",
+                );
+            }
+            return { code: String(data.code || code), discount: Number(data.discount) || 0 };
+        },
+        [authHeaders, items],
+    );
+
+    const applyCoupon = async () => {
+        const code = couponInput.trim().toUpperCase();
+        if (!code) return;
+        if (!getToken()) {
+            setCouponError("Please log in to use a coupon.");
+            return;
+        }
+        setCouponLoading(true);
+        setCouponError("");
+        try {
+            const result = await validateCouponCode(code, subtotal);
+            setAppliedCoupon({ ...result, forSubtotal: subtotal });
+            setCouponInput("");
+        } catch (err) {
+            setAppliedCoupon(null);
+            setCouponError(err instanceof Error ? err.message : "This coupon can't be used.");
+        } finally {
+            setCouponLoading(false);
+        }
+    };
+
+    const removeCoupon = () => {
+        setAppliedCoupon(null);
+        setCouponError("");
+    };
+
+    // Cart changed (quantity, item removed): check the coupon again for the new cart.
+    useEffect(() => {
+        if (!appliedCoupon || Math.abs(appliedCoupon.forSubtotal - subtotal) < 0.005 || subtotal <= 0) return;
+        let cancelled = false;
+        validateCouponCode(appliedCoupon.code, subtotal)
+            .then((result) => {
+                if (!cancelled) setAppliedCoupon({ ...result, forSubtotal: subtotal });
+            })
+            .catch((err) => {
+                if (cancelled) return;
+                setAppliedCoupon(null);
+                setCouponError(
+                    `${appliedCoupon.code} was removed: ${err instanceof Error ? err.message : "it no longer applies"}`,
+                );
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [appliedCoupon, subtotal, validateCouponCode]);
 
     const fetchCart = useCallback(async () => {
         const response = await fetch(`${API_URL}/cart`, {
@@ -654,6 +744,11 @@ export default function CheckoutPage() {
                 // different amount than the one shown.
                 expectedSubtotal: subtotal,
 
+                // Coupon (re-validated by the backend) and the final total shown:
+                // the backend rejects (409) instead of charging a different amount.
+                ...(appliedCoupon && couponDiscount > 0 ? { couponCode: appliedCoupon.code } : {}),
+                expectedTotal: total,
+
                 shippingAddress: shipping,
                 billingAddress: billing,
 
@@ -695,9 +790,12 @@ export default function CheckoutPage() {
             }
 
             if (!response.ok) {
-                throw new Error(
-                    data?.message || "Unable to place your order"
-                );
+                const message = Array.isArray(data?.message) ? data.message.join(", ") : data?.message;
+                if (appliedCoupon && typeof message === "string" && /coupon/i.test(message)) {
+                    setAppliedCoupon(null);
+                    setCouponError(message);
+                }
+                throw new Error(message || "Unable to place your order");
             }
 
             if (paymentMethod === "COD") {
@@ -1166,8 +1264,8 @@ export default function CheckoutPage() {
                                         setPaymentMethod("ONLINE")
                                     }
                                     title="Pay Online"
-                                    description="UPI, Credit / Debit Card, Net Banking"
-                                    tag="SECURE PAYMENT"
+                                    description={`UPI, Credit / Debit Card, Net Banking · Extra ${ONLINE_PAYMENT_DISCOUNT_PERCENT}% off`}
+                                    tag={`SAVE ${ONLINE_PAYMENT_DISCOUNT_PERCENT}%`}
                                 />
 
                                 <PaymentOption
@@ -1405,6 +1503,65 @@ export default function CheckoutPage() {
                                 </section>
                             )}
 
+                            {/* Coupon */}
+                            <div className="border-t border-gray-200 px-5 py-4">
+                                {appliedCoupon && couponDiscount > 0 ? (
+                                    <div className="flex items-center justify-between gap-3 rounded-lg border border-dashed border-success-green bg-[#f0f7f3] px-3 py-2.5">
+                                        <div className="min-w-0">
+                                            <p className="truncate text-sm font-semibold text-success-green">
+                                                {appliedCoupon.code} applied
+                                            </p>
+                                            <p className="text-xs text-gray-600">You save {formatPrice(couponDiscount)}</p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={removeCoupon}
+                                            className="shrink-0 text-xs font-semibold text-red-600 hover:underline"
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                ) : token ? (
+                                    <form
+                                        onSubmit={(event) => {
+                                            event.preventDefault();
+                                            applyCoupon();
+                                        }}
+                                        className="flex gap-2"
+                                    >
+                                        <input
+                                            value={couponInput}
+                                            onChange={(event) => {
+                                                setCouponInput(event.target.value.toUpperCase());
+                                                setCouponError("");
+                                            }}
+                                            maxLength={40}
+                                            placeholder="Coupon code"
+                                            aria-label="Coupon code"
+                                            className="h-10 min-w-0 flex-1 rounded-md border border-gray-200 bg-white px-3 text-sm uppercase text-brand-navy outline-none placeholder:normal-case placeholder:text-gray-400 focus:border-brand-navy"
+                                        />
+                                        <button
+                                            type="submit"
+                                            disabled={couponLoading || !couponInput.trim()}
+                                            className="h-10 shrink-0 rounded-md bg-brand-navy px-4 text-xs font-semibold uppercase tracking-wide text-white transition hover:bg-[#14284d] disabled:opacity-50"
+                                        >
+                                            {couponLoading ? "Checking..." : "Apply"}
+                                        </button>
+                                    </form>
+                                ) : (
+                                    <p className="text-xs text-gray-600">
+                                        Have a coupon?{" "}
+                                        <a href="/user/login" className="font-semibold text-brand-navy underline underline-offset-2">
+                                            Log in
+                                        </a>{" "}
+                                        to use it.
+                                    </p>
+                                )}
+                                {couponError && (
+                                    <p role="alert" className="mt-2 text-xs text-red-600">{couponError}</p>
+                                )}
+                            </div>
+
                             <div className="border-t border-gray-200 px-5 py-5">
                                 <div className="space-y-3 text-sm">
                                     {comboSavings > 0 && (
@@ -1428,6 +1585,26 @@ export default function CheckoutPage() {
                                         <span>{formatPrice(subtotal)}</span>
                                     </div>
 
+                                    {/* Coupon discount */}
+                                    {couponDiscount > 0 && appliedCoupon && (
+                                        <div className="flex justify-between text-gray-600">
+                                            <span>Coupon ({appliedCoupon.code})</span>
+                                            <span className="text-success-green">
+                                                - {formatPrice(couponDiscount)}
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {/* Online payment discount (only when Pay Online is selected) */}
+                                    {appliedPrepaidDiscount > 0 && (
+                                        <div className="flex justify-between text-gray-600">
+                                            <span>Online payment discount ({ONLINE_PAYMENT_DISCOUNT_PERCENT}%)</span>
+                                            <span className="text-success-green">
+                                                - {formatPrice(appliedPrepaidDiscount)}
+                                            </span>
+                                        </div>
+                                    )}
+
                                     <div className="flex justify-between text-gray-600">
                                         <span>Shipping</span>
                                         <span className="text-success-green">
@@ -1449,6 +1626,12 @@ export default function CheckoutPage() {
                                         <p className="mt-1 text-right text-[10px] text-gray-400">
                                             Inclusive of applicable taxes
                                         </p>
+                                        {/* Cash on Delivery selected: show what paying online would save */}
+                                        {paymentMethod !== "ONLINE" && prepaidDiscount > 0 && (
+                                            <p className="mt-2 rounded-md bg-[#f0f7f3] px-3 py-2 text-xs text-success-green">
+                                                Pay online and save {formatPrice(prepaidDiscount)} ({ONLINE_PAYMENT_DISCOUNT_PERCENT}% off).
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                             </div>

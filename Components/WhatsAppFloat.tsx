@@ -17,6 +17,8 @@ export default function WhatsAppFloat() {
         overflow-visible
         transition-transform duration-300
         hover:scale-110
+        translate-y-[calc(var(--pdp-bar-offset,0px)*-1)]
+        whatsapp-float
         focus-visible:outline-none
         focus-visible:ring-2
         focus-visible:ring-success-green

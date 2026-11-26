@@ -180,7 +180,7 @@ export default function CancellationPolicyPage() {
                     <ul>
                         <li>
                             <strong>UPI, cards, net banking and wallets:</strong> Refunded to
-                            the original payment method within 5–7 business days of the
+                            the original payment method within 5-7 business days of the
                             cancellation being confirmed. Your bank may take a little longer
                             to show the credit.
                         </li>

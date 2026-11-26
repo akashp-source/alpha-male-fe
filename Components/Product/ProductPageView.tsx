@@ -16,6 +16,7 @@ import ProductFAQsV2 from "@/Components/Product/ProductFAQsV2";
 import ProductInformation from "@/Components/Product/ProductInformation";
 import ProductAfterOrder from "@/Components/Product/ProductAfterOrder";
 import ProductCompareAndSafety from "@/Components/Product/ProductCompareAndSafety";
+import ProductComparisonV2 from "@/Components/Product/ProductComparisonV2";
 // import ProductDetailedDescription from "@/Components/Product/ProductDetailedDescription";
 import ProductDetailedDescriptionV2 from "@/Components/Product/ProductDetailedDescriptionV2";
 // import ProductRatings from "@/Components/Product/ProductRatings";
@@ -37,7 +38,7 @@ export default function ProductPageView({ product }: { product: any }) {
 
             {/* Product details and purchase section */}
 
-            <ProductBuySection product={product} />
+            <ProductBuySection key={product._id} product={product} />
 
 
 
@@ -77,7 +78,7 @@ export default function ProductPageView({ product }: { product: any }) {
             {/* Product information ("Inside the pack") */}
             <ProductInformation
                 information={product.productInformation}
-                sku={product.sku}
+                // sku={product.sku}
                 licenceNumber={product.licenceNumber}
             />
 
@@ -86,10 +87,17 @@ export default function ProductPageView({ product }: { product: any }) {
 
             {/* Comparison table + "Read before use" (old comparison design replaced)
             <ProductComparison comparison={product.comparison} /> */}
+            {/* Comparison + safety side by side (old design, replaced below)
             <ProductCompareAndSafety
                 comparison={product.comparison}
                 safetyInfo={product.safetyInfo}
-            />
+            /> */}
+
+            {/* "Strips vs pills" comparison with product images (admin → Know the difference) */}
+            <ProductComparisonV2 comparison={product.comparison} />
+
+            {/* "Read before use" on its own (no comparison passed) */}
+            <ProductCompareAndSafety safetyInfo={product.safetyInfo} />
 
             {/* 
         <ProductHighlights
@@ -109,13 +117,13 @@ export default function ProductPageView({ product }: { product: any }) {
             eyebrow="WHY BOLD S"
             highlights={product.highlights}
         /> */}
-            <ProductHighlightsV4
+            {/* <ProductHighlightsV4
                 highlights={product.highlights}
                 heading={`Why Choose ${product.name}?`}
                 eyebrow={badgeEyebrow}
                 productName={badgeName}
                 strength={badgeStrength}
-            />
+            /> */}
 
             {/* <ProductClaims
                 claims={product.claims}

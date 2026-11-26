@@ -147,7 +147,7 @@ export default function TermsAndConditionsPage() {
                         rows={[
                             ["Who can buy", "Adults aged 18 and above, ordering for personal use"],
                             ["Payment", "UPI, cards, net banking, wallets, and Cash on Delivery where available"],
-                            ["Dispatch", "Within 24–48 hours, in discreet sealed packaging"],
+                            ["Dispatch", "Within 24-48 hours, in discreet sealed packaging"],
                             ["Returns", "Sealed, unopened products within 7 days; damaged or wrong items reported within 48 hours"],
                             ["Subscriptions", "Cancel anytime; refund rules are set out in Section 6"],
                             ["Disputes", "Indian law; courts at Hyderabad, Telangana"],
@@ -287,8 +287,8 @@ export default function TermsAndConditionsPage() {
 
                     <Section title="7. Delivery">
                         <p>
-                            We deliver across India. Orders are dispatched within 24–48 hours
-                            and usually arrive within 2–6 business days (up to 10 in remote
+                            We deliver across India. Orders are dispatched within 24-48 hours
+                            and usually arrive within 2-6 business days (up to 10 in remote
                             areas), in plain, sealed packaging that does not reveal what is
                             inside.
                         </p>
@@ -317,7 +317,7 @@ export default function TermsAndConditionsPage() {
                             </li>
                             <li>
                                 <strong className="text-olympus">Refunds:</strong>{" "}
-                                Credited to your original payment method within 5–7 business
+                                Credited to your original payment method within 5-7 business
                                 days of approval.
                             </li>
                         </ul>

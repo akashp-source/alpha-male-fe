@@ -321,7 +321,7 @@ export default function SavedAddressesPage() {
                                         <div className="mt-3 space-y-0.5 text-xs leading-5 text-brand-navy-muted">
                                             <p>{address.addressLine1}</p>
                                             {address.addressLine2 && <p>{address.addressLine2}</p>}
-                                            <p>{titleCase(address.city)}, {titleCase(address.state)} – {address.pincode}</p>
+                                            <p>{titleCase(address.city)}, {titleCase(address.state)} - {address.pincode}</p>
                                         </div>
                                         <p className="mt-4 flex items-center gap-2 border-t border-[#e8ebef] pt-3 text-[11px] text-[#718096]"><Phone size={12} />{address.phone}</p>
                                     </article>

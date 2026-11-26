@@ -84,7 +84,7 @@ export default async function ProductPreviewPage({
                 <span className="mx-2 text-palladium">·</span>
                 {product.isActive
                     ? "This product is live. This is how customers see it."
-                    : "Not published — customers can't see this page. Buying is disabled until the product is active."}
+                    : "Not published - customers can't see this page. Buying is disabled until the product is active."}
             </div>
 
             <Navbar />

@@ -124,8 +124,9 @@ export interface Product {
         rows: (
             | { label: string; ourValue: string; otherValue: string }
             | {
-                ours: { title: string; description?: string };
-                others: { title: string; description?: string };
+                // note: small detail line under our value (optional).
+                ours: { title: string; description?: string; note?: string };
+                others: { title: string; description?: string; note?: string };
             }
         )[];
     } | null;
