@@ -88,14 +88,23 @@ function StepsBanner({ banner }: { banner: StoryBanner }) {
                 <ol className={`mt-12 grid gap-12 sm:grid-cols-2 lg:flex lg:justify-center lg:gap-28 xl:gap-36 max-sm:mt-8 max-sm:gap-x-3 max-sm:gap-y-7 ${banner.items.length === 4 ? "max-sm:grid-cols-2" : "max-sm:grid-cols-3"}`}>
                     {banner.items.map((item, index) => (
                         <li key={index} className="flex min-w-0 flex-col items-center">
-                            {/* Raised look: white ring + layered shadow (stronger on navy) */}
+                            {/* Old look: white ring (border + white glow) + layered shadow
                             <span
                                 className={`relative h-36 w-36 overflow-hidden rounded-full border-4 border-white bg-white sm:h-44 sm:w-44 max-sm:h-[5.5rem] max-sm:w-[5.5rem] max-sm:border-[3px] ${banner.theme === "navy"
                                     ? "shadow-[0_6px_14px_rgba(0,0,0,0.35),0_22px_48px_rgba(0,0,0,0.5),0_0_0_8px_rgba(255,255,255,0.06)]"
                                     : "shadow-[0_6px_14px_rgba(33,46,73,0.14),0_22px_48px_rgba(33,46,73,0.22),0_0_0_8px_rgba(255,255,255,0.7)]"
                                     }`}
+                            > */}
+                            {/* Round photo, no white ring: just the soft drop shadow */}
+                            <span
+                                className={`relative h-36 w-36 overflow-hidden rounded-full sm:h-44 sm:w-44 max-sm:h-[5.5rem] max-sm:w-[5.5rem] ${banner.theme === "navy"
+                                    ? "shadow-[0_6px_14px_rgba(0,0,0,0.35),0_22px_48px_rgba(0,0,0,0.5)]"
+                                    : "shadow-[0_6px_14px_rgba(33,46,73,0.14),0_22px_48px_rgba(33,46,73,0.22)]"
+                                    }`}
                             >
-                                {item.image && <Image unoptimized={!canOptimizeImage(item.image)} src={item.image} alt="" fill sizes="176px" className="object-cover" />}
+                                {/* Zoomed a little so the circle edge trims the white frame
+                                    some step photos have built in. */}
+                                {item.image && <Image unoptimized={!canOptimizeImage(item.image)} src={item.image} alt="" fill sizes="200px" className="scale-[1.26] object-cover" />}
                             </span>
                             {/* Pill flips colours on navy so it stays visible */}
                             <span
