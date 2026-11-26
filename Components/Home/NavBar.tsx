@@ -173,7 +173,7 @@ export default function Navbar() {
         <header
             className={`sticky top-0 z-50 w-full border-b border-[#eeeeee] bg-white transition-transform duration-300 ${navbarHidden ? "-translate-y-full" : ""}`}
         >
-            <div className="mx-auto grid h-[76px] w-full max-w-[1800px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-10 md:h-[92px]">
+            <div className="mx-auto grid h-[64px] w-full max-w-[1800px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-10 md:h-[76px]">
 
                 {/* Logo */}
                 <Link href="/" className="flex min-w-0 shrink items-center gap-1.5 justify-self-start sm:gap-2 md:shrink-0 md:gap-3">
@@ -183,14 +183,14 @@ export default function Navbar() {
                         width={52}
                         height={52}
                         priority
-                        className="h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11 md:h-14 md:w-14"
+                        className="h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11 md:h-12 md:w-12"
                     />
 
                     {/* Wordmark + tagline (DRIVE • STAMINA • ENERGY), centred under it like the logo artwork */}
                     {/* The name sets the width; the tagline (w-0 + min-w-full) is
                         stretched to exactly that width and can never be wider. */}
                     <span className="inline-flex min-w-0 flex-col leading-none">
-                        <span className="truncate font-heading text-[13px] font-semibold leading-none tracking-[0.05em] text-brand-navy sm:text-base sm:tracking-[0.08em] md:text-[27px]">
+                        <span className="truncate font-heading text-[13px] font-semibold leading-none tracking-[0.05em] text-brand-navy sm:text-base sm:tracking-[0.08em] md:text-[24px]">
                             ALPHA MALE
                         </span>
                         {/* Hidden on the smallest phones, where it would be too small to read */}
@@ -253,7 +253,7 @@ export default function Navbar() {
                                 href="/user/profile"
                                 aria-label="My account"
                                 title="My account"
-                                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-brand-navy transition hover:bg-[#f5f7fa] md:h-[54px] md:w-[54px]"
+                                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-brand-navy transition hover:bg-[#f5f7fa] md:h-[46px] md:w-[46px]"
                             >
                                 <UserRound size={22} strokeWidth={1.8} />
                             </Link>
@@ -261,7 +261,7 @@ export default function Navbar() {
                             <button
                                 type="button"
                                 onClick={handleLogout}
-                                className="hidden items-center gap-2 rounded-full border border-[#e0e5ed] px-4 py-3 text-sm font-semibold text-brand-navy transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 sm:flex"
+                                className="hidden items-center gap-2 rounded-full border border-[#e0e5ed] px-4 py-2.5 text-sm font-semibold text-brand-navy transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 sm:flex"
                             >
                                 <LogOut size={17} />
                                 Sign out
@@ -272,7 +272,7 @@ export default function Navbar() {
                             href="/user/login"
                             aria-label="Sign in"
                             title="Sign in"
-                            className="hidden h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-brand-navy transition hover:bg-[#f5f7fa] md:flex md:h-[54px] md:w-[54px]"
+                            className="hidden h-11 w-11 items-center justify-center rounded-full border border-[#e0e5ed] text-brand-navy transition hover:bg-[#f5f7fa] md:flex md:h-[46px] md:w-[46px]"
                         >
                             <UserRound size={22} strokeWidth={1.8} />
                         </Link>
@@ -288,7 +288,7 @@ export default function Navbar() {
                         aria-label={`Open cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}
                         aria-haspopup="dialog"
                         aria-expanded={isCartOpen}
-                        className="flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-brand-navy px-2.5 text-white transition hover:bg-[#14284d] sm:h-11 sm:gap-2 sm:px-3 md:h-[55px] md:gap-3 md:px-6"
+                        className="flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-brand-navy px-2.5 text-white transition hover:bg-[#14284d] sm:h-11 sm:gap-2 sm:px-3 md:h-[46px] md:gap-3 md:px-6"
                     >
                         <ShoppingCart size={21} strokeWidth={1.8} aria-hidden="true" />
 

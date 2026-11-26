@@ -85,7 +85,7 @@ export default function NavbarSearch({ open, onOpenChange }: NavbarSearchProps) 
                 onClick={() => onOpenChange(!open)}
                 aria-label={open ? "Close search" : "Search products"}
                 aria-expanded={open}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#e0e5ed] text-brand-navy transition hover:bg-[#f5f7fa] sm:h-11 sm:w-11 md:h-[54px] md:w-[54px]"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#e0e5ed] text-brand-navy transition hover:bg-[#f5f7fa] sm:h-11 sm:w-11 md:h-[46px] md:w-[46px]"
             >
                 {open ? <X size={21} strokeWidth={1.8} /> : <Search size={21} strokeWidth={1.8} />}
             </button>

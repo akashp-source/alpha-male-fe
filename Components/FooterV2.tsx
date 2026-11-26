@@ -1,5 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle, Phone } from "lucide-react";
+import { Banknote, CreditCard, Landmark, MessageCircle, Phone, Smartphone } from "lucide-react";
 
 import { WHATSAPP_LINK } from "@/lib/contact";
 
@@ -10,8 +11,8 @@ const SUPPORT_PHONE_LINK = "+919000937222";
 const SUPPORT_HOURS = "10 am - 6 pm, Mon - Sat";
 
 const SHOP_LINKS = [
-    { label: "Alpha Bold · 25 mg", href: "/products/alpha-male-bold-s-25mg" },
-    { label: "Alpha Boss · 50 mg", href: "/products/alpha-male-boss-s-50mg" },
+    { label: "Alpha Bold (S - 25 mg)", href: "/products/alpha-male-bold-s-25mg" },
+    { label: "Alpha Boss (S - 50 mg)", href: "/products/alpha-male-boss-s-50mg" },
     { label: "All products", href: "/shop" },
 ];
 
@@ -24,7 +25,13 @@ const POLICY_LINKS = [
     { label: "IT policy", href: "/policies/it-policy" },
 ];
 
-const PAYMENT_METHODS = ["UPI", "Cards", "Net banking", "COD"];
+// const PAYMENT_METHODS = ["UPI", "Cards", "Net banking", "COD"];
+const PAYMENT_METHODS = [
+    { label: "UPI", Icon: Smartphone },
+    { label: "Cards", Icon: CreditCard },
+    { label: "Net banking", Icon: Landmark },
+    { label: "COD", Icon: Banknote },
+];
 
 const columnLabel = "mb-4 font-body text-[10px] font-semibold uppercase tracking-[0.22em] text-palladium";
 const linkClass = "font-body text-sm text-olympus transition hover:text-white";
@@ -82,9 +89,19 @@ export default function FooterV2() {
             <div className="pdp-container py-12">
                 <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
                     <div>
-                        <p className="font-heading text-lg font-semibold uppercase tracking-[0.18em] text-white">
+                        {/* <p className="font-heading text-lg font-semibold uppercase tracking-[0.18em] text-white">
                             Alpha Male
-                        </p>
+                        </p> */}
+                        <Link href="/home" aria-label="Alpha Male home" className="inline-block">
+                            <Image
+                                src="/images/logo-cropped.png"
+                                alt="Alpha Male"
+                                width={120}
+                                height={120}
+                                sizes="120px"
+                                className="h-24 w-24 object-contain sm:h-28 sm:w-28"
+                            />
+                        </Link>
                         <p className="mt-4 max-w-[260px] font-body text-sm leading-relaxed text-olympus">
                             India&apos;s premium, science-backed men&apos;s wellness brand.
                         </p>
@@ -125,12 +142,13 @@ export default function FooterV2() {
 
                         <p className={`${columnLabel} mt-7`}>We accept</p>
                         <ul className="flex flex-wrap gap-2">
-                            {PAYMENT_METHODS.map((method) => (
+                            {PAYMENT_METHODS.map(({ label, Icon }) => (
                                 <li
-                                    key={method}
-                                    className="rounded-md border border-white/20 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.08em] text-olympus"
+                                    key={label}
+                                    className="flex items-center gap-1.5 rounded-md border border-white/20 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-[0.08em] text-olympus"
                                 >
-                                    {method}
+                                    <Icon size={13} aria-hidden="true" className="shrink-0 text-palladium" />
+                                    {label}
                                 </li>
                             ))}
                         </ul>
