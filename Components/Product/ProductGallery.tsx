@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Package } from "lucide-react";
+import { ChevronLeft, ChevronRight, Expand, Package } from "lucide-react";
+
+import ProductImageLightbox from "./ProductImageLightbox";
 
 interface ProductGalleryProps {
     images: string[];
@@ -23,6 +25,8 @@ const prefersReducedMotion = () =>
 export default function ProductGallery({ images, name, badge }: ProductGalleryProps) {
     const list = images.filter(Boolean);
     const [active, setActive] = useState(0);
+    // Full-screen viewer: the image it opened on, or null when closed.
+    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
     const galleryRef = useRef<HTMLDivElement>(null);
     const trackRef = useRef<HTMLDivElement>(null);
     const thumbsRef = useRef<HTMLDivElement>(null);
@@ -71,6 +75,12 @@ export default function ProductGallery({ images, name, badge }: ProductGalleryPr
     }, [active]);
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        // Enter on the gallery (not on a button inside it) opens full screen.
+        if (event.key === "Enter" && event.target === event.currentTarget) {
+            event.preventDefault();
+            setLightboxIndex(active);
+            return;
+        }
         if (count < 2) return;
         if (event.key === "ArrowRight") {
             event.preventDefault();
@@ -117,8 +127,11 @@ export default function ProductGallery({ images, name, badge }: ProductGalleryPr
                 <div
                     ref={trackRef}
                     onScroll={onScroll}
-                    onClick={() => galleryRef.current?.focus({ preventScroll: true })}
-                    className="no-scrollbar flex aspect-square w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-2xl sm:rounded-[20px] lg:max-h-[460px]"
+                    onClick={() => {
+                        galleryRef.current?.focus({ preventScroll: true });
+                        setLightboxIndex(active);
+                    }}
+                    className="no-scrollbar flex aspect-square w-full cursor-zoom-in snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-2xl sm:rounded-[20px] lg:max-h-[460px]"
                 >
                     {list.map((image, index) => (
                         <div
@@ -140,6 +153,16 @@ export default function ProductGallery({ images, name, badge }: ProductGalleryPr
                         </div>
                     ))}
                 </div>
+
+                {/* Full screen */}
+                <button
+                    type="button"
+                    onClick={() => setLightboxIndex(active)}
+                    aria-label="View images full screen"
+                    className="absolute bottom-3 right-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-brand-navy shadow-md transition hover:bg-white"
+                >
+                    <Expand size={16} />
+                </button>
 
                 {count > 1 && (
                     <>
@@ -202,8 +225,21 @@ export default function ProductGallery({ images, name, badge }: ProductGalleryPr
 
             {count > 1 && (
                 <p className="mt-1 hidden font-body text-[11px] text-brand-navy-muted lg:block">
-                    Click an image, then use ← → to browse.
+                    Click an image to view it full screen; use ← → to browse.
                 </p>
+            )}
+
+            {lightboxIndex !== null && (
+                <ProductImageLightbox
+                    images={list}
+                    name={name}
+                    startIndex={lightboxIndex}
+                    onClose={(index) => {
+                        setLightboxIndex(null);
+                        // Leave the gallery on the image the user ended on.
+                        goTo(index);
+                    }}
+                />
             )}
         </div>
     );

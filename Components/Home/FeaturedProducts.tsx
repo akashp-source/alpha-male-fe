@@ -64,7 +64,7 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
 
         const interval = window.setInterval(() => {
             setActiveIndex((previous) => (previous + 1) % products.length);
-        }, 5000);
+        }, 3000);
 
         return () => window.clearInterval(interval);
     }, [products.length, isHovered, hasFocus, userPaused, reducedMotion, motionPreferenceReady]);
@@ -138,7 +138,7 @@ export default function FeaturedProducts({ initialProducts }: { initialProducts?
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`${activeIndex + 1} of ${products.length}`}
-            className="relative isolate mx-auto w-full max-w-[1450px] px-4 py-7 text-center sm:px-6 sm:py-10 lg:min-h-[650px] lg:px-28 lg:py-16 lg:text-left"
+                className="relative isolate mx-auto w-full max-w-[1450px] px-4 py-7 text-center sm:px-6 sm:py-10 lg:min-h-[650px] lg:px-28 lg:py-16 lg:text-left"
             >
                 <img
                     src={product.bannerImages[0]}
