@@ -8,7 +8,7 @@ export default function NotFound() {
         <main className="flex min-h-screen flex-1 flex-col items-center justify-center bg-brand-navy px-6 py-16 text-center font-body text-white">
             <Link href="/" aria-label="Alpha Male home">
                 <Image
-                    src="/images/logo.png"
+                    src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/7dea7f70-17ce-4059-ae58-1e7da21d2220.webp"
                     alt="Alpha Male"
                     width={150}
                     height={150}

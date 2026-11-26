@@ -26,7 +26,7 @@ export default function UserNavbar() {
                 <Link href="/" className="flex items-center gap-2">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-navy text-white">
                         <Image
-                            src="/images/logo.png"
+                            src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/7dea7f70-17ce-4059-ae58-1e7da21d2220.webp"
                             alt="Alpha Male"
                             width={52}
                             height={52}

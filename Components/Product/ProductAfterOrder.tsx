@@ -14,7 +14,7 @@ interface Step {
 export default function ProductAfterOrder({ requiresPrescription = false }: ProductAfterOrderProps) {
     const steps: Step[] = [
         {
-            title: "You order",
+            title: "Place your order",
             text: `Pay online for ${ONLINE_PAYMENT_DISCOUNT_PERCENT}% off, or choose Cash on Delivery.`,
         },
         ...(requiresPrescription
@@ -24,12 +24,12 @@ export default function ProductAfterOrder({ requiresPrescription = false }: Prod
             }]
             : []),
         {
-            title: "Packed plain",
-            text: "Sealed, unbranded parcel. Tracking on SMS and WhatsApp.",
+            title: "Packed discreetly",
+            text: "Your order ships in a plain, sealed parcel. Track it via SMS and WhatsApp.",
         },
         {
-            title: "At your door",
-            text: "In 2-5 working days across India.",
+            title: "Delivered to your door",
+            text: "Estimated delivery in 2–5 working days across India.",
         },
     ];
 

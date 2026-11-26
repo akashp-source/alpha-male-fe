@@ -57,7 +57,7 @@ function FeatureBanner({ banner }: { banner: StoryBanner }) {
                 <BannerNumber value={banner.number} className={theme.number} />
                 {banner.eyebrow && <p className={`${eyebrowClass} mt-4`}>{banner.eyebrow}</p>}
                 <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-4xl">{banner.title}</h2>
-                {banner.body && <p className={`mt-4 font-body text-sm leading-relaxed sm:text-base ${theme.muted}`}>{banner.body}</p>}
+                {banner.body && <p className={`mt-4 whitespace-pre-line font-body text-sm leading-relaxed sm:text-base ${theme.muted}`}>{banner.body}</p>}
                 {banner.items.length > 0 && (
                     <dl className={`mt-7 grid border-y ${theme.line}`} style={{ gridTemplateColumns: `repeat(${banner.items.length}, minmax(0, 1fr))` }}>
                         {banner.items.map((item, index) => (
@@ -81,7 +81,7 @@ function StepsBanner({ banner }: { banner: StoryBanner }) {
             <BannerNumber value={banner.number} className={theme.number} />
             {banner.eyebrow && <p className={`${eyebrowClass} mt-4`}>{banner.eyebrow}</p>}
             <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-4xl">{banner.title}</h2>
-            {banner.body && <p className={`mx-auto mt-4 max-w-xl font-body text-sm leading-relaxed ${theme.muted}`}>{banner.body}</p>}
+            {banner.body && <p className={`mx-auto mt-4 max-w-xl whitespace-pre-line font-body text-sm leading-relaxed ${theme.muted}`}>{banner.body}</p>}
             {banner.items.length > 0 && (
                 // Phones: steps side by side with small photos (3 per row, 2 when there are 4),
                 // so the banner stays short. Tablet/desktop unchanged.
@@ -130,7 +130,7 @@ function SplitBanner({ banner }: { banner: StoryBanner }) {
                 <BannerNumber value={banner.number} className={theme.number} />
                 {banner.eyebrow && <p className={`${eyebrowClass} mt-4`}>{banner.eyebrow}</p>}
                 <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-4xl">{banner.title}</h2>
-                {banner.body && <p className={`mt-4 font-body text-sm leading-relaxed sm:text-base ${theme.muted}`}>{banner.body}</p>}
+                {banner.body && <p className={`mt-4 whitespace-pre-line font-body text-sm leading-relaxed sm:text-base ${theme.muted}`}>{banner.body}</p>}
                 {banner.items.length > 0 && (
                     <ul className={`mt-6 border-t ${theme.line}`}>
                         {banner.items.map((item, index) => (
@@ -190,12 +190,12 @@ function HeroBanner({ banner }: { banner: StoryBanner }) {
             {banner.subtitle && (
                 <p className={`flex items-center justify-center gap-3 font-body font-medium ${desktop ? "mt-[0.9em] text-[clamp(0.75rem,1.2cqw,1.05rem)]" : "mt-4 text-sm sm:text-base"}`}>
                     <span aria-hidden="true" className={`w-[2.2em] border-t ${theme.line} border-current opacity-50`} />
-                    {banner.subtitle}
+                    <span className="whitespace-pre-line">{banner.subtitle}</span>
                     <span aria-hidden="true" className={`w-[2.2em] border-t ${theme.line} border-current opacity-50`} />
                 </p>
             )}
             {banner.body && (
-                <p className={`font-body leading-relaxed ${theme.muted} ${desktop ? "mt-[0.9em] text-[clamp(0.7rem,1cqw,0.95rem)]" : "mt-4 text-sm"}`}>
+                <p className={`whitespace-pre-line font-body leading-relaxed ${theme.muted} ${desktop ? "mt-[0.9em] text-[clamp(0.7rem,1cqw,0.95rem)]" : "mt-4 text-sm"}`}>
                     {banner.body}
                 </p>
             )}
@@ -253,7 +253,7 @@ export default function ProductStoryBanners({ header, banners = [] }: ProductSto
                             <div className="pdp-container mb-10 text-center sm:mb-12">
                                 {header.eyebrow && <p className={eyebrowClass}>{header.eyebrow}</p>}
                                 {header.title && <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-4xl">{header.title}</h2>}
-                                {header.subtitle && <p className={`mt-2 font-body text-sm ${theme.muted}`}>{header.subtitle}</p>}
+                                {header.subtitle && <p className={`mt-2 whitespace-pre-line font-body text-sm ${theme.muted}`}>{header.subtitle}</p>}
                             </div>
                         )}
                         <Layout banner={banner} />
