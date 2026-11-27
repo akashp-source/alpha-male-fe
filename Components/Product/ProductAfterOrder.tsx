@@ -10,19 +10,23 @@ interface Step {
     text: string;
 }
 
-/** "What happens after you order": fixed copy; the call step is prescription-only. */
-export default function ProductAfterOrder({ requiresPrescription = false }: ProductAfterOrderProps) {
+/**
+ * "What happens after you order": fixed copy, the same 4 steps on every product.
+ * (`requiresPrescription` is still accepted but no longer changes the steps.)
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function ProductAfterOrder(_props: ProductAfterOrderProps) {
     const steps: Step[] = [
         {
             title: "Place your order",
             text: `Pay online for ${ONLINE_PAYMENT_DISCOUNT_PERCENT}% off, or choose Cash on Delivery.`,
         },
-        ...(requiresPrescription
-            ? [{
-                title: "Dispatch confirmation",
-                text: "We’ll confirm your order and delivery address before shipping to help avoid delays and get your order to the right doorstep.",
-            }]
-            : []),
+        // Old: only prescription products got this step.
+        // ...(requiresPrescription ? [{ title: "Dispatch confirmation", text: "..." }] : []),
+        {
+            title: "Dispatch confirmation",
+            text: "We’ll confirm your order and delivery address before shipping to help avoid delays and get your order to the right doorstep.",
+        },
         {
             title: "Packed discreetly",
             text: "Your order ships in a plain, sealed parcel. Track it via SMS and WhatsApp.",
