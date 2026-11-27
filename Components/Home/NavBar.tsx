@@ -22,6 +22,8 @@ const navLinks = [
     { name: "Home", href: "/home" },
     { name: "Shop", href: "/shop" },
     // { name: "Combos", href: "/shop" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
     { name: "Help", href: "/help" },
 ];
 
@@ -173,7 +175,7 @@ export default function Navbar() {
         <header
             className={`sticky top-0 z-50 w-full border-b border-[#eeeeee] bg-white transition-transform duration-300 ${navbarHidden ? "-translate-y-full" : ""}`}
         >
-            <div className="mx-auto grid h-[64px] w-full max-w-[1800px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-10 md:h-[76px]">
+            <div className="mx-auto grid h-[54px] w-full max-w-[1800px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-10 md:h-[64px]">
 
                 {/* Logo */}
                 <Link href="/" className="flex min-w-0 shrink items-center gap-1.5 justify-self-start sm:gap-2 md:shrink-0 md:gap-3">

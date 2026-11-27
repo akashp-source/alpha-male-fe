@@ -1,5 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { canOptimizeImage } from "@/lib/image-hosts";
+import ShowcaseSlider from "@/Components/Product/ShowcaseSlider";
 
 import type { Product } from "@/types/product";
 
@@ -8,6 +10,9 @@ type StoryBanner = NonNullable<Product["storyBanners"]>[number];
 interface ProductStoryBannersProps {
     header?: Product["storyHeader"];
     banners?: Product["storyBanners"];
+    /** Product page theme, for banners set to "Same as product". */
+    pageTheme?: string;
+    pageAccent?: string;
 }
 
 // Background + text colours per theme (brand tokens only).
@@ -15,11 +20,61 @@ const THEME = {
     light: { section: "bg-white text-brand-navy", muted: "text-brand-navy-muted", line: "border-olympus", number: "text-palladium" },
     pale: { section: "bg-pale-gray text-brand-navy", muted: "text-brand-navy-muted", line: "border-olympus", number: "text-medium-gray" },
     navy: { section: "bg-brand-navy text-white", muted: "text-olympus", line: "border-white/15", number: "text-white/35" },
+    blush: { section: "bg-blush text-brand-navy", muted: "text-brand-navy-muted", line: "border-accent-rose/25", number: "text-accent-rose/40" },
+    cream: { section: "bg-cream text-brand-navy", muted: "text-brand-navy-muted", line: "border-accent-orange/25", number: "text-accent-orange/40" },
+    // Soft mint teal with a lighter glow (old deep teal was too dark):
+    // teal: { section: "bg-teal-deep text-white", muted: "text-olympus", line: "border-white/15", number: "text-white/35" },
+    teal: {
+        section: "bg-teal-soft bg-[radial-gradient(ellipse_at_50%_100%,var(--color-teal-soft-light),var(--color-teal-soft)_70%)] text-brand-navy",
+        muted: "text-brand-navy-muted",
+        line: "border-brand-navy/15",
+        number: "text-brand-navy/30",
+    },
 } as const;
+
+/** Dark backgrounds: white text, light buttons and pills. */
+const isDark = (theme?: string) => theme === "navy";
 
 const themeOf = (banner: StoryBanner) => THEME[banner.theme as keyof typeof THEME] ?? THEME.light;
 
-const eyebrowClass = "font-body text-[10px] font-semibold uppercase tracking-[0.22em]";
+/** Accent colour for labels, numbers and lines ("" = inherit the theme's text colour). */
+const ACCENTS = {
+    rose: {
+        light: { text: "text-accent-rose", bg: "bg-accent-rose", border: "border-accent-rose" },
+        dark: { text: "text-accent-rose-light", bg: "bg-accent-rose-light", border: "border-accent-rose-light" },
+    },
+    orange: {
+        light: { text: "text-accent-orange", bg: "bg-accent-orange", border: "border-accent-orange" },
+        dark: { text: "text-accent-orange-light", bg: "bg-accent-orange-light", border: "border-accent-orange-light" },
+    },
+} as const;
+
+function accentOf(banner: StoryBanner) {
+    const accent = ACCENTS[banner.accent as keyof typeof ACCENTS];
+    if (!accent) return { text: "", bg: "bg-current", border: "border-current" };
+    return isDark(banner.theme) ? accent.dark : accent.light;
+}
+
+/** Short centred rule under a title. */
+function Divider({ className }: { className: string }) {
+    return <span aria-hidden="true" className={`mx-auto mt-5 block h-px w-14 opacity-60 ${className}`} />;
+}
+
+/** Optional banner button. No link = scroll to the buy box (#buy). */
+function BannerCta({ banner, className }: { banner: StoryBanner; className: string }) {
+    if (!banner.ctaLabel) return null;
+    const href = banner.ctaHref || "#buy";
+    const classes = `inline-flex min-h-11 items-center justify-center rounded-full px-7 font-body text-[11px] font-bold uppercase tracking-[0.18em] transition ${className}`;
+    if (href.startsWith("#")) {
+        return <a href={href} className={classes}>{banner.ctaLabel}</a>;
+    }
+    if (/^https?:/i.test(href)) {
+        return <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>{banner.ctaLabel}</a>;
+    }
+    return <Link href={href} className={classes}>{banner.ctaLabel}</Link>;
+}
+
+const eyebrowClass = "font-body text-[12px] font-semibold uppercase tracking-[0.22em]";
 
 /** Big decorative number, e.g. "01" (the banner title carries the meaning). */
 function BannerNumber({ value, className }: { value?: string; className: string }) {
@@ -55,7 +110,7 @@ function FeatureBanner({ banner }: { banner: StoryBanner }) {
             )}
             <div>
                 <BannerNumber value={banner.number} className={theme.number} />
-                {banner.eyebrow && <p className={`${eyebrowClass} mt-4`}>{banner.eyebrow}</p>}
+                {banner.eyebrow && <p className={`${eyebrowClass} mt-4 ${accentOf(banner).text}`}>{banner.eyebrow}</p>}
                 <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-4xl">{banner.title}</h2>
                 {banner.body && <p className={`mt-4 whitespace-pre-line font-body text-sm leading-relaxed sm:text-base ${theme.muted}`}>{banner.body}</p>}
                 {banner.items.length > 0 && (
@@ -90,14 +145,14 @@ function StepsBanner({ banner }: { banner: StoryBanner }) {
                         <li key={index} className="flex min-w-0 flex-col items-center">
                             {/* Old look: white ring (border + white glow) + layered shadow
                             <span
-                                className={`relative h-36 w-36 overflow-hidden rounded-full border-4 border-white bg-white sm:h-44 sm:w-44 max-sm:h-[5.5rem] max-sm:w-[5.5rem] max-sm:border-[3px] ${banner.theme === "navy"
+                                className={`relative h-36 w-36 overflow-hidden rounded-full border-4 border-white bg-white sm:h-44 sm:w-44 max-sm:h-[5.5rem] max-sm:w-[5.5rem] max-sm:border-[3px] ${isDark(banner.theme)
                                     ? "shadow-[0_6px_14px_rgba(0,0,0,0.35),0_22px_48px_rgba(0,0,0,0.5),0_0_0_8px_rgba(255,255,255,0.06)]"
                                     : "shadow-[0_6px_14px_rgba(33,46,73,0.14),0_22px_48px_rgba(33,46,73,0.22),0_0_0_8px_rgba(255,255,255,0.7)]"
                                     }`}
                             > */}
                             {/* Round photo, no white ring: just the soft drop shadow */}
                             <span
-                                className={`relative h-36 w-36 overflow-hidden rounded-full sm:h-44 sm:w-44 max-sm:h-[5.5rem] max-sm:w-[5.5rem] ${banner.theme === "navy"
+                                className={`relative h-36 w-36 overflow-hidden rounded-full sm:h-44 sm:w-44 max-sm:h-[5.5rem] max-sm:w-[5.5rem] ${isDark(banner.theme)
                                     ? "shadow-[0_6px_14px_rgba(0,0,0,0.35),0_22px_48px_rgba(0,0,0,0.5)]"
                                     : "shadow-[0_6px_14px_rgba(33,46,73,0.14),0_22px_48px_rgba(33,46,73,0.22)]"
                                     }`}
@@ -108,7 +163,7 @@ function StepsBanner({ banner }: { banner: StoryBanner }) {
                             </span>
                             {/* Pill flips colours on navy so it stays visible */}
                             <span
-                                className={`mt-6 rounded-full px-3 py-1 ${eyebrowClass} tracking-[0.16em] max-sm:mt-4 max-sm:px-2 max-sm:py-0.5 max-sm:text-[8px] ${banner.theme === "navy" ? "bg-white text-brand-navy" : "bg-brand-navy text-white"}`}
+                                className={`mt-6 rounded-full px-3 py-1 ${eyebrowClass} tracking-[0.16em] max-sm:mt-4 max-sm:px-2 max-sm:py-0.5 max-sm:text-[8px] ${isDark(banner.theme) ? "bg-white text-brand-navy" : "bg-brand-navy text-white"}`}
                             >
                                 Step {index + 1}
                             </span>
@@ -237,11 +292,171 @@ function HeroBanner({ banner }: { banner: StoryBanner }) {
     );
 }
 
-const LAYOUT = { feature: FeatureBanner, steps: StepsBanner, split: SplitBanner, hero: HeroBanner } as const;
+/** Intro: centred label, title, short rule and text (e.g. "In the mood for closer?"). */
+function IntroBanner({ banner }: { banner: StoryBanner }) {
+    const theme = themeOf(banner);
+    const accent = accentOf(banner);
+    return (
+        <div className="pdp-container text-center">
+            {banner.eyebrow && <p className={`${eyebrowClass} ${accent.text}`}>{banner.eyebrow} </p>}
+            <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-5xl">{banner.title}</h2>
+            <Divider className={accent.bg} />
+            {banner.subtitle && <p className="mx-auto mt-5 max-w-2xl whitespace-pre-line font-body text-sm font-medium sm:text-base">{banner.subtitle}</p>}
+            {banner.body && (
+                <p className={`mx-auto mt-5 max-w-2xl whitespace-pre-line font-body text-sm leading-7 sm:text-base sm:leading-8 ${theme.muted}`}>
+                    {banner.body}
+                </p>
+            )}
+            <BannerCta banner={banner} className={isDark(banner.theme) ? "mt-8 bg-white text-brand-navy hover:bg-olympus" : "mt-8 bg-brand-navy text-white hover:bg-[#14284d]"} />
+        </div>
+    );
+}
+
+/** Features: heading on the left, then one row per feature with its picture on alternating sides. */
+function FeaturesBanner({ banner }: { banner: StoryBanner }) {
+    const theme = themeOf(banner);
+    const accent = accentOf(banner);
+    return (
+        <div className="pdp-container">
+            {banner.eyebrow && <p className={`${eyebrowClass} ${accent.text}`}>{banner.eyebrow}</p>}
+            <h2 className={`mt-2 font-heading text-4xl leading-tight sm:text-5xl ${accent.text}`}>{banner.title}</h2>
+            {banner.subtitle && <p className="mt-2 whitespace-pre-line font-heading text-base uppercase tracking-[0.06em] sm:text-lg">{banner.subtitle}</p>}
+            {banner.body && <p className={`mt-4 max-w-2xl whitespace-pre-line font-body text-sm leading-relaxed sm:text-base ${theme.muted}`}>{banner.body}</p>}
+
+            {banner.items.length > 0 && (
+                <ol className="mx-auto mt-10 max-w-4xl space-y-10 sm:mt-14 sm:space-y-14">
+                    {banner.items.map((item, index) => {
+                        const flip = index % 2 === 1;
+                        return (
+                            <li key={index} className={`flex items-center gap-4 sm:gap-6 ${flip ? "flex-row-reverse" : ""}`}>
+                                <span className="relative flex h-28 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-[#f4f5f8] sm:h-40 sm:w-32">
+                                    {item.image && (
+                                        <Image unoptimized={!canOptimizeImage(item.image)} src={item.image} alt="" fill sizes="128px" className="object-contain p-2" />
+                                    )}
+                                </span>
+                                {/* Connector: line ending in a dot, pointing at the text */}
+                                <span aria-hidden="true" className={`hidden w-12 shrink-0 items-center sm:flex lg:w-20 ${flip ? "flex-row-reverse" : ""}`}>
+                                    <span className={`h-2 w-2 rounded-full ${accent.bg}`} />
+                                    <span className={`flex-1 border-t opacity-40 ${accent.border}`} />
+                                    <span className={`h-1.5 w-1.5 rounded-full ${accent.bg} opacity-70`} />
+                                </span>
+                                <div className="min-w-0 flex-1">
+                                    <p className={`${eyebrowClass} tracking-[0.18em] ${accent.text}`}>
+                                        {String(index + 1).padStart(2, "0")}
+                                        {item.label && ` · ${item.label}`}
+                                    </p>
+                                    {item.title && <h3 className="mt-1.5 font-heading text-lg leading-snug sm:text-2xl">{item.title}</h3>}
+                                    {item.text && <p className={`mt-1.5 font-body text-xs leading-relaxed sm:text-sm ${theme.muted}`}>{item.text}</p>}
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ol>
+            )}
+        </div>
+    );
+}
+
+/** Showcase: centred label, title and text over a big photo (own phone photo optional), then a button. */
+function ShowcaseBanner({ banner }: { banner: StoryBanner }) {
+    const theme = themeOf(banner);
+    const accent = accentOf(banner);
+    const navy = isDark(banner.theme);
+    const photo = (src: string, className: string, mobile: boolean) => (
+        <div className={`relative overflow-hidden rounded-3xl ${navy ? "shadow-[0_24px_60px_rgba(0,0,0,0.35)] ring-1 ring-white/10" : "shadow-[0_18px_40px_rgba(33,46,73,0.18)]"} ${className}`}>
+            <Image unoptimized={!canOptimizeImage(src)} src={src}
+                alt={banner.imageAlt || ""}
+                width={mobile ? 800 : 1600}
+                height={mobile ? 1000 : 900}
+                sizes={mobile ? "100vw" : "(max-width: 1200px) 100vw, 1100px"}
+                className="block h-auto w-full"
+            />
+        </div>
+    );
+    return (
+        <div className="pdp-container text-center">
+            {banner.eyebrow && <p className={`${eyebrowClass} ${accent.text}`}>{banner.eyebrow}</p>}
+            <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-4xl">{banner.title}</h2>
+            <Divider className={accent.bg} />
+            {banner.body && <p className={`mx-auto mt-5 max-w-2xl whitespace-pre-line font-body text-sm leading-relaxed sm:text-base ${theme.muted}`}>{banner.body}</p>}
+            {/* Extra photos added: main photo + those slide every 2 seconds */}
+            {banner.image && (banner.slides?.length ?? 0) > 0 ? (
+                <div className="mx-auto mt-8 max-w-5xl sm:mt-10">
+                    <ShowcaseSlider
+                        slides={[{ image: banner.image, mobileImage: banner.mobileImage }, ...(banner.slides ?? [])]}
+                        alt={banner.imageAlt || ""}
+                        navy={navy}
+                    />
+                </div>
+            ) : banner.image && (
+                <div className="mx-auto mt-8 max-w-5xl sm:mt-10">
+                    {banner.mobileImage ? (
+                        <>
+                            {photo(banner.mobileImage, "sm:hidden", true)}
+                            {photo(banner.image, "hidden sm:block", false)}
+                        </>
+                    ) : (
+                        photo(banner.image, "", false)
+                    )}
+                </div>
+            )}
+            <BannerCta banner={banner} className={navy ? "mt-8 bg-white text-brand-navy hover:bg-olympus" : "mt-8 bg-brand-navy text-white hover:bg-[#14284d]"} />
+        </div>
+    );
+}
+
+/** Cards: label + title on the left, short note on the right, then numbered cards (e.g. how-to steps). */
+function CardsBanner({ banner }: { banner: StoryBanner }) {
+    const theme = themeOf(banner);
+    const accent = accentOf(banner);
+    const navy = isDark(banner.theme);
+    return (
+        <div className="pdp-container">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+                <div>
+                    {banner.eyebrow && <p className={`${eyebrowClass} ${accent.text}`}>{banner.eyebrow}</p>}
+                    <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-4xl">{banner.title}</h2>
+                </div>
+                {banner.body && <p className={`max-w-sm whitespace-pre-line font-body text-sm leading-relaxed ${theme.muted}`}>{banner.body}</p>}
+            </div>
+            {banner.items.length > 0 && (
+                <ol className={`mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 ${banner.items.length >= 4 ? "lg:grid-cols-4" : banner.items.length === 3 ? "lg:grid-cols-3" : ""}`}>
+                    {banner.items.map((item, index) => (
+                        <li key={index} className={`rounded-2xl border p-5 sm:p-6 ${navy ? "border-white/15 bg-white/[0.04]" : "border-[#e1e6ee] bg-white"}`}>
+                            <p aria-hidden="true" className={`font-heading text-3xl font-normal leading-none ${accent.text || theme.number}`}>
+                                {String(index + 1).padStart(2, "0")}
+                            </p>
+                            {item.title && <h3 className="mt-4 font-heading text-lg leading-snug">{item.title}</h3>}
+                            {item.text && <p className={`mt-2 font-body text-xs leading-relaxed sm:text-sm ${theme.muted}`}>{item.text}</p>}
+                        </li>
+                    ))}
+                </ol>
+            )}
+        </div>
+    );
+}
+
+const LAYOUT = {
+    feature: FeatureBanner,
+    steps: StepsBanner,
+    split: SplitBanner,
+    hero: HeroBanner,
+    intro: IntroBanner,
+    features: FeaturesBanner,
+    showcase: ShowcaseBanner,
+    cards: CardsBanner,
+} as const;
 
 /** Product-page story banners, stacked, with an optional heading above them. */
-export default function ProductStoryBanners({ header, banners = [] }: ProductStoryBannersProps) {
-    const list = (banners ?? []).filter((banner) => banner?.title?.trim());
+export default function ProductStoryBanners({ header, banners = [], pageTheme = "", pageAccent = "" }: ProductStoryBannersProps) {
+    // A banner's own background / accent wins; "product" = use the page theme.
+    const list = (banners ?? [])
+        .filter((banner) => banner?.title?.trim())
+        .map((banner) => ({
+            ...banner,
+            theme: banner.theme === "product" ? pageTheme || "light" : banner.theme,
+            accent: banner.accent === "product" ? pageAccent : banner.accent,
+        }));
     if (!list.length) return null;
 
     const hasHeader = Boolean(header && (header.eyebrow || header.title || header.subtitle));

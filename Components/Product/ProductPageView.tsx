@@ -24,6 +24,7 @@ import ProductRatingsV2 from "@/Components/Product/ProductRatingsV2";
 import DeliveryBanner from "@/Components/DeliveryBanner";
 import OurStandard from "@/Components/OurStandard";
 import ProductStoryBanners from "@/Components/Product/ProductStoryBanners";
+import ProductYouMayAlsoLike from "@/Components/Product/ProductYouMayAlsoLike";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ProductPageView({ product }: { product: any }) {
@@ -44,14 +45,16 @@ export default function ProductPageView({ product }: { product: any }) {
 
             {/* Product recommendations */}
             {/* <ProductRecommendations product={product} /> old design, replaced by ProductRecommendationsV2 */}
-            <ProductRecommendationsV2 product={product} />
+            {/* <ProductRecommendationsV2 product={product} /> moved to the bottom as ProductYouMayAlsoLike */}
 
-            {/* "Our standard" badges (replaces the navy trust bar) */}
-            {/* <OurStandard /> */}
-            <OurStandard marquee />
 
             {/* Story banners (stacked; renders only if set in admin) */}
-            <ProductStoryBanners header={product.storyHeader} banners={product.storyBanners} />
+            <ProductStoryBanners
+                header={product.storyHeader}
+                banners={product.storyBanners}
+                pageTheme={product.pageTheme}
+                pageAccent={product.pageAccent}
+            />
 
             {/* Product key points (removed from the page)
             <ProductKeyPoints
@@ -162,7 +165,15 @@ export default function ProductPageView({ product }: { product: any }) {
                 faqs={product.faqs}
                 productName={product.name}
             /> */}
-            <ProductFAQsV2 faqs={product.faqs} />
+            <ProductFAQsV2 faqs={product.faqs} productName={product.name} tagline={product.faqTagline} intro={product.faqIntro} />
+
+            {/* "You may also like", last on the page, in the product's page theme */}
+            <ProductYouMayAlsoLike product={product} />
+
+            {/* "Our standard" badges (replaces the navy trust bar) */}
+            {/* <OurStandard /> */}
+            <OurStandard marquee />
+
         </main>
     );
 }

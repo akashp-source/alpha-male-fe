@@ -158,8 +158,20 @@ export interface Product {
         subtitle: string;
     } | null;
 
-    // Product-page story banners, in order. layout: feature | steps | split | hero;
-    // theme: light | pale | navy.
+    // Product page theme (admin → Page theme): background '' (white) | light |
+    // pale | navy | blush | cream | teal, accent '' | rose | orange. Used by "You may also like" and
+    // story banners whose background / accent is "product".
+    pageTheme?: string;
+    pageAccent?: string;
+    // "You may also like" heading; blank = default wording.
+    recommendationsEyebrow?: string;
+    recommendationsTitle?: string;
+    // FAQ section text (blank tagline = none; blank intro = default sentence).
+    faqTagline?: string;
+    faqIntro?: string;
+
+    // Product-page story banners, in order. layout: feature | steps | split | hero |
+    // intro | features | showcase | cards; theme: light | pale | navy | blush | product.
     storyBanners?: {
         layout: string;
         theme: string;
@@ -171,7 +183,15 @@ export interface Product {
         image: string;
         imageAlt: string;
         imageBadge: string;
-        items: { title: string; text: string; image: string }[];
+        /** "" (brand navy) | "rose": colour of labels, numbers and lines. */
+        accent?: string;
+        /** Phone image for the showcase layout (blank = use `image`). */
+        mobileImage?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        /** Extra showcase photos; with any, the photo slides every 3 seconds. */
+        slides?: { image: string; mobileImage?: string }[];
+        items: { label?: string; title: string; text: string; image: string }[];
         tags: string[];
     }[];
 
