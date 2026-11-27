@@ -17,6 +17,12 @@ const tabLabel = (category: string) => (category === DEFAULT_CATEGORY ? "General
 
 interface ProductFAQsV2Props {
     faqs?: FAQ[];
+    /** Shown in the default intro, "Everything you need to know about ...". */
+    productName?: string;
+    /** Short line under the heading (admin → FAQs). Blank = none. */
+    tagline?: string;
+    /** Intro text (admin → FAQs). Blank = the default sentence with the product name. */
+    intro?: string;
 }
 
 /**
@@ -24,7 +30,7 @@ interface ProductFAQsV2Props {
  * With more than one FAQ category, tabs (General FAQs · Product · Usage ...)
  * switch between them.
  */
-export default function ProductFAQsV2({ faqs = [] }: ProductFAQsV2Props) {
+export default function ProductFAQsV2({ faqs = [], productName = "", tagline = "", intro = "" }: ProductFAQsV2Props) {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const idPrefix = useId();
 
@@ -48,8 +54,18 @@ export default function ProductFAQsV2({ faqs = [] }: ProductFAQsV2Props) {
                             Good to know
                         </p>
                         <h2 className="font-heading text-3xl leading-tight text-brand-navy sm:text-4xl">
-                            Straight answers
+                            Your Questions, Answered
                         </h2>
+                        {/* Old fixed text (same on every product):
+                        <p>Feel Closer. Stay Protected.</p>
+                        <p>Everything you need to know about {productName}, including product details, usage guidance, and discreet delivery information.</p> */}
+                        {tagline.trim() && (
+                            <p className="mt-3 whitespace-pre-line font-body text-sm font-medium sm:text-base">{tagline.trim()}</p>
+                        )}
+                        <p className="mx-auto mt-2 max-w-2xl whitespace-pre-line font-body text-sm leading-relaxed text-brand-navy-muted sm:text-base">
+                            {intro.trim() ||
+                                `Everything you need to know about ${productName.trim() || "this product"}, including product details, usage guidance, and discreet delivery information.`}
+                        </p>
                     </div>
 
                     {/* Category tabs (only when there's more than one) */}

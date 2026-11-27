@@ -19,8 +19,8 @@ export default function ProductAfterOrder({ requiresPrescription = false }: Prod
         },
         ...(requiresPrescription
             ? [{
-                title: "A private call",
-                text: "Two minutes to confirm your order and check it's safe for you.",
+                title: "Dispatch confirmation",
+                text: "We’ll confirm your order and delivery address before shipping to help avoid delays and get your order to the right doorstep.",
             }]
             : []),
         {

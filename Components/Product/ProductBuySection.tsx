@@ -556,7 +556,8 @@ export default function ProductBuySection({
     const sectionLabel = "font-body text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-navy";
 
     return (
-        <section className="w-full bg-white text-brand-navy">
+        // id="buy": story banner buttons scroll back here.
+        <section id="buy" className="w-full scroll-mt-20 bg-white text-brand-navy">
             <div className="pdp-container py-4 sm:py-5 lg:py-4">
 
                 {/* Breadcrumb */}

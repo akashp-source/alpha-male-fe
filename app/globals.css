@@ -37,6 +37,21 @@
   --color-accent-green-deep: #103e3a;
   --color-accent-green-moss: #315b3e;
   --color-accent-lime: #c5df50;
+
+  /* "Bare" (condoms) story banners: blush background + rose accent.
+     rose is AA on white and blush; rose-light is for navy backgrounds. */
+  --color-blush: #fbecec;
+  --color-accent-rose: #a3344f;
+  --color-accent-rose-light: #f3a9ba;
+
+  /* "Long Play" pages: cream / soft-teal backgrounds + orange accent.
+     orange is AA (4.5:1+) on white, cream and soft teal; orange-light is for navy.
+     Old deep teal (too dark): --color-teal-deep: #0e4448; old orange: #b54a17. */
+  --color-cream: #fbf1ea;
+  --color-teal-soft: #c9dfda;
+  --color-teal-soft-light: #d9ebe6;
+  --color-accent-orange: #a0410f;
+  --color-accent-orange-light: #f4a261;
 }
 
 /* Heading rule: H1-H2 = Cinzel 600, H3 and below = Montserrat 600.
