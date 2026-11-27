@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { devAuthHeader, useIsDev } from "@/lib/dev-access";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
 export const MAX_SUGGESTIONS = 6;
 const DEBOUNCE_MS = 250;
@@ -24,6 +26,8 @@ export function useProductSuggestions(query: string, enabled: boolean) {
     const [results, setResults] = useState<ProductSuggestion[]>([]);
     const [resultsFor, setResultsFor] = useState("");
     const [loading, setLoading] = useState(false);
+    // Dev accounts also find test products.
+    const isDev = useIsDev();
 
     useEffect(() => {
         if (!enabled || !term) return;
@@ -32,7 +36,7 @@ export function useProductSuggestions(query: string, enabled: boolean) {
             setLoading(true);
             try {
                 const params = new URLSearchParams({ page: "1", limit: String(MAX_SUGGESTIONS), search: term });
-                const response = await fetch(`${API_URL}/product?${params.toString()}`, { signal: controller.signal });
+                const response = await fetch(`${API_URL}/product?${params.toString()}`, { signal: controller.signal, headers: devAuthHeader(isDev) });
                 if (!response.ok) throw new Error("search failed");
                 const data = await response.json();
                 setResults(Array.isArray(data.products) ? data.products.slice(0, MAX_SUGGESTIONS) : []);
@@ -50,7 +54,7 @@ export function useProductSuggestions(query: string, enabled: boolean) {
             window.clearTimeout(timer);
             controller.abort();
         };
-    }, [enabled, term]);
+    }, [enabled, term, isDev]);
 
     const ready = Boolean(term) && resultsFor === term;
     return { term, suggestions: ready ? results : [], ready, loading };

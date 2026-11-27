@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Loader2, Search, ShoppingCart, SlidersHorizontal, X } from "lucide-react";
 import AddToCartButton from "../Cart/AddToCartButton";
 import { categoryLabel, useStoreCategories } from "@/lib/categories";
+import { devAuthHeader, useIsDev } from "@/lib/dev-access";
 import { productHref } from "@/lib/productUrl";
 import ProductSuggestionList from "@/Components/Search/ProductSuggestionList";
 import { useProductSuggestions } from "@/Components/Search/useProductSuggestions";
@@ -52,6 +53,8 @@ const money = (value: number) =>
     `₹${value.toLocaleString("en-IN")}`;
 
 export default function ShopProducts({ onAddToCart, initialSearch = "" }: Props) {
+    // Dev accounts also see test products (refetches once that's known).
+    const isDev = useIsDev();
     // Category filter options come from the backend (GET /categories).
     const storeCategories = useStoreCategories();
     const categories = useMemo(
@@ -122,7 +125,8 @@ export default function ShopProducts({ onAddToCart, initialSearch = "" }: Props)
 
             const response = await fetch(
                 `${API_URL}/product?${params.toString()}`,
-                { signal, cache: "no-store" }
+                // Dev accounts also get test products.
+                { signal, cache: "no-store", headers: devAuthHeader(isDev) }
             );
 
             if (!response.ok) {
@@ -142,7 +146,7 @@ export default function ShopProducts({ onAddToCart, initialSearch = "" }: Props)
         } finally {
             if (!signal.aborted) setLoading(false);
         }
-    }, [page, search, category, priceRange, inStock, retry]);
+    }, [page, search, category, priceRange, inStock, retry, isDev]);
 
     useEffect(() => {
         const controller = new AbortController();
