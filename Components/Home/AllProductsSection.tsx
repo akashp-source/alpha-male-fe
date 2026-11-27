@@ -11,6 +11,7 @@ import type { Product } from "@/types/product";
 import AddToCartButton from "@/Components/Cart/AddToCartButton";
 import { categoryLabel, useStoreCategories } from "@/lib/categories";
 import SortDropdown from "./SortDropdown";
+import { devAuthHeader, useIsDev } from "@/lib/dev-access";
 import { productHref } from "@/lib/productUrl";
 
 // products/total: first page from the server (default filters).
@@ -42,12 +43,15 @@ export default function AllProductsSection({ products, total: initialTotal }: Pr
     const [comboOnly, setComboOnly] = useState(false);
     const [sort, setSort] = useState("featured");
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+    // Dev accounts also see test products (the server-sent page 1 never has them).
+    const isDev = useIsDev();
 
     useEffect(() => {
-        if (skipInitialFetch.current) {
+        if (skipInitialFetch.current && !isDev) {
             skipInitialFetch.current = false;
             return;
         }
+        skipInitialFetch.current = false;
         const controller = new AbortController();
         const params = new URLSearchParams({ page: String(page), limit: String(PAGE_SIZE) });
         if (search.trim()) params.set("search", search.trim());
@@ -59,7 +63,7 @@ export default function AllProductsSection({ products, total: initialTotal }: Pr
 
         setLoading(true);
         setError("");
-        fetch(`${API_URL}/product?${params.toString()}`, { signal: controller.signal, cache: "no-store" })
+        fetch(`${API_URL}/product?${params.toString()}`, { signal: controller.signal, cache: "no-store", headers: devAuthHeader(isDev) })
             .then(async (response) => {
                 if (!response.ok) throw new Error("Unable to load products");
                 return response.json();
@@ -75,7 +79,7 @@ export default function AllProductsSection({ products, total: initialTotal }: Pr
             .finally(() => { if (!controller.signal.aborted) setLoading(false); });
 
         return () => controller.abort();
-    }, [page, search, category, inStock, price]);
+    }, [page, search, category, inStock, price, isDev]);
 
     const visibleProducts = useMemo(() => {
         const filtered = apiProducts.filter((product) => {

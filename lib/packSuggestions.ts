@@ -1,3 +1,4 @@
+import { devAuthHeader } from "@/lib/dev-access";
 /**
  * "Smarter pack" suggestions for products sold in several pack sizes
  * (e.g. 3-pack, 6-pack, 12-pack). Computed by the backend
@@ -50,7 +51,8 @@ export async function fetchPackSuggestions(
 
     const response = await fetch(
         `${API_URL}/product/pack-suggestions/${encodeURIComponent(productId)}?quantity=${quantity}`,
-        { cache: "no-store", signal }
+        // Login only for known dev accounts (test products); anonymous otherwise.
+        { cache: "no-store", signal, headers: devAuthHeader() }
     );
     if (!response.ok) throw new Error("Unable to load pack suggestions");
 
