@@ -40,6 +40,8 @@ type Props = {
     onAddToCart?: (product: Product) => void;
     /** Search from the URL (/shop?search=...), e.g. from the navbar search. */
     initialSearch?: string;
+    /** Category slug from the URL (/shop?category=...), e.g. from "Browse by category". */
+    initialCategory?: string;
 };
 
 const priceOptions = [
@@ -52,7 +54,7 @@ const priceOptions = [
 const money = (value: number) =>
     `₹${value.toLocaleString("en-IN")}`;
 
-export default function ShopProducts({ onAddToCart, initialSearch = "" }: Props) {
+export default function ShopProducts({ onAddToCart, initialSearch = "", initialCategory = "" }: Props) {
     // Dev accounts also see test products (refetches once that's known).
     const isDev = useIsDev();
     // Category filter options come from the backend (GET /categories).
@@ -82,7 +84,7 @@ export default function ShopProducts({ onAddToCart, initialSearch = "" }: Props)
     const [highlight, setHighlight] = useState({ index: -1, term: "" });
     const activeSuggestion = highlight.term === draftTerm ? highlight.index : -1;
     const setActiveSuggestion = (index: number) => setHighlight({ index, term: draftTerm });
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState(initialCategory);
     const [priceRange, setPriceRange] = useState("all");
     const [inStock, setInStock] = useState(false);
     const [saleOnly, setSaleOnly] = useState(false);

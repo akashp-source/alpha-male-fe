@@ -9,6 +9,7 @@ import BestSellers from "./BestSellers";
 // import FeaturedConceptA from "./FeaturedConceptA"; // Card track concept, not used.
 // import FeaturedConceptB from "./FeaturedConceptB"; // Spotlight concept, not used.
 import FeaturedConceptC from "./FeaturedConceptC";
+import BrowseByCategory, { type BrowseCategory } from "./BrowseByCategory";
 import FAQ from "../Faqs";
 import TrustSection from "./TrustSection";
 // import FooterPage from "../Footer"; (replaced by FooterV2 in app/layout.tsx)
@@ -96,12 +97,26 @@ async function getHomeComparisons(): Promise<HomeComparison[]> {
     }
 }
 
+// "Browse by category" cards (active categories, in the admin's order).
+async function getCategories(): Promise<BrowseCategory[]> {
+    try {
+        const response = await fetch(`${API_URL}/categories`, productFetchOptions);
+        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+        const data = await response.json();
+        return Array.isArray(data.categories) ? data.categories : [];
+    } catch (error) {
+        console.error("Categories error:", error);
+        return [];
+    }
+}
+
 export default async function HomePage() {
-    const [{ products, total }, bestSellers, comparisons, featured] = await Promise.all([
+    const [{ products, total }, bestSellers, comparisons, featured, categories] = await Promise.all([
         getProducts(),
         getBestSellers(),
         getHomeComparisons(),
         getFeaturedProducts(),
+        getCategories(),
     ]);
 
     return (
@@ -109,6 +124,7 @@ export default async function HomePage() {
             <Navbar />
             <HeroBanner />
             <BestSellers products={bestSellers} />
+            <BrowseByCategory categories={categories} />
             <AllProductsSection products={products} total={total} />
             {/* New carousel concepts. Comment out the versions you don't want to use. */}
             {/* <FeaturedProducts initialProducts={featured} /> Previous hero design. */}

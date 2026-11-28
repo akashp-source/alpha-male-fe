@@ -38,9 +38,5 @@ export function useStoreCategories() {
     return categories;
 }
 
-/** Display form of a category name: first letter of each word capitalised ("oral strip" -> "Oral Strip"). */
-export function categoryLabel(name: string) {
-    return String(name ?? "")
-        .trim()
-        .replace(/(^|[\s/-])([a-z])/g, (_, sep: string, letter: string) => sep + letter.toUpperCase());
-}
+// Moved to lib/category-label.ts (usable on the server too); re-exported here.
+export { categoryLabel } from "./category-label";

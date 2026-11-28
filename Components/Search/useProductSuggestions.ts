@@ -35,7 +35,8 @@ export function useProductSuggestions(query: string, enabled: boolean) {
         const timer = window.setTimeout(async () => {
             setLoading(true);
             try {
-                const params = new URLSearchParams({ page: "1", limit: String(MAX_SUGGESTIONS), search: term });
+                // view=suggest: the backend sends only the fields shown here (lighter, faster).
+                const params = new URLSearchParams({ page: "1", limit: String(MAX_SUGGESTIONS), search: term, view: "suggest" });
                 const response = await fetch(`${API_URL}/product?${params.toString()}`, { signal: controller.signal, headers: devAuthHeader(isDev) });
                 if (!response.ok) throw new Error("search failed");
                 const data = await response.json();
