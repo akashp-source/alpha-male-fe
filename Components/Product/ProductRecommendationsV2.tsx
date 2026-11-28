@@ -247,13 +247,15 @@ export default function ProductRecommendationsV2({ product }: { product: Product
                                                 </span>
                                             )}
                                             {item.images?.[0] && (
-                                                <Image
-                                                    src={item.images[0]}
-                                                    alt={item.name}
-                                                    fill
-                                                    sizes="(max-width: 640px) 220px, 25vw"
-                                                    className="object-contain p-5 transition-transform duration-500 group-hover:scale-105"
-                                                />
+                                                <span className="absolute inset-5">
+                                                    <Image
+                                                        src={item.images[0]}
+                                                        alt={item.name}
+                                                        fill
+                                                        sizes="(max-width: 640px) 220px, 25vw"
+                                                        className="rounded-lg object-contain transition-transform duration-500 group-hover:scale-105"
+                                                    />
+                                                </span>
                                             )}
                                         </Link>
                                         <div className="flex flex-1 flex-col p-4">

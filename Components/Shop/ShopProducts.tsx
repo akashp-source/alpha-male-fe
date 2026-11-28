@@ -574,14 +574,16 @@ export default function ShopProducts({ onAddToCart, initialSearch = "" }: Props)
                                                 className="relative block aspect-square overflow-hidden bg-pale-gray p-4"
                                             >
                                                 {image ? (
-                                                    <Image
-                                                        src={image}
-                                                        alt={product.name}
-                                                        fill
-                                                        unoptimized={!canOptimizeImage(image)}
-                                                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 280px"
-                                                        className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-                                                    />
+                                                    <span className="absolute inset-3">
+                                                        <Image
+                                                            src={image}
+                                                            alt={product.name}
+                                                            fill
+                                                            unoptimized={!canOptimizeImage(image)}
+                                                            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 280px"
+                                                            className="rounded-lg object-contain transition-transform duration-500 group-hover:scale-105"
+                                                        />
+                                                    </span>
                                                 ) : (
                                                     <div className="flex h-full items-center justify-center text-xs text-slate-400">
                                                         Product image unavailable

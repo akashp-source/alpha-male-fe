@@ -45,7 +45,7 @@ export default function TrustSection() {
                     {/* WHO GMP Image */}
                     <div className="relative flex w-full shrink-0 items-center justify-center sm:w-[190px] lg:w-[215px]">
                         <Image
-                            src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/e81db186-1272-4e9a-b20a-32479654957c.webp"
+                            src="https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/491c2f22-d24f-4fd0-ba8e-93723b47591a.webp"
                             alt="WHO-GMP Certification"
                             width={220}
                             height={220}

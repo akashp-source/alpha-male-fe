@@ -15,6 +15,18 @@ const categoryOf = (faq: FAQ) => faq.category?.trim() || DEFAULT_CATEGORY;
 // "General" reads as "General FAQs" on its tab, like the design.
 const tabLabel = (category: string) => (category === DEFAULT_CATEGORY ? "General FAQs" : category);
 
+// "**bold**" in admin text → <strong>. Anything else stays plain text (no HTML).
+const withBold = (text: string) =>
+    text.split(/(\*\*[^*]+?\*\*)/g).map((part, i) =>
+        /^\*\*[^*]+?\*\*$/.test(part) ? (
+            <strong key={i} className="font-semibold text-brand-navy">
+                {part.slice(2, -2)}
+            </strong>
+        ) : (
+            part
+        ),
+    );
+
 interface ProductFAQsV2Props {
     faqs?: FAQ[];
     /** Shown in the default intro, "Everything you need to know about ...". */
@@ -63,7 +75,7 @@ export default function ProductFAQsV2({ faqs = [], productName = "", tagline = "
                             <p className="mt-3 whitespace-pre-line font-body text-sm font-medium sm:text-base">{tagline.trim()}</p>
                         )}
                         <p className="mx-auto mt-2 max-w-2xl whitespace-pre-line font-body text-sm leading-relaxed text-brand-navy-muted sm:text-base">
-                            {intro.trim() ||
+                            {intro.trim() ? withBold(intro.trim()) :
                                 `Everything you need to know about ${productName.trim() || "this product"}, including product details, usage guidance, and discreet delivery information.`}
                         </p>
                     </div>

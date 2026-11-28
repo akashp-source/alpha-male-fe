@@ -175,17 +175,17 @@ export default function ShowcaseSlider({ slides, alt, navy }: ShowcaseSliderProp
                             type="button"
                             aria-label="Previous photo"
                             onClick={prev}
-                            className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-brand-navy shadow-md backdrop-blur transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:left-5 sm:h-12 sm:w-12"
+                            className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/90 hover:text-brand-navy focus-visible:bg-white/90 focus-visible:text-brand-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:left-5 sm:h-12 sm:w-12"
                         >
-                            <ChevronLeft size={22} aria-hidden="true" />
+                            <ChevronLeft size={22} aria-hidden="true" className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]" />
                         </button>
                         <button
                             type="button"
                             aria-label="Next photo"
                             onClick={next}
-                            className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-brand-navy shadow-md backdrop-blur transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-5 sm:h-12 sm:w-12"
+                            className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/90 hover:text-brand-navy focus-visible:bg-white/90 focus-visible:text-brand-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-5 sm:h-12 sm:w-12"
                         >
-                            <ChevronRight size={22} aria-hidden="true" />
+                            <ChevronRight size={22} aria-hidden="true" className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]" />
                         </button>
                     </>
                 )}
