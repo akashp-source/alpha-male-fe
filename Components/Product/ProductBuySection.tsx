@@ -49,12 +49,21 @@ import {
     Plus,
     ShoppingBag,
     Zap,
-    Check,
+    ShieldCheck,
     Package,
     ChevronRight,
     // Phone, (used by the removed consultation-call note)
     Star,
 } from "lucide-react";
+
+// Accent colours on white (AA), for the quick point icons.
+const QUICK_POINT_ICON_COLOUR = {
+    rose: "text-accent-rose",
+    orange: "text-accent-orange",
+    gold: "text-accent-gold-deep",
+    emerald: "text-accent-emerald",
+    wine: "text-accent-wine",
+} as const;
 
 interface ProductBuySectionProps {
     product: Product;
@@ -278,6 +287,9 @@ export default function ProductBuySection({
 
     const rating = product.ratings?.summary;
     const quickPoints = (product.quickPoints ?? []).filter((point) => point.trim());
+    // Quick point icon: the product's accent colour (admin → Page theme), else the default green.
+    const quickPointIconClass =
+        QUICK_POINT_ICON_COLOUR[product.pageAccent as keyof typeof QUICK_POINT_ICON_COLOUR] ?? "text-success-green";
 
     // Load suggestions shortly after the quantity settles.
     useEffect(() => {
@@ -649,7 +661,7 @@ export default function ProductBuySection({
                             <ul className="mt-2 space-y-1">
                                 {quickPoints.map((point, index) => (
                                     <li key={index} className="flex items-start gap-2 font-body text-xs text-brand-navy sm:text-sm">
-                                        <Check size={15} strokeWidth={2.5} className="mt-0.5 shrink-0 text-success-green" aria-hidden="true" />
+                                        <ShieldCheck size={16} strokeWidth={2.25} className={`mt-0.5 shrink-0 ${quickPointIconClass}`} aria-hidden="true" />
                                         {point}
                                     </li>
                                 ))}
