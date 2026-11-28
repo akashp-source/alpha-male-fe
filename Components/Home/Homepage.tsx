@@ -6,8 +6,8 @@ import AllProductsSection from "./AllProductsSection";
 import BestSellers from "./BestSellers";
 // import FeaturedProducts from "./FeaturedProducts"; // Previous homepage hero carousel, retained for reference.
 // import HomeHeroCarousel from "./HomeHeroCarousel"; // Previous replacement concept.
-import FeaturedConceptA from "./FeaturedConceptA";
-import FeaturedConceptB from "./FeaturedConceptB";
+// import FeaturedConceptA from "./FeaturedConceptA"; // Card track concept, not used.
+// import FeaturedConceptB from "./FeaturedConceptB"; // Spotlight concept, not used.
 import FeaturedConceptC from "./FeaturedConceptC";
 import FAQ from "../Faqs";
 import TrustSection from "./TrustSection";
@@ -113,8 +113,8 @@ export default async function HomePage() {
             {/* New carousel concepts. Comment out the versions you don't want to use. */}
             {/* <FeaturedProducts initialProducts={featured} /> Previous hero design. */}
             {/* <HomeHeroCarousel products={featured} /> Previous replacement concept. */}
-            <FeaturedConceptA products={featured} />
-            <FeaturedConceptB products={featured} />
+            {/* <FeaturedConceptA products={featured} /> Card track concept, not used. */}
+            {/* <FeaturedConceptB products={featured} /> Spotlight concept, not used. */}
             <FeaturedConceptC products={featured} />
             <TrustSection />
             {/* "Our standard" badges, sliding */}

@@ -10,7 +10,7 @@ import { canOptimizeImage } from "@/lib/image-hosts";
 import { accentText, THEME_BACKGROUND, themeOf, useAutoplay } from "@/lib/featured-theme";
 
 /** Time each product stays before the slider moves on. */
-const AUTOPLAY_MS = 2000;
+const AUTOPLAY_MS = 3000;
 
 // No page theme = the original navy design.
 const backgroundOf = (theme: string) => THEME_BACKGROUND[theme] ?? "bg-brand-navy";
