@@ -183,6 +183,9 @@ export interface Product {
         image: string;
         imageAlt: string;
         imageBadge: string;
+        /** Tilted tag on the photo corner (showcase layout); blank = none. */
+        tiltedTag?: string;
+        tiltedTagSide?: "right" | "left";
         /** "" (brand navy) | "rose": colour of labels, numbers and lines. */
         accent?: string;
         /** Phone image for the showcase layout (blank = use `image`). */

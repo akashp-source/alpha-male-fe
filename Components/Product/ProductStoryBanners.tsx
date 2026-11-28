@@ -337,7 +337,7 @@ function IntroBanner({ banner }: { banner: StoryBanner }) {
         <div className="pdp-container text-center">
             {banner.eyebrow && <p className={`${eyebrowClass} ${accent.text}`}>{banner.eyebrow} </p>}
             <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-5xl">{banner.title}</h2>
-            <Divider className={accent.bg} />
+            {/* <Divider className={accent.bg} /> */}
             {banner.subtitle && <p className="mx-auto mt-5 max-w-2xl whitespace-pre-line font-body text-sm font-medium sm:text-base">{banner.subtitle}</p>}
             {banner.body && (
                 <p className={`mx-auto mt-5 max-w-2xl whitespace-pre-line font-body text-sm leading-7 sm:text-base sm:leading-8 ${theme.muted}`}>
@@ -410,11 +410,29 @@ function ShowcaseBanner({ banner }: { banner: StoryBanner }) {
             />
         </div>
     );
+    // Optional tilted tag in the banner's top corner, beside the heading
+    // (admin: text + left / right), measured from the screen edge so it sits in
+    // the empty space beside the 1200px content. Below 1280px wide there is no
+    // room beside the title, so it is centred above the label instead.
+    const tag = banner.tiltedTag?.trim();
+    const tagLeft = banner.tiltedTagSide === "left";
+    const hasAccent = Boolean(ACCENTS[banner.accent as keyof typeof ACCENTS]);
+    const tagColours = hasAccent
+        ? `${accent.bg} ${navy ? "text-brand-navy" : "text-white"}`
+        : navy ? "bg-white text-brand-navy" : "bg-brand-navy text-white";
+    const tiltedTag = tag ? (
+        <span
+            className={`pointer-events-none relative z-20 mb-5 inline-block max-w-[85%] rounded-md px-3 py-1.5 text-center font-body text-[10px] font-bold uppercase leading-snug tracking-[0.16em] shadow-[0_10px_24px_rgba(33,46,73,0.28)] ring-2 ring-white/70 sm:px-4 sm:py-2 sm:text-xs xl:absolute xl:top-16 xl:mb-0 xl:max-w-[13rem] 2xl:top-20 2xl:max-w-[18rem] ${tagColours} ${tagLeft ? "-rotate-6 xl:left-[calc((1200px_-_100vw)/2_+_2.5rem)]" : "rotate-6 xl:right-[calc((1200px_-_100vw)/2_+_2.5rem)]"}`}
+        >
+            {tag}
+        </span>
+    ) : null;
     return (
-        <div className="pdp-container text-center">
+        <div className="pdp-container relative text-center">
+            {tiltedTag}
             {banner.eyebrow && <p className={`${eyebrowClass} ${accent.text}`}>{banner.eyebrow}</p>}
             <h2 className="mt-3 font-heading text-3xl leading-tight sm:text-4xl">{banner.title}</h2>
-            <Divider className={accent.bg} />
+            {/* Short line under the title, removed: <Divider className={accent.bg} /> */}
             {banner.body && <p className={`mx-auto mt-5 max-w-2xl whitespace-pre-line font-body text-sm leading-relaxed sm:text-base ${theme.muted}`}>{banner.body}</p>}
             {/* Extra photos added: main photo + those slide every 2 seconds */}
             {banner.image && (banner.slides?.length ?? 0) > 0 ? (

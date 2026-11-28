@@ -243,16 +243,18 @@ export default function AllProductsSection({ products, total: initialTotal }: Pr
                         {error ? <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-red-600">{error}</div> : loading ? <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">{Array.from({ length: 6 }, (_, i) => <div key={i} className="animate-pulse overflow-hidden rounded-2xl bg-white"><div className="aspect-square bg-slate-200" /><div className="space-y-3 p-3 sm:p-5"><div className="h-3 w-1/3 rounded bg-slate-200" /><div className="h-4 w-4/5 rounded bg-slate-200" /></div></div>)}</div> : visibleProducts.length ? <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                             {visibleProducts.map((product) => {
                                 return <article key={product._id} className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-lg sm:rounded-[22px]">
-                                    <div className="relative flex aspect-square items-center justify-center bg-pale-gray p-2 sm:p-5">
+                                    {/* Image opens the product page (same link as the name; skipped by keyboard / screen readers to avoid a duplicate). */}
+                                    <Link href={productHref(product)} tabIndex={-1} aria-hidden="true" className="relative flex aspect-square items-center justify-center bg-pale-gray p-2 sm:p-5">
                                         {product.images?.[0] ? <span className="absolute inset-2 sm:inset-5"><Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 300px" className="rounded-lg object-contain" unoptimized={!canOptimizeImage(product.images[0])} /></span> : <ShoppingBag className="h-9 w-9 text-slate-400 sm:h-12 sm:w-12" />}
                                         {product.comboOffers?.length > 0 && <span className="absolute right-2 top-2 rounded-full bg-white px-2 py-1 text-[9px] font-semibold sm:right-4 sm:top-4 sm:px-3 sm:py-1.5 sm:text-xs">Combo</span>}
-                                    </div>
+                                    </Link>
                                     <div className="flex flex-1 flex-col p-2.5 sm:p-5">
                                         <p className="mb-1 truncate text-[9px] font-bold uppercase tracking-[0.12em] text-brand-navy-muted sm:text-xs sm:tracking-[0.16em]">{categoryName(product.category)}</p>
                                         <Link href={productHref(product)} className="line-clamp-2 text-xs font-bold leading-4 hover:underline sm:font-heading sm:text-base sm:leading-6">{product.name}</Link>
                                         <div className="mt-1.5 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 sm:mt-2 sm:gap-2"><strong className="text-sm sm:text-xl">{money(product.price)}</strong></div>
-                                        <div className="mt-auto grid grid-cols-1 gap-1.5 pt-3 min-[390px]:grid-cols-2 sm:gap-2 sm:pt-4">
-                                            <Link href={productHref(product)} className="flex h-9 items-center justify-center rounded-lg border border-brand-navy text-[11px] font-medium transition hover:bg-slate-50 sm:h-11 sm:rounded-xl sm:text-sm">View</Link>
+                                        <div className="mt-auto grid grid-cols-1 gap-1.5 pt-3 sm:gap-2 sm:pt-4">
+                                            {/* View button removed (the image and name open the product):
+                                            <Link href={productHref(product)} className="flex h-9 items-center justify-center rounded-lg border border-brand-navy text-[11px] font-medium transition hover:bg-slate-50 sm:h-11 sm:rounded-xl sm:text-sm">View</Link> */}
                                             <AddToCartButton productId={product._id} label="Add" className="h-9 justify-center gap-1 rounded-lg bg-brand-navy px-1 text-[11px] font-medium text-white transition hover:bg-[#14284d] disabled:opacity-60 sm:h-11 sm:gap-2 sm:rounded-xl sm:px-2 sm:text-sm" />
                                         </div>
                                     </div>

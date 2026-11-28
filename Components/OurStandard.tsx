@@ -12,10 +12,10 @@ import { canOptimizeImage } from "@/lib/image-hosts";
  */
 const STANDARDS: { label: string; image: string }[] = [
     { label: "WHO-GMP certified facility", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/f57e0f71-f4f6-4df7-aaac-a303affe6f85.webp" /* TODO: image URL */ },
-    { label: "Own licensed manufacturing", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/a3f29879-8d8d-4ad2-a18e-2ceabf9b6fbf.webp" /* TODO: image URL */ },
-    { label: "Every batch tested before release", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/132f5919-005d-4e70-89d5-00eb0444253d.webp" /* TODO: image URL */ },
-    { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/8e5bb2e1-d278-4d6b-b672-dc160a199c63.webp" /* TODO: image URL */ },
-    { label: "Plain, sealed parcel", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/9130a7c8-be38-4bf9-8300-7f1c7815861e.webp" /* TODO: image URL */ },
+    { label: "Own licensed manufacturing", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/2cd0e616-c23e-4c30-9166-f20640a1e6d0.webp" /* TODO: image URL */ },
+    { label: "Every batch tested before release", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/19038772-0c69-4e66-ad45-cf4881d443a0.webp" /* TODO: image URL */ },
+    { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/b5b5b3ee-c2f9-462b-9407-b31ae8ab0ed8.webp" /* TODO: image URL */ },
+    { label: "Plain, sealed parcel", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/2a6faf53-a9a0-473d-87c6-1cc7cbad8856.webp" /* TODO: image URL */ },
     { label: "Secure payments · COD available", image: "https://cdn.techinasia.com/data/images/dlRGQQAAOU2qtuy2rqTqmi0Y6nBHQ4BJtitaQXTH.png" /* TODO: image URL */ },
     { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/01147f6d-5cd9-41a2-8854-11d8ad466af8.webp" /* TODO: image URL */ },
     // blue dart

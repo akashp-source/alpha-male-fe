@@ -54,10 +54,15 @@ export default function ShopPage() {
     );
 }
 
-// Reads ?search= (navbar search). The key remounts the list when the search
-// changes, so a new navbar search on /shop starts fresh at page 1.
+// Reads ?search= (navbar search) and ?category= (homepage "Browse by
+// category"). The key remounts the list when either changes, so it starts
+// fresh at page 1.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function ShopWithSearch({ onAddToCart }: { onAddToCart: (product: any) => void }) {
-    const search = (useSearchParams().get("search") ?? "").trim().slice(0, 100);
-    return <ShopProducts key={search} initialSearch={search} onAddToCart={onAddToCart} />;
+    const params = useSearchParams();
+    const search = (params.get("search") ?? "").trim().slice(0, 100);
+    const rawCategory = (params.get("category") ?? "").trim().toLowerCase();
+    // Only a slug ("oral-strips"); anything else is ignored.
+    const category = /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(rawCategory) && rawCategory.length <= 100 ? rawCategory : "";
+    return <ShopProducts key={`${search}|${category}`} initialSearch={search} initialCategory={category} onAddToCart={onAddToCart} />;
 }
