@@ -22,7 +22,7 @@ const STANDARDS: { label: string; image: string }[] = [
     { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/17e15f0a-8b88-4aaf-9a54-f2e708f9a14b.webp" /* TODO: image URL */ },
 
     // dtdc
-    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/e10524fe-acb3-4ebb-b317-97af59bd285e.webp" /* TODO: image URL */ },
+    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/a6396e7f-8d7d-45b0-9dcb-bfccf469c752.webp" /* TODO: image URL */ },
 ];
 
 // Marquee: each copy holds the badges this many times (wider than any screen).
