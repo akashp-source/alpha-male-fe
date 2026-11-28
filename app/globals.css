@@ -52,6 +52,24 @@
   --color-teal-soft-light: #d9ebe6;
   --color-accent-orange: #a0410f;
   --color-accent-orange-light: #f4a261;
+
+  /* Strip pages, light backgrounds from the pack photos (each with a lighter glow):
+     Boss = sand + gold, Icon = mint + emerald, Legend = petal + wine, Bold = mist + navy.
+     Accents are AA (4.5:1+) on white and their background; -light versions are for navy. */
+  --color-sand: #ede3d7;
+  --color-sand-light: #f7f1ea;
+  --color-mint: #d8e7dd;
+  --color-mint-light: #ecf4ef;
+  --color-petal: #f4e2de;
+  --color-petal-light: #fbf1ef;
+  --color-mist: #dfe5ee;
+  --color-mist-light: #eff3f8;
+  --color-accent-gold-deep: #7a5818;
+  --color-accent-gold-light: #e0c08a;
+  --color-accent-emerald: #1d5a3a;
+  --color-accent-emerald-light: #8fd1ab;
+  --color-accent-wine: #7a2333;
+  --color-accent-wine-light: #eba3b0;
 }
 
 /* Heading rule: H1-H2 = Cinzel 600, H3 and below = Montserrat 600.

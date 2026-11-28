@@ -30,6 +30,31 @@ const THEME = {
         line: "border-brand-navy/15",
         number: "text-brand-navy/30",
     },
+    // Boss / Icon / Legend / Bold: light backgrounds from the pack photos.
+    sand: {
+        section: "bg-sand bg-[radial-gradient(ellipse_at_50%_100%,var(--color-sand-light),var(--color-sand)_70%)] text-brand-navy",
+        muted: "text-brand-navy-muted",
+        line: "border-accent-gold-deep/25",
+        number: "text-accent-gold-deep/40",
+    },
+    mint: {
+        section: "bg-mint bg-[radial-gradient(ellipse_at_50%_100%,var(--color-mint-light),var(--color-mint)_70%)] text-brand-navy",
+        muted: "text-brand-navy-muted",
+        line: "border-accent-emerald/25",
+        number: "text-accent-emerald/40",
+    },
+    petal: {
+        section: "bg-petal bg-[radial-gradient(ellipse_at_50%_100%,var(--color-petal-light),var(--color-petal)_70%)] text-brand-navy",
+        muted: "text-brand-navy-muted",
+        line: "border-accent-wine/25",
+        number: "text-accent-wine/40",
+    },
+    mist: {
+        section: "bg-mist bg-[radial-gradient(ellipse_at_50%_100%,var(--color-mist-light),var(--color-mist)_70%)] text-brand-navy",
+        muted: "text-brand-navy-muted",
+        line: "border-brand-navy/15",
+        number: "text-brand-navy/30",
+    },
 } as const;
 
 /** Dark backgrounds: white text, light buttons and pills. */
@@ -46,6 +71,18 @@ const ACCENTS = {
     orange: {
         light: { text: "text-accent-orange", bg: "bg-accent-orange", border: "border-accent-orange" },
         dark: { text: "text-accent-orange-light", bg: "bg-accent-orange-light", border: "border-accent-orange-light" },
+    },
+    gold: {
+        light: { text: "text-accent-gold-deep", bg: "bg-accent-gold-deep", border: "border-accent-gold-deep" },
+        dark: { text: "text-accent-gold-light", bg: "bg-accent-gold-light", border: "border-accent-gold-light" },
+    },
+    emerald: {
+        light: { text: "text-accent-emerald", bg: "bg-accent-emerald", border: "border-accent-emerald" },
+        dark: { text: "text-accent-emerald-light", bg: "bg-accent-emerald-light", border: "border-accent-emerald-light" },
+    },
+    wine: {
+        light: { text: "text-accent-wine", bg: "bg-accent-wine", border: "border-accent-wine" },
+        dark: { text: "text-accent-wine-light", bg: "bg-accent-wine-light", border: "border-accent-wine-light" },
     },
 } as const;
 

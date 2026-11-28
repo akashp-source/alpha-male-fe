@@ -244,7 +244,7 @@ export default function AllProductsSection({ products, total: initialTotal }: Pr
                             {visibleProducts.map((product) => {
                                 return <article key={product._id} className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-lg sm:rounded-[22px]">
                                     <div className="relative flex aspect-square items-center justify-center bg-pale-gray p-2 sm:p-5">
-                                        {product.images?.[0] ? <Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 300px" className="object-contain p-2 sm:p-5" unoptimized={!canOptimizeImage(product.images[0])} /> : <ShoppingBag className="h-9 w-9 text-slate-400 sm:h-12 sm:w-12" />}
+                                        {product.images?.[0] ? <span className="absolute inset-2 sm:inset-5"><Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 300px" className="rounded-lg object-contain" unoptimized={!canOptimizeImage(product.images[0])} /></span> : <ShoppingBag className="h-9 w-9 text-slate-400 sm:h-12 sm:w-12" />}
                                         {product.comboOffers?.length > 0 && <span className="absolute right-2 top-2 rounded-full bg-white px-2 py-1 text-[9px] font-semibold sm:right-4 sm:top-4 sm:px-3 sm:py-1.5 sm:text-xs">Combo</span>}
                                     </div>
                                     <div className="flex flex-1 flex-col p-2.5 sm:p-5">

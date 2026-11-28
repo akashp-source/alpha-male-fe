@@ -36,12 +36,14 @@ function BestSellerCard({
         >
             <div className="relative aspect-square overflow-hidden rounded-xl bg-pale-gray">
                 {image ? (
-                    <img
-                        src={image}
-                        alt={hidden ? "" : product.name}
-                        loading="lazy"
-                        className="h-full w-full object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-110"
-                    />
+                    <div className="h-full w-full p-3">
+                        <img
+                            src={image}
+                            alt={hidden ? "" : product.name}
+                            loading="lazy"
+                            className="h-full w-full rounded-lg object-contain transition-transform duration-700 ease-out group-hover:scale-110"
+                        />
+                    </div>
                 ) : (
                     <div className="flex h-full items-center justify-center">
                         <ShoppingBag size={36} className="text-[#b5a99b]" />

@@ -35,19 +35,26 @@ const SECTION = {
     blush: "bg-blush text-brand-navy",
     cream: "bg-cream text-brand-navy",
     teal: "bg-teal-soft bg-[radial-gradient(ellipse_at_50%_100%,var(--color-teal-soft-light),var(--color-teal-soft)_70%)] text-brand-navy",
+    sand: "bg-sand bg-[radial-gradient(ellipse_at_50%_100%,var(--color-sand-light),var(--color-sand)_70%)] text-brand-navy",
+    mint: "bg-mint bg-[radial-gradient(ellipse_at_50%_100%,var(--color-mint-light),var(--color-mint)_70%)] text-brand-navy",
+    petal: "bg-petal bg-[radial-gradient(ellipse_at_50%_100%,var(--color-petal-light),var(--color-petal)_70%)] text-brand-navy",
+    mist: "bg-mist bg-[radial-gradient(ellipse_at_50%_100%,var(--color-mist-light),var(--color-mist)_70%)] text-brand-navy",
 } as const;
 
 // Accent: [on light backgrounds, on dark backgrounds]; card image tint.
 const ACCENT_TEXT = {
     rose: ["text-accent-rose", "text-accent-rose-light"],
     orange: ["text-accent-orange", "text-accent-orange-light"],
+    gold: ["text-accent-gold-deep", "text-accent-gold-light"],
+    emerald: ["text-accent-emerald", "text-accent-emerald-light"],
+    wine: ["text-accent-wine", "text-accent-wine-light"],
 } as const;
-const ACCENT_TINT = { rose: "bg-blush/70", orange: "bg-cream" } as const;
+const ACCENT_TINT = { rose: "bg-blush/70", orange: "bg-cream", gold: "bg-sand-light", emerald: "bg-mint-light", wine: "bg-petal-light" } as const;
 
 /**
  * "You may also like" at the bottom of the product page, in the product's
- * page theme. Same products as before (same category, minus the
- * frequently-bought-together add-ons shown by the buy buttons).
+ * page theme. Products from the categories chosen in admin (default: same category), minus the
+ * frequently-bought-together add-ons shown by the buy buttons.
  */
 export default function ProductYouMayAlsoLike({ product }: { product: Product }) {
     const [addingProductId, setAddingProductId] = useState<string | null>(null);
@@ -120,14 +127,16 @@ export default function ProductYouMayAlsoLike({ product }: { product: Product })
                                         </span>
                                     )}
                                     {image && (
-                                        <Image
-                                            unoptimized={!canOptimizeImage(image)}
-                                            src={image}
-                                            alt={item.name}
-                                            fill
-                                            sizes="(max-width: 640px) 78vw, (max-width: 1024px) 45vw, 33vw"
-                                            className="object-contain p-6 transition-transform duration-500 motion-safe:group-hover:scale-105"
-                                        />
+                                        <span className="absolute inset-6">
+                                            <Image
+                                                unoptimized={!canOptimizeImage(image)}
+                                                src={image}
+                                                alt={item.name}
+                                                fill
+                                                sizes="(max-width: 640px) 78vw, (max-width: 1024px) 45vw, 33vw"
+                                                className="rounded-lg object-contain transition-transform duration-500 motion-safe:group-hover:scale-105"
+                                            />
+                                        </span>
                                     )}
                                 </Link>
 

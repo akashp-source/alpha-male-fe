@@ -12,14 +12,17 @@ import { canOptimizeImage } from "@/lib/image-hosts";
  */
 const STANDARDS: { label: string; image: string }[] = [
     { label: "WHO-GMP certified facility", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/f57e0f71-f4f6-4df7-aaac-a303affe6f85.webp" /* TODO: image URL */ },
-    { label: "Own licensed manufacturing", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/528e33bd-b081-4ca7-9271-f9e301e12553.webp" /* TODO: image URL */ },
-    { label: "Every batch tested before release", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/660f4f1b-3df3-4ff1-b95e-209160492cee.webp" /* TODO: image URL */ },
-    { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/0167e65b-38f6-42cf-bf73-dfa623f24bdb.webp" /* TODO: image URL */ },
-    { label: "Plain, sealed parcel", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/b5696aa5-8c08-46e7-83d8-bcc7071d8785.webp" /* TODO: image URL */ },
-    { label: "Secure payments · COD available", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/1fc835c0-48be-49ee-a16d-5b339b97359a.webp" /* TODO: image URL */ },
+    { label: "Own licensed manufacturing", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/a3f29879-8d8d-4ad2-a18e-2ceabf9b6fbf.webp" /* TODO: image URL */ },
+    { label: "Every batch tested before release", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/132f5919-005d-4e70-89d5-00eb0444253d.webp" /* TODO: image URL */ },
+    { label: "Made in India", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/8e5bb2e1-d278-4d6b-b672-dc160a199c63.webp" /* TODO: image URL */ },
+    { label: "Plain, sealed parcel", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/9130a7c8-be38-4bf9-8300-7f1c7815861e.webp" /* TODO: image URL */ },
+    { label: "Secure payments · COD available", image: "https://cdn.techinasia.com/data/images/dlRGQQAAOU2qtuy2rqTqmi0Y6nBHQ4BJtitaQXTH.png" /* TODO: image URL */ },
     { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/01147f6d-5cd9-41a2-8854-11d8ad466af8.webp" /* TODO: image URL */ },
+    // blue dart
     { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/17e15f0a-8b88-4aaf-9a54-f2e708f9a14b.webp" /* TODO: image URL */ },
-    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/0908090a-6e7f-4567-a9d1-0ace507e5449.webp" /* TODO: image URL */ },
+
+    // dtdc
+    { label: "Logistics Partners", image: "https://alpha-male-mumbai.s3.ap-south-1.amazonaws.com/products/6af5afef82ff2dc6bab65f0b/e10524fe-acb3-4ebb-b317-97af59bd285e.webp" /* TODO: image URL */ },
 ];
 
 // Marquee: each copy holds the badges this many times (wider than any screen).
@@ -28,7 +31,7 @@ const MARQUEE_REPEAT = 3;
 function Badge({ label, image, hidden = false }: { label: string; image: string; hidden?: boolean }) {
     return (
         <li aria-hidden={hidden || undefined} className="flex w-[132px] shrink-0 flex-col items-center text-center sm:w-[150px]">
-            <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-brand-navy shadow-[0_10px_24px_rgba(33,46,73,0.25)] sm:h-28 sm:w-28">
+            <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full  shadow-[0_10px_24px_rgba(33,46,73,0.25)] sm:h-28 sm:w-28">
                 {image ? (
                     <Image
                         src={image}

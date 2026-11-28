@@ -148,7 +148,7 @@ export default function ProductGallery({ images, name, badge }: ProductGalleryPr
                                 alt={index === 0 ? name : `${name} - image ${index + 1}`}
                                 loading={index === 0 ? "eager" : "lazy"}
                                 draggable={false}
-                                className="h-full w-full select-none object-contain"
+                                className="h-full w-full select-none rounded-xl object-contain"
                             />
                         </div>
                     ))}
@@ -217,7 +217,7 @@ export default function ProductGallery({ images, name, badge }: ProductGalleryPr
                             className={`h-11 min-h-11 w-11 min-w-11 shrink-0 overflow-hidden rounded-lg border-2 p-1.5 transition sm:h-16 sm:w-16 ${index === active ? "border-brand-navy" : "border-transparent hover:border-brand-navy/30"}`}
                         >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={image} alt="" loading="lazy" className="h-full w-full object-contain" />
+                            <img src={image} alt="" loading="lazy" className="h-full w-full rounded-md object-contain" />
                         </button>
                     ))}
                 </div>
